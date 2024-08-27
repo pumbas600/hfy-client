@@ -1,4 +1,6 @@
+using HfyClientApi.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Reddit.AuthTokenRetriever;
 
 namespace HfyClientApi.Controllers
 {
@@ -11,8 +13,7 @@ namespace HfyClientApi.Controllers
 
     public OAuthController(IHttpClientFactory clientFactory, IConfiguration configuration)
     {
-      _clientFactory = clientFactory;
-      _configuration = configuration;
+
     }
 
   }
