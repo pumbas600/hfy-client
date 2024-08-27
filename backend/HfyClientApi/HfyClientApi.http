@@ -1,0 +1,6 @@
+@HfyClientApi_HostAddress = http://localhost:5070
+
+GET {{HfyClientApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
