@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{8533EA2B-371C-4848-9976-D40D3908A59D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "backend\HfyClientApi\HfyClientApi.csproj", "{C6B9DF87-2E57-4341-BAC4-68D8F92E743A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "backend\HfyClientApi\HfyClientApi.csproj", "{F99F05AB-A720-4595-ADC5-232E6CAD7592}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "backend\HfyClientConsole\HfyClientConsole.csproj", "{BA4717B5-87A1-4D67-AA37-CC03ECE89D6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "backend\HfyClientConsole\HfyClientConsole.csproj", "{0120EA1F-B74A-4754-8D05-82C0225DC7F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,21 +15,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6B9DF87-2E57-4341-BAC4-68D8F92E743A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6B9DF87-2E57-4341-BAC4-68D8F92E743A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6B9DF87-2E57-4341-BAC4-68D8F92E743A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6B9DF87-2E57-4341-BAC4-68D8F92E743A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA4717B5-87A1-4D67-AA37-CC03ECE89D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA4717B5-87A1-4D67-AA37-CC03ECE89D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA4717B5-87A1-4D67-AA37-CC03ECE89D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA4717B5-87A1-4D67-AA37-CC03ECE89D6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C6B9DF87-2E57-4341-BAC4-68D8F92E743A} = {8533EA2B-371C-4848-9976-D40D3908A59D}
-		{BA4717B5-87A1-4D67-AA37-CC03ECE89D6C} = {8533EA2B-371C-4848-9976-D40D3908A59D}
+		{F99F05AB-A720-4595-ADC5-232E6CAD7592} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
+		{0120EA1F-B74A-4754-8D05-82C0225DC7F7} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CE86DAD-9C03-4D8A-831F-B3E83BB0A05C}
