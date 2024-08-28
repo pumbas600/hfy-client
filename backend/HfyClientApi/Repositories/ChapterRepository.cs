@@ -1,8 +1,9 @@
 using HfyClientApi.Data;
+using HfyClientApi.Models;
 
 namespace HfyClientApi.Repositories
 {
-  public class ChapterRepository
+  public class ChapterRepository : IChapterRepository
   {
     private readonly AppDbContext _context;
 
@@ -11,6 +12,9 @@ namespace HfyClientApi.Repositories
       _context = context;
     }
 
-
+    public async Task<Chapter?> GetChapterByIdAsync(string id)
+    {
+      return await _context.Chapters.FindAsync(id);
+    }
   }
 }

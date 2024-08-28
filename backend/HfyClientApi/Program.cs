@@ -1,5 +1,6 @@
 using HfyClientApi.Configuration;
 using HfyClientApi.Data;
+using HfyClientApi.Repositories;
 using HfyClientApi.Services;
 using Microsoft.EntityFrameworkCore;
 using Reddit;
@@ -59,6 +60,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddSingleton(reddit);
 builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
+builder.Services.AddScoped<IChapterService, ChapterService>();
+
+builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 
 var app = builder.Build();
 
