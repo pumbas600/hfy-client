@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "backend\Hfy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "backend\HfyClientConsole\HfyClientConsole.csproj", "{0120EA1F-B74A-4754-8D05-82C0225DC7F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HfyClientApi.Tests", "backend\HfyClientApi.Tests\HfyClientApi.Tests.csproj", "{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F99F05AB-A720-4595-ADC5-232E6CAD7592} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
 		{0120EA1F-B74A-4754-8D05-82C0225DC7F7} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
+		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CE86DAD-9C03-4D8A-831F-B3E83BB0A05C}
