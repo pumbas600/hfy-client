@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
+using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using Reddit.Controllers;
 
@@ -54,11 +55,11 @@ namespace HfyClientApi.Services
 
         if (chapterLink.Label.Contains("next"))
         {
-          AddChapterLink(nextLinkMap, chapterLink);
+          nextLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
         }
         else if (chapterLink.Label.Contains("prev"))
         {
-          AddChapterLink(previousLinkMap, chapterLink);
+          previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
         }
       }
 
@@ -95,19 +96,6 @@ namespace HfyClientApi.Services
 
       return chapter;
     }
-
-    internal protected static void AddChapterLink(
-      Dictionary<string, List<ChapterLink>> dict, ChapterLink chapterLink)
-    {
-      if (!dict.TryGetValue(chapterLink.PostId, out List<ChapterLink>? value))
-      {
-        value = ([]);
-        dict[chapterLink.PostId] = value;
-      }
-
-      value.Add(chapterLink);
-    }
-
 
     internal protected static ChapterLink? ParseRedditLink(IElement linkElement)
     {
