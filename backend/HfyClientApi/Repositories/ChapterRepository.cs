@@ -34,7 +34,15 @@ namespace HfyClientApi.Repositories
 
     public async Task<Chapter?> GetChapterByIdAsync(string id)
     {
-      return await _context.Chapters.FindAsync(id);
+      var chapter = await _context.Chapters.FindAsync(id);
+      if (chapter != null)
+      {
+        // By loading the Story like this, rather than using .Include(), we avoid a round-trip to
+        // the database if the entity is already local storage with Find().
+        await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
+      }
+
+      return chapter;
     }
   }
 }
