@@ -19,6 +19,9 @@ namespace HfyClientApi.Services
       public required string PostId { get; set; }
       public required string Label { get; set; }
       public required HtmlNode LinkElement { get; set; }
+
+      public override string ToString()
+        => $"ChapterLink(Subreddit: {Subreddit}, PostId: {PostId}, Label: {Label}, LinkElement: {LinkElement})";
     }
 
     private const string RedditBaseUrl = "https://www.reddit.com";
@@ -38,21 +41,24 @@ namespace HfyClientApi.Services
       Dictionary<string, List<ChapterLink>> nextLinkMap = [];
       Dictionary<string, List<ChapterLink>> previousLinkMap = [];
 
-      foreach (var linkElement in links)
+      if (links != null)
       {
-        var chapterLink = ParseRedditLink(linkElement);
-        if (chapterLink == null)
+        foreach (var linkElement in links)
         {
-          continue;
-        }
+          var chapterLink = ParseRedditLink(linkElement);
+          if (chapterLink == null)
+          {
+            continue;
+          }
 
-        if (chapterLink.Label.Contains("next"))
-        {
-          nextLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
-        }
-        else if (chapterLink.Label.Contains("prev"))
-        {
-          previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+          if (chapterLink.Label.Contains("next"))
+          {
+            nextLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+          }
+          else if (chapterLink.Label.Contains("prev"))
+          {
+            previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+          }
         }
       }
 
@@ -80,7 +86,7 @@ namespace HfyClientApi.Services
         Subreddit = post.Subreddit,
         Title = post.Title,
         Author = post.Author,
-        TextHTML = document.Text,
+        TextHTML = document.DocumentNode.InnerHtml,
         Created = post.Created,
         Edited = post.Edited == default ? post.Created : post.Edited,
         NextChapterId = nextChapterId,

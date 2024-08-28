@@ -49,28 +49,22 @@ namespace HfyClientApi.Tests.Services
     [InlineData("⏮Prev")]
     public void ChapterFromPost_WithOnlyPreviousLink_ExtractsPreviousLink(string previousLinkLabel)
     {
-      var textHtml = $"""
-      <div class="md">
+      var textHtml = BuildPostHtml(
+        $"""
         <p>
           <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
           <a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">{previousLinkLabel}</a> |
           Next
         </p>
-
-        < p >
-          < a href = "https://www.patreon.com/sdfsdfsdf" > Patreon </ a > |
-          < a href = "https://www.reddit.com/r/MySubreddit/" > Official Subreddit </ a > |
-          < a href = "https://www.royalroad.com/fiction/70060/my_example_story" > Royal Road </ a >
-        </ p >
-
-        < p >< strong >Example text...</ strong ></ p >
+        """,
+        """
         <p>
           <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
           <a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">Previous</a> |
           Next
         </p>
-      </div>
-      """;
+        """
+      );
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
@@ -80,6 +74,21 @@ namespace HfyClientApi.Tests.Services
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("pumbas600", chapter.Author);
       Assert.Equal("sdfghj", chapter.Id);
+      Assert.Equal(BuildPostHtml(
+        """
+        <p>
+          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
+           |
+          Next
+        </p>
+        """,
+        """
+        <p>
+          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
+           |
+          Next
+        </p>
+        """), chapter.TextHTML);
       Assert.Equal("1exzyx5", chapter.PreviousChapterId);
       Assert.Null(chapter.NextChapterId);
     }
@@ -96,14 +105,10 @@ namespace HfyClientApi.Tests.Services
     {
       var textHtml = BuildPostHtml(
         $"""
-        <p>
-          <a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">{nextLinkLabel}</a>
-        </p>
+        <p><a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">{nextLinkLabel}</a></p>
         """,
         """
-        <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Next</a>
-        </p>
+        <p><a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">Next</a></p>
         """
       );
 
@@ -115,6 +120,7 @@ namespace HfyClientApi.Tests.Services
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("pumbas600", chapter.Author);
       Assert.Equal("sdfghj", chapter.Id);
+      Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHTML);
       Assert.Equal("1exzyx5", chapter.NextChapterId);
       Assert.Null(chapter.PreviousChapterId);
     }
@@ -142,13 +148,13 @@ namespace HfyClientApi.Tests.Services
       return $"""
       <div class="md">
         {prefixHtml}
-        < p >
-          < a href = "https://www.patreon.com/sdfsdfsdf" > Patreon </ a > |
-          < a href = "https://www.reddit.com/r/MySubreddit/" > Official Subreddit </ a > |
-          < a href = "https://www.royalroad.com/fiction/70060/my_example_story" > Royal Road </ a >
-        </ p >
+        <p>
+          <a href="https://www.patreon.com/sdfsdfsdf"> Patreon </a> |
+          <a href="https://www.reddit.com/r/MySubreddit/"> Official Subreddit </a> |
+          <a href="https://www.royalroad.com/fiction/70060/my_example_story"> Royal Road </a>
+        </p>
 
-        < p >< strong >Example text...</ strong ></ p >
+        <p><strong>Example text...</strong></p>
         {suffixHtml}
       </div>
       """;
