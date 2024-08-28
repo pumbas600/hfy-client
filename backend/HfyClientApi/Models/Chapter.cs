@@ -17,13 +17,13 @@ namespace HfyClientApi.Models
     public DateTime Edited { get; set; }
 
     /// <summary>
-    /// The next chapter in the series. If null, this is the latest chapter.
+    /// The next chapter in the story. If null, this is the latest chapter.
     /// </summary>
     public string? NextChapterId { get; set; }
     public Chapter? NextChapter { get; set; }
 
     /// <summary>
-    /// The previous chapter in the series. If null, this is the first chapter.
+    /// The previous chapter in the story. If null, this is the first chapter.
     /// </summary>
     public string? PreviousChapterId { get; set; }
     public Chapter? PreviousChapter { get; set; }
