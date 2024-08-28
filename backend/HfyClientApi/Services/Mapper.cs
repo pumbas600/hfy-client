@@ -1,10 +1,11 @@
+using HfyClientApi.Dtos;
 using HfyClientApi.Models;
 
-namespace HfyClientApi.Dtos
+namespace HfyClientApi.Services
 {
-  public static class Mapper
+  public class Mapper : IMapper
   {
-    public static FullChapterDto ToFullChapterDto(Story story, Chapter chapter)
+    public FullChapterDto ToFullChapterDto(Story story, Chapter chapter)
     {
       return new FullChapterDto
       {

@@ -57,6 +57,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddSingleton(reddit);
+builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 
 var app = builder.Build();
