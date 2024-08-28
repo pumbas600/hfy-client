@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HfyClientApi.Models
 {
@@ -12,6 +13,8 @@ namespace HfyClientApi.Models
     public string FirstChapterId { get; set; } = null!;
 
     public Chapter FirstChapter { get; set; } = null!;
+
+    [InverseProperty("Story")]
     public ICollection<Chapter> Chapters { get; } = [];
 
   }
