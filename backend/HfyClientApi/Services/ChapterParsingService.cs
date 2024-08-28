@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using HfyClientApi.Models;
@@ -18,6 +19,7 @@ namespace HfyClientApi.Services
       public required string Subreddit { get; set; }
       public required string PostId { get; set; }
       public required string Label { get; set; }
+      public required IElement LinkElement { get; set; }
     }
 
     private const string RedditBaseUrl = "https://www.reddit.com";
@@ -39,8 +41,8 @@ namespace HfyClientApi.Services
       var document = parser.ParseDocument(post.SelfTextHTML);
       var links = document.QuerySelectorAll("a");
 
-      List<ChapterLink> nextLinks = [];
-      List<ChapterLink> previousLinks = [];
+      Dictionary<string, List<ChapterLink>> nextLinkMap = [];
+      Dictionary<string, List<ChapterLink>> previousLinkMap = [];
 
       foreach (var linkElement in links)
       {
@@ -52,18 +54,31 @@ namespace HfyClientApi.Services
 
         if (chapterLink.Label.Contains("next"))
         {
-          nextLinks.Add(chapterLink);
+          AddChapterLink(nextLinkMap, chapterLink);
         }
         else if (chapterLink.Label.Contains("prev"))
         {
-          previousLinks.Add(chapterLink);
+          AddChapterLink(previousLinkMap, chapterLink);
         }
       }
 
+      // For now, we'll just use the first link found for next and previous...
+      var nextLinks = nextLinkMap.Values.FirstOrDefault([]);
+      var nextChapterId = nextLinks.FirstOrDefault()?.PostId;
+
+      var previousLinks = previousLinkMap.Values.FirstOrDefault([]);
+      var previousChapterId = previousLinks.FirstOrDefault()?.PostId;
+
+      var linkElementsToRemove = nextLinks.Select(links => links.LinkElement)
+        .Concat(previousLinks.Select(links => links.LinkElement));
+
+      foreach (var linkElement in linkElementsToRemove)
+      {
+        linkElement.Remove();
+      }
 
       // TODO: Determine link priority by checking if a corresponding link exists for prev/first links.
-      // TODO: Remove links from HTML.
-      // TODO: Cleanup any dangling | used to separate links.
+      // TODO: Cleanup any dangling '|' used to separate links.
 
       var chapter = new Chapter
       {
@@ -71,14 +86,26 @@ namespace HfyClientApi.Services
         Subreddit = post.Subreddit,
         Title = post.Title,
         Author = post.Author,
-        TextHTML = post.SelfTextHTML,
+        TextHTML = document.ToHtml(),
         Created = post.Created,
         Edited = post.Edited == default ? post.Created : post.Edited,
-        NextChapterId = nextLinks.FirstOrDefault()?.PostId,
-        PreviousChapterId = previousLinks.FirstOrDefault()?.PostId,
+        NextChapterId = nextChapterId,
+        PreviousChapterId = previousChapterId,
       };
 
       return chapter;
+    }
+
+    internal protected static void AddChapterLink(
+      Dictionary<string, List<ChapterLink>> dict, ChapterLink chapterLink)
+    {
+      if (!dict.TryGetValue(chapterLink.PostId, out List<ChapterLink>? value))
+      {
+        value = ([]);
+        dict[chapterLink.PostId] = value;
+      }
+
+      value.Add(chapterLink);
     }
 
 
@@ -101,7 +128,13 @@ namespace HfyClientApi.Services
 
       string label = linkElement.TextContent;
 
-      return new() { Subreddit = subreddit, PostId = postId, Label = label.ToLower() };
+      return new()
+      {
+        Subreddit = subreddit,
+        PostId = postId,
+        Label = label.ToLower(),
+        LinkElement = linkElement
+      };
     }
 
 
