@@ -21,5 +21,12 @@ namespace HfyClientApi.Controllers
       var chapter = await _chapterService.GetChapterByIdAsync(id);
       return chapter;
     }
+
+    [HttpPut("{id}/process")]
+    public async Task<ActionResult<FullChapterDto>> ProcessChapterByIdAsync([FromRoute] string id)
+    {
+      var chapter = await _chapterService.ProcessChapterByIdAsync(id);
+      return chapter;
+    }
   }
 }

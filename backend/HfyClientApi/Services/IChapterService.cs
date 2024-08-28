@@ -6,6 +6,6 @@ namespace HfyClientApi.Services
   {
     Task<FullChapterDto> GetChapterByIdAsync(string id);
 
-    Task<FullChapterDto> ProcessChapterFromIdAsync(string id);
+    Task<FullChapterDto> ProcessChapterByIdAsync(string id);
   }
 }

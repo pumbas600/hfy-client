@@ -29,7 +29,7 @@ namespace HfyClientApi.Services
       return _mapper.ToFullChapterDto(chapter);
     }
 
-    public async Task<FullChapterDto> ProcessChapterFromIdAsync(string id)
+    public async Task<FullChapterDto> ProcessChapterByIdAsync(string id)
     {
       var postFullname = $"t3_{id}";
       var posts = _reddit.GetPosts([postFullname]);
