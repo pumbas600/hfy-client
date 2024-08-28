@@ -1,12 +1,11 @@
-using AngleSharp.Html.Parser;
 using HfyClientApi.Services;
+using HtmlAgilityPack;
 using Reddit.Controllers;
 
 namespace HfyClientApi.Tests.Services
 {
   public class ChapterParsingServiceTests
   {
-    private readonly HtmlParser htmlParser = new();
     private readonly ChapterParsingService chapterParsingService = new();
 
     [Fact]
@@ -14,8 +13,7 @@ namespace HfyClientApi.Tests.Services
     {
 
       var link = "https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/";
-      var doc = htmlParser.ParseDocument($"<a href=\"{link}\">Next</a>");
-      var linkElement = doc.QuerySelector("a")!;
+      var linkElement = HtmlNode.CreateNode($"<a href=\"{link}\">Next</a>");
 
       var parsedLink = ChapterParsingService.ParseRedditLink(linkElement);
 
@@ -31,9 +29,7 @@ namespace HfyClientApi.Tests.Services
     [InlineData("https://www.royalroad.com/fiction/70060/my_example_story")]
     public void ParseRedditLink_WithInvalidChapterLink_ReturnsNull(string link)
     {
-      var doc = htmlParser.ParseDocument($"<a href=\"{link}\">Next</a>");
-      var linkElement = doc.QuerySelector("a")!;
-
+      var linkElement = HtmlNode.CreateNode($"<a href=\"{link}\">Next</a>");
       var parsedLink = ChapterParsingService.ParseRedditLink(linkElement);
 
       Assert.Null(parsedLink);
@@ -98,24 +94,18 @@ namespace HfyClientApi.Tests.Services
     [InlineData("Next ⏭")]
     public void ChapterFromPost_WithOnlyNextLink_ExtractsNextLink(string nextLinkLabel)
     {
-      var textHtml = $"""
-      <div class="md">
+      var textHtml = BuildPostHtml(
+        $"""
         <p>
           <a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">{nextLinkLabel}</a>
         </p>
-
-        < p >
-          < a href = "https://www.patreon.com/sdfsdfsdf" > Patreon </ a > |
-          < a href = "https://www.reddit.com/r/MySubreddit/" > Official Subreddit </ a > |
-          < a href = "https://www.royalroad.com/fiction/70060/my_example_story" > Royal Road </ a >
-        </ p >
-
-        < p >< strong >Example text...</ strong ></ p >
+        """,
+        """
         <p>
           <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Next</a>
         </p>
-      </div>
-      """;
+        """
+      );
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
@@ -132,17 +122,7 @@ namespace HfyClientApi.Tests.Services
     [Fact]
     public void ChapterFromPost_WithNoLinks_ReturnsChapter()
     {
-      var textHtml = $"""
-      <div class="md">
-        < p >
-          < a href = "https://www.patreon.com/sdfsdfsdf" > Patreon </ a > |
-          < a href = "https://www.reddit.com/r/MySubreddit/" > Official Subreddit </ a > |
-          < a href = "https://www.royalroad.com/fiction/70060/my_example_story" > Royal Road </ a >
-        </ p >
-
-        < p >< strong >Example text...</ strong ></ p >
-      </div>
-      """;
+      var textHtml = BuildPostHtml();
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
@@ -152,8 +132,26 @@ namespace HfyClientApi.Tests.Services
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("pumbas600", chapter.Author);
       Assert.Equal("sdfghj", chapter.Id);
+      Assert.Equal(BuildPostHtml(), chapter.TextHTML);
       Assert.Null(chapter.PreviousChapterId);
       Assert.Null(chapter.NextChapterId);
+    }
+
+    private static string BuildPostHtml(string prefixHtml = "", string suffixHtml = "")
+    {
+      return $"""
+      <div class="md">
+        {prefixHtml}
+        < p >
+          < a href = "https://www.patreon.com/sdfsdfsdf" > Patreon </ a > |
+          < a href = "https://www.reddit.com/r/MySubreddit/" > Official Subreddit </ a > |
+          < a href = "https://www.royalroad.com/fiction/70060/my_example_story" > Royal Road </ a >
+        </ p >
+
+        < p >< strong >Example text...</ strong ></ p >
+        {suffixHtml}
+      </div>
+      """;
     }
   }
 }

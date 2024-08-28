@@ -1,10 +1,8 @@
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using AngleSharp;
-using AngleSharp.Dom;
-using AngleSharp.Html.Parser;
 using HfyClientApi.Extensions;
 using HfyClientApi.Models;
+using HtmlAgilityPack;
 using Reddit.Controllers;
 
 [assembly: InternalsVisibleTo("HfyClientApi.Tests")]
@@ -20,7 +18,7 @@ namespace HfyClientApi.Services
       public required string Subreddit { get; set; }
       public required string PostId { get; set; }
       public required string Label { get; set; }
-      public required IElement LinkElement { get; set; }
+      public required HtmlNode LinkElement { get; set; }
     }
 
     private const string RedditBaseUrl = "https://www.reddit.com";
@@ -30,17 +28,12 @@ namespace HfyClientApi.Services
     /// </summary>
     private const string RedditLinkRegex = @$"{RedditBaseUrl}/r/(\w+)/comments/(\w+)/\w+/?";
 
-    private readonly HtmlParser parser;
-
-    public ChapterParsingService()
-    {
-      parser = new HtmlParser();
-    }
-
     public Chapter ChapterFromPost(SelfPost post)
     {
-      var document = parser.ParseDocument(post.SelfTextHTML);
-      var links = document.QuerySelectorAll("a");
+      var document = new HtmlDocument();
+      document.LoadHtml(post.SelfTextHTML);
+
+      var links = document.DocumentNode.SelectNodes("//a");
 
       Dictionary<string, List<ChapterLink>> nextLinkMap = [];
       Dictionary<string, List<ChapterLink>> previousLinkMap = [];
@@ -87,7 +80,7 @@ namespace HfyClientApi.Services
         Subreddit = post.Subreddit,
         Title = post.Title,
         Author = post.Author,
-        TextHTML = document.ToHtml(),
+        TextHTML = document.Text,
         Created = post.Created,
         Edited = post.Edited == default ? post.Created : post.Edited,
         NextChapterId = nextChapterId,
@@ -97,9 +90,9 @@ namespace HfyClientApi.Services
       return chapter;
     }
 
-    internal protected static ChapterLink? ParseRedditLink(IElement linkElement)
+    internal protected static ChapterLink? ParseRedditLink(HtmlNode linkElement)
     {
-      var link = linkElement.GetAttribute("href");
+      var link = linkElement.GetAttributeValue("href", null);
       if (link == null || !link.StartsWith(RedditBaseUrl))
       {
         return null;
@@ -114,7 +107,7 @@ namespace HfyClientApi.Services
       string subreddit = match.Groups[1].Value;
       string postId = match.Groups[2].Value;
 
-      string label = linkElement.TextContent;
+      string label = linkElement.InnerText;
 
       return new()
       {
