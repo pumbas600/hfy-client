@@ -76,17 +76,13 @@ namespace HfyClientApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FirstChapterId1")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Subreddit")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FirstChapterId1");
+                    b.HasIndex("FirstChapterId");
 
                     b.ToTable("Stories");
                 });
@@ -112,7 +108,7 @@ namespace HfyClientApi.Migrations
                 {
                     b.HasOne("HfyClientApi.Models.Chapter", "FirstChapter")
                         .WithMany()
-                        .HasForeignKey("FirstChapterId1")
+                        .HasForeignKey("FirstChapterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

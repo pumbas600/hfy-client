@@ -12,6 +12,7 @@ namespace HfyClientApi.Models
     public string Subreddit { get; set; } = null!;
     public string FirstChapterId { get; set; } = null!;
 
+    [ForeignKey(nameof(FirstChapterId))]
     public Chapter FirstChapter { get; set; } = null!;
 
     [InverseProperty("Story")]

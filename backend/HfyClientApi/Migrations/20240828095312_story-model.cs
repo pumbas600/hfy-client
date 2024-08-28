@@ -39,15 +39,14 @@ namespace HfyClientApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Author = table.Column<string>(type: "text", nullable: false),
                     Subreddit = table.Column<string>(type: "text", nullable: false),
-                    FirstChapterId = table.Column<string>(type: "text", nullable: false),
-                    FirstChapterId1 = table.Column<string>(type: "text", nullable: false)
+                    FirstChapterId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stories_Chapters_FirstChapterId1",
-                        column: x => x.FirstChapterId1,
+                        name: "FK_Stories_Chapters_FirstChapterId",
+                        column: x => x.FirstChapterId,
                         principalTable: "Chapters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -65,9 +64,9 @@ namespace HfyClientApi.Migrations
                 column: "StoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stories_FirstChapterId1",
+                name: "IX_Stories_FirstChapterId",
                 table: "Stories",
-                column: "FirstChapterId1");
+                column: "FirstChapterId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Chapters_Chapters_NextChapterId",

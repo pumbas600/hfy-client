@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HfyClientApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240828094112_story-model")]
+    [Migration("20240828095312_story-model")]
     partial class storymodel
     {
         /// <inheritdoc />
@@ -79,17 +79,13 @@ namespace HfyClientApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FirstChapterId1")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Subreddit")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FirstChapterId1");
+                    b.HasIndex("FirstChapterId");
 
                     b.ToTable("Stories");
                 });
@@ -115,7 +111,7 @@ namespace HfyClientApi.Migrations
                 {
                     b.HasOne("HfyClientApi.Models.Chapter", "FirstChapter")
                         .WithMany()
-                        .HasForeignKey("FirstChapterId1")
+                        .HasForeignKey("FirstChapterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
