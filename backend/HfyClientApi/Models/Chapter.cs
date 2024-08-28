@@ -24,10 +24,5 @@ namespace HfyClientApi.Models
     /// The previous chapter in the series. If null, this is the first chapter.
     /// </summary>
     public string? PreviousChapterId { get; set; }
-
-    /// <summary>
-    /// The first chapter in the series. If this is the first chapter, it will be its own id.
-    /// </summary>
-    public string FirstChapterId { get; set; } = null!;
   }
 }

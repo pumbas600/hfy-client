@@ -41,7 +41,6 @@ namespace HfyClientApi.Services
 
       List<ChapterLink> nextLinks = [];
       List<ChapterLink> previousLinks = [];
-      List<ChapterLink> firstChapterLinks = [];
 
       foreach (var linkElement in links)
       {
@@ -58,10 +57,6 @@ namespace HfyClientApi.Services
         else if (chapterLink.Label.Contains("prev"))
         {
           previousLinks.Add(chapterLink);
-        }
-        else if (chapterLink.Label.Contains("first"))
-        {
-          firstChapterLinks.Add(chapterLink);
         }
       }
 
@@ -81,7 +76,6 @@ namespace HfyClientApi.Services
         Edited = post.Edited == default ? post.Created : post.Edited,
         NextChapterId = nextLinks.FirstOrDefault()?.PostId,
         PreviousChapterId = previousLinks.FirstOrDefault()?.PostId,
-        FirstChapterId = firstChapterLinks.FirstOrDefault()?.PostId ?? post.Id
       };
 
       return chapter;
