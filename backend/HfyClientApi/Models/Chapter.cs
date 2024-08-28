@@ -3,6 +3,7 @@ namespace HfyClientApi.Models
   public class Chapter
   {
     public string Id { get; set; } = null!;
+    public string Subreddit { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string Author { get; set; } = null!;
     public string TextHTML { get; set; } = null!;
