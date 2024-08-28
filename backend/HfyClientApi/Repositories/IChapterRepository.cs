@@ -6,6 +6,10 @@ namespace HfyClientApi.Repositories
   {
 
     Task<Chapter?> GetChapterByIdAsync(string id);
+
+    Task<Chapter> CreateChapterAsync(Chapter chapter);
+
+    Task<Chapter> CreateFirstChapter(Story story, Chapter firstChapter);
   }
 
 }
