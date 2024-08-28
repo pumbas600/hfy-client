@@ -6,9 +6,7 @@ namespace HfyClientApi.Models
   {
     [Key]
     public string Id { get; set; } = null!;
-    public string Subreddit { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public string Author { get; set; } = null!;
     public string TextHTML { get; set; } = null!;
     public DateTime Created { get; set; }
 
@@ -22,10 +20,15 @@ namespace HfyClientApi.Models
     /// The next chapter in the series. If null, this is the latest chapter.
     /// </summary>
     public string? NextChapterId { get; set; }
+    public Chapter? NextChapter { get; set; }
 
     /// <summary>
     /// The previous chapter in the series. If null, this is the first chapter.
     /// </summary>
     public string? PreviousChapterId { get; set; }
+    public Chapter? PreviousChapter { get; set; }
+
+    public int StoryId { get; set; }
+    public Story Story { get; set; } = null!;
   }
 }

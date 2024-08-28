@@ -70,9 +70,7 @@ namespace HfyClientApi.Tests.Services
 
       var chapter = chapterParsingService.ChapterFromPost(post);
 
-      Assert.Equal("HFY", chapter.Subreddit);
       Assert.Equal("My Example Story", chapter.Title);
-      Assert.Equal("pumbas600", chapter.Author);
       Assert.Equal("sdfghj", chapter.Id);
       Assert.Equal(BuildPostHtml(
         """
@@ -116,9 +114,7 @@ namespace HfyClientApi.Tests.Services
 
       var chapter = chapterParsingService.ChapterFromPost(post);
 
-      Assert.Equal("HFY", chapter.Subreddit);
       Assert.Equal("My Example Story", chapter.Title);
-      Assert.Equal("pumbas600", chapter.Author);
       Assert.Equal("sdfghj", chapter.Id);
       Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHTML);
       Assert.Equal("1exzyx5", chapter.NextChapterId);
@@ -134,9 +130,7 @@ namespace HfyClientApi.Tests.Services
 
       var chapter = chapterParsingService.ChapterFromPost(post);
 
-      Assert.Equal("HFY", chapter.Subreddit);
       Assert.Equal("My Example Story", chapter.Title);
-      Assert.Equal("pumbas600", chapter.Author);
       Assert.Equal("sdfghj", chapter.Id);
       Assert.Equal(BuildPostHtml(), chapter.TextHTML);
       Assert.Null(chapter.PreviousChapterId);

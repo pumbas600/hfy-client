@@ -83,9 +83,7 @@ namespace HfyClientApi.Services
       var chapter = new Chapter
       {
         Id = post.Id,
-        Subreddit = post.Subreddit,
         Title = post.Title,
-        Author = post.Author,
         TextHTML = document.DocumentNode.InnerHtml,
         Created = post.Created,
         Edited = post.Edited == default ? post.Created : post.Edited,
