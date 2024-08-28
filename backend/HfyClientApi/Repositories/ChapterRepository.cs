@@ -21,11 +21,14 @@ namespace HfyClientApi.Repositories
 
     public async Task<Chapter> CreateFirstChapter(Story story, Chapter firstChapter)
     {
-      story.FirstChapter = firstChapter;
       firstChapter.Story = story;
 
-      await _context.Stories.AddAsync(story);
+      await _context.Chapters.AddAsync(firstChapter);
       await _context.SaveChangesAsync();
+
+      story.FirstChapter = firstChapter;
+      await _context.SaveChangesAsync();
+
       return firstChapter;
     }
 
