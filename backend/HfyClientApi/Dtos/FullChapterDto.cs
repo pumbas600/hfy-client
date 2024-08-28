@@ -2,10 +2,9 @@ namespace HfyClientApi.Dtos
 {
   public class FullChapterDto : StoryDto
   {
-    public required string Id { get; set; }
+    public required string ChapterId { get; set; }
     public required string Title { get; set; }
     public required string TextHtml { get; set; }
-    public required string StoryId { get; set; }
 
     public DateTime Created { get; set; }
 

@@ -7,7 +7,7 @@ namespace HfyClientApi.Models
     [Key]
     public string Id { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public string TextHTML { get; set; } = null!;
+    public string TextHtml { get; set; } = null!;
     public DateTime Created { get; set; }
 
     /// <summary>

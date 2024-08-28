@@ -84,7 +84,7 @@ namespace HfyClientApi.Services
       {
         Id = post.Id,
         Title = post.Title,
-        TextHTML = document.DocumentNode.InnerHtml,
+        TextHtml = document.DocumentNode.InnerHtml,
         Created = post.Created,
         Edited = post.Edited == default ? post.Created : post.Edited,
         NextChapterId = nextChapterId,

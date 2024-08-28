@@ -86,7 +86,7 @@ namespace HfyClientApi.Tests.Services
            |
           Next
         </p>
-        """), chapter.TextHTML);
+        """), chapter.TextHtml);
       Assert.Equal("1exzyx5", chapter.PreviousChapterId);
       Assert.Null(chapter.NextChapterId);
     }
@@ -116,7 +116,7 @@ namespace HfyClientApi.Tests.Services
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
-      Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHTML);
+      Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHtml);
       Assert.Equal("1exzyx5", chapter.NextChapterId);
       Assert.Null(chapter.PreviousChapterId);
     }
@@ -132,7 +132,7 @@ namespace HfyClientApi.Tests.Services
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
-      Assert.Equal(BuildPostHtml(), chapter.TextHTML);
+      Assert.Equal(BuildPostHtml(), chapter.TextHtml);
       Assert.Null(chapter.PreviousChapterId);
       Assert.Null(chapter.NextChapterId);
     }
