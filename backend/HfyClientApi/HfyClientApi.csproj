@@ -9,6 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Reddit" Version="1.5.2" />
     <PackageReference Include="Reddit.AuthTokenRetrieverLib" Version="1.5.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
