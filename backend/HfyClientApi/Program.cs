@@ -11,13 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-// var reddit = new RedditClient(
-//   appId: builder.Configuration[Config.Keys.RedditAppId],
-//   appSecret: builder.Configuration[Config.Keys.RedditAppSecret],
-//   // refreshToken: builder.Configuration[Config.Keys.RedditRefreshToken],
-//   accessToken: builder.Configuration[Config.Keys.RedditAccessToken],
-//   userAgent: Config.UserAgent
-// );
+var reddit = new RedditClient(
+  appId: builder.Configuration[Config.Keys.RedditAppId],
+  appSecret: builder.Configuration[Config.Keys.RedditAppSecret],
+  // refreshToken: builder.Configuration[Config.Keys.RedditRefreshToken],
+  accessToken: builder.Configuration[Config.Keys.RedditAccessToken],
+  userAgent: Config.UserAgent
+);
 
 // builder.Services.AddSingleton(reddit);
 
@@ -56,6 +56,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddSingleton(reddit);
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 
 var app = builder.Build();
