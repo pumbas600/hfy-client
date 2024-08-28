@@ -67,7 +67,8 @@ namespace HfyClientApi.Services
 
 
       // TODO: Determine link priority by checking if a corresponding link exists for prev/first links.
-
+      // TODO: Remove links from HTML.
+      // TODO: Cleanup any dangling | used to separate links.
 
       var chapter = new Chapter
       {

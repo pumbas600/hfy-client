@@ -129,6 +129,31 @@ namespace HfyClientApi.Tests.Services
       Assert.Null(chapter.PreviousChapterId);
     }
 
+    [Fact]
+    public void ChapterFromPost_WithNoLinks_ReturnsChapter()
+    {
+      var textHtml = $"""
+      <div class="md">
+        < p >
+          < a href = "https://www.patreon.com/sdfsdfsdf" > Patreon </ a > |
+          < a href = "https://www.reddit.com/r/MySubreddit/" > Official Subreddit </ a > |
+          < a href = "https://www.royalroad.com/fiction/70060/my_example_story" > Royal Road </ a >
+        </ p >
 
+        < p >< strong >Example text...</ strong ></ p >
+      </div>
+      """;
+
+      SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
+
+      var chapter = chapterParsingService.ChapterFromPost(post);
+
+      Assert.Equal("HFY", chapter.Subreddit);
+      Assert.Equal("My Example Story", chapter.Title);
+      Assert.Equal("pumbas600", chapter.Author);
+      Assert.Equal("sdfghj", chapter.Id);
+      Assert.Null(chapter.PreviousChapterId);
+      Assert.Null(chapter.NextChapterId);
+    }
   }
 }
