@@ -1,21 +1,24 @@
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using HfyClientApi.Models;
 using Reddit.Controllers;
 
+[assembly: InternalsVisibleTo("HfyClientApi.Tests")]
+
 namespace HfyClientApi.Services
 {
 
   public class ChapterParsingService : IChapterParsingService
   {
-    private class ChapterLink
+
+    internal protected class ChapterLink
     {
       public required string Subreddit { get; set; }
       public required string PostId { get; set; }
       public required string Label { get; set; }
     }
-
 
     private const string RedditBaseUrl = "https://www.reddit.com";
 
@@ -84,7 +87,7 @@ namespace HfyClientApi.Services
     }
 
 
-    private ChapterLink? ParseRedditLink(IElement linkElement)
+    internal protected static ChapterLink? ParseRedditLink(IElement linkElement)
     {
       var link = linkElement.GetAttribute("href");
       if (link == null || !link.StartsWith(RedditBaseUrl))
