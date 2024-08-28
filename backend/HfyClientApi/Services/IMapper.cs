@@ -5,6 +5,6 @@ namespace HfyClientApi.Services
 {
   public interface IMapper
   {
-    public FullChapterDto ToFullChapterDto(Story story, Chapter chapter);
+    public FullChapterDto ToFullChapterDto(Chapter chapter);
   }
 }

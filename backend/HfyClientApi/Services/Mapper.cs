@@ -5,7 +5,7 @@ namespace HfyClientApi.Services
 {
   public class Mapper : IMapper
   {
-    public FullChapterDto ToFullChapterDto(Story story, Chapter chapter)
+    public FullChapterDto ToFullChapterDto(Chapter chapter)
     {
       return new FullChapterDto
       {
@@ -16,10 +16,10 @@ namespace HfyClientApi.Services
         Edited = chapter.Edited,
         NextChapterId = chapter.NextChapterId,
         PreviousChapterId = chapter.PreviousChapterId,
-        StoryId = story.Id,
-        Author = story.Author,
-        Subreddit = story.Subreddit,
-        FirstChapterId = story.FirstChapterId
+        StoryId = chapter.Story.Id,
+        Author = chapter.Story.Author,
+        Subreddit = chapter.Story.Subreddit,
+        FirstChapterId = chapter.Story.FirstChapterId
       };
     }
   }

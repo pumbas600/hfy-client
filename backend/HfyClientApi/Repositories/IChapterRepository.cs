@@ -5,7 +5,7 @@ namespace HfyClientApi.Repositories
   public interface IChapterRepository
   {
 
-    Task<Chapter> GetChapterByIdAsync(string id);
+    Task<Chapter?> GetChapterByIdAsync(string id);
   }
 
 }
