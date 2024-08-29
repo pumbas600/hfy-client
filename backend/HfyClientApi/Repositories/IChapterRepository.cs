@@ -13,7 +13,7 @@ namespace HfyClientApi.Repositories
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter);
 
-    Task<Result<Chapter>> UpsertFirstChapterAsync(Story story, Chapter firstChapter);
+    Task<Result<Chapter>> UpsertStoryAndChapterAsync(Story story, Chapter chapter);
   }
 
 }

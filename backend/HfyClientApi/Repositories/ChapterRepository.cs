@@ -56,7 +56,7 @@ namespace HfyClientApi.Repositories
       return Errors.ChapterUpsertFailed(chapter.Id);
     }
 
-    public async Task<Result<Chapter>> UpsertFirstChapterAsync(Story story, Chapter firstChapter)
+    public async Task<Result<Chapter>> UpsertStoryAndChapterAsync(Story story, Chapter chapter)
     {
       for (int attempt = 1; attempt <= MaxUpsertAttempts; attempt++)
       {
@@ -64,38 +64,43 @@ namespace HfyClientApi.Repositories
 
         try
         {
-          var detachedChapter = await GetDetachedChapterByIdAsync(firstChapter.Id);
+          var detachedChapter = await GetDetachedChapterByIdAsync(chapter.Id);
           if (detachedChapter != null)
           {
-            firstChapter.StoryId = detachedChapter.StoryId;
-            await UpdateChapterAsync(firstChapter);
-            await _context.Entry(firstChapter).Reference(c => c.Story).LoadAsync();
+            chapter.StoryId = detachedChapter.StoryId;
+            await UpdateChapterAsync(chapter);
+            await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
             // Note: Theoretically the story entity should never need to be updated. -P
           }
           else
           {
-            firstChapter.Story = story;
-            await _context.Chapters.AddAsync(firstChapter);
+            chapter.Story = story;
+
+            // Temporarily remove the first chapter id to prevent a circular dependency.
+            var firstChapterId = story.FirstChapterId;
+            story.FirstChapterId = null;
+
+            await _context.Chapters.AddAsync(chapter);
             await _context.SaveChangesAsync();
 
-            story.FirstChapter = firstChapter;
+            story.FirstChapterId = firstChapterId;
             await _context.SaveChangesAsync();
           }
 
           await transaction.CommitAsync();
-          return firstChapter;
+          return chapter;
         }
         catch (OperationCanceledException ex)
         {
           await transaction.RollbackAsync();
           _logger.LogError(
             ex, "Upsert first chapter id={} transaction cancelled, attempt={}/{}",
-            firstChapter.Id, attempt, MaxUpsertAttempts
+            chapter.Id, attempt, MaxUpsertAttempts
           );
         }
       }
 
-      return Errors.ChapterUpsertFailed(firstChapter.Id);
+      return Errors.ChapterUpsertFailed(chapter.Id);
     }
 
     public async Task<Result<Chapter>> GetChapterByIdAsync(string id)

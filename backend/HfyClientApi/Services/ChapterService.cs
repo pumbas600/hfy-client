@@ -55,9 +55,10 @@ namespace HfyClientApi.Services
         {
           Author = selfPost.Author,
           Subreddit = selfPost.Subreddit,
+          FirstChapterId = selfPost.Id,
         };
 
-        var createdChapterResult = await _chapterRepository.UpsertFirstChapterAsync(story, parsedChapter);
+        var createdChapterResult = await _chapterRepository.UpsertStoryAndChapterAsync(story, parsedChapter);
         return createdChapterResult.Map(_mapper.ToFullChapterDto);
       }
       // TODO: Validate that the previous chapter link exists
