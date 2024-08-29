@@ -12,16 +12,16 @@ namespace HfyClientApi.Services
   {
     private readonly IChapterRepository _chapterRepository;
     private readonly IChapterParsingService _chapterParsingService;
-    private readonly RedditClient _reddit;
+    private readonly IRedditService _redditService;
     private readonly IMapper _mapper;
 
     public ChapterService(
       IChapterRepository chapterRepository, IChapterParsingService chapterParsingService,
-      RedditClient redditClient, IMapper mapper)
+      IRedditService redditService, IMapper mapper)
     {
       _chapterRepository = chapterRepository;
       _chapterParsingService = chapterParsingService;
-      _reddit = redditClient;
+      _redditService = redditService;
       _mapper = mapper;
     }
 
@@ -33,19 +33,13 @@ namespace HfyClientApi.Services
 
     public async Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id)
     {
-      var postFullname = $"t3_{id}";
-      var posts = _reddit.GetPosts([postFullname]);
-      if (posts.Count == 0)
+      var selfPostResult = _redditService.GetSelfPostById(id);
+      if (selfPostResult.IsFailure)
       {
-        return Errors.PostNotFound(id);
+        return selfPostResult.Error;
       }
 
-      var post = posts[0];
-      if (post is not SelfPost selfPost)
-      {
-        return Errors.PostNotSelfPost(id);
-      }
-
+      var selfPost = selfPostResult.Data;
       var parsedChapter = _chapterParsingService.ChapterFromPost(selfPost);
 
       // TODO: Check for broken/incorrect links between chapters.

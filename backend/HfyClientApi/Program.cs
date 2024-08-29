@@ -59,6 +59,7 @@ builder.Services.AddSingleton(reddit);
 builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 builder.Services.AddScoped<IChapterService, ChapterService>();
+builder.Services.AddScoped<IRedditService, RedditService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 
