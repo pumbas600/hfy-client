@@ -25,10 +25,10 @@ namespace HfyClientApi.Repositories
 
         try
         {
-          var existingChapter = await GetChapterByIdAsync(chapter.Id);
-          if (existingChapter != null)
+          var existingChapterResult = await GetChapterByIdAsync(chapter.Id);
+          if (existingChapterResult.IsSuccess)
           {
-            chapter.Story = existingChapter.Story;
+            chapter.Story = existingChapterResult.Data.Story;
             await UpdateChapterAsync(chapter);
           }
           else
@@ -63,10 +63,10 @@ namespace HfyClientApi.Repositories
 
         try
         {
-          var existingChapter = await GetChapterByIdAsync(firstChapter.Id);
-          if (existingChapter != null)
+          var existingChapterResult = await GetChapterByIdAsync(firstChapter.Id);
+          if (existingChapterResult.IsSuccess)
           {
-            firstChapter.Story = existingChapter.Story;
+            firstChapter.Story = existingChapterResult.Data.Story;
             await UpdateChapterAsync(firstChapter);
             // Note: Theoretically the story entity should never need to be updated. -P
           }
@@ -96,16 +96,18 @@ namespace HfyClientApi.Repositories
       return Errors.ChapterUpsertFailed(firstChapter.Id);
     }
 
-    public async Task<Chapter?> GetChapterByIdAsync(string id)
+    public async Task<Result<Chapter>> GetChapterByIdAsync(string id)
     {
       var chapter = await _context.Chapters.FindAsync(id);
-      if (chapter != null)
+      if (chapter == null)
       {
-        // By loading the Story like this, rather than using .Include(), we avoid a round-trip to
-        // the database if the entity is already local storage with Find().
-        await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
+        return Errors.ChapterNotFound(id);
       }
 
+
+      // By loading the Story like this, rather than using .Include(), we avoid a round-trip to
+      // the database if the entity is already local storage with Find().
+      await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
       return chapter;
     }
 

@@ -27,13 +27,8 @@ namespace HfyClientApi.Services
 
     public async Task<Result<FullChapterDto>> GetChapterByIdAsync(string id)
     {
-      var chapter = await _chapterRepository.GetChapterByIdAsync(id);
-      if (chapter == null)
-      {
-        return Errors.ChapterNotFound(id);
-      }
-
-      return _mapper.ToFullChapterDto(chapter);
+      var chapterResult = await _chapterRepository.GetChapterByIdAsync(id);
+      return chapterResult.Map(_mapper.ToFullChapterDto);
     }
 
     public async Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id)
