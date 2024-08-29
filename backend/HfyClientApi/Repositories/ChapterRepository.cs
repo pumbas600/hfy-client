@@ -75,15 +75,7 @@ namespace HfyClientApi.Repositories
           else
           {
             chapter.Story = story;
-
-            // Temporarily remove the first chapter id to prevent a circular dependency.
-            var firstChapterId = story.FirstChapterId;
-            story.FirstChapterId = null;
-
             await _context.Chapters.AddAsync(chapter);
-            await _context.SaveChangesAsync();
-
-            story.FirstChapterId = firstChapterId;
             await _context.SaveChangesAsync();
           }
 
