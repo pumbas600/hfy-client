@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{7776CC03-81FD-442F-9447-43C6DDCC5979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "HfyClientApi\HfyClientApi.csproj", "{738DE38A-8A87-4F0D-938A-DB14DFDF131A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "backend\HfyClientApi\HfyClientApi.csproj", "{738DE38A-8A87-4F0D-938A-DB14DFDF131A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi.Tests", "HfyClientApi.Tests\HfyClientApi.Tests.csproj", "{483DE58E-5284-4DF2-8AB7-D2152633D019}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi.Tests", "backend\HfyClientApi.Tests\HfyClientApi.Tests.csproj", "{483DE58E-5284-4DF2-8AB7-D2152633D019}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "backend\HfyClientConsole\HfyClientConsole.csproj", "{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "HfyClientConsole\HfyClientConsole.csproj", "{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,11 +30,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{738DE38A-8A87-4F0D-938A-DB14DFDF131A} = {7776CC03-81FD-442F-9447-43C6DDCC5979}
-		{483DE58E-5284-4DF2-8AB7-D2152633D019} = {7776CC03-81FD-442F-9447-43C6DDCC5979}
-		{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467} = {7776CC03-81FD-442F-9447-43C6DDCC5979}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CE86DAD-9C03-4D8A-831F-B3E83BB0A05C}
