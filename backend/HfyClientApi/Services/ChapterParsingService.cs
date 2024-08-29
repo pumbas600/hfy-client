@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using HfyClientApi.Extensions;
+using HfyClientApi.Models;
 using HtmlAgilityPack;
 using Reddit.Controllers;
 
@@ -30,7 +31,7 @@ namespace HfyClientApi.Services
     /// </summary>
     private const string RedditLinkRegex = @$"{RedditBaseUrl}/r/(\w+)/comments/(\w+)/\w+/?";
 
-    public IChapterParsingService.ParsedChapter ChapterFromPost(SelfPost post)
+    public Chapter ChapterFromPost(SelfPost post)
     {
       var document = new HtmlDocument();
       document.LoadHtml(post.SelfTextHTML);
@@ -88,10 +89,17 @@ namespace HfyClientApi.Services
       // TODO: Determine link priority by checking if a corresponding link exists for prev/first links.
       // TODO: Cleanup any dangling '|' used to separate links.
 
+      if (firstChapterId == null && previousChapterId == null)
+      {
+        firstChapterId = post.Id;
+      }
+
       return new()
       {
         Id = post.Id,
         Title = post.Title,
+        Author = post.Author,
+        Subreddit = post.Subreddit,
         TextHtml = document.DocumentNode.InnerHtml,
         IsNsfw = post.NSFW,
         CreatedAtUtc = post.Created,
@@ -99,7 +107,7 @@ namespace HfyClientApi.Services
         ProcessedAtUtc = DateTime.UtcNow,
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
-        FirstChapterId = firstChapterId
+        FirstChapterId = firstChapterId,
       };
     }
 

@@ -1,8 +1,10 @@
 namespace HfyClientApi.Dtos
 {
-  public class FullChapterDto : StoryDto
+  public class FullChapterDto
   {
-    public required string ChapterId { get; set; }
+    public required string Id { get; set; }
+    public required string Author { get; set; }
+    public required string Subreddit { get; set; }
     public required string Title { get; set; }
     public required string TextHtml { get; set; }
     public required bool IsNsfw { get; set; }
@@ -29,5 +31,12 @@ namespace HfyClientApi.Dtos
     /// The id of the previous chapter in the story. If null, this is the first chapter.
     /// </summary>
     public required string? PreviousChapterId { get; set; }
+
+    /// <summary>
+    /// The id of the first chapter in the story. Chapters in the same story will all have the
+    /// same FirstChapterId. If this is the first chapter, it will be the same as Id. If null, then
+    /// the story this chapter belongs to has not been identified yet.
+    /// </summary>
+    public required string? FirstChapterId { get; set; }
   }
 }

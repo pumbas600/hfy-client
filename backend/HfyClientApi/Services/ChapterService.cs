@@ -1,10 +1,6 @@
 using HfyClientApi.Dtos;
-using HfyClientApi.Exceptions;
-using HfyClientApi.Models;
 using HfyClientApi.Repositories;
 using HfyClientApi.Utils;
-using Reddit;
-using Reddit.Controllers;
 
 namespace HfyClientApi.Services
 {
@@ -44,14 +40,7 @@ namespace HfyClientApi.Services
 
       // TODO: Check for broken/incorrect links between chapters.
 
-      Story story = new()
-      {
-        Author = selfPost.Author,
-        Subreddit = selfPost.Subreddit,
-        FirstChapterId = parsedChapter.FirstChapterId,
-      };
-
-      var createdChapterResult = await _chapterRepository.UpsertStoryAndChapterAsync(story, parsedChapter);
+      var createdChapterResult = await _chapterRepository.UpsertChapterAsync(parsedChapter);
       return createdChapterResult.Map(_mapper.ToFullChapterDto);
 
     }

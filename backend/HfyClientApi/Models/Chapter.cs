@@ -1,14 +1,19 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Models
 {
+  [Index(nameof(FirstChapterId))]
   public class Chapter
   {
     [Key]
     public string Id { get; set; } = null!;
+    public string Author { get; set; } = null!;
+    public string Subreddit { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string TextHtml { get; set; } = null!;
     public bool IsNsfw { get; set; }
+
     public DateTime CreatedAtUtc { get; set; }
 
     /// <summary>
@@ -32,7 +37,11 @@ namespace HfyClientApi.Models
     /// </summary>
     public string? PreviousChapterId { get; set; }
 
-    public int StoryId { get; set; }
-    public Story Story { get; set; } = null!;
+    /// <summary>
+    /// The id of the first chapter in the story. Chapters in the same story will all have the
+    /// same FirstChapterId. If this is the first chapter, it will be the same as Id. If null, then
+    /// the story this chapter belongs to has not been identified yet.
+    /// </summary>
+    public string? FirstChapterId { get; set; } = null!;
   }
 }

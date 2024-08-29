@@ -29,7 +29,6 @@ namespace HfyClientApi.Repositories
           var detachedChapter = await GetDetachedChapterByIdAsync(chapter.Id);
           if (detachedChapter != null)
           {
-            chapter.StoryId = detachedChapter.StoryId;
             await UpdateChapterAsync(chapter);
           }
           else
@@ -38,9 +37,7 @@ namespace HfyClientApi.Repositories
             await _context.SaveChangesAsync();
           }
 
-          await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
           await transaction.CommitAsync();
-
           return chapter;
         }
         catch (OperationCanceledException ex)
@@ -48,45 +45,6 @@ namespace HfyClientApi.Repositories
           await transaction.RollbackAsync();
           _logger.LogError(
             ex, "Upsert chapter id={} transaction cancelled, attempt={}/{}",
-            chapter.Id, attempt, MaxUpsertAttempts
-          );
-        }
-      }
-
-      return Errors.ChapterUpsertFailed(chapter.Id);
-    }
-
-    public async Task<Result<Chapter>> UpsertStoryAndChapterAsync(Story story, Chapter chapter)
-    {
-      for (int attempt = 1; attempt <= MaxUpsertAttempts; attempt++)
-      {
-        using var transaction = await _context.Database.BeginTransactionAsync();
-
-        try
-        {
-          var detachedChapter = await GetDetachedChapterByIdAsync(chapter.Id);
-          if (detachedChapter != null)
-          {
-            chapter.StoryId = detachedChapter.StoryId;
-            await UpdateChapterAsync(chapter);
-            await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
-            // Note: Theoretically the story entity should never need to be updated. -P
-          }
-          else
-          {
-            chapter.Story = story;
-            await _context.Chapters.AddAsync(chapter);
-            await _context.SaveChangesAsync();
-          }
-
-          await transaction.CommitAsync();
-          return chapter;
-        }
-        catch (OperationCanceledException ex)
-        {
-          await transaction.RollbackAsync();
-          _logger.LogError(
-            ex, "Upsert first chapter id={} transaction cancelled, attempt={}/{}",
             chapter.Id, attempt, MaxUpsertAttempts
           );
         }
@@ -103,10 +61,6 @@ namespace HfyClientApi.Repositories
         return Errors.ChapterNotFound(id);
       }
 
-
-      // By loading the Story like this, rather than using .Include(), we avoid a round-trip to
-      // the database if the entity is already local storage with Find().
-      await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
       return chapter;
     }
 
@@ -121,17 +75,6 @@ namespace HfyClientApi.Repositories
     private async Task<Chapter?> GetDetachedChapterByIdAsync(string id)
     {
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
-    }
-
-    public async Task<Result<Story>> GetStoryByFirstChapterIdAsync(string firstChapterId)
-    {
-      var story = await _context.Stories.FirstOrDefaultAsync(s => s.FirstChapterId == firstChapterId);
-      if (story == null)
-      {
-        return Errors.StoryNotFoundWithFirstChapterId(firstChapterId);
-      }
-
-      return story;
     }
   }
 }

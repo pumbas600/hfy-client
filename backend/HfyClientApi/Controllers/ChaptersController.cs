@@ -28,7 +28,7 @@ namespace HfyClientApi.Controllers
       var chapterResult = await _chapterService.ProcessChapterByIdAsync(id);
 
       return chapterResult.ToActionResult(
-        data => CreatedAtAction(nameof(GetChapterById), new { id = data.ChapterId }, data)
+        chapter => CreatedAtAction(nameof(GetChapterById), new { id = chapter.Id }, chapter)
       );
     }
   }

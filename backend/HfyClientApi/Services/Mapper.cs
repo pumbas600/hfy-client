@@ -9,7 +9,9 @@ namespace HfyClientApi.Services
     {
       return new FullChapterDto
       {
-        ChapterId = chapter.Id,
+        Id = chapter.Id,
+        Author = chapter.Author,
+        Subreddit = chapter.Subreddit,
         Title = chapter.Title,
         TextHtml = chapter.TextHtml,
         IsNsfw = chapter.IsNsfw,
@@ -18,10 +20,7 @@ namespace HfyClientApi.Services
         ProcessedAtUtc = chapter.ProcessedAtUtc,
         NextChapterId = chapter.NextChapterId,
         PreviousChapterId = chapter.PreviousChapterId,
-        StoryId = chapter.Story.Id,
-        Author = chapter.Story.Author,
-        Subreddit = chapter.Story.Subreddit,
-        FirstChapterId = chapter.Story.FirstChapterId
+        FirstChapterId = chapter.FirstChapterId
       };
     }
   }
