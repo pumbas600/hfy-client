@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using HfyClientApi.Extensions;
-using HfyClientApi.Models;
 using HtmlAgilityPack;
 using Reddit.Controllers;
 
@@ -31,7 +30,7 @@ namespace HfyClientApi.Services
     /// </summary>
     private const string RedditLinkRegex = @$"{RedditBaseUrl}/r/(\w+)/comments/(\w+)/\w+/?";
 
-    public Chapter ChapterFromPost(SelfPost post)
+    public IChapterParsingService.ParsedChapter ChapterFromPost(SelfPost post)
     {
       var document = new HtmlDocument();
       document.LoadHtml(post.SelfTextHTML);
@@ -40,6 +39,7 @@ namespace HfyClientApi.Services
 
       Dictionary<string, List<ChapterLink>> nextLinkMap = [];
       Dictionary<string, List<ChapterLink>> previousLinkMap = [];
+      Dictionary<string, List<ChapterLink>> firstLinkMap = [];
 
       if (links != null)
       {
@@ -59,6 +59,10 @@ namespace HfyClientApi.Services
           {
             previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
           }
+          else if (chapterLink.Label.Contains("first"))
+          {
+            firstLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+          }
         }
       }
 
@@ -69,8 +73,12 @@ namespace HfyClientApi.Services
       var previousLinks = previousLinkMap.Values.FirstOrDefault([]);
       var previousChapterId = previousLinks.FirstOrDefault()?.PostId;
 
+      var firstLinks = firstLinkMap.Values.FirstOrDefault([]);
+      var firstChapterId = firstLinks.FirstOrDefault()?.PostId;
+
       var linkElementsToRemove = nextLinks.Select(links => links.LinkElement)
-        .Concat(previousLinks.Select(links => links.LinkElement));
+        .Concat(previousLinks.Select(links => links.LinkElement))
+        .Concat(firstLinks.Select(links => links.LinkElement));
 
       foreach (var linkElement in linkElementsToRemove)
       {
@@ -80,7 +88,7 @@ namespace HfyClientApi.Services
       // TODO: Determine link priority by checking if a corresponding link exists for prev/first links.
       // TODO: Cleanup any dangling '|' used to separate links.
 
-      var chapter = new Chapter
+      return new()
       {
         Id = post.Id,
         Title = post.Title,
@@ -91,9 +99,8 @@ namespace HfyClientApi.Services
         ProcessedAtUtc = DateTime.UtcNow,
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
+        FirstChapterId = firstChapterId
       };
-
-      return chapter;
     }
 
     internal protected static ChapterLink? ParseRedditLink(HtmlNode linkElement)

@@ -52,14 +52,14 @@ namespace HfyClientApi.Tests.Services
       var textHtml = BuildPostHtml(
         $"""
         <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
+          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Random Link</a> |
           <a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">{previousLinkLabel}</a> |
           Next
         </p>
         """,
         """
         <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
+          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Random Link</a> |
           <a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">Previous</a> |
           Next
         </p>
@@ -75,20 +75,21 @@ namespace HfyClientApi.Tests.Services
       Assert.Equal(BuildPostHtml(
         """
         <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
+          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Random Link</a> |
            |
           Next
         </p>
         """,
         """
         <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">First</a> |
+          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Random Link</a> |
            |
           Next
         </p>
         """), chapter.TextHtml);
       Assert.Equal("1exzyx5", chapter.PreviousChapterId);
       Assert.Null(chapter.NextChapterId);
+      Assert.Null(chapter.FirstChapterId);
     }
 
     [Theory]
@@ -118,6 +119,38 @@ namespace HfyClientApi.Tests.Services
       Assert.Equal("sdfghj", chapter.Id);
       Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHtml);
       Assert.Equal("1exzyx5", chapter.NextChapterId);
+      Assert.Null(chapter.PreviousChapterId);
+      Assert.Null(chapter.FirstChapterId);
+    }
+
+    [Theory]
+    [InlineData("First")]
+    [InlineData("first")]
+    [InlineData("<< First")]
+    [InlineData("<< first")]
+    [InlineData("First chapter")]
+    [InlineData("⏮First")]
+    [InlineData("⏮ First")]
+    public void ChapterFromPost_WithOnlyFirstLink_ExtractsFirstLink(string firstLinkLabel)
+    {
+      var textHtml = BuildPostHtml(
+        $"""
+        <p><a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">{firstLinkLabel}</a></p>
+        """,
+        """
+        <p><a href="https://www.reddit.com/r/HFY/comments/1exzyx5/my_example_story_100/">First</a></p>
+        """
+      );
+
+      SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
+
+      var chapter = chapterParsingService.ChapterFromPost(post);
+
+      Assert.Equal("My Example Story", chapter.Title);
+      Assert.Equal("sdfghj", chapter.Id);
+      Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHtml);
+      Assert.Equal("1exzyx5", chapter.FirstChapterId);
+      Assert.Null(chapter.NextChapterId);
       Assert.Null(chapter.PreviousChapterId);
     }
 

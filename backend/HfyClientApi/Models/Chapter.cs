@@ -18,7 +18,7 @@ namespace HfyClientApi.Models
     public DateTime EditedAtUtc { get; set; }
 
     /// <summary>
-    /// UTC time when the chapter was last processed by the system to determine the chapter links.
+    /// UTC time when the chapter was last updated from the original post.
     /// </summary>
     public DateTime ProcessedAtUtc { get; set; }
 

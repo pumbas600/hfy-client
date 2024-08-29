@@ -5,6 +5,13 @@ namespace HfyClientApi.Services
 {
   public interface IChapterParsingService
   {
-    public Chapter ChapterFromPost(SelfPost post);
+    public class ParsedChapter : Chapter
+    {
+      public string? FirstChapterId { get; set; }
+
+      public bool IsFirstChapter => FirstChapterId == null || FirstChapterId == Id;
+    }
+
+    public ParsedChapter ChapterFromPost(SelfPost post);
   }
 }

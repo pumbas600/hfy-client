@@ -46,10 +46,10 @@ namespace HfyClientApi.Services
         return Errors.PostNotSelfPost(id);
       }
 
-      var chapter = _chapterParsingService.ChapterFromPost(selfPost);
+      var parsedChapter = _chapterParsingService.ChapterFromPost(selfPost);
 
 
-      if (chapter.PreviousChapterId == null)
+      if (parsedChapter.PreviousChapterId == null && parsedChapter.IsFirstChapter)
       {
         Story story = new()
         {
@@ -57,7 +57,7 @@ namespace HfyClientApi.Services
           Subreddit = selfPost.Subreddit,
         };
 
-        var createdChapterResult = await _chapterRepository.UpsertFirstChapterAsync(story, chapter);
+        var createdChapterResult = await _chapterRepository.UpsertFirstChapterAsync(story, parsedChapter);
         return createdChapterResult.Map(_mapper.ToFullChapterDto);
       }
       else
