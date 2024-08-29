@@ -19,7 +19,7 @@ namespace HfyClientApi.Repositories
 
     public async Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter)
     {
-      for (int attempt = 0; attempt < MaxUpsertAttempts; attempt++)
+      for (int attempt = 1; attempt <= MaxUpsertAttempts; attempt++)
       {
         using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -38,15 +38,15 @@ namespace HfyClientApi.Repositories
             await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
           }
 
-          transaction.Commit();
+          await transaction.CommitAsync();
 
           return chapter;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
           await transaction.RollbackAsync();
           _logger.LogError(
-            "Failed to upsert chapter id={}, attempt={}/{}",
+            ex, "Failed to upsert chapter id={}, attempt={}/{}",
             chapter.Id, attempt, MaxUpsertAttempts
           );
         }
@@ -57,7 +57,7 @@ namespace HfyClientApi.Repositories
 
     public async Task<Result<Chapter>> UpsertFirstChapter(Story story, Chapter firstChapter)
     {
-      for (int attempt = 0; attempt < MaxUpsertAttempts; attempt++)
+      for (int attempt = 1; attempt <= MaxUpsertAttempts; attempt++)
       {
         using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -80,14 +80,14 @@ namespace HfyClientApi.Repositories
             await _context.SaveChangesAsync();
           }
 
-          transaction.Commit();
+          await transaction.CommitAsync();
           return firstChapter;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
           await transaction.RollbackAsync();
           _logger.LogError(
-            "Failed to upsert first chapter id={}, attempt={}/{}",
+            ex, "Failed to upsert first chapter id={}, attempt={}/{}",
             firstChapter.Id, attempt, MaxUpsertAttempts
           );
         }
