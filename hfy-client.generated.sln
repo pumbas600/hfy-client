@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{7776CC03-81FD-442F-9447-43C6DDCC5979}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "backend\HfyClientApi\HfyClientApi.csproj", "{F99F05AB-A720-4595-ADC5-232E6CAD7592}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi", "backend\HfyClientApi\HfyClientApi.csproj", "{738DE38A-8A87-4F0D-938A-DB14DFDF131A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "backend\HfyClientConsole\HfyClientConsole.csproj", "{0120EA1F-B74A-4754-8D05-82C0225DC7F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientApi.Tests", "backend\HfyClientApi.Tests\HfyClientApi.Tests.csproj", "{483DE58E-5284-4DF2-8AB7-D2152633D019}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HfyClientApi.Tests", "backend\HfyClientApi.Tests\HfyClientApi.Tests.csproj", "{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HfyClientConsole", "backend\HfyClientConsole\HfyClientConsole.csproj", "{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,26 +17,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F99F05AB-A720-4595-ADC5-232E6CAD7592}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0120EA1F-B74A-4754-8D05-82C0225DC7F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{738DE38A-8A87-4F0D-938A-DB14DFDF131A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{738DE38A-8A87-4F0D-938A-DB14DFDF131A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{738DE38A-8A87-4F0D-938A-DB14DFDF131A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{738DE38A-8A87-4F0D-938A-DB14DFDF131A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{483DE58E-5284-4DF2-8AB7-D2152633D019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{483DE58E-5284-4DF2-8AB7-D2152633D019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{483DE58E-5284-4DF2-8AB7-D2152633D019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{483DE58E-5284-4DF2-8AB7-D2152633D019}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F99F05AB-A720-4595-ADC5-232E6CAD7592} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
-		{0120EA1F-B74A-4754-8D05-82C0225DC7F7} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
-		{5F0780AB-C137-4B71-BAAF-24ACB7B6F8B2} = {B4C7B85B-34C2-474F-9D20-CB2B2C8F695A}
+		{738DE38A-8A87-4F0D-938A-DB14DFDF131A} = {7776CC03-81FD-442F-9447-43C6DDCC5979}
+		{483DE58E-5284-4DF2-8AB7-D2152633D019} = {7776CC03-81FD-442F-9447-43C6DDCC5979}
+		{E6B694C4-46FD-4F5F-AAE5-1D558C5B0467} = {7776CC03-81FD-442F-9447-43C6DDCC5979}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CE86DAD-9C03-4D8A-831F-B3E83BB0A05C}

@@ -8,8 +8,6 @@ var configuration = new ConfigurationBuilder()
   .AddUserSecrets<Program>()
   .Build();
 
-Console.WriteLine(configuration[Config.Keys.RedditAppId]);
-
 var authTokenRetriever = new AuthTokenRetrieverLib(
   configuration[Config.Keys.RedditAppId],
   8080,

@@ -12,6 +12,7 @@ namespace HfyClientApi.Services
         ChapterId = chapter.Id,
         Title = chapter.Title,
         TextHtml = chapter.TextHtml,
+        IsNsfw = chapter.IsNsfw,
         Created = chapter.Created,
         Edited = chapter.Edited,
         NextChapterId = chapter.NextChapterId,

@@ -8,6 +8,7 @@ namespace HfyClientApi.Models
     public string Id { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string TextHtml { get; set; } = null!;
+    public bool IsNsfw { get; set; }
     public DateTime Created { get; set; }
 
     /// <summary>
