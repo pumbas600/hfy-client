@@ -9,7 +9,8 @@ function requiredEnv(key: keyof NodeJS.ProcessEnv): string {
 
 const config = {
   api: {
-    baseUrl: process.env.API_BASE_URL || "https://localhost:7112",
+    baseUrl:
+      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5070/api/v1",
   },
 } as const;
 
