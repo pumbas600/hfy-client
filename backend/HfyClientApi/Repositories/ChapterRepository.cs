@@ -115,6 +115,7 @@ namespace HfyClientApi.Repositories
 
     public async Task<Chapter> UpdateChapterAsync(Chapter chapter)
     {
+      chapter.ProcessedAtUtc = DateTime.UtcNow;
       _context.Chapters.Update(chapter);
       await _context.SaveChangesAsync();
       return chapter;
