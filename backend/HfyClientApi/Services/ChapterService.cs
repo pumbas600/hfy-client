@@ -48,28 +48,18 @@ namespace HfyClientApi.Services
 
       var parsedChapter = _chapterParsingService.ChapterFromPost(selfPost);
 
+      // TODO: Check for broken/incorrect links between chapters.
 
-      if (parsedChapter.PreviousChapterId == null && parsedChapter.IsFirstChapter)
+      Story story = new()
       {
-        Story story = new()
-        {
-          Author = selfPost.Author,
-          Subreddit = selfPost.Subreddit,
-          FirstChapterId = selfPost.Id,
-        };
+        Author = selfPost.Author,
+        Subreddit = selfPost.Subreddit,
+        FirstChapterId = parsedChapter.FirstChapterId,
+      };
 
-        var createdChapterResult = await _chapterRepository.UpsertStoryAndChapterAsync(story, parsedChapter);
-        return createdChapterResult.Map(_mapper.ToFullChapterDto);
-      }
-      // TODO: Validate that the previous chapter link exists
-      else if (parsedChapter.FirstChapterId != null)
-      {
-        throw new NotImplementedException();
-      }
-      else
-      {
-        throw new NotImplementedException();
-      }
+      var createdChapterResult = await _chapterRepository.UpsertStoryAndChapterAsync(story, parsedChapter);
+      return createdChapterResult.Map(_mapper.ToFullChapterDto);
+
     }
   }
 }

@@ -21,7 +21,7 @@ namespace HfyClientApi.Services
         StoryId = chapter.Story.Id,
         Author = chapter.Story.Author,
         Subreddit = chapter.Story.Subreddit,
-        FirstChapterId = chapter.Story.FirstChapterId // TODO: Make this always non-null...
+        FirstChapterId = chapter.Story.FirstChapterId
       };
     }
   }
