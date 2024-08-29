@@ -9,13 +9,18 @@ namespace HfyClientApi.Models
     public string Title { get; set; } = null!;
     public string TextHtml { get; set; } = null!;
     public bool IsNsfw { get; set; }
-    public DateTime Created { get; set; }
+    public DateTime CreatedAtUtc { get; set; }
 
     /// <summary>
-    /// When the chapter was last edited. If it hasn't been edited, this will be the same as
-    /// Created.
+    /// UTC time when the chapter was last edited. If it hasn't been edited, this will be the same
+    // as CreatedAtUtc.
     /// </summary>
-    public DateTime Edited { get; set; }
+    public DateTime EditedAtUtc { get; set; }
+
+    /// <summary>
+    /// UTC time when the chapter was last processed by the system to determine the chapter links.
+    /// </summary>
+    public DateTime ProcessedAtUtc { get; set; }
 
     /// <summary>
     /// The next chapter in the story. If null, this is the latest chapter.

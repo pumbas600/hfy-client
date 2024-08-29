@@ -47,7 +47,7 @@ namespace HfyClientApi.Repositories
         {
           await transaction.RollbackAsync();
           _logger.LogError(
-            ex, "Failed to upsert chapter id={}, attempt={}/{}",
+            ex, "Upsert chapter id={} transaction cancelled, attempt={}/{}",
             chapter.Id, attempt, MaxUpsertAttempts
           );
         }
@@ -89,7 +89,7 @@ namespace HfyClientApi.Repositories
         {
           await transaction.RollbackAsync();
           _logger.LogError(
-            ex, "Failed to upsert first chapter id={}, attempt={}/{}",
+            ex, "Upsert first chapter id={} transaction cancelled, attempt={}/{}",
             firstChapter.Id, attempt, MaxUpsertAttempts
           );
         }

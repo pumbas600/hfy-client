@@ -86,8 +86,9 @@ namespace HfyClientApi.Services
         Title = post.Title,
         TextHtml = document.DocumentNode.InnerHtml,
         IsNsfw = post.NSFW,
-        Created = post.Created,
-        Edited = post.Edited == default ? post.Created : post.Edited,
+        CreatedAtUtc = post.Created,
+        EditedAtUtc = post.Edited == default ? post.Created : post.Edited,
+        ProcessedAtUtc = DateTime.UtcNow,
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
       };
