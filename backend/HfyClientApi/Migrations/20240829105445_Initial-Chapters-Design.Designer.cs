@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HfyClientApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240828065828_chapters")]
-    partial class chapters
+    [Migration("20240829105445_Initial-Chapters-Design")]
+    partial class InitialChaptersDesign
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,11 +34,17 @@ namespace HfyClientApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Edited")
+                    b.Property<DateTime>("EditedAtUtc")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FirstChapterId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsNsfw")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("NextChapterId")
                         .HasColumnType("text");
@@ -46,11 +52,14 @@ namespace HfyClientApi.Migrations
                     b.Property<string>("PreviousChapterId")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("ProcessedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Subreddit")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("TextHTML")
+                    b.Property<string>("TextHtml")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -59,6 +68,8 @@ namespace HfyClientApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FirstChapterId");
 
                     b.ToTable("Chapters");
                 });

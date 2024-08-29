@@ -27,11 +27,18 @@ namespace HfyClientApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("EditedAtUtc")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FirstChapterId")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsNsfw")
                         .HasColumnType("boolean");
@@ -45,8 +52,9 @@ namespace HfyClientApi.Migrations
                     b.Property<DateTime>("ProcessedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("StoryId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Subreddit")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("TextHtml")
                         .IsRequired()
@@ -58,49 +66,9 @@ namespace HfyClientApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoryId");
+                    b.HasIndex("FirstChapterId");
 
                     b.ToTable("Chapters");
-                });
-
-            modelBuilder.Entity("HfyClientApi.Models.Story", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstChapterId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Subreddit")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Stories");
-                });
-
-            modelBuilder.Entity("HfyClientApi.Models.Chapter", b =>
-                {
-                    b.HasOne("HfyClientApi.Models.Story", "Story")
-                        .WithMany("Chapters")
-                        .HasForeignKey("StoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Story");
-                });
-
-            modelBuilder.Entity("HfyClientApi.Models.Story", b =>
-                {
-                    b.Navigation("Chapters");
                 });
 #pragma warning restore 612, 618
         }
