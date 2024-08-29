@@ -1,4 +1,5 @@
 using HfyClientApi.Models;
+using HfyClientApi.Utils;
 
 namespace HfyClientApi.Repositories
 {
@@ -7,11 +8,11 @@ namespace HfyClientApi.Repositories
 
     Task<Chapter?> GetChapterByIdAsync(string id);
 
-    Task<Chapter> UpsertChapterAsync(Chapter chapter);
+    Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter);
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter);
 
-    Task<Chapter> UpsertFirstChapter(Story story, Chapter firstChapter);
+    Task<Result<Chapter>> UpsertFirstChapter(Story story, Chapter firstChapter);
   }
 
 }

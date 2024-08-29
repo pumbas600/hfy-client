@@ -62,8 +62,8 @@ namespace HfyClientApi.Services
           Subreddit = selfPost.Subreddit,
         };
 
-        var createdChapter = await _chapterRepository.UpsertFirstChapter(story, chapter);
-        return _mapper.ToFullChapterDto(createdChapter);
+        var createdChapterResult = await _chapterRepository.UpsertFirstChapter(story, chapter);
+        return createdChapterResult.Map(_mapper.ToFullChapterDto);
       }
       else
       {

@@ -57,6 +57,11 @@ namespace HfyClientApi.Utils
       _data = data;
     }
 
+    public Result<R> Map<R>(Func<T, R> mapper)
+    {
+      return IsSuccess ? Success(mapper(Data)) : Failure<R>(Error);
+    }
+
 
     public R Match<R>(Func<T, R> onSuccess, Func<Error, R> onFailure)
     {

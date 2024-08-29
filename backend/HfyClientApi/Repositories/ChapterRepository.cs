@@ -1,10 +1,12 @@
 using HfyClientApi.Data;
 using HfyClientApi.Models;
+using HfyClientApi.Utils;
 
 namespace HfyClientApi.Repositories
 {
   public class ChapterRepository : IChapterRepository
   {
+    private const int MaxUpsertAttempts = 3;
     private readonly AppDbContext _context;
     private readonly ILogger<ChapterRepository> _logger;
 
@@ -14,74 +16,87 @@ namespace HfyClientApi.Repositories
       _logger = logger;
     }
 
-    public async Task<Chapter> UpsertChapterAsync(Chapter chapter)
+    public async Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter)
     {
-      using var transaction = await _context.Database.BeginTransactionAsync();
-
-      try
+      for (int attempt = 0; attempt < MaxUpsertAttempts; attempt++)
       {
-        var existingChapter = await GetChapterByIdAsync(chapter.Id);
-        if (existingChapter != null)
-        {
-          chapter.Story = existingChapter.Story;
-          await UpdateChapterAsync(chapter);
-        }
-        else
-        {
-          await _context.Chapters.AddAsync(chapter);
-          await _context.SaveChangesAsync();
-          await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
-        }
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        transaction.Commit();
+        try
+        {
+          var existingChapter = await GetChapterByIdAsync(chapter.Id);
+          if (existingChapter != null)
+          {
+            chapter.Story = existingChapter.Story;
+            await UpdateChapterAsync(chapter);
+          }
+          else
+          {
+            await _context.Chapters.AddAsync(chapter);
+            await _context.SaveChangesAsync();
+            await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
+          }
 
-        return chapter;
-      }
-      catch (Exception)
-      {
-        _logger.LogError("Failed to upsert chapter (id={})", chapter.Id);
-        await transaction.RollbackAsync();
+          transaction.Commit();
+
+          return chapter;
+        }
+        catch (Exception)
+        {
+          await transaction.RollbackAsync();
+          _logger.LogError(
+            "Failed to upsert first chapter id={}, attempt={}/{}",
+            chapter.Id, attempt, MaxUpsertAttempts
+          );
+        }
       }
 
       // TODO: The story might not be populated. -P
       return chapter;
     }
 
-    public async Task<Chapter> UpsertFirstChapter(Story story, Chapter firstChapter)
+    public async Task<Result<Chapter>> UpsertFirstChapter(Story story, Chapter firstChapter)
     {
-      firstChapter.Story = story;
-
-      using var transaction = await _context.Database.BeginTransactionAsync();
-
-      try
+      for (int attempt = 0; attempt < MaxUpsertAttempts; attempt++)
       {
-        var existingChapter = await GetChapterByIdAsync(firstChapter.Id);
-        if (existingChapter != null)
-        {
-          firstChapter.Story = existingChapter.Story;
-          await UpdateChapterAsync(firstChapter);
-          // Note: Theoretically the story entity should never need to be updated. -P
-        }
-        else
-        {
-          await _context.Chapters.AddAsync(firstChapter);
-          await _context.SaveChangesAsync();
+        firstChapter.Story = story;
 
-          story.FirstChapter = firstChapter;
-          await _context.SaveChangesAsync();
-        }
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        transaction.Commit();
-        return firstChapter;
-      }
-      catch (Exception)
-      {
-        _logger.LogError("Failed to upsert first chapter (id={})", firstChapter.Id);
-        await transaction.RollbackAsync();
+        try
+        {
+          var existingChapter = await GetChapterByIdAsync(firstChapter.Id);
+          if (existingChapter != null)
+          {
+            firstChapter.Story = existingChapter.Story;
+            await UpdateChapterAsync(firstChapter);
+            // Note: Theoretically the story entity should never need to be updated. -P
+          }
+          else
+          {
+            await _context.Chapters.AddAsync(firstChapter);
+            await _context.SaveChangesAsync();
+
+            story.FirstChapter = firstChapter;
+            await _context.SaveChangesAsync();
+          }
+
+          transaction.Commit();
+          return firstChapter;
+        }
+        catch (Exception)
+        {
+          await transaction.RollbackAsync();
+          _logger.LogError(
+            "Failed to upsert first chapter id={}, attempt={}/{}",
+            firstChapter.Id, attempt, MaxUpsertAttempts
+          );
+        }
       }
 
       // TODO: The story might not be populated. -P
       return firstChapter;
+
     }
 
     public async Task<Chapter?> GetChapterByIdAsync(string id)
