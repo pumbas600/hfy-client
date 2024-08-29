@@ -12,5 +12,7 @@ namespace HfyClientApi.Exceptions
 
     public static Error ChapterNotFound(string chapterId) =>
       new("Chapters.NotFound", $"No chapter found for id {chapterId}", HttpStatusCode.NotFound);
+    public static Error ChapterUpsertFailed(string chapterId) =>
+      new("Chapters.UpsertFailed", $"Failed to upsert chapter with id {chapterId}", HttpStatusCode.Conflict);
   }
 }

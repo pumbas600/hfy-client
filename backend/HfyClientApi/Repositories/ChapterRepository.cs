@@ -1,4 +1,5 @@
 using HfyClientApi.Data;
+using HfyClientApi.Exceptions;
 using HfyClientApi.Models;
 using HfyClientApi.Utils;
 
@@ -45,22 +46,19 @@ namespace HfyClientApi.Repositories
         {
           await transaction.RollbackAsync();
           _logger.LogError(
-            "Failed to upsert first chapter id={}, attempt={}/{}",
+            "Failed to upsert chapter id={}, attempt={}/{}",
             chapter.Id, attempt, MaxUpsertAttempts
           );
         }
       }
 
-      // TODO: The story might not be populated. -P
-      return chapter;
+      return Errors.ChapterUpsertFailed(chapter.Id);
     }
 
     public async Task<Result<Chapter>> UpsertFirstChapter(Story story, Chapter firstChapter)
     {
       for (int attempt = 0; attempt < MaxUpsertAttempts; attempt++)
       {
-        firstChapter.Story = story;
-
         using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
@@ -74,6 +72,7 @@ namespace HfyClientApi.Repositories
           }
           else
           {
+            firstChapter.Story = story;
             await _context.Chapters.AddAsync(firstChapter);
             await _context.SaveChangesAsync();
 
@@ -94,9 +93,7 @@ namespace HfyClientApi.Repositories
         }
       }
 
-      // TODO: The story might not be populated. -P
-      return firstChapter;
-
+      return Errors.ChapterUpsertFailed(firstChapter.Id);
     }
 
     public async Task<Chapter?> GetChapterByIdAsync(string id)
