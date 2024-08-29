@@ -1,6 +1,5 @@
 using HfyClientApi.Data;
 using HfyClientApi.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
@@ -24,16 +23,18 @@ namespace HfyClientApi.Repositories
         var existingChapter = await GetChapterByIdAsync(chapter.Id);
         if (existingChapter != null)
         {
-          _context.Chapters.Update(chapter);
           chapter.Story = existingChapter.Story;
+          await UpdateChapterAsync(chapter);
         }
         else
         {
           await _context.Chapters.AddAsync(chapter);
+          await _context.SaveChangesAsync();
           await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
         }
 
-        await _context.SaveChangesAsync();
+        transaction.Commit();
+
         return chapter;
       }
       catch (Exception)
@@ -42,7 +43,7 @@ namespace HfyClientApi.Repositories
         await transaction.RollbackAsync();
       }
 
-      // TODO: The story might not be populated
+      // TODO: The story might not be populated. -P
       return chapter;
     }
 
@@ -57,8 +58,8 @@ namespace HfyClientApi.Repositories
         var existingChapter = await GetChapterByIdAsync(firstChapter.Id);
         if (existingChapter != null)
         {
-          _context.Chapters.Update(firstChapter);
           firstChapter.Story = existingChapter.Story;
+          await UpdateChapterAsync(firstChapter);
           // Note: Theoretically the story entity should never need to be updated. -P
         }
         else
@@ -69,6 +70,9 @@ namespace HfyClientApi.Repositories
           story.FirstChapter = firstChapter;
           await _context.SaveChangesAsync();
         }
+
+        transaction.Commit();
+        return firstChapter;
       }
       catch (Exception)
       {
@@ -76,6 +80,7 @@ namespace HfyClientApi.Repositories
         await transaction.RollbackAsync();
       }
 
+      // TODO: The story might not be populated. -P
       return firstChapter;
     }
 
