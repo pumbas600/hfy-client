@@ -1,6 +1,8 @@
 using HfyClientApi.Dtos;
+using HfyClientApi.Exceptions;
 using HfyClientApi.Models;
 using HfyClientApi.Repositories;
+using HfyClientApi.Utils;
 using Reddit;
 using Reddit.Controllers;
 
@@ -23,26 +25,30 @@ namespace HfyClientApi.Services
       _mapper = mapper;
     }
 
-    public async Task<FullChapterDto> GetChapterByIdAsync(string id)
+    public async Task<Result<FullChapterDto>> GetChapterByIdAsync(string id)
     {
-      var chapter = await _chapterRepository.GetChapterByIdAsync(id) ?? throw new Exception($"Chapter with id {id} not found");
+      var chapter = await _chapterRepository.GetChapterByIdAsync(id);
+      if (chapter == null)
+      {
+        return Errors.ChapterNotFound(id);
+      }
+
       return _mapper.ToFullChapterDto(chapter);
     }
 
-    public async Task<FullChapterDto> ProcessChapterByIdAsync(string id)
+    public async Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id)
     {
       var postFullname = $"t3_{id}";
       var posts = _reddit.GetPosts([postFullname]);
       if (posts.Count == 0)
       {
-        throw new Exception($"Post with id {id} not found");
+        return Errors.PostNotFound(id);
       }
 
-      // Maybe need to call .About()?
       var post = posts[0];
       if (post is not SelfPost selfPost)
       {
-        throw new Exception($"Post with id {id} is not a self post");
+        return Errors.PostNotSelfPost(id);
       }
 
       var chapter = _chapterParsingService.ChapterFromPost(selfPost);

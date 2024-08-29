@@ -19,14 +19,17 @@ namespace HfyClientApi.Controllers
     public async Task<ActionResult<FullChapterDto>> GetChapterByIdAsync([FromRoute] string id)
     {
       var chapter = await _chapterService.GetChapterByIdAsync(id);
-      return chapter;
+      return chapter.ToActionResult(Ok);
     }
 
     [HttpPut("{id}/process")]
     public async Task<ActionResult<FullChapterDto>> ProcessChapterByIdAsync([FromRoute] string id)
     {
       var chapter = await _chapterService.ProcessChapterByIdAsync(id);
-      return chapter;
+
+      return chapter.ToActionResult(
+        data => CreatedAtAction(nameof(GetChapterByIdAsync), new { id = data.ChapterId }, data)
+      );
     }
   }
 }
