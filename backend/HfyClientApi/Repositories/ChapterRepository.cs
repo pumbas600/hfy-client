@@ -125,5 +125,16 @@ namespace HfyClientApi.Repositories
     {
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
+
+    public async Task<Result<Story>> GetStoryByFirstChapterIdAsync(string firstChapterId)
+    {
+      var story = await _context.Stories.FirstOrDefaultAsync(s => s.FirstChapterId == firstChapterId);
+      if (story == null)
+      {
+        return Errors.StoryNotFoundWithFirstChapterId(firstChapterId);
+      }
+
+      return story;
+    }
   }
 }

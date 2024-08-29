@@ -14,5 +14,8 @@ namespace HfyClientApi.Exceptions
       new("Chapters.NotFound", $"No chapter found for id {chapterId}", HttpStatusCode.NotFound);
     public static Error ChapterUpsertFailed(string chapterId) =>
       new("Chapters.UpsertFailed", $"Failed to upsert chapter with id {chapterId}", HttpStatusCode.Conflict);
+
+    public static Error StoryNotFoundWithFirstChapterId(string firstChapterId) =>
+      new("Stories.NotFoundWithFirstChapter", $"No story found with first chapter id {firstChapterId}", HttpStatusCode.NotFound);
   }
 }

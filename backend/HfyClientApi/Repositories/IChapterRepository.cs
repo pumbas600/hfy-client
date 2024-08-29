@@ -7,6 +7,7 @@ namespace HfyClientApi.Repositories
   {
 
     Task<Result<Chapter>> GetChapterByIdAsync(string id);
+    Task<Result<Story>> GetStoryByFirstChapterIdAsync(string firstChapterId);
 
     Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter);
 

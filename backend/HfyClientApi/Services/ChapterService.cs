@@ -60,6 +60,11 @@ namespace HfyClientApi.Services
         var createdChapterResult = await _chapterRepository.UpsertFirstChapterAsync(story, parsedChapter);
         return createdChapterResult.Map(_mapper.ToFullChapterDto);
       }
+      // TODO: Validate that the previous chapter link exists
+      else if (parsedChapter.FirstChapterId != null)
+      {
+        throw new NotImplementedException();
+      }
       else
       {
         throw new NotImplementedException();
