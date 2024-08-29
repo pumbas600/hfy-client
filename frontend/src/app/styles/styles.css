@@ -1,0 +1,143 @@
+@layer normalize {
+  * {
+    box-sizing: border-box;
+    font-family: inherit;
+    margin: 0;
+    outline-offset: max(0.0625rem, 1px);
+    padding: 0;
+    text-decoration-thickness: from-font;
+  }
+
+  html {
+    font-kerning: normal;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    font-synthesis: none;
+    hanging-punctuation: first allow-end last;
+    hyphenate-character: "‐"; /* Unambiguous hyphen U+2010 */
+    letter-spacing: 0;
+    margin: 0;
+    orphans: 2;
+    overflow-wrap: break-word;
+    padding: 0;
+    tab-size: 2;
+    text-rendering: geometricPrecision;
+    text-underline-position: from-font;
+    text-wrap: pretty;
+  }
+
+  [hidden] {
+    display: none;
+  }
+
+  body {
+    min-height: 100svh;
+  }
+
+  p {
+    line-height: 1.55;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  b,
+  strong {
+    font-weight: bolder;
+  }
+
+  em,
+  i,
+  var {
+    font-style: italic;
+  }
+
+  em > em,
+  em > i,
+  i > em,
+  i > i {
+    font-style: normal;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: ui-monospace, monospace;
+  }
+
+  abbr {
+    text-decoration: none;
+  }
+
+  hr {
+    box-sizing: content-box;
+    height: 0;
+  }
+
+  audio,
+  canvas,
+  figure,
+  embed,
+  iframe,
+  img,
+  object,
+  picture,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  picture,
+  img,
+  svg,
+  video,
+  canvas {
+    border-style: none;
+    height: auto;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  button {
+    touch-action: manipulation;
+  }
+
+  fieldset {
+    border: 0;
+    min-width: 0;
+  }
+}
+
+@layer fonts {
+}
+
+@layer core {
+  :root {
+    /* Colors */
+    --primary-color: #06402b;
+
+    /* Type scale */
+    --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
+    --step--1: clamp(0.8333rem, 0.7749rem + 0.2919vw, 1.1253rem);
+    --step-0: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+    --step-1: clamp(1.2rem, 1.0401rem + 0.7995vw, 1.9995rem);
+    --step-2: clamp(1.44rem, 1.1949rem + 1.2253vw, 2.6653rem);
+    --step-3: clamp(1.728rem, 1.363rem + 1.8249vw, 3.5529rem);
+    --step-4: clamp(2.0736rem, 1.5411rem + 2.6624vw, 4.736rem);
+
+    accent-color: var(--primary-color);
+    color-scheme: only light;
+    font-size: 16px;
+  }
+}
