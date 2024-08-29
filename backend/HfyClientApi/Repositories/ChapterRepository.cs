@@ -2,6 +2,7 @@ using HfyClientApi.Data;
 using HfyClientApi.Exceptions;
 using HfyClientApi.Models;
 using HfyClientApi.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
@@ -25,24 +26,24 @@ namespace HfyClientApi.Repositories
 
         try
         {
-          var existingChapterResult = await GetChapterByIdAsync(chapter.Id);
-          if (existingChapterResult.IsSuccess)
+          var detachedChapter = await GetDetachedChapterByIdAsync(chapter.Id);
+          if (detachedChapter != null)
           {
-            chapter.Story = existingChapterResult.Data.Story;
+            chapter.StoryId = detachedChapter.StoryId;
             await UpdateChapterAsync(chapter);
           }
           else
           {
             await _context.Chapters.AddAsync(chapter);
             await _context.SaveChangesAsync();
-            await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
           }
 
+          await _context.Entry(chapter).Reference(c => c.Story).LoadAsync();
           await transaction.CommitAsync();
 
           return chapter;
         }
-        catch (Exception ex)
+        catch (OperationCanceledException ex)
         {
           await transaction.RollbackAsync();
           _logger.LogError(
@@ -55,7 +56,7 @@ namespace HfyClientApi.Repositories
       return Errors.ChapterUpsertFailed(chapter.Id);
     }
 
-    public async Task<Result<Chapter>> UpsertFirstChapter(Story story, Chapter firstChapter)
+    public async Task<Result<Chapter>> UpsertFirstChapterAsync(Story story, Chapter firstChapter)
     {
       for (int attempt = 1; attempt <= MaxUpsertAttempts; attempt++)
       {
@@ -63,11 +64,12 @@ namespace HfyClientApi.Repositories
 
         try
         {
-          var existingChapterResult = await GetChapterByIdAsync(firstChapter.Id);
-          if (existingChapterResult.IsSuccess)
+          var detachedChapter = await GetDetachedChapterByIdAsync(firstChapter.Id);
+          if (detachedChapter != null)
           {
-            firstChapter.Story = existingChapterResult.Data.Story;
+            firstChapter.StoryId = detachedChapter.StoryId;
             await UpdateChapterAsync(firstChapter);
+            await _context.Entry(firstChapter).Reference(c => c.Story).LoadAsync();
             // Note: Theoretically the story entity should never need to be updated. -P
           }
           else
@@ -83,7 +85,7 @@ namespace HfyClientApi.Repositories
           await transaction.CommitAsync();
           return firstChapter;
         }
-        catch (Exception ex)
+        catch (OperationCanceledException ex)
         {
           await transaction.RollbackAsync();
           _logger.LogError(
@@ -116,6 +118,11 @@ namespace HfyClientApi.Repositories
       _context.Chapters.Update(chapter);
       await _context.SaveChangesAsync();
       return chapter;
+    }
+
+    private async Task<Chapter?> GetDetachedChapterByIdAsync(string id)
+    {
+      return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
   }
 }
