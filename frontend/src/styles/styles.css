@@ -157,6 +157,8 @@
   :root {
     /* Colors */
     --primary-color: #06402b;
+    --primary-darkened: #042d1f;
+    --primary-contrast: #ffffff;
     --background-acent: #c9eae6;
 
     /* Type scale */
@@ -168,10 +170,15 @@
     --step-3: clamp(1.728rem, 1.363rem + 1.8249vw, 3.5529rem);
     --step-4: clamp(2.0736rem, 1.5411rem + 2.6624vw, 4.736rem);
 
+    --border-radius: 0.2rem;
+
+    --body-font: "Atkinson Hyperlegible", system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --heading-font: "Noto Serif", serif;
+
     accent-color: var(--primary-color);
     color-scheme: only light;
-    font-family: "Atkinson Hyperlegible", system-ui, -apple-system,
-      BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: var(--body-font);
     font-size: 16px;
   }
 
@@ -181,7 +188,7 @@
   h4,
   h5,
   h6 {
-    font-family: "Noto Serif", serif;
+    font-family: var(--heading-font);
     font-weight: bold;
   }
 
@@ -207,5 +214,31 @@
 
   h6 {
     font-size: var(--step--2);
+  }
+
+  button {
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--primary-contrast);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1.5rem;
+    min-width: 120px;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+    color: #666;
+  }
+
+  button:not(:disabled):hover {
+    background-color: var(--primary-darkened);
   }
 }
