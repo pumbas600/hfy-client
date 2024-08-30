@@ -120,6 +120,36 @@
 }
 
 @layer fonts {
+  @font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url("../fonts/Atkinson-Hyperlegible-Regular-102a.woff2")
+        format("woff2"),
+      url("../fonts/Atkinson-Hyperlegible-Regular-102.woff") format("woff");
+    font-style: normal;
+    font-weight: 300;
+  }
+  @font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url("../fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2"),
+      url("../fonts/Atkinson-Hyperlegible-Italic-102.woff") format("woff");
+    font-style: italic;
+    font-weight: 300;
+  }
+  @font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url("../fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2"),
+      url("../fonts/Atkinson-Hyperlegible-Bold-102.woff") format("woff");
+    font-style: normal;
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url("../fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2")
+        format("woff2"),
+      url("../fonts/Atkinson-Hyperlegible-BoldItalic-102.woff") format("woff");
+    font-style: italic;
+    font-weight: 700;
+  }
 }
 
 @layer core {
@@ -138,6 +168,8 @@
 
     accent-color: var(--primary-color);
     color-scheme: only light;
+    font-family: "Atkinson Hyperlegible", Inter, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
   }
 }
