@@ -20,9 +20,9 @@ export default async function Page({ params }: Params<{ id: string }>) {
     <article>
       <h2>{chapter.title}</h2>
       <time>{/*Created at ...*/}</time>
-      <ChapterButtons links={chapter} />
+      <ChapterButtons chapter={chapter} />
       <main dangerouslySetInnerHTML={{ __html: chapter.textHtml }} />
-      <ChapterButtons links={chapter} hideFirstLink />
+      <ChapterButtons chapter={chapter} hideFirstLink />
     </article>
   );
 }
