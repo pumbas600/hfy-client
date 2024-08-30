@@ -16,12 +16,12 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
           <strong>r/{chapter.subreddit}</strong>
           <a href={chapter.redditAuthorLink}>{chapter.author}</a>
         </div>
-        <a href={chapter.redditPostLink} title="Read on Reddit">
-          <FontAwesomeIcon
-            icon={faReddit}
-            size="lg"
-            className={styles.redditIcon}
-          />
+        <a
+          href={chapter.redditPostLink}
+          title="Read on Reddit"
+          className={styles.redditIcon}
+        >
+          <FontAwesomeIcon icon={faReddit} size="lg" />
         </a>
       </div>
       <h2>{chapter.title}</h2>
