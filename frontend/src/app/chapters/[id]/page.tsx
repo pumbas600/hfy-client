@@ -18,8 +18,13 @@ export default async function Page({ params }: Params<{ id: string }>) {
 
   return (
     <article>
-      <h2>{chapter.title}</h2>
-      <time>{/*Created at ...*/}</time>
+      <header>
+        <h2>{chapter.title}</h2>
+        <a href={chapter.redditPostLink}>Read on Reddit</a>
+        <p>r/{chapter.subreddit}</p>
+        <p>{chapter.author}</p>
+        <time>{/*Created at ...*/}</time>
+      </header>
       <ChapterButtons chapter={chapter} />
       <main dangerouslySetInnerHTML={{ __html: chapter.textHtml }} />
       <ChapterButtons chapter={chapter} hideFirstLink />
