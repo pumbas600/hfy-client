@@ -162,6 +162,7 @@
     --primary-contrast-secondary: #c3e4d2;
     --background-acent: #c9eae6;
     --background-contrast: #000000;
+    --reddit-orange: #ff5700;
 
     /* Type scale */
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
