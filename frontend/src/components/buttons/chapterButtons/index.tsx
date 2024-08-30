@@ -1,5 +1,6 @@
 import { FullChapter } from "@/types/chapter";
 import ChapterButton from "@/components/buttons/chapterButton";
+import styles from "./chapterButtons.module.css";
 
 export interface ChapterButtonsProps {
   chapter: FullChapter;
@@ -17,7 +18,7 @@ export default function ChapterButtons({
       : undefined;
 
   return (
-    <div>
+    <div className={styles.buttonGroup}>
       {!(hideFirstLink || isFirst) && (
         <ChapterButton chapterId={chapter.firstChapterId}>First</ChapterButton>
       )}
