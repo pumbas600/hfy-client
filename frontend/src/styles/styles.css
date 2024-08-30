@@ -157,6 +157,7 @@
   :root {
     /* Colors */
     --primary-color: #06402b;
+    --background-acent: #c9eae6;
 
     /* Type scale */
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
@@ -181,35 +182,30 @@
   h5,
   h6 {
     font-family: "Noto Serif", serif;
+    font-weight: bold;
   }
 
   h1 {
     font-size: var(--step-3);
-    font-weight: normal;
   }
 
   h2 {
     font-size: var(--step-2);
-    font-weight: normal;
   }
 
   h3 {
     font-size: var(--step-1);
-    font-weight: normal;
   }
 
   h4 {
     font-size: var(--step-0);
-    font-weight: bold;
   }
 
   h5 {
     font-size: var(--step--1);
-    font-weight: bold;
   }
 
   h6 {
     font-size: var(--step--2);
-    font-weight: bold;
   }
 }

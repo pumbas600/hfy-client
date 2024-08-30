@@ -1,0 +1,13 @@
+.pageHeader {
+  background-color: var(--background-acent);
+  padding-block: 2rem;
+}
+
+.pageHeader h1,
+.pageHeader h2,
+.pageHeader h3,
+.pageHeader h4,
+.pageHeader h5,
+.pageHeader h6 {
+  color: var(--primary-color);
+}

@@ -1,0 +1,14 @@
+.authorContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.authorContainer strong {
+  letter-spacing: 1px;
+}
+
+.authorContainer p {
+  font-size: var(--step-0);
+}

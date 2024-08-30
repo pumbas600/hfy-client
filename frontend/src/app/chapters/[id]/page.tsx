@@ -1,4 +1,7 @@
 import ChapterButtons from "@/components/buttons/chapterButtons";
+import Container from "@/components/container";
+import ChapterHeader from "@/components/layout/chapterHeader";
+import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
 import { ChapterApi } from "@/types/api";
 import { Params } from "@/types/next";
@@ -18,16 +21,12 @@ export default async function Page({ params }: Params<{ id: string }>) {
 
   return (
     <article>
-      <header>
-        <h2>{chapter.title}</h2>
-        <a href={chapter.redditPostLink}>Read on Reddit</a>
-        <p>r/{chapter.subreddit}</p>
-        <p>{chapter.author}</p>
-        <time>{/*Created at ...*/}</time>
-      </header>
-      <ChapterButtons chapter={chapter} />
-      <main dangerouslySetInnerHTML={{ __html: chapter.textHtml }} />
-      <ChapterButtons chapter={chapter} hideFirstLink />
+      <ChapterHeader chapter={chapter} />
+      <Container>
+        <ChapterButtons chapter={chapter} />
+        <main dangerouslySetInnerHTML={{ __html: chapter.textHtml }} />
+        <ChapterButtons chapter={chapter} hideFirstLink />
+      </Container>
     </article>
   );
 }
