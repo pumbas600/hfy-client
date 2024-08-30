@@ -4,3 +4,22 @@
   justify-content: space-between;
   gap: 0.5rem;
 }
+
+.previousButtons {
+  display: flex;
+  gap: 1px;
+}
+
+.previousButtons button {
+  border-radius: 0;
+}
+
+.previousButtons a:first-child button {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.previousButtons a:last-child button {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}

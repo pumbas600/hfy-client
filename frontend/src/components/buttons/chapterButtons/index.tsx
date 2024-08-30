@@ -1,6 +1,10 @@
 import { FullChapter } from "@/types/chapter";
 import ChapterButton from "@/components/buttons/chapterButton";
 import styles from "./chapterButtons.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesLeft } from "@fortawesome/free-solid-svg-icons/faAnglesLeft";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 
 export interface ChapterButtonsProps {
   chapter: FullChapter;
@@ -19,16 +23,25 @@ export default function ChapterButtons({
 
   return (
     <div className={styles.buttonGroup}>
-      {!(hideFirstLink || isFirst) && (
-        <ChapterButton chapterId={chapter.firstChapterId}>First</ChapterButton>
-      )}
-      <ChapterButton
-        chapterId={chapter.previousChapterId}
-        tooltip={previousChapterTooltip}
-      >
-        Previous
+      <div className={styles.previousButtons}>
+        {!(hideFirstLink || isFirst) && (
+          <ChapterButton chapterId={chapter.firstChapterId}>
+            <FontAwesomeIcon icon={faAnglesLeft} />
+            First
+          </ChapterButton>
+        )}
+        <ChapterButton
+          chapterId={chapter.previousChapterId}
+          tooltip={previousChapterTooltip}
+        >
+          <FontAwesomeIcon icon={faAngleLeft} />
+          Previous
+        </ChapterButton>
+      </div>
+      <ChapterButton chapterId={chapter.nextChapterId}>
+        Next
+        <FontAwesomeIcon icon={faAngleRight} />
       </ChapterButton>
-      <ChapterButton chapterId={chapter.nextChapterId}>Next</ChapterButton>
     </div>
   );
 }
