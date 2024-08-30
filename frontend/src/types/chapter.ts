@@ -5,6 +5,7 @@ export interface FullChapter {
   title: string;
   textHtml: string;
   isNsfw: boolean;
+  redditPostLink: string;
   createdAtUtc: string;
   editedAtUtc: string;
   processedAtUtc: string;

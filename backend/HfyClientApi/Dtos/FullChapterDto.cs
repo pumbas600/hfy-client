@@ -9,6 +9,11 @@ namespace HfyClientApi.Dtos
     public required string TextHtml { get; set; }
     public required bool IsNsfw { get; set; }
 
+    /// <summary>
+    /// The link to the Reddit post that this chapter was created from.
+    /// </summary>
+    public required string RedditPostLink { get; set; }
+
     public required DateTime CreatedAtUtc { get; set; }
 
     /// <summary>
