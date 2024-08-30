@@ -52,6 +52,8 @@ namespace HfyClientApi.Utils
       }
     }
 
+    public string ErrorCode => Error.Code;
+
     internal Result(T? data, Error error) : base(error)
     {
       _data = data;

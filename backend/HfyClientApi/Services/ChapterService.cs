@@ -1,4 +1,5 @@
 using HfyClientApi.Dtos;
+using HfyClientApi.Exceptions;
 using HfyClientApi.Repositories;
 using HfyClientApi.Utils;
 
@@ -24,6 +25,11 @@ namespace HfyClientApi.Services
     public async Task<Result<FullChapterDto>> GetChapterByIdAsync(string id)
     {
       var chapterResult = await _chapterRepository.GetChapterByIdAsync(id);
+      if (chapterResult.ErrorCode == Errors.Codes.ChapterNotFound)
+      {
+        return await ProcessChapterByIdAsync(id);
+      }
+
       return chapterResult.Map(_mapper.ToFullChapterDto);
     }
 
