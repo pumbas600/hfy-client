@@ -8,7 +8,7 @@ export interface FullChapter {
   createdAtUtc: string;
   editedAtUtc: string;
   processedAtUtc: string;
-  nextChapterId?: string;
-  previousChapterId?: string;
-  firstChapterId?: string;
+  nextChapterId: string | null;
+  previousChapterId: string | null;
+  firstChapterId: string | null;
 }

@@ -1,19 +1,19 @@
 import Link from "next/link";
 
 export interface ChapterButtonProps {
-  chapterId?: string;
-  title?: string;
+  chapterId: string | null;
+  tooltip?: string;
   children?: React.ReactNode;
 }
 
 export default function ChapterButton({
   chapterId,
-  title,
+  tooltip,
   children,
 }: ChapterButtonProps) {
   if (!chapterId) {
     return (
-      <button disabled title={title}>
+      <button disabled title={tooltip}>
         {children}
       </button>
     );
@@ -21,7 +21,7 @@ export default function ChapterButton({
 
   return (
     <Link href={`/chapters/${chapterId}`}>
-      <button title={title}>{children}</button>
+      <button title={tooltip}>{children}</button>
     </Link>
   );
 }
