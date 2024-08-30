@@ -164,11 +164,12 @@
     /* Type scale */
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
     --step--1: clamp(0.8333rem, 0.7749rem + 0.2919vw, 1.1253rem);
-    --step-0: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
-    --step-1: clamp(1.2rem, 1.0401rem + 0.7995vw, 1.9995rem);
-    --step-2: clamp(1.44rem, 1.1949rem + 1.2253vw, 2.6653rem);
-    --step-3: clamp(1.728rem, 1.363rem + 1.8249vw, 3.5529rem);
-    --step-4: clamp(2.0736rem, 1.5411rem + 2.6624vw, 4.736rem);
+    --step-0: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+    --step-1: clamp(1.1rem, 0.95em + 0.65vw, 1.6rem);
+    --step-2: clamp(1.2rem, 1.0401rem + 0.7995vw, 1.9995rem);
+    --step-3: clamp(1.44rem, 1.1949rem + 1.2253vw, 2.6653rem);
+    --step-4: clamp(1.728rem, 1.363rem + 1.8249vw, 3.5529rem);
+    --step-5: clamp(2.0736rem, 1.5411rem + 2.6624vw, 4.736rem);
 
     --border-radius: 0.2rem;
 
@@ -193,36 +194,39 @@
   }
 
   h1 {
-    font-size: var(--step-3);
+    font-size: var(--step-4);
   }
 
   h2 {
-    font-size: var(--step-2);
+    font-size: var(--step-3);
   }
 
   h3 {
-    font-size: var(--step-1);
+    font-size: var(--step-2);
   }
 
   h4 {
-    font-size: var(--step-0);
+    font-size: var(--step-1);
   }
 
   h5 {
-    font-size: var(--step--1);
+    font-size: var(--step-0);
   }
 
   h6 {
-    font-size: var(--step--2);
+    font-size: var(--step--1);
+  }
+
+  p {
+    font-size: var(--step-0);
   }
 
   button {
     border: none;
     background-color: var(--primary-color);
     color: var(--primary-contrast);
-    font-weight: bold;
     letter-spacing: 0.5px;
-    font-size: 0.875rem;
+    font-size: var(--step--1);
     padding: 0.5rem 1.5rem;
     min-width: 120px;
     border-radius: var(--border-radius);
