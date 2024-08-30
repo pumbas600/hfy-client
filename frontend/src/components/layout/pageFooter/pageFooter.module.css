@@ -3,12 +3,3 @@
   color: var(--primary-contrast-secondary);
   padding-block: 3rem;
 }
-
-.pageFooter a {
-  text-decoration: none;
-  color: var(--primary-contrast);
-}
-
-.pageFooter a:hover {
-  color: var(--primary-contrast-secondary);
-}

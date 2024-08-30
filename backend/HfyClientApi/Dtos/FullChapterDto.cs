@@ -14,6 +14,11 @@ namespace HfyClientApi.Dtos
     /// </summary>
     public required string RedditPostLink { get; set; }
 
+    /// <summary>
+    /// The link to the author's Reddit profile.
+    /// </summary>
+    public required string RedditAuthorLink { get; set; }
+
     public required DateTime CreatedAtUtc { get; set; }
 
     /// <summary>

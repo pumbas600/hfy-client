@@ -161,6 +161,7 @@
     --primary-contrast: #ebf7ed;
     --primary-contrast-secondary: #c3e4d2;
     --background-acent: #c9eae6;
+    --background-contrast: #000000;
 
     /* Type scale */
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
@@ -182,6 +183,7 @@
     color-scheme: only light;
     font-family: var(--body-font);
     font-size: 16px;
+    color: var(--background-contrast);
   }
 
   h1,

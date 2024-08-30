@@ -1,0 +1,8 @@
+.subtleLink {
+  text-decoration: none;
+  color: var(--primary-contrast);
+}
+
+.subtleLink:hover {
+  color: var(--primary-contrast-secondary);
+}

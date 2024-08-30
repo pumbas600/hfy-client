@@ -16,6 +16,7 @@ namespace HfyClientApi.Services
         TextHtml = chapter.TextHtml,
         IsNsfw = chapter.IsNsfw,
         RedditPostLink = $"https://www.reddit.com/r/{chapter.Subreddit}/comments/{chapter.Id}",
+        RedditAuthorLink = $"https://www.reddit.com/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
         ProcessedAtUtc = chapter.ProcessedAtUtc,
