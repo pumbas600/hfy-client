@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap");
+
 @layer normalize {
   * {
     box-sizing: border-box;
@@ -122,31 +124,30 @@
 @layer fonts {
   @font-face {
     font-family: "Atkinson Hyperlegible";
-    src: url("../fonts/Atkinson-Hyperlegible-Regular-102a.woff2")
-        format("woff2"),
-      url("../fonts/Atkinson-Hyperlegible-Regular-102.woff") format("woff");
+    src: url("/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2"),
+      url("/fonts/Atkinson-Hyperlegible-Regular-102.woff") format("woff");
     font-style: normal;
     font-weight: 300;
   }
   @font-face {
     font-family: "Atkinson Hyperlegible";
-    src: url("../fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2"),
-      url("../fonts/Atkinson-Hyperlegible-Italic-102.woff") format("woff");
+    src: url("/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2"),
+      url("/fonts/Atkinson-Hyperlegible-Italic-102.woff") format("woff");
     font-style: italic;
     font-weight: 300;
   }
   @font-face {
     font-family: "Atkinson Hyperlegible";
-    src: url("../fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2"),
-      url("../fonts/Atkinson-Hyperlegible-Bold-102.woff") format("woff");
+    src: url("/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2"),
+      url("/fonts/Atkinson-Hyperlegible-Bold-102.woff") format("woff");
     font-style: normal;
     font-weight: 700;
   }
   @font-face {
     font-family: "Atkinson Hyperlegible";
-    src: url("../fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2")
+    src: url("/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2")
         format("woff2"),
-      url("../fonts/Atkinson-Hyperlegible-BoldItalic-102.woff") format("woff");
+      url("/fonts/Atkinson-Hyperlegible-BoldItalic-102.woff") format("woff");
     font-style: italic;
     font-weight: 700;
   }
@@ -168,8 +169,47 @@
 
     accent-color: var(--primary-color);
     color-scheme: only light;
-    font-family: "Atkinson Hyperlegible", Inter, system-ui, -apple-system,
+    font-family: "Atkinson Hyperlegible", system-ui, -apple-system,
       BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Noto Serif", serif;
+  }
+
+  h1 {
+    font-size: var(--step-3);
+    font-weight: normal;
+  }
+
+  h2 {
+    font-size: var(--step-2);
+    font-weight: normal;
+  }
+
+  h3 {
+    font-size: var(--step-1);
+    font-weight: normal;
+  }
+
+  h4 {
+    font-size: var(--step-0);
+    font-weight: bold;
+  }
+
+  h5 {
+    font-size: var(--step--1);
+    font-weight: bold;
+  }
+
+  h6 {
+    font-size: var(--step--2);
+    font-weight: bold;
   }
 }
