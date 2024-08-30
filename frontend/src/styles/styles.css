@@ -158,7 +158,8 @@
     /* Colors */
     --primary-color: #06402b;
     --primary-darkened: #042d1f;
-    --primary-contrast: #ffffff;
+    --primary-contrast: #ebf7ed;
+    --primary-contrast-secondary: #c3e4d2;
     --background-acent: #c9eae6;
 
     /* Type scale */
@@ -217,8 +218,13 @@
     font-size: var(--step--1);
   }
 
-  p {
+  p,
+  a {
     font-size: var(--step-0);
+  }
+
+  a {
+    transition: color 0.15s ease-in-out;
   }
 
   button {

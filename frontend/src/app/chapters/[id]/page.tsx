@@ -1,7 +1,7 @@
 import ChapterButtons from "@/components/buttons/chapterButtons";
 import Container from "@/components/container";
 import ChapterHeader from "@/components/layout/chapterHeader";
-import PageHeader from "@/components/layout/pageHeader";
+import PageFooter from "@/components/layout/pageFooter";
 import config from "@/config";
 import { ChapterApi } from "@/types/api";
 import { Params } from "@/types/next";
@@ -27,6 +27,7 @@ export default async function Page({ params }: Params<{ id: string }>) {
         <main dangerouslySetInnerHTML={{ __html: chapter.textHtml }} />
         <ChapterButtons chapter={chapter} hideFirstLink />
       </Container>
+      <PageFooter />
     </article>
   );
 }
