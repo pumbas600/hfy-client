@@ -48,8 +48,8 @@ namespace HfyClientApi.Services
     public ChapterPaginationDto ToPaginatedChapterMetadataDto(
       int pageSize, IEnumerable<Chapter> chapters)
     {
-      var lastChapter = chapters.Last();
-      var nextKey = new ChapterPaginationKey()
+      var lastChapter = chapters.LastOrDefault();
+      var nextKey = lastChapter == null ? null : new ChapterPaginationKey()
       {
         LastCreatedAtUtc = lastChapter.CreatedAtUtc,
         LastPostId = lastChapter.Id

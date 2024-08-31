@@ -12,7 +12,7 @@ namespace HfyClientApi.Dtos
     /// <summary>
     /// The keyset pagination key for the next page of data.
     /// </summary>
-    public required K NextKey { get; set; }
+    public required K? NextKey { get; set; }
     public required int PageSize { get; set; }
     public required IEnumerable<T> Data { get; set; }
   }

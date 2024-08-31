@@ -8,5 +8,8 @@ namespace HfyClientApi.Services
     Task<Result<FullChapterDto>> GetChapterByIdAsync(string id);
 
     Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id);
+
+    Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
+      int pageSize, ChapterPaginationKey? nextKey);
   }
 }
