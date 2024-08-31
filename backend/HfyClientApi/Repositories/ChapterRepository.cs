@@ -1,4 +1,5 @@
 using HfyClientApi.Data;
+using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
 using HfyClientApi.Models;
 using HfyClientApi.Utils;
@@ -75,6 +76,31 @@ namespace HfyClientApi.Repositories
     private async Task<Chapter?> GetDetachedChapterByIdAsync(string id)
     {
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+    }
+
+    public async Task<IEnumerable<Chapter>> GetPaginatedChapterMetadata(
+      int pageSize, ChapterPaginationKey key)
+    {
+      return await _context.Chapters
+        .Select(c => new Chapter()
+        {
+          Id = c.Id,
+          Author = c.Author,
+          Subreddit = c.Subreddit,
+          Title = c.Title,
+          IsNsfw = c.IsNsfw,
+          Upvotes = c.Upvotes,
+          Downvotes = c.Downvotes,
+          CreatedAtUtc = c.CreatedAtUtc,
+          EditedAtUtc = c.EditedAtUtc,
+          ProcessedAtUtc = c.ProcessedAtUtc
+        })
+        .OrderByDescending(c => c.CreatedAtUtc)
+        .ThenBy(c => c.Id)
+        .Where(c => c.CreatedAtUtc < key.LastCreatedAtUtc
+          || (c.CreatedAtUtc == key.LastCreatedAtUtc && c.Id.CompareTo(key.LastPostId) > 0))
+        .Take(pageSize)
+        .ToListAsync();
     }
   }
 }

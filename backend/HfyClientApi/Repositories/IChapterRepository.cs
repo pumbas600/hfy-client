@@ -1,3 +1,4 @@
+using HfyClientApi.Dtos;
 using HfyClientApi.Models;
 using HfyClientApi.Utils;
 
@@ -12,6 +13,7 @@ namespace HfyClientApi.Repositories
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter);
 
+    Task<IEnumerable<Chapter>> GetPaginatedChapterMetadata(int pageSize, ChapterPaginationKey key);
   }
 
 }
