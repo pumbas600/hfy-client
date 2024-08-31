@@ -78,10 +78,10 @@ namespace HfyClientApi.Repositories
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadata(
-      int pageSize, ChapterPaginationKey key)
+    public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
+      int pageSize, ChapterPaginationKey? nextKey)
     {
-      return await _context.Chapters
+      IQueryable<Chapter> query = _context.Chapters
         .Select(c => new Chapter()
         {
           Id = c.Id,
@@ -96,9 +96,15 @@ namespace HfyClientApi.Repositories
           ProcessedAtUtc = c.ProcessedAtUtc
         })
         .OrderByDescending(c => c.CreatedAtUtc)
-        .ThenBy(c => c.Id)
-        .Where(c => c.CreatedAtUtc < key.LastCreatedAtUtc
-          || (c.CreatedAtUtc == key.LastCreatedAtUtc && c.Id.CompareTo(key.LastPostId) > 0))
+        .ThenBy(c => c.Id);
+
+      if (nextKey != null)
+      {
+        query = query.Where(c => c.CreatedAtUtc < nextKey.LastCreatedAtUtc
+          || (c.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Id.CompareTo(nextKey.LastPostId) > 0));
+      }
+
+      return await query
         .Take(pageSize)
         .ToListAsync();
     }

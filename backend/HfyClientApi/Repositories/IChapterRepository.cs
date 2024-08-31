@@ -13,7 +13,8 @@ namespace HfyClientApi.Repositories
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter);
 
-    Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadata(int pageSize, ChapterPaginationKey key);
+    Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
+      int pageSize, ChapterPaginationKey? nextKey);
   }
 
 }
