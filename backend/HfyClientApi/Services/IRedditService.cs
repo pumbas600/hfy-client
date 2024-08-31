@@ -5,6 +5,6 @@ namespace HfyClientApi.Services
 {
   public interface IRedditService
   {
-    public Result<SelfPost> GetSelfPostById(string postId);
+    Result<SelfPost> GetSelfPostById(string postId);
   }
 }

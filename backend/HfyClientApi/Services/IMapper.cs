@@ -5,11 +5,10 @@ namespace HfyClientApi.Services
 {
   public interface IMapper
   {
-    public FullChapterDto ToFullChapterDto(Chapter chapter);
+    FullChapterDto ToFullChapterDto(Chapter chapter);
 
-    public ChapterMetadataDto ToChapterMetadataDto(Chapter chapter);
+    ChapterMetadataDto ToChapterMetadataDto(Chapter chapter);
 
-    public ChapterPaginationDto ToPaginatedChapterMetadataDto(
-      int pageSize, IEnumerable<Chapter> chapters);
+    ChapterPaginationDto ToPaginatedChapterMetadataDto(int pageSize, IEnumerable<Chapter> chapters);
   }
 }

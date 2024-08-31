@@ -5,6 +5,6 @@ namespace HfyClientApi.Services
 {
   public interface IChapterParsingService
   {
-    public Chapter ChapterFromPost(SelfPost post);
+    Chapter ChapterFromPost(SelfPost post);
   }
 }

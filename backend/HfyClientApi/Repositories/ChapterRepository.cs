@@ -78,7 +78,7 @@ namespace HfyClientApi.Repositories
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<IEnumerable<Chapter>> GetPaginatedChapterMetadata(
+    public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadata(
       int pageSize, ChapterPaginationKey key)
     {
       return await _context.Chapters
