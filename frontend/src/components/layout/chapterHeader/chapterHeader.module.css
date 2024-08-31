@@ -34,3 +34,7 @@
 .authorContainer a:hover {
   text-decoration: underline;
 }
+
+.timeMetadata {
+  font-size: var(--step--1);
+}

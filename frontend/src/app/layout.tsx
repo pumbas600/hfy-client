@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import "@/styles/styles.css";
 
 // See: https://docs.fontawesome.com/web/use-with/react/use-with#getting-font-awesome-css-to-work
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
+
+dayjs.extend(relativeTime);
 
 export const metadata: Metadata = {
   title: "HFY Client",

@@ -14,6 +14,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "dayjs": "^1.11.13",
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18"
