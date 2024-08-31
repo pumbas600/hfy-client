@@ -15,6 +15,8 @@ namespace HfyClientApi.Services
         Title = chapter.Title,
         TextHtml = chapter.TextHtml,
         IsNsfw = chapter.IsNsfw,
+        Upvotes = 1, // TODO: Implement upvotes and downvotes
+        Downvotes = 0,
         RedditPostLink = $"https://www.reddit.com/r/{chapter.Subreddit}/comments/{chapter.Id}",
         RedditAuthorLink = $"https://www.reddit.com/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
@@ -23,6 +25,34 @@ namespace HfyClientApi.Services
         NextChapterId = chapter.NextChapterId,
         PreviousChapterId = chapter.PreviousChapterId,
         FirstChapterId = chapter.FirstChapterId
+      };
+    }
+
+    public ChapterMetadataDto ToChapterMetadataDto(Chapter chapter)
+    {
+      return new ChapterMetadataDto
+      {
+        Id = chapter.Id,
+        Author = chapter.Author,
+        Subreddit = chapter.Subreddit,
+        Title = chapter.Title,
+        IsNsfw = chapter.IsNsfw,
+        Upvotes = 1, // TODO: Implement upvotes and downvotes
+        Downvotes = 0,
+        CreatedAtUtc = chapter.CreatedAtUtc,
+        EditedAtUtc = chapter.EditedAtUtc,
+        ProcessedAtUtc = chapter.ProcessedAtUtc
+      };
+    }
+
+    public PaginationDto<ChapterMetadataDto> ToPaginatedChapterMetadataDto(
+      int page, int pageSize, List<Chapter> chapters)
+    {
+      return new PaginationDto<ChapterMetadataDto>
+      {
+        Page = page,
+        PageSize = pageSize,
+        Data = chapters.Select(ToChapterMetadataDto)
       };
     }
   }
