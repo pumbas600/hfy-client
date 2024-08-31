@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using HfyClientApi.Data;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
@@ -79,9 +80,14 @@ namespace HfyClientApi.Repositories
     }
 
     public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
-      int pageSize, ChapterPaginationKey? nextKey)
+      int pageSize, string subreddit, ChapterPaginationKey? nextKey)
     {
-      IQueryable<Chapter> query = _context.Chapters
+      Expression<Func<Chapter, bool>> predicate = nextKey == null
+        ? c => c.Subreddit == subreddit
+        : c => c.Subreddit == subreddit && c.CreatedAtUtc < nextKey.LastCreatedAtUtc
+          || (c.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Id.CompareTo(nextKey.LastPostId) > 0);
+
+      return await _context.Chapters
         .Select(c => new Chapter()
         {
           Id = c.Id,
@@ -96,15 +102,8 @@ namespace HfyClientApi.Repositories
           ProcessedAtUtc = c.ProcessedAtUtc
         })
         .OrderByDescending(c => c.CreatedAtUtc)
-        .ThenBy(c => c.Id);
-
-      if (nextKey != null)
-      {
-        query = query.Where(c => c.CreatedAtUtc < nextKey.LastCreatedAtUtc
-          || (c.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Id.CompareTo(nextKey.LastPostId) > 0));
-      }
-
-      return await query
+        .ThenBy(c => c.Id)
+        .Where(predicate)
         .Take(pageSize)
         .ToListAsync();
     }

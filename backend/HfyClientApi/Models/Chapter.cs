@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Models
 {
+  [Index(nameof(Subreddit))]
   [Index(nameof(CreatedAtUtc))]
   [Index(nameof(FirstChapterId))]
   public class Chapter

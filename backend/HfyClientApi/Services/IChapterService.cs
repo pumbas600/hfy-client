@@ -10,6 +10,6 @@ namespace HfyClientApi.Services
     Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id);
 
     Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
-      int pageSize, ChapterPaginationKey? nextKey);
+      int pageSize, string subreddit, ChapterPaginationKey? nextKey);
   }
 }
