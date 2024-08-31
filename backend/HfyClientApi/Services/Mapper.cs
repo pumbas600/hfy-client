@@ -45,12 +45,19 @@ namespace HfyClientApi.Services
       };
     }
 
-    public PaginationDto<ChapterMetadataDto> ToPaginatedChapterMetadataDto(
-      int page, int pageSize, List<Chapter> chapters)
+    public ChapterPaginationDto ToPaginatedChapterMetadataDto(
+      int pageSize, List<Chapter> chapters)
     {
-      return new PaginationDto<ChapterMetadataDto>
+      var lastChapter = chapters.Last();
+      var nextKey = new ChapterPaginationKey()
       {
-        Page = page,
+        LastCreatedAtUtc = lastChapter.CreatedAtUtc,
+        LastPostId = lastChapter.Id
+      };
+
+      return new ChapterPaginationDto()
+      {
+        NextKey = nextKey,
         PageSize = pageSize,
         Data = chapters.Select(ToChapterMetadataDto)
       };

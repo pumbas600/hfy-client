@@ -100,6 +100,8 @@ namespace HfyClientApi.Services
         Title = post.Title,
         Author = post.Author,
         Subreddit = post.Subreddit,
+        Upvotes = post.UpVotes,
+        Downvotes = post.DownVotes,
         TextHtml = document.DocumentNode.InnerHtml,
         IsNsfw = post.NSFW,
         CreatedAtUtc = post.Created,
