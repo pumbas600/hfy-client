@@ -1,4 +1,5 @@
 using HfyClientApi.Dtos;
+using HfyClientApi.Exceptions;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,35 @@ namespace HfyClientApi.Controllers
       return chapterResult.ToActionResult(
         chapter => CreatedAtAction(nameof(GetChapterById), new { id = chapter.Id }, chapter)
       );
+    }
+
+    [HttpGet("r/{subreddit}/new")]
+    public async Task<ActionResult<ChapterPaginationDto>> GetNewSubredditChapters(
+      [FromRoute] string subreddit, [FromQuery] DateTime? lastCreated,
+      [FromQuery] string? lastId, [FromQuery] int pageSize = 20)
+    {
+      ChapterPaginationKey? nextKey = null;
+
+      // TODO: Validate lastCreated is a UTC timestamp
+
+      if (lastCreated != null && lastId != null)
+      {
+        nextKey = new ChapterPaginationKey()
+        {
+          // For some reason, C# doesn't realise that lastCreated is not null.
+          LastCreatedAtUtc = lastCreated.Value,
+          LastPostId = lastId,
+        };
+      }
+      else if (lastCreated != null || lastId != null)
+      {
+        return Errors.ChapterPaginationPartialKeyset.ToActionResult();
+      }
+
+      var chapterPaginationDto = await _chapterService.GetPaginatedNewChaptersMetadataAsync(
+        subreddit, pageSize, nextKey);
+
+      return Ok(chapterPaginationDto);
     }
 
   }

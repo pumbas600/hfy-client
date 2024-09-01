@@ -80,7 +80,7 @@ namespace HfyClientApi.Repositories
     }
 
     public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
-      int pageSize, string subreddit, ChapterPaginationKey? nextKey)
+      string subreddit, int pageSize, ChapterPaginationKey? nextKey)
     {
       Expression<Func<Chapter, bool>> predicate = nextKey == null
         ? c => c.Subreddit == subreddit

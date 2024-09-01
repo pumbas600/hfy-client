@@ -34,10 +34,10 @@ namespace HfyClientApi.Services
     }
 
     public async Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
-      int pageSize, string subreddit, ChapterPaginationKey? nextKey)
+      string subreddit, int pageSize, ChapterPaginationKey? nextKey)
     {
       var chapters = await _chapterRepository.GetPaginatedNewChaptersMetadataAsync(
-        pageSize, subreddit, nextKey);
+        subreddit, pageSize, nextKey);
 
       return _mapper.ToPaginatedChapterMetadataDto(pageSize, chapters);
     }

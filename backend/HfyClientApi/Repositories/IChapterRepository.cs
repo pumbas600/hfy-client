@@ -14,7 +14,7 @@ namespace HfyClientApi.Repositories
     Task<Chapter> UpdateChapterAsync(Chapter chapter);
 
     Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
-      int pageSize, string subreddit, ChapterPaginationKey? nextKey);
+      string subreddit, int pageSize, ChapterPaginationKey? nextKey);
   }
 
 }

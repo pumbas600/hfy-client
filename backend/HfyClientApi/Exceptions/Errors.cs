@@ -11,7 +11,7 @@ namespace HfyClientApi.Exceptions
       public const string PostNotFound = "Post.NotFound";
       public const string ChapterNotFound = "Chapter.NotFound";
       public const string ChapterUpsertFailed = "Chapter.UpsertFailed";
-
+      public const string ChapterPaginationPartialKeyset = "Chapter.PaginationPartialKeyset";
     }
 
     public static Error PostNotFound(string postId) =>
@@ -21,5 +21,8 @@ namespace HfyClientApi.Exceptions
       new(Codes.ChapterNotFound, $"No chapter found for id {chapterId}", HttpStatusCode.NotFound);
     public static Error ChapterUpsertFailed(string chapterId) =>
       new(Codes.ChapterUpsertFailed, $"Failed to upsert chapter with id {chapterId}", HttpStatusCode.Conflict);
+
+    public static readonly Error ChapterPaginationPartialKeyset =
+      new(Codes.ChapterPaginationPartialKeyset, $"Both lastCreated and lastId must be provided or omitted.", HttpStatusCode.BadRequest);
   }
 }
