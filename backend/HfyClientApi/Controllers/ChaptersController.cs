@@ -47,7 +47,7 @@ namespace HfyClientApi.Controllers
         nextKey = new ChapterPaginationKey()
         {
           // For some reason, C# doesn't realise that lastCreated is not null.
-          LastCreatedAtUtc = lastCreated.Value,
+          LastCreatedAtUtc = lastCreated.Value.ToUniversalTime(),
           LastPostId = lastId,
         };
       }
