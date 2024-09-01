@@ -1,5 +1,6 @@
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
+using HfyClientApi.Models;
 using HfyClientApi.Repositories;
 using HfyClientApi.Utils;
 
@@ -54,10 +55,47 @@ namespace HfyClientApi.Services
       var parsedChapter = _chapterParsingService.ChapterFromPost(selfPost);
 
       // TODO: Check for broken/incorrect links between chapters.
+      await UpdateChapterLinksAsync(parsedChapter);
 
       var createdChapterResult = await _chapterRepository.UpsertChapterAsync(parsedChapter);
       return createdChapterResult.Map(_mapper.ToFullChapterDto);
 
+    }
+
+    internal async Task<Result> UpdateChapterLinksAsync(Chapter parsedChapter)
+    {
+      // TODO: Does the update work as I've only selected a few columns?
+
+      var (previousChapter, nextChapter) = await _chapterRepository.GetLinkedChaptersByChapterAsync(parsedChapter);
+      if (previousChapter == null)
+      {
+        // TODO: Look for previous chapters with a next link to this chapter?
+      }
+      else if (previousChapter.NextChapterId == null)
+      {
+        previousChapter.NextChapterId = parsedChapter.Id;
+        await _chapterRepository.UpdateChapterAsync(previousChapter, onlyLinks: true);
+      }
+      else if (previousChapter.NextChapterId != parsedChapter.Id)
+      {
+        // TODO: BROKEN LINK!
+      }
+
+      if (nextChapter == null)
+      {
+        // TODO: Look for next chapters with a previous link to this chapter?
+      }
+      else if (nextChapter.PreviousChapterId == null)
+      {
+        nextChapter.PreviousChapterId = parsedChapter.Id;
+        await _chapterRepository.UpdateChapterAsync(nextChapter, onlyLinks: true);
+      }
+      else if (nextChapter.PreviousChapterId != parsedChapter.Id)
+      {
+        // TODO: BROKEN LINK!
+      }
+
+      return Result.Success();
     }
   }
 }

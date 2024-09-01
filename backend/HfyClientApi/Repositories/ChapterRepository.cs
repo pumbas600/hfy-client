@@ -66,10 +66,22 @@ namespace HfyClientApi.Repositories
       return chapter;
     }
 
-    public async Task<Chapter> UpdateChapterAsync(Chapter chapter)
+    public async Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false)
     {
-      chapter.ProcessedAtUtc = DateTime.UtcNow;
-      _context.Chapters.Update(chapter);
+      if (onlyLinks)
+      {
+        await _context.Chapters
+          .Where(c => c.Id == chapter.Id)
+          .ExecuteUpdateAsync(builder =>
+            builder.SetProperty(c => c.PreviousChapterId, chapter.PreviousChapterId)
+              .SetProperty(c => c.NextChapterId, chapter.NextChapterId)
+          );
+      }
+      else
+      {
+        chapter.ProcessedAtUtc = DateTime.UtcNow;
+        _context.Chapters.Update(chapter);
+      }
       await _context.SaveChangesAsync();
       return chapter;
     }
@@ -108,12 +120,23 @@ namespace HfyClientApi.Repositories
         .ToListAsync();
     }
 
-    public async Task<IEnumerable<Chapter?>> GetChaptersByIdsAsync(IEnumerable<string> ids)
+    public async Task<(Chapter?, Chapter?)> GetLinkedChaptersByChapterAsync(Chapter chapter)
     {
-      var chapters = await _context.Chapters.Where(c => ids.Contains(c.Id)).ToListAsync();
-      var chapterMap = chapters.ToDictionary(c => c.Id);
+      var linkedChapters = await _context.Chapters
+        .Select(c => new Chapter()
+        {
+          Id = c.Id,
+          PreviousChapterId = c.PreviousChapterId,
+          NextChapterId = c.NextChapterId
+        })
+        .Where(c => c.Id == chapter.PreviousChapterId || c.Id == chapter.NextChapterId)
+        .ToListAsync();
+      var linkedChapterMap = linkedChapters.ToDictionary(c => c.Id);
 
-      return ids.Select(id => chapterMap.GetValueOrDefault(id));
+      return (
+        linkedChapterMap.GetValueOrDefault(chapter.PreviousChapterId ?? ""),
+        linkedChapterMap.GetValueOrDefault(chapter.NextChapterId ?? "")
+      );
     }
   }
 }
