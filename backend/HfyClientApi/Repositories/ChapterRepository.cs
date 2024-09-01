@@ -107,5 +107,13 @@ namespace HfyClientApi.Repositories
         .Take(pageSize)
         .ToListAsync();
     }
+
+    public async Task<IEnumerable<Chapter?>> GetChaptersByIdsAsync(IEnumerable<string> ids)
+    {
+      var chapters = await _context.Chapters.Where(c => ids.Contains(c.Id)).ToListAsync();
+      var chapterMap = chapters.ToDictionary(c => c.Id);
+
+      return ids.Select(id => chapterMap.GetValueOrDefault(id));
+    }
   }
 }

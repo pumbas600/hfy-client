@@ -9,6 +9,8 @@ namespace HfyClientApi.Repositories
 
     Task<Result<Chapter>> GetChapterByIdAsync(string id);
 
+    Task<IEnumerable<Chapter?>> GetChaptersByIdsAsync(IEnumerable<string> ids);
+
     Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter);
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter);

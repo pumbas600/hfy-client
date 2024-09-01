@@ -40,8 +40,6 @@ namespace HfyClientApi.Controllers
     {
       ChapterPaginationKey? nextKey = null;
 
-      // TODO: Validate lastCreated is a UTC timestamp
-
       if (lastCreated != null && lastId != null)
       {
         nextKey = new ChapterPaginationKey()
