@@ -7,6 +7,6 @@ namespace HfyClientApi.Models
     [Key]
     public string FirstChapterId { get; set; } = null!;
 
-    public string CoverImageUrl { get; set; } = null!;
+    public string CoverArtUrl { get; set; } = null!;
   }
 }

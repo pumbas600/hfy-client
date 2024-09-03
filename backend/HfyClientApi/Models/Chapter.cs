@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Models
@@ -47,5 +48,8 @@ namespace HfyClientApi.Models
     /// the story this chapter belongs to has not been identified yet.
     /// </summary>
     public string? FirstChapterId { get; set; } = null!;
+
+    [ForeignKey(nameof(FirstChapterId))]
+    public StoryMetadata? StoryMetadata { get; set; }
   }
 }

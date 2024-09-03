@@ -17,11 +17,10 @@ namespace HfyClientApi.Services
     {
       public required string Subreddit { get; set; }
       public required string PostId { get; set; }
-      public required string Label { get; set; }
       public required HtmlNode LinkElement { get; set; }
 
       public override string ToString()
-        => $"ChapterLink(Subreddit: {Subreddit}, PostId: {PostId}, Label: {Label}, LinkElement: {LinkElement})";
+        => $"ChapterLink(Subreddit: {Subreddit}, PostId: {PostId}, LinkElement: {LinkElement})";
     }
 
     private const string RedditBaseUrl = "https://www.reddit.com";
@@ -41,26 +40,36 @@ namespace HfyClientApi.Services
       Dictionary<string, List<ChapterLink>> nextLinkMap = [];
       Dictionary<string, List<ChapterLink>> previousLinkMap = [];
       Dictionary<string, List<ChapterLink>> firstLinkMap = [];
+      string? coverArtUrl = null;
 
       if (links != null)
       {
         foreach (var linkElement in links)
         {
+          var label = linkElement.InnerText.ToLower();
+          var link = linkElement.GetAttributeValue("href", null);
+
+          if (label.Contains("cover") && IsImageUrl(link))
+          {
+            coverArtUrl = link;
+            continue;
+          }
+
           var chapterLink = ParseRedditLink(linkElement);
           if (chapterLink == null)
           {
             continue;
           }
 
-          if (chapterLink.Label.Contains("next"))
+          if (label.Contains("next"))
           {
             nextLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
           }
-          else if (chapterLink.Label.Contains("prev"))
+          else if (label.Contains("prev"))
           {
             previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
           }
-          else if (chapterLink.Label.Contains("first"))
+          else if (label.Contains("first"))
           {
             firstLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
           }
@@ -94,6 +103,16 @@ namespace HfyClientApi.Services
         firstChapterId = post.Id;
       }
 
+      StoryMetadata? storyMetadata = null;
+      if (firstChapterId != null && coverArtUrl != null)
+      {
+        storyMetadata = new()
+        {
+          FirstChapterId = firstChapterId,
+          CoverArtUrl = coverArtUrl
+        };
+      }
+
       return new()
       {
         Id = post.Id,
@@ -110,6 +129,7 @@ namespace HfyClientApi.Services
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
         FirstChapterId = firstChapterId,
+        StoryMetadata = storyMetadata,
       };
     }
 
@@ -130,17 +150,19 @@ namespace HfyClientApi.Services
       string subreddit = match.Groups[1].Value;
       string postId = match.Groups[2].Value;
 
-      string label = linkElement.InnerText;
-
       return new()
       {
         Subreddit = subreddit,
         PostId = postId,
-        Label = label.ToLower(),
         LinkElement = linkElement
       };
     }
 
+    internal protected static bool IsImageUrl(string url)
+    {
+      List<string> imageFiletypes = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
 
+      return imageFiletypes.Any(url.EndsWith);
+    }
   }
 }
