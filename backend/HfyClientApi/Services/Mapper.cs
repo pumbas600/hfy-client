@@ -1,3 +1,4 @@
+using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Models;
 
@@ -15,10 +16,10 @@ namespace HfyClientApi.Services
         Title = chapter.Title,
         TextHtml = chapter.TextHtml,
         IsNsfw = chapter.IsNsfw,
-        Upvotes = 1, // TODO: Implement upvotes and downvotes
-        Downvotes = 0,
-        RedditPostLink = $"https://www.reddit.com/r/{chapter.Subreddit}/comments/{chapter.Id}",
-        RedditAuthorLink = $"https://www.reddit.com/user/{chapter.Author}",
+        Upvotes = chapter.Upvotes,
+        Downvotes = chapter.Downvotes,
+        RedditPostLink = $"{Config.RedditUrl}/r/{chapter.Subreddit}/comments/{chapter.Id}",
+        RedditAuthorLink = $"{Config.RedditUrl}/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
         ProcessedAtUtc = chapter.ProcessedAtUtc,
@@ -37,8 +38,8 @@ namespace HfyClientApi.Services
         Subreddit = chapter.Subreddit,
         Title = chapter.Title,
         IsNsfw = chapter.IsNsfw,
-        Upvotes = 1, // TODO: Implement upvotes and downvotes
-        Downvotes = 0,
+        Upvotes = chapter.Upvotes,
+        Downvotes = chapter.Downvotes,
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
         ProcessedAtUtc = chapter.ProcessedAtUtc
