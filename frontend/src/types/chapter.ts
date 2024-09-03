@@ -1,16 +1,26 @@
-export interface FullChapter {
+export interface ChapterMetadata {
   id: string;
   author: string;
   subreddit: string;
   title: string;
-  textHtml: string;
   isNsfw: boolean;
-  redditPostLink: string;
-  redditAuthorLink: string;
+  upvotes: number;
+  downvotes: number;
   createdAtUtc: string;
   editedAtUtc: string;
   processedAtUtc: string;
+}
+
+export interface FullChapter extends ChapterMetadata {
+  textHtml: string;
+  redditPostLink: string;
+  redditAuthorLink: string;
   nextChapterId: string | null;
   previousChapterId: string | null;
   firstChapterId: string | null;
+}
+
+export interface ChapterPaginationKey {
+  lastCreatedAtUtc: string;
+  lastPostId: string;
 }

@@ -4,12 +4,12 @@ import Container from "@/components/container";
 import ChapterHeader from "@/components/layout/chapterHeader";
 import PageFooter from "@/components/layout/pageFooter";
 import config from "@/config";
-import { ChapterApi } from "@/types/api";
+import { GetChapterRequest } from "@/types/api";
 import { Params } from "@/types/next";
 
 export default async function Page({ params }: Params<{ id: string }>) {
   const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`);
-  const chapter: ChapterApi.Res = await res.json();
+  const chapter: GetChapterRequest.ResBody = await res.json();
 
   if (!res.ok) {
     return (
