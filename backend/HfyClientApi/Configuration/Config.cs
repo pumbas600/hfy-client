@@ -10,11 +10,6 @@ namespace HfyClientApi.Configuration
       public const string RedditAccessToken = "RedditAccessToken";
     }
 
-    public class HttpClients
-    {
-      public const string Reddit = "Reddit";
-    }
-
     public const string UserAgent = "hfy-client (by pumbas600)";
     public const string RedditUrl = "https://www.reddit.com";
   }
