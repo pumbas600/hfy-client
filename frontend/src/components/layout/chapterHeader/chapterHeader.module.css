@@ -34,3 +34,7 @@
 .authorContainer a:hover {
   text-decoration: underline;
 }
+
+.title {
+  padding-bottom: 1rem;
+}

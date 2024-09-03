@@ -12,9 +12,6 @@ export interface ChapterHeaderProps {
 }
 
 export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
-  const createdAt = dayjs(chapter.createdAtUtc);
-  const processedAt = dayjs(chapter.processedAtUtc);
-
   return (
     <PageHeader>
       <div className={styles.detailsContainer}>
@@ -30,7 +27,7 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
           <FontAwesomeIcon icon={faReddit} size="lg" />
         </a>
       </div>
-      <h2>{chapter.title}</h2>
+      <h2 className={styles.title}>{chapter.title}</h2>
       <ChapterTimeMetadata
         createdAtUtc={chapter.createdAtUtc}
         processedAtUtc={chapter.processedAtUtc}
