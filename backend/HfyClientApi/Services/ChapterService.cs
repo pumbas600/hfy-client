@@ -11,15 +11,17 @@ namespace HfyClientApi.Services
     private readonly IChapterRepository _chapterRepository;
     private readonly IChapterParsingService _chapterParsingService;
     private readonly IRedditService _redditService;
+    private readonly ILogger<ChapterService> _logger;
     private readonly IMapper _mapper;
 
     public ChapterService(
       IChapterRepository chapterRepository, IChapterParsingService chapterParsingService,
-      IRedditService redditService, IMapper mapper)
+      IRedditService redditService, ILogger<ChapterService> logger, IMapper mapper)
     {
       _chapterRepository = chapterRepository;
       _chapterParsingService = chapterParsingService;
       _redditService = redditService;
+      _logger = logger;
       _mapper = mapper;
     }
 
@@ -54,7 +56,6 @@ namespace HfyClientApi.Services
       var selfPost = selfPostResult.Data;
       var parsedChapter = _chapterParsingService.ChapterFromPost(selfPost);
 
-      // TODO: Check for broken/incorrect links between chapters.
       await UpdateChapterLinksAsync(parsedChapter);
 
       var createdChapterResult = await _chapterRepository.UpsertChapterAsync(parsedChapter);
@@ -62,40 +63,65 @@ namespace HfyClientApi.Services
 
     }
 
-    internal async Task<Result> UpdateChapterLinksAsync(Chapter parsedChapter)
+    internal async Task<Result> UpdateChapterLinksAsync(Chapter chapter)
     {
-      // TODO: Does the update work as I've only selected a few columns?
+      var (previousChapter, nextChapter) = await _chapterRepository.GetLinkedChaptersByChapterAsync(chapter);
 
-      var (previousChapter, nextChapter) = await _chapterRepository.GetLinkedChaptersByChapterAsync(parsedChapter);
+      await UpdatePreviousChapterLinkAsync(chapter, previousChapter);
+      await UpdateNextChapterLinkAsync(chapter, nextChapter);
+
+      return Result.Success();
+    }
+
+    internal async Task UpdatePreviousChapterLinkAsync(
+      Chapter originalChapter, Chapter? previousChapter)
+    {
       if (previousChapter == null)
       {
-        // TODO: Look for previous chapters with a next link to this chapter?
+        // Find a chapter with a next link to the original chapter.
+        previousChapter = await _chapterRepository.GetChapterByNextLinkIdAsync(originalChapter.Id);
+        if (previousChapter != null)
+        {
+          originalChapter.PreviousChapterId = previousChapter.Id;
+        }
       }
       else if (previousChapter.NextChapterId == null)
       {
-        previousChapter.NextChapterId = parsedChapter.Id;
+        previousChapter.NextChapterId = originalChapter.Id;
         await _chapterRepository.UpdateChapterAsync(previousChapter, onlyLinks: true);
       }
-      else if (previousChapter.NextChapterId != parsedChapter.Id)
+      else if (previousChapter.NextChapterId != originalChapter.Id)
       {
-        // TODO: BROKEN LINK!
+        _logger.LogWarning(
+          "Chapter {} has a broken previous link. The linked chapter has a next link to {}",
+          originalChapter.Id, previousChapter.NextChapterId
+        );
       }
+    }
 
+    internal async Task UpdateNextChapterLinkAsync(Chapter originalChapter, Chapter? nextChapter)
+    {
       if (nextChapter == null)
       {
-        // TODO: Look for next chapters with a previous link to this chapter?
+        // Find a chapter with a previous link to the original chapter.
+        nextChapter = await _chapterRepository.GetChapterByPreviousLinkIdAsync(originalChapter.Id);
+        if (nextChapter != null)
+        {
+          originalChapter.NextChapterId = nextChapter.Id;
+        }
       }
       else if (nextChapter.PreviousChapterId == null)
       {
-        nextChapter.PreviousChapterId = parsedChapter.Id;
+        nextChapter.PreviousChapterId = originalChapter.Id;
         await _chapterRepository.UpdateChapterAsync(nextChapter, onlyLinks: true);
       }
-      else if (nextChapter.PreviousChapterId != parsedChapter.Id)
+      else if (nextChapter.PreviousChapterId != originalChapter.Id)
       {
-        // TODO: BROKEN LINK!
+        _logger.LogWarning(
+          "Chapter {} has a broken next link. The linked chapter has a previous link to {}",
+          originalChapter.Id, nextChapter.PreviousChapterId
+        );
       }
-
-      return Result.Success();
     }
   }
 }

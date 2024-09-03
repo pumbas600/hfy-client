@@ -138,5 +138,31 @@ namespace HfyClientApi.Repositories
         linkedChapterMap.GetValueOrDefault(chapter.NextChapterId ?? "")
       );
     }
+
+    public async Task<Chapter?> GetChapterByNextLinkIdAsync(string nextLinkId)
+    {
+      return await _context.Chapters
+        .Select(c => new Chapter()
+        {
+          Id = c.Id,
+          PreviousChapterId = c.PreviousChapterId,
+          NextChapterId = c.NextChapterId
+        })
+        .Where(c => c.NextChapterId == nextLinkId)
+        .FirstOrDefaultAsync();
+    }
+
+    public async Task<Chapter?> GetChapterByPreviousLinkIdAsync(string previousLinkId)
+    {
+      return await _context.Chapters
+        .Select(c => new Chapter()
+        {
+          Id = c.Id,
+          PreviousChapterId = c.PreviousChapterId,
+          NextChapterId = c.NextChapterId
+        })
+        .Where(c => c.PreviousChapterId == previousLinkId)
+        .FirstOrDefaultAsync();
+    }
   }
 }

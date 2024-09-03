@@ -11,6 +11,10 @@ namespace HfyClientApi.Repositories
 
     Task<(Chapter?, Chapter?)> GetLinkedChaptersByChapterAsync(Chapter chapter);
 
+    Task<Chapter?> GetChapterByNextLinkIdAsync(string nextLinkId);
+
+    Task<Chapter?> GetChapterByPreviousLinkIdAsync(string previousLinkId);
+
     Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter);
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false);
