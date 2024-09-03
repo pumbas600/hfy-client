@@ -54,7 +54,7 @@ namespace HfyClientApi.Services
       }
 
       var selfPost = selfPostResult.Data;
-      var parsedChapter = _chapterParsingService.ChapterFromPost(selfPost);
+      var (parsedChapter, storyMetadata) = _chapterParsingService.ChapterFromPost(selfPost);
 
       await UpdateChapterLinksAsync(parsedChapter);
 

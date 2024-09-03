@@ -30,7 +30,7 @@ namespace HfyClientApi.Services
     /// </summary>
     private const string RedditLinkRegex = @$"{RedditBaseUrl}/r/(\w+)/comments/(\w+)/\w+/?";
 
-    public Chapter ChapterFromPost(SelfPost post)
+    public (Chapter, StoryMetadata?) ChapterFromPost(SelfPost post)
     {
       var document = new HtmlDocument();
       document.LoadHtml(post.SelfTextHTML);
@@ -113,7 +113,7 @@ namespace HfyClientApi.Services
         };
       }
 
-      return new()
+      var chapter = new Chapter()
       {
         Id = post.Id,
         Title = post.Title,
@@ -129,8 +129,9 @@ namespace HfyClientApi.Services
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
         FirstChapterId = firstChapterId,
-        StoryMetadata = storyMetadata,
       };
+
+      return (chapter, storyMetadata);
     }
 
     internal protected static ChapterLink? ParseRedditLink(HtmlNode linkElement)

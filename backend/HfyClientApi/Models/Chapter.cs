@@ -48,8 +48,5 @@ namespace HfyClientApi.Models
     /// the story this chapter belongs to has not been identified yet.
     /// </summary>
     public string? FirstChapterId { get; set; } = null!;
-
-    [ForeignKey(nameof(FirstChapterId))]
-    public StoryMetadata? StoryMetadata { get; set; }
   }
 }
