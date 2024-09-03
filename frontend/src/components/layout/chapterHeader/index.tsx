@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 import dayjs from "dayjs";
 import RelativeTime from "@/components/times/relativeTime";
+import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
@@ -30,10 +31,10 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
         </a>
       </div>
       <h2>{chapter.title}</h2>
-      <p className={styles.timeMetadata}>
-        Posted <RelativeTime dateTimeUtc={chapter.createdAtUtc} /> • Last synced{" "}
-        <RelativeTime dateTimeUtc={chapter.processedAtUtc} />
-      </p>
+      <ChapterTimeMetadata
+        createdAtUtc={chapter.createdAtUtc}
+        processedAtUtc={chapter.processedAtUtc}
+      />
     </PageHeader>
   );
 }
