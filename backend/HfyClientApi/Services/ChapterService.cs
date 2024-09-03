@@ -60,7 +60,6 @@ namespace HfyClientApi.Services
 
       var createdChapterResult = await _chapterRepository.UpsertChapterAsync(parsedChapter);
       return createdChapterResult.Map(_mapper.ToFullChapterDto);
-
     }
 
     internal async Task<Result> UpdateChapterLinksAsync(Chapter chapter)
