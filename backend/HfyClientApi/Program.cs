@@ -60,6 +60,12 @@ builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 builder.Services.AddScoped<IChapterService, ChapterService>();
 builder.Services.AddScoped<IRedditService, RedditService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddHttpClient(Config.HttpClients.Reddit, c =>
+{
+  c.BaseAddress = new Uri(Config.RedditUrl);
+  c.DefaultRequestHeaders.Add("User-Agent", Config.UserAgent);
+});
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 
