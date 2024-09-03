@@ -16,7 +16,7 @@ export default function ChapterSummaryCard({
         <h4>{metadata.title}</h4>
         <ChapterTimeMetadata
           createdAtUtc={metadata.createdAtUtc}
-          processedAtUtc={metadata.processedAtUtc}
+          syncedAtUtc={metadata.syncedAtUtc}
         />
         <p>
           <button>Upvote</button>

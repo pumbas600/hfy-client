@@ -3,17 +3,17 @@ import styles from "./chapterTimeMetadata.module.css";
 
 export interface ChapterTimeMetadataProps {
   createdAtUtc: string;
-  processedAtUtc: string;
+  syncedAtUtc: string;
 }
 
 export default function ChapterTimeMetadata({
   createdAtUtc,
-  processedAtUtc,
+  syncedAtUtc,
 }: ChapterTimeMetadataProps) {
   return (
     <p className={styles.timeMetadata}>
       Posted <RelativeTime dateTimeUtc={createdAtUtc} /> • Last synced{" "}
-      <RelativeTime dateTimeUtc={processedAtUtc} />
+      <RelativeTime dateTimeUtc={syncedAtUtc} />
     </p>
   );
 }

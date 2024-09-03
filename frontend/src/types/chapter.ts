@@ -8,7 +8,7 @@ export interface ChapterMetadata {
   downvotes: number;
   createdAtUtc: string;
   editedAtUtc: string;
-  processedAtUtc: string;
+  syncedAtUtc: string;
 }
 
 export interface FullChapter extends ChapterMetadata {

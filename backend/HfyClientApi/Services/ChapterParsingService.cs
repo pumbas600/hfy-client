@@ -106,7 +106,7 @@ namespace HfyClientApi.Services
         IsNsfw = post.NSFW,
         CreatedAtUtc = post.Created,
         EditedAtUtc = post.Edited == default ? post.Created : post.Edited,
-        ProcessedAtUtc = DateTime.UtcNow,
+        SyncedAtUtc = DateTime.UtcNow,
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
         FirstChapterId = firstChapterId,

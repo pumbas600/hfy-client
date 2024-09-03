@@ -22,7 +22,7 @@ namespace HfyClientApi.Services
         RedditAuthorLink = $"{Config.RedditUrl}/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
-        ProcessedAtUtc = chapter.ProcessedAtUtc,
+        SyncedAtUtc = chapter.SyncedAtUtc,
         NextChapterId = chapter.NextChapterId,
         PreviousChapterId = chapter.PreviousChapterId,
         FirstChapterId = chapter.FirstChapterId
@@ -42,7 +42,7 @@ namespace HfyClientApi.Services
         Downvotes = chapter.Downvotes,
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
-        ProcessedAtUtc = chapter.ProcessedAtUtc
+        SyncedAtUtc = chapter.SyncedAtUtc
       };
     }
 

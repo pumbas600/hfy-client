@@ -79,7 +79,7 @@ namespace HfyClientApi.Repositories
       }
       else
       {
-        chapter.ProcessedAtUtc = DateTime.UtcNow;
+        chapter.SyncedAtUtc = DateTime.UtcNow;
         _context.Chapters.Update(chapter);
       }
       await _context.SaveChangesAsync();
@@ -111,7 +111,7 @@ namespace HfyClientApi.Repositories
           Downvotes = c.Downvotes,
           CreatedAtUtc = c.CreatedAtUtc,
           EditedAtUtc = c.EditedAtUtc,
-          ProcessedAtUtc = c.ProcessedAtUtc
+          SyncedAtUtc = c.SyncedAtUtc
         })
         .OrderByDescending(c => c.CreatedAtUtc)
         .ThenBy(c => c.Id)

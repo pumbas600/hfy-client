@@ -3,9 +3,8 @@ import PageHeader from "../pageHeader";
 import styles from "./chapterHeader.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
-import dayjs from "dayjs";
-import RelativeTime from "@/components/times/relativeTime";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
+import Link from "next/link";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
@@ -16,7 +15,9 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
     <PageHeader>
       <div className={styles.detailsContainer}>
         <div className={styles.authorContainer}>
-          <strong>r/{chapter.subreddit}</strong>
+          <Link href={`/r/${chapter.subreddit}`}>
+            <strong>r/{chapter.subreddit}</strong>
+          </Link>
           <a href={chapter.redditAuthorLink}>{chapter.author}</a>
         </div>
         <a
@@ -30,7 +31,7 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
       <h2 className={styles.title}>{chapter.title}</h2>
       <ChapterTimeMetadata
         createdAtUtc={chapter.createdAtUtc}
-        processedAtUtc={chapter.processedAtUtc}
+        syncedAtUtc={chapter.syncedAtUtc}
       />
     </PageHeader>
   );

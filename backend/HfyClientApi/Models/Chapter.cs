@@ -29,7 +29,7 @@ namespace HfyClientApi.Models
     /// <summary>
     /// UTC time when the chapter was last updated from the original post.
     /// </summary>
-    public DateTime ProcessedAtUtc { get; set; }
+    public DateTime SyncedAtUtc { get; set; }
 
     /// <summary>
     /// The next chapter in the story. If null, this is the latest chapter.

@@ -21,6 +21,6 @@ namespace HfyClientApi.Dtos
     /// <summary>
     /// UTC time when the chapter was last updated from the original post.
     /// </summary>
-    public required DateTime ProcessedAtUtc { get; set; }
+    public required DateTime SyncedAtUtc { get; set; }
   }
 }
