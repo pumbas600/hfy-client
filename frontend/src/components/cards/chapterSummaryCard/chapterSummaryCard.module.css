@@ -4,14 +4,26 @@
 }
 
 .card {
+  padding-inline: 2rem;
   padding-block: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-radius: 0.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
+.card:hover {
+  background-color: var(--hover-color);
+}
+
 .card img {
   width: 5rem;
+}
+
+.authorContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 1.5rem;
 }

@@ -233,6 +233,10 @@
     transition: color 0.15s ease-in-out;
   }
 
+  hr {
+    border: 1px solid var(--border-color);
+  }
+
   button {
     border: none;
     background-color: var(--primary-color);

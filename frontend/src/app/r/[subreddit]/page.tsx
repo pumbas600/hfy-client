@@ -1,3 +1,4 @@
+import ChapterCardList from "@/components/cards/chapterCardList";
 import ChapterSummaryCard from "@/components/cards/chapterSummaryCard";
 import Container from "@/components/container";
 import PageFooter from "@/components/layout/pageFooter";
@@ -24,11 +25,7 @@ export default async function Subreddit({
         <h1>r/{params.subreddit}</h1>
       </PageHeader>
       <Container>
-        <main>
-          {paginatedChapters.data.map((chapter) => (
-            <ChapterSummaryCard key={chapter.id} metadata={chapter} />
-          ))}
-        </main>
+        <ChapterCardList chapters={paginatedChapters.data} />
       </Container>
       <PageFooter />
     </div>
