@@ -9,6 +9,7 @@ namespace HfyClientApi.Services
   public class ChapterService : IChapterService
   {
     private readonly IChapterRepository _chapterRepository;
+    private readonly IStoryMetadataRepository _storyMetadataRepository;
     private readonly IChapterParsingService _chapterParsingService;
     private readonly IRedditService _redditService;
     private readonly ILogger<ChapterService> _logger;
@@ -16,9 +17,11 @@ namespace HfyClientApi.Services
 
     public ChapterService(
       IChapterRepository chapterRepository, IChapterParsingService chapterParsingService,
-      IRedditService redditService, ILogger<ChapterService> logger, IMapper mapper)
+      IStoryMetadataRepository storyMetadataRepository, IRedditService redditService,
+      ILogger<ChapterService> logger, IMapper mapper)
     {
       _chapterRepository = chapterRepository;
+      _storyMetadataRepository = storyMetadataRepository;
       _chapterParsingService = chapterParsingService;
       _redditService = redditService;
       _logger = logger;
@@ -59,6 +62,11 @@ namespace HfyClientApi.Services
       await UpdateChapterLinksAsync(parsedChapter);
 
       var createdChapterResult = await _chapterRepository.UpsertChapterAsync(parsedChapter);
+
+      if (storyMetadata != null)
+      {
+        await _storyMetadataRepository.UpsertMetadata(storyMetadata);
+      }
 
       return createdChapterResult.Map(createdChapter =>
         _mapper.ToFullChapterDto(new CombinedChapter

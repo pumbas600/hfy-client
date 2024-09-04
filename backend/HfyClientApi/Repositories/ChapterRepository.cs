@@ -100,35 +100,30 @@ namespace HfyClientApi.Repositories
     public async Task<IEnumerable<CombinedChapter>> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey)
     {
-      Expression<Func<Chapter, bool>> predicate = nextKey == null
-        ? c => c.Subreddit == subreddit
-        : c => c.Subreddit == subreddit && c.CreatedAtUtc < nextKey.LastCreatedAtUtc
-          || (c.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Id.CompareTo(nextKey.LastPostId) > 0);
+      Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
+        ? c => c.Chapter.Subreddit == subreddit
+        : c => c.Chapter.Subreddit == subreddit && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
+          || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
       return await _context.Chapters
-        .Select(c => new Chapter()
-        {
-          Id = c.Id,
-          Author = c.Author,
-          Subreddit = c.Subreddit,
-          Title = c.Title,
-          IsNsfw = c.IsNsfw,
-          Upvotes = c.Upvotes,
-          Downvotes = c.Downvotes,
-          CreatedAtUtc = c.CreatedAtUtc,
-          EditedAtUtc = c.EditedAtUtc,
-          SyncedAtUtc = c.SyncedAtUtc
-        })
-        .OrderByDescending(c => c.CreatedAtUtc)
-        .ThenBy(c => c.Id)
-        .Where(predicate)
-        .Take(pageSize)
-        .Join(
+        .GroupJoin(
           _context.StoryMetadata,
           chapter => chapter.FirstChapterId,
           story => story.FirstChapterId,
-          (chapter, story) => new CombinedChapter() { Chapter = chapter, StoryMetadata = story }
+          (chapter, story) => new { Chapter = chapter, Story = story }
         )
+        .SelectMany(
+          x => x.Story.DefaultIfEmpty(),
+          (chapter, story) => new CombinedChapter()
+          {
+            Chapter = chapter.Chapter,
+            StoryMetadata = story
+          }
+        )
+        .OrderByDescending(c => c.Chapter.CreatedAtUtc)
+        .ThenBy(c => c.Chapter.Id)
+        .Where(predicate)
+        .Take(pageSize)
         .ToListAsync();
     }
 

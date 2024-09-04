@@ -4,7 +4,6 @@ using HfyClientApi.Repositories;
 using HfyClientApi.Services;
 using Microsoft.EntityFrameworkCore;
 using Reddit;
-using Reddit.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +61,7 @@ builder.Services.AddScoped<IChapterService, ChapterService>();
 builder.Services.AddScoped<IRedditService, RedditService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
+builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
 
 var app = builder.Build();
 
