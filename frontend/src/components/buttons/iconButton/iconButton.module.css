@@ -1,0 +1,16 @@
+.iconButton {
+  min-width: auto;
+  width: auto;
+  height: auto;
+  padding-inline: 0.75rem;
+  aspect-ratio: 1/1;
+  background-color: transparent;
+  color: var(--primary-color);
+  border-radius: 50%;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.iconButton:hover {
+  background-color: var(--hover-color);
+  color: var(--primary-darkened);
+}

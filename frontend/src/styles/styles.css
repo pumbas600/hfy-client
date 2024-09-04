@@ -164,6 +164,7 @@
     --background-contrast: #000000;
     --reddit-orange: #ff5700;
     --border-color: #e0e0e0;
+    --hover-color: rgba(0, 0, 0, 0.05);
 
     /* Type scale */
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);

@@ -6,6 +6,8 @@ import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { Params } from "@/types/next";
 
+export const revalidate = 60; // Incrementally regenerate every 1 minute
+
 export default async function Subreddit({
   params,
 }: Params<{ subreddit: string }>) {
@@ -13,8 +15,6 @@ export default async function Subreddit({
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
   );
   const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
-
-  console.log(paginatedChapters);
 
   const hasNext = paginatedChapters.data.length != paginatedChapters.pageSize;
 

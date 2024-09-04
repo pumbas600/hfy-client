@@ -2,6 +2,7 @@ import { ChapterMetadata } from "@/types/chapter";
 import Link from "next/link";
 import styles from "./chapterSummaryCard.module.css";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
+import Upvotes from "./upvotes";
 
 export interface ChapterSummaryCardProps {
   metadata: ChapterMetadata;
@@ -19,11 +20,7 @@ export default function ChapterSummaryCard({
             createdAtUtc={metadata.createdAtUtc}
             syncedAtUtc={metadata.syncedAtUtc}
           />
-          <p>
-            <button>Upvote</button>
-            <span>{metadata.upvotes - metadata.downvotes}</span>
-            <button>Downvote</button>
-          </p>
+          <Upvotes upvotes={metadata.upvotes} downvotes={metadata.downvotes} />
         </div>
         {metadata.coverArtUrl && (
           <img

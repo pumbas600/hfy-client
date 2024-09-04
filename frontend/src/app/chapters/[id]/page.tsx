@@ -7,6 +7,8 @@ import config from "@/config";
 import { GetChapterRequest } from "@/types/api";
 import { Params } from "@/types/next";
 
+export const revalidate = 5 * 60; // Incrementally regenerate every 5 minute
+
 export default async function Page({ params }: Params<{ id: string }>) {
   const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`);
   const chapter: GetChapterRequest.ResBody = await res.json();
