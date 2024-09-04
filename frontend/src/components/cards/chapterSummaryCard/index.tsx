@@ -13,16 +13,24 @@ export default function ChapterSummaryCard({
   return (
     <Link href={`/chapters/${metadata.id}`} className={styles.cardLink}>
       <article className={styles.card}>
-        <h4>{metadata.title}</h4>
-        <ChapterTimeMetadata
-          createdAtUtc={metadata.createdAtUtc}
-          syncedAtUtc={metadata.syncedAtUtc}
-        />
-        <p>
-          <button>Upvote</button>
-          <span>{metadata.upvotes - metadata.downvotes}</span>
-          <button>Downvote</button>
-        </p>
+        <div>
+          <h4>{metadata.title}</h4>
+          <ChapterTimeMetadata
+            createdAtUtc={metadata.createdAtUtc}
+            syncedAtUtc={metadata.syncedAtUtc}
+          />
+          <p>
+            <button>Upvote</button>
+            <span>{metadata.upvotes - metadata.downvotes}</span>
+            <button>Downvote</button>
+          </p>
+        </div>
+        {metadata.coverArtUrl && (
+          <img
+            src={metadata.coverArtUrl}
+            alt={`${metadata.title}'s cover art`}
+          />
+        )}
       </article>
     </Link>
   );

@@ -6,4 +6,12 @@
 .card {
   padding-block: 1rem;
   border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card img {
+  width: 5rem;
 }
