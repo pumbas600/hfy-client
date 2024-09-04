@@ -50,3 +50,17 @@ dotnet run
 
 dotnet watch
 ```
+
+### Updating the Database
+
+If you make changes to the database schema, you can generate a migration using:
+
+```bash
+dotnet ef migrations add "Migration-Name"
+```
+
+To update the database with the new migration, run:
+
+```bash
+dotnet ef database update
+```
