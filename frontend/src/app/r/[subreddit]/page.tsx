@@ -1,11 +1,14 @@
 import ChapterSummaryCard from "@/components/cards/chapterSummaryCard";
 import Container from "@/components/container";
+import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { Params } from "@/types/next";
 
-export default async function Page({ params }: Params<{ subreddit: string }>) {
+export default async function Subreddit({
+  params,
+}: Params<{ subreddit: string }>) {
   const res = await fetch(
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
   );
@@ -27,6 +30,7 @@ export default async function Page({ params }: Params<{ subreddit: string }>) {
           ))}
         </main>
       </Container>
+      <PageFooter />
     </div>
   );
 }

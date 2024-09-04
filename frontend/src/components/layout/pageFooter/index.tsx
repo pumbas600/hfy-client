@@ -8,6 +8,7 @@ export default function PageFooter() {
     <footer className={styles.pageFooter}>
       <Container>
         <p>Hello there :)</p>
+        <SubtleLink href={"/about"}>About</SubtleLink>
         <SubtleLink href={config.githubUrl}>View source</SubtleLink>
       </Container>
     </footer>

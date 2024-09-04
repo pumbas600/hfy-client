@@ -3,3 +3,9 @@
   color: var(--primary-contrast-secondary);
   padding-block: 3rem;
 }
+
+.pageFooter > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
