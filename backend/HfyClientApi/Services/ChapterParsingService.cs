@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using HfyClientApi.Configuration;
 using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using HtmlAgilityPack;
@@ -23,12 +24,10 @@ namespace HfyClientApi.Services
         => $"ChapterLink(Subreddit: {Subreddit}, PostId: {PostId}, LinkElement: {LinkElement})";
     }
 
-    private const string RedditBaseUrl = "https://www.reddit.com";
-
     /// <summary>
     /// A regex expression that allows the subreddit and post id to be extracted from a Reddit link.
     /// </summary>
-    private const string RedditLinkRegex = @$"{RedditBaseUrl}/r/(\w+)/comments/(\w+)/\w+/?";
+    private const string RedditLinkRegex = @$"{Config.RedditUrl}/r/(\w+)/comments/(\w+)/\w+/?";
 
     public (Chapter, StoryMetadata?) ChapterFromPost(SelfPost post)
     {
@@ -48,30 +47,42 @@ namespace HfyClientApi.Services
         {
           var label = linkElement.InnerText.ToLower();
           var link = linkElement.GetAttributeValue("href", null);
-
-          if (label.Contains("cover") && IsImageUrl(link))
-          {
-            coverArtUrl = link;
-            continue;
-          }
-
-          var chapterLink = ParseRedditLink(linkElement);
-          if (chapterLink == null)
+          if (link == null)
           {
             continue;
           }
 
-          if (label.Contains("next"))
+          if (!link.StartsWith(Config.RedditUrl))
           {
-            nextLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+            if (label.Contains("cover") && IsImageUrl(link))
+            {
+              coverArtUrl = link;
+            }
+            else if (coverArtUrl == null && link.StartsWith("https://www.royalroad.com/"))
+            {
+              coverArtUrl = GetCoverArtUrlFromRoyalRoadLink(link);
+            }
           }
-          else if (label.Contains("prev"))
+          else
           {
-            previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
-          }
-          else if (label.Contains("first"))
-          {
-            firstLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+            var chapterLink = ParseRedditLink(linkElement);
+            if (chapterLink == null)
+            {
+              continue;
+            }
+
+            if (label.Contains("next"))
+            {
+              nextLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+            }
+            else if (label.Contains("prev"))
+            {
+              previousLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+            }
+            else if (label.Contains("first"))
+            {
+              firstLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+            }
           }
         }
       }
@@ -137,7 +148,7 @@ namespace HfyClientApi.Services
     internal protected static ChapterLink? ParseRedditLink(HtmlNode linkElement)
     {
       var link = linkElement.GetAttributeValue("href", null);
-      if (link == null || !link.StartsWith(RedditBaseUrl))
+      if (link == null)
       {
         return null;
       }
@@ -163,7 +174,18 @@ namespace HfyClientApi.Services
     {
       List<string> imageFiletypes = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
 
-      return imageFiletypes.Any(url.EndsWith);
+      if (!imageFiletypes.Any(url.EndsWith))
+      {
+        return false;
+      }
+
+      // TODO: Make a HEAD request and check the Content-Type header
+      return true;
+    }
+
+    internal protected static string? GetCoverArtUrlFromRoyalRoadLink(string royalRoadLink)
+    {
+      return null;
     }
   }
 }
