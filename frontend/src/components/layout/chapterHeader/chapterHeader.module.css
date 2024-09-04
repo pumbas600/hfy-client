@@ -32,14 +32,8 @@
   letter-spacing: 0.5px;
 }
 
-.authorContainer a {
+.authorContainer {
   font-size: var(--step-0);
-  color: var(--background-contrast);
-  text-decoration: none;
-}
-
-.authorContainer a:hover {
-  text-decoration: underline;
 }
 
 .title {

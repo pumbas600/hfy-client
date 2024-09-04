@@ -6,6 +6,7 @@ export interface ChapterMetadata {
   isNsfw: boolean;
   upvotes: number;
   downvotes: number;
+  redditAuthorLink: string;
   coverArtUrl: string | null;
   createdAtUtc: string;
   editedAtUtc: string;
@@ -15,7 +16,6 @@ export interface ChapterMetadata {
 export interface FullChapter extends ChapterMetadata {
   textHtml: string;
   redditPostLink: string;
-  redditAuthorLink: string;
   nextChapterId: string | null;
   previousChapterId: string | null;
   firstChapterId: string | null;

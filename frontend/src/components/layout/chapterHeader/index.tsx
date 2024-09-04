@@ -6,6 +6,7 @@ import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
 import Link from "next/link";
 import IconButton from "@/components/buttons/iconButton";
+import { UnderlinedLink } from "@/components/links";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
@@ -20,10 +21,12 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
       <div>
         <div className={styles.titleContainer}>
           <div className={styles.authorContainer}>
-            <Link href={`/r/${chapter.subreddit}`}>
+            <UnderlinedLink href={`/r/${chapter.subreddit}`}>
               <strong>r/{chapter.subreddit}</strong>
-            </Link>
-            <a href={chapter.redditAuthorLink}>{chapter.author}</a>
+            </UnderlinedLink>
+            <UnderlinedLink href={chapter.redditAuthorLink}>
+              u/{chapter.author}
+            </UnderlinedLink>
           </div>
           <a href={chapter.redditPostLink}>
             <IconButton icon={faReddit} title="Read on Reddit" />

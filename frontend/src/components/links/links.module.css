@@ -1,0 +1,18 @@
+.subtleLink {
+  text-decoration: none;
+  color: var(--primary-contrast);
+}
+
+.subtleLink:hover {
+  color: var(--primary-contrast-secondary);
+}
+
+.underlinedLink {
+  font-size: inherit;
+  color: var(--background-contrast);
+  text-decoration: none;
+}
+
+.underlinedLink:hover {
+  text-decoration: underline;
+}

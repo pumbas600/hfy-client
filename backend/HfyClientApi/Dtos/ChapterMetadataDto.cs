@@ -11,6 +11,11 @@ namespace HfyClientApi.Dtos
     public required int Downvotes { get; set; }
     public required string? CoverArtUrl { get; set; }
 
+    /// <summary>
+    /// The link to the author's Reddit profile.
+    /// </summary>
+    public required string RedditAuthorLink { get; set; }
+
     public required DateTime CreatedAtUtc { get; set; }
 
     /// <summary>

@@ -46,6 +46,7 @@ namespace HfyClientApi.Services
         Upvotes = chapter.Upvotes,
         Downvotes = chapter.Downvotes,
         CoverArtUrl = combinedChapter.StoryMetadata?.CoverArtUrl,
+        RedditAuthorLink = $"{Config.RedditUrl}/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
         SyncedAtUtc = chapter.SyncedAtUtc

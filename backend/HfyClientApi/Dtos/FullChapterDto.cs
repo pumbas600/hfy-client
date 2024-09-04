@@ -10,11 +10,6 @@ namespace HfyClientApi.Dtos
     public required string RedditPostLink { get; set; }
 
     /// <summary>
-    /// The link to the author's Reddit profile.
-    /// </summary>
-    public required string RedditAuthorLink { get; set; }
-
-    /// <summary>
     /// The id of the next chapter in the story. If null, this is the latest chapter.
     /// </summary>
     public required string? NextChapterId { get; set; }

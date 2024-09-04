@@ -15,6 +15,9 @@ export default function ChapterSummaryCard({
     <Link href={`/chapters/${metadata.id}`} className={styles.cardLink}>
       <article className={styles.card}>
         <div>
+          <div>
+            <a href={metadata.redditAuthorLink}>u/{metadata.author}</a>
+          </div>
           <h4>{metadata.title}</h4>
           <ChapterTimeMetadata
             createdAtUtc={metadata.createdAtUtc}
