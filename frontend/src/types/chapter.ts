@@ -6,6 +6,7 @@ export interface ChapterMetadata {
   isNsfw: boolean;
   upvotes: number;
   downvotes: number;
+  coverArtUrl: string | null;
   createdAtUtc: string;
   editedAtUtc: string;
   syncedAtUtc: string;

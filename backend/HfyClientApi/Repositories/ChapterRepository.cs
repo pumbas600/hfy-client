@@ -106,6 +106,7 @@ namespace HfyClientApi.Repositories
           || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
       return await _context.Chapters
+        // This is essentially doing a LEFT JOIN
         .GroupJoin(
           _context.StoryMetadata,
           chapter => chapter.FirstChapterId,
