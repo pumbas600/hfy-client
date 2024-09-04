@@ -1,14 +1,10 @@
-import Container from "@/components/container";
+import Container, { ContainerProps } from "@/components/container";
 import styles from "./pageHeader.module.css";
 
-export interface PageHeaderProps {
-  children?: React.ReactNode;
-}
-
-export default function PageHeader({ children }: PageHeaderProps) {
+export default function PageHeader(containerProps: ContainerProps) {
   return (
     <header className={styles.pageHeader}>
-      <Container>{children}</Container>
+      <Container {...containerProps} />
     </header>
   );
 }

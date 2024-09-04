@@ -1,4 +1,19 @@
-.detailsContainer {
+.chapterHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: center;
+}
+
+.chapterHeader img {
+  width: 6rem;
+}
+
+.chapterHeader > div {
+  width: 100%;
+}
+
+.titleContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
