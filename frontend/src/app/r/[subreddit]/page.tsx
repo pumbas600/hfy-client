@@ -1,5 +1,6 @@
 import ChapterSummaryCard from "@/components/cards/chapterSummaryCard";
 import Container from "@/components/container";
+import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { Params } from "@/types/next";
@@ -15,13 +16,17 @@ export default async function Page({ params }: Params<{ subreddit: string }>) {
   const hasNext = paginatedChapters.data.length != paginatedChapters.pageSize;
 
   return (
-    <Container>
-      <main>
-        <h1>{params.subreddit}</h1>
-        {paginatedChapters.data.map((chapter) => (
-          <ChapterSummaryCard key={chapter.id} metadata={chapter} />
-        ))}
-      </main>
-    </Container>
+    <div>
+      <PageHeader>
+        <h1>r/{params.subreddit}</h1>
+      </PageHeader>
+      <Container>
+        <main>
+          {paginatedChapters.data.map((chapter) => (
+            <ChapterSummaryCard key={chapter.id} metadata={chapter} />
+          ))}
+        </main>
+      </Container>
+    </div>
   );
 }
