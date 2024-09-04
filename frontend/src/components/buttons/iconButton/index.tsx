@@ -16,7 +16,7 @@ export default function IconButton({
 }: IconButtonProps) {
   return (
     <button onClick={onClick} title={title} className={styles.iconButton}>
-      <FontAwesomeIcon {...props} size={props.size ?? "lg"} />
+      <FontAwesomeIcon {...props} size={props.size ?? "xl"} />
     </button>
   );
 }

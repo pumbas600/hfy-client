@@ -1,9 +1,8 @@
 .iconButton {
   min-width: auto;
-  width: auto;
-  height: auto;
-  padding-inline: 0.75rem;
-  aspect-ratio: 1/1;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
   background-color: transparent;
   color: var(--primary-color);
   border-radius: 50%;
