@@ -25,5 +25,9 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  gap: 1.5rem;
+  gap: 0.5rem;
+}
+
+.subtitle {
+  color: var(--background-contrast-secondary);
 }

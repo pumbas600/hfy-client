@@ -17,12 +17,11 @@ export default function ChapterSummaryCard({
       <article className={styles.card}>
         <div>
           <div className={styles.authorContainer}>
-            <UnderlinedLink href={metadata.redditAuthorLink}>
-              u/{metadata.author}
-            </UnderlinedLink>
+            <p>u/{metadata.author}</p>
             <ChapterTimeMetadata
               createdAtUtc={metadata.createdAtUtc}
               syncedAtUtc={metadata.syncedAtUtc}
+              className={styles.subtitle}
             />
           </div>
           <h4>{metadata.title}</h4>
