@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
 import Link from "next/link";
-import Image from "next/image";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
