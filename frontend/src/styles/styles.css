@@ -164,6 +164,7 @@
     --background-contrast: #000000;
     --reddit-orange: #ff5700;
     --border-color: #e0e0e0;
+    --divider-color: #ccc;
     --hover-color: rgba(0, 0, 0, 0.05);
 
     /* Type scale */
@@ -234,7 +235,8 @@
   }
 
   hr {
-    border: 1px solid var(--border-color);
+    margin-block: 0.25rem;
+    border: 1px solid var(--divider-color);
   }
 
   button {

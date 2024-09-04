@@ -24,7 +24,7 @@ export default async function Subreddit({
       <PageHeader>
         <h1>r/{params.subreddit}</h1>
       </PageHeader>
-      <Container>
+      <Container main>
         <ChapterCardList chapters={paginatedChapters.data} />
       </Container>
       <PageFooter />
