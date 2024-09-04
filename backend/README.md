@@ -31,6 +31,8 @@ You can then set the `RedditRefreshToken` user secret:
 dotnet user-secrets set "RedditRefreshToken" "YOUR_REFRESH_TOKEN"
 ```
 
+**TODO**: Investigate why you can't only use the refresh token (Also need access token).
+
 ### Database
 
 To update your database with the correct schema, run the following commands in the [`/HfyClientApi`](./HfyClientApi/) directory:

@@ -4,6 +4,7 @@ using HfyClientApi.Configuration;
 using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using HtmlAgilityPack;
+using OpenGraphNet;
 using Reddit.Controllers;
 
 [assembly: InternalsVisibleTo("HfyClientApi.Tests")]
@@ -29,7 +30,14 @@ namespace HfyClientApi.Services
     /// </summary>
     private const string RedditLinkRegex = @$"{Config.RedditUrl}/r/(\w+)/comments/(\w+)/\w+/?";
 
-    public (Chapter, StoryMetadata?) ChapterFromPost(SelfPost post)
+    private readonly ILogger<ChapterParsingService> _logger;
+
+    public ChapterParsingService(ILogger<ChapterParsingService> logger)
+    {
+      _logger = logger;
+    }
+
+    public async Task<(Chapter, StoryMetadata?)> ChapterFromPost(SelfPost post)
     {
       var document = new HtmlDocument();
       document.LoadHtml(post.SelfTextHTML);
@@ -58,9 +66,9 @@ namespace HfyClientApi.Services
             {
               coverArtUrl = link;
             }
-            else if (coverArtUrl == null && link.StartsWith("https://www.royalroad.com/"))
+            else if (coverArtUrl == null && link.StartsWith("https://www.royalroad.com/fiction"))
             {
-              coverArtUrl = GetCoverArtUrlFromRoyalRoadLink(link);
+              coverArtUrl = await GetCoverArtUrlFromRoyalRoadLink(link);
             }
           }
           else
@@ -115,6 +123,8 @@ namespace HfyClientApi.Services
       }
 
       StoryMetadata? storyMetadata = null;
+      Console.WriteLine("Cover art URL: " + coverArtUrl);
+
       if (firstChapterId != null && coverArtUrl != null)
       {
         storyMetadata = new()
@@ -183,9 +193,13 @@ namespace HfyClientApi.Services
       return true;
     }
 
-    internal protected static string? GetCoverArtUrlFromRoyalRoadLink(string royalRoadLink)
+    internal protected async Task<string?> GetCoverArtUrlFromRoyalRoadLink(
+      string royalRoadLink)
     {
-      return null;
+      _logger.LogInformation("Fetching cover art from Royal Road link: {}", royalRoadLink);
+      var graph = await OpenGraph.ParseUrlAsync(royalRoadLink);
+      return graph.Image?.ToString();
+
     }
   }
 }
