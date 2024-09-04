@@ -55,15 +55,21 @@ namespace HfyClientApi.Repositories
       return Errors.ChapterUpsertFailed(chapter.Id);
     }
 
-    public async Task<Result<Chapter>> GetChapterByIdAsync(string id)
+    public async Task<Result<CombinedChapter>> GetChapterByIdAsync(string id)
     {
-      var chapter = await _context.Chapters.FindAsync(id);
-      if (chapter == null)
+      var combinedChapter = await _context.Chapters.Join(
+        _context.StoryMetadata,
+        chapter => chapter.FirstChapterId,
+        story => story.FirstChapterId,
+        (chapter, story) => new CombinedChapter() { Chapter = chapter, StoryMetadata = story }
+      ).FirstOrDefaultAsync(c => c.Chapter.Id == id);
+
+      if (combinedChapter == null)
       {
         return Errors.ChapterNotFound(id);
       }
 
-      return chapter;
+      return combinedChapter;
     }
 
     public async Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false)
@@ -91,7 +97,7 @@ namespace HfyClientApi.Repositories
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
+    public async Task<IEnumerable<CombinedChapter>> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey)
     {
       Expression<Func<Chapter, bool>> predicate = nextKey == null
@@ -117,6 +123,12 @@ namespace HfyClientApi.Repositories
         .ThenBy(c => c.Id)
         .Where(predicate)
         .Take(pageSize)
+        .Join(
+          _context.StoryMetadata,
+          chapter => chapter.FirstChapterId,
+          story => story.FirstChapterId,
+          (chapter, story) => new CombinedChapter() { Chapter = chapter, StoryMetadata = story }
+        )
         .ToListAsync();
     }
 

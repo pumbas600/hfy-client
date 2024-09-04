@@ -9,6 +9,7 @@ namespace HfyClientApi.Dtos
     public required bool IsNsfw { get; set; }
     public required int Upvotes { get; set; }
     public required int Downvotes { get; set; }
+    public required string? CoverArtUrl { get; set; }
 
     public required DateTime CreatedAtUtc { get; set; }
 

@@ -59,7 +59,14 @@ namespace HfyClientApi.Services
       await UpdateChapterLinksAsync(parsedChapter);
 
       var createdChapterResult = await _chapterRepository.UpsertChapterAsync(parsedChapter);
-      return createdChapterResult.Map(_mapper.ToFullChapterDto);
+
+      return createdChapterResult.Map(createdChapter =>
+        _mapper.ToFullChapterDto(new CombinedChapter
+        {
+          Chapter = createdChapterResult.Data,
+          StoryMetadata = storyMetadata
+        })
+      );
     }
 
     internal async Task<Result> UpdateChapterLinksAsync(Chapter chapter)

@@ -1,14 +1,14 @@
 using HfyClientApi.Dtos;
-using HfyClientApi.Models;
+using HfyClientApi.Repositories;
 
 namespace HfyClientApi.Services
 {
   public interface IMapper
   {
-    FullChapterDto ToFullChapterDto(Chapter chapter);
+    FullChapterDto ToFullChapterDto(CombinedChapter combinedChapter);
 
-    ChapterMetadataDto ToChapterMetadataDto(Chapter chapter);
+    ChapterMetadataDto ToChapterMetadataDto(CombinedChapter combinedChapter);
 
-    ChapterPaginationDto ToPaginatedChapterMetadataDto(int pageSize, IEnumerable<Chapter> chapters);
+    ChapterPaginationDto ToPaginatedChapterMetadataDto(int pageSize, IEnumerable<CombinedChapter> combinedChapters);
   }
 }
