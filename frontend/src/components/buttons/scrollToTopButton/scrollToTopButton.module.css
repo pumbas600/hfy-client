@@ -1,0 +1,15 @@
+.scrollToTopButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+}
+
+@media screen and (max-width: 768px) {
+  .scrollToTopButton {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

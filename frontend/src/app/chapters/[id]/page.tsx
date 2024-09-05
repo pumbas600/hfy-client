@@ -1,4 +1,5 @@
 import ChapterButtons from "@/components/buttons/chapterButtons";
+import ScrollToTopButton from "@/components/buttons/scrollToTopButton";
 import Container from "@/components/container";
 import ChapterHeader from "@/components/layout/chapterHeader";
 import PageFooter from "@/components/layout/pageFooter";
@@ -50,6 +51,7 @@ export default async function Page({ params }: Params<{ id: string }>) {
         <ChapterButtons chapter={chapter} />
         <TextLayout textHtml={chapter.textHtml} />
         <ChapterButtons chapter={chapter} hideFirstLink />
+        <ScrollToTopButton />
       </Container>
       <PageFooter />
     </div>
