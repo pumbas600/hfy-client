@@ -1,8 +1,8 @@
 import ChapterButtons from "@/components/buttons/chapterButtons";
-import ChapterText from "@/components/chapterText";
 import Container from "@/components/container";
 import ChapterHeader from "@/components/layout/chapterHeader";
 import PageFooter from "@/components/layout/pageFooter";
+import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
 import { GetChapterRequest } from "@/types/api";
 import { Params } from "@/types/next";
@@ -27,7 +27,7 @@ export default async function Page({ params }: Params<{ id: string }>) {
       <ChapterHeader chapter={chapter} />
       <Container>
         <ChapterButtons chapter={chapter} />
-        <ChapterText textHtml={chapter.textHtml} />
+        <TextLayout textHtml={chapter.textHtml} />
         <ChapterButtons chapter={chapter} hideFirstLink />
       </Container>
       <PageFooter />
