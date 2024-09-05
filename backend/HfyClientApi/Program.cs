@@ -63,6 +63,14 @@ builder.Services.AddScoped<IRedditService, RedditService>();
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
 
+builder.Services.AddCors(options =>
+{
+  options.AddDefaultPolicy(policy =>
+  {
+    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+  });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,6 +81,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(); // Enable cors!
 
 app.UseAuthorization();
 
