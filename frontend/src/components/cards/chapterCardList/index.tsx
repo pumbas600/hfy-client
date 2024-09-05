@@ -56,7 +56,7 @@ export default function ChapterCardList({
       next={fetchNext}
       endMessage={
         <p style={{ textAlign: "center" }}>
-          <b>Yay! You have seen it all</b>
+          <strong>You have read it all!</strong>
         </p>
       }
     >
