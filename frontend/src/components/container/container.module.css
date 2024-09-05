@@ -1,6 +1,7 @@
 .container {
   max-width: 800px;
-  margin: 0.75rem auto;
+  margin: 0 auto;
+  padding-block: 0.75rem;
   padding-inline: 1rem;
 }
 

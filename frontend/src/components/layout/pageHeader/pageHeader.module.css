@@ -1,7 +1,11 @@
 .pageHeader {
   background-color: var(--background-acent);
-  padding-block-start: 1rem;
   padding-block-end: 3rem;
+}
+
+/* Page headers which don't have a nav bar preceeding it */
+.pageHeader:not(nav ~ .pageHeader) {
+  padding-block-start: 2rem;
 }
 
 .pageHeader h1,
@@ -20,9 +24,19 @@
   align-items: center;
 }
 
+.navBar {
+  top: 0;
+  position: sticky;
+  background-color: var(--background-acent);
+}
+
 @media screen and (max-width: 768px) {
   .pageHeader {
-    padding-block-start: 0.5rem;
     padding-block-end: 2rem;
+  }
+
+  /* Page headers which don't have a nav bar preceeding it */
+  .pageHeader:not(nav ~ .pageHeader) {
+    padding-block-start: 1rem;
   }
 }

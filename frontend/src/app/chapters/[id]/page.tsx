@@ -23,7 +23,7 @@ export default async function Page({ params }: Params<{ id: string }>) {
   }
 
   return (
-    <article>
+    <div>
       <ChapterHeader chapter={chapter} />
       <Container>
         <ChapterButtons chapter={chapter} />
@@ -31,6 +31,6 @@ export default async function Page({ params }: Params<{ id: string }>) {
         <ChapterButtons chapter={chapter} hideFirstLink />
       </Container>
       <PageFooter />
-    </article>
+    </div>
   );
 }
