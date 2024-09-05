@@ -6,7 +6,10 @@
 }
 
 .chapterHeader img {
-  width: 6rem;
+  width: 7rem;
+  padding: 3px;
+  background-color: white;
+  border: 1px solid var(--border-color);
 }
 
 .chapterHeader > div {
