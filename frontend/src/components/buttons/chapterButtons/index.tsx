@@ -16,6 +16,11 @@ export default function ChapterButtons({
   hideFirstLink = false,
 }: ChapterButtonsProps) {
   const isFirst = chapter.firstChapterId === chapter.id;
+
+  if (isFirst && chapter.nextChapterId === null) {
+    return;
+  }
+
   const previousChapterTooltip =
     chapter.previousChapterId === null && !isFirst
       ? "The previous chapter cannot be determined"
