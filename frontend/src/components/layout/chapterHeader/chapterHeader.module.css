@@ -13,14 +13,6 @@
   width: 100%;
 }
 
-.titleContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
 .authorContainer {
   display: flex;
   flex-direction: row;

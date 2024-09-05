@@ -121,7 +121,7 @@ namespace HfyClientApi.Services
       }
 
       // TODO: Determine link priority by checking if a corresponding link exists for prev/first links.
-      // TODO: Cleanup any dangling '|' used to separate links.
+      // TODO: Cleanup any dangling '|', or '[', ']' used to separate links.
 
       if (firstChapterId == null && previousChapterId == null)
       {
@@ -129,8 +129,6 @@ namespace HfyClientApi.Services
       }
 
       StoryMetadata? storyMetadata = null;
-      Console.WriteLine("Cover art URL: " + coverArtUrl);
-
       if (firstChapterId != null && coverArtUrl != null)
       {
         storyMetadata = new()

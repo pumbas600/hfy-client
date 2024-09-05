@@ -12,11 +12,11 @@ export default function Container({
   className,
   main = false,
 }: ContainerProps) {
+  const classNames = [styles.container, className ?? ""];
+
   if (main) {
-    return (
-      <main className={`${styles.container} ${className}`}>{children}</main>
-    );
+    return <main className={classNames.join(" ")}>{children}</main>;
   }
 
-  return <div className={`${styles.container} ${className}`}>{children}</div>;
+  return <div className={classNames.join(" ")}>{children}</div>;
 }

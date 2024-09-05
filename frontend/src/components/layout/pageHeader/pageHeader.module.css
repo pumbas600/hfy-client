@@ -1,6 +1,7 @@
 .pageHeader {
   background-color: var(--background-acent);
-  padding-block: 3rem;
+  padding-block-start: 1rem;
+  padding-block-end: 3rem;
 }
 
 .pageHeader h1,
@@ -12,8 +13,16 @@
   color: var(--primary-color);
 }
 
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media screen and (max-width: 768px) {
   .pageHeader {
-    padding-block: 2rem;
+    padding-block-start: 0.5rem;
+    padding-block-end: 2rem;
   }
 }

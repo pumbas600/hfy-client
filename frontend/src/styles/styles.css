@@ -235,6 +235,11 @@
     transition: color 0.15s ease-in-out;
   }
 
+  a:has(> button) {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
   hr {
     margin-block: 0.25rem;
     border: 1px solid var(--divider-color);
