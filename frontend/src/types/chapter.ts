@@ -1,3 +1,5 @@
+import { Pagination } from "./pagination";
+
 export interface ChapterMetadata {
   id: string;
   author: string;
@@ -25,3 +27,8 @@ export interface ChapterPaginationKey {
   lastCreatedAtUtc: string;
   lastPostId: string;
 }
+
+export type PaginatedChapters = Pagination<
+  ChapterPaginationKey,
+  ChapterMetadata
+>;

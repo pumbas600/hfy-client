@@ -1,5 +1,9 @@
-import { ChapterMetadata, ChapterPaginationKey, FullChapter } from "../chapter";
-import { Pagination } from "../pagination";
+import {
+  ChapterMetadata,
+  ChapterPaginationKey,
+  FullChapter,
+  PaginatedChapters,
+} from "../chapter";
 
 export namespace GetChapterRequest {
   export interface Params {
@@ -15,6 +19,6 @@ export namespace GetNewChaptersRequest {
     subreddit: ChapterMetadata["subreddit"];
   }
 
-  export type ResBody = Pagination<ChapterPaginationKey, ChapterMetadata>;
+  export type ResBody = PaginatedChapters;
   export type ReqBody = never;
 }

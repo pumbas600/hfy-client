@@ -1,5 +1,4 @@
 import ChapterCardList from "@/components/cards/chapterCardList";
-import ChapterSummaryCard from "@/components/cards/chapterSummaryCard";
 import Container from "@/components/container";
 import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
@@ -17,15 +16,16 @@ export default async function Subreddit({
   );
   const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
 
-  const hasNext = paginatedChapters.data.length != paginatedChapters.pageSize;
-
   return (
     <div>
       <PageHeader>
         <h1>r/{params.subreddit}</h1>
       </PageHeader>
       <Container main>
-        <ChapterCardList chapters={paginatedChapters.data} />
+        <ChapterCardList
+          subreddit={params.subreddit}
+          paginatedChapters={paginatedChapters}
+        />
       </Container>
       <PageFooter />
     </div>
