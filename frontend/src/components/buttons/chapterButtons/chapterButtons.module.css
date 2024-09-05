@@ -24,3 +24,9 @@
   border-top-right-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }
+
+@media screen and (max-width: 768px) {
+  .buttonGroup {
+    gap: 1px;
+  }
+}

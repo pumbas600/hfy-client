@@ -4,3 +4,9 @@
   padding-inline: 1rem;
   padding-block: 0.75rem;
 }
+
+@media screen and (max-width: 768px) {
+  main.container {
+    padding-inline: 0;
+  }
+}

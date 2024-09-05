@@ -265,3 +265,9 @@
     background-color: var(--primary-darkened);
   }
 }
+
+@media screen and (max-width: 768px) {
+  button {
+    min-width: auto;
+  }
+}

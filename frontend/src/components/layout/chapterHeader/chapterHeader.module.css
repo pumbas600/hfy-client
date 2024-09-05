@@ -39,3 +39,17 @@
 .title {
   padding-bottom: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .chapterHeader {
+    gap: 0.75rem;
+  }
+
+  .chapterHeader img {
+    width: 5rem;
+  }
+
+  .authorContainer {
+    flex-wrap: wrap;
+  }
+}

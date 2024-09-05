@@ -11,3 +11,9 @@
 .pageHeader h6 {
   color: var(--primary-color);
 }
+
+@media screen and (max-width: 768px) {
+  .pageHeader {
+    padding-block: 2rem;
+  }
+}
