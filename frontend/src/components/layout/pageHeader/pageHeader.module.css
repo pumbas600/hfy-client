@@ -26,8 +26,6 @@
 }
 
 .navBar {
-  top: 0;
-  position: sticky;
   background-color: var(--background-acent);
 }
 
