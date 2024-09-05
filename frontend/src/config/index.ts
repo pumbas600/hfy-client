@@ -13,6 +13,7 @@ const config = {
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5070/api/v1",
   },
   githubUrl: "https://github.com/pumbas600/hfy-client",
+  title: "HFY Client",
 } as const;
 
 export default config;

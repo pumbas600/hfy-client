@@ -7,14 +7,16 @@ import { faReddit } from "@fortawesome/free-brands-svg-icons";
 
 export interface PageHeaderProps extends ContainerProps {
   backLink?: string;
+  backTitle?: string;
   redditLink?: string;
   redditLinkTitle?: string;
 }
 
 export default function PageHeader({
   backLink,
+  backTitle = "Back",
   redditLink,
-  redditLinkTitle,
+  redditLinkTitle = "View on Reddit",
   ...containerProps
 }: PageHeaderProps) {
   const hasNavBar = backLink !== undefined || redditLink !== undefined;
@@ -26,15 +28,12 @@ export default function PageHeader({
           <Container className={styles.navContainer}>
             {backLink && (
               <Link href={backLink}>
-                <IconButton icon={faArrowLeft} title="Back" />
+                <IconButton icon={faArrowLeft} title={backTitle} />
               </Link>
             )}
             {redditLink && (
               <a href={redditLink}>
-                <IconButton
-                  icon={faReddit}
-                  title={redditLinkTitle ?? "View on Reddit"}
-                />
+                <IconButton icon={faReddit} title={redditLinkTitle} />
               </a>
             )}
           </Container>
