@@ -3,6 +3,7 @@ import PageHeader from "../pageHeader";
 import styles from "./chapterHeader.module.css";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
 import { UnderlinedLink } from "@/components/links";
+import CoverArt from "@/components/images/coverArt";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
@@ -19,7 +20,7 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
       redditLinkTitle="Read on Reddit"
     >
       {chapter.coverArtUrl && (
-        <img src={chapter.coverArtUrl} alt={`${chapter.title}'s cover art`} />
+        <CoverArt url={chapter.coverArtUrl} chapterTitle={chapter.title} />
       )}
       <div>
         <div className={styles.authorContainer}>

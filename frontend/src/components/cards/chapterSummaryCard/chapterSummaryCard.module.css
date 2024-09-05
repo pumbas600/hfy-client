@@ -14,20 +14,12 @@
   gap: 0.25rem;
 }
 
-@media screen and (max-width: 768px) {
-  .card {
-    border-radius: 0;
-    padding-inline: 1.25rem;
-    padding-block: 0.75rem;
-  }
-}
-
 .card:hover {
   background-color: var(--hover-color);
 }
 
 .card img {
-  width: 5rem;
+  width: 6rem;
 }
 
 .authorContainer {
@@ -40,4 +32,16 @@
 
 .subtitle {
   color: var(--background-contrast-secondary);
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    border-radius: 0;
+    padding-inline: 1.25rem;
+    padding-block: 0.75rem;
+  }
+
+  .card img {
+    width: 5rem;
+  }
 }

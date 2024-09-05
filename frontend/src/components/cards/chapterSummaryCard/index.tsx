@@ -4,6 +4,7 @@ import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
 import Upvotes from "./upvotes";
 import { UnderlinedLink } from "@/components/links";
 import styles from "./chapterSummaryCard.module.css";
+import CoverArt from "@/components/images/coverArt";
 
 export interface ChapterSummaryCardProps {
   metadata: ChapterMetadata;
@@ -28,10 +29,7 @@ export default function ChapterSummaryCard({
           <Upvotes upvotes={metadata.upvotes} downvotes={metadata.downvotes} />
         </div>
         {metadata.coverArtUrl && (
-          <img
-            src={metadata.coverArtUrl}
-            alt={`${metadata.title}'s cover art`}
-          />
+          <CoverArt url={metadata.coverArtUrl} chapterTitle={metadata.title} />
         )}
       </article>
     </Link>
