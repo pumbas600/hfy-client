@@ -15,7 +15,7 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
     <PageHeader
       className={styles.chapterHeader}
       backLink={subredditLink}
-      redditLink={chapter.redditAuthorLink}
+      redditLink={chapter.redditPostLink}
       redditLinkTitle="Read on Reddit"
     >
       {chapter.coverArtUrl && (
