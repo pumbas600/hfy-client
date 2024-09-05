@@ -47,6 +47,7 @@ namespace HfyClientApi.Services
       Dictionary<string, List<ChapterLink>> nextLinkMap = [];
       Dictionary<string, List<ChapterLink>> previousLinkMap = [];
       Dictionary<string, List<ChapterLink>> firstLinkMap = [];
+
       string? coverArtUrl = null;
 
       if (links != null)
@@ -90,6 +91,11 @@ namespace HfyClientApi.Services
             else if (label.Contains("first"))
             {
               firstLinkMap.AddIfAbsent(chapterLink.PostId, []).Add(chapterLink);
+            }
+            else
+            {
+              // Update the link to point to not go to Reddit
+              chapterLink.LinkElement.SetAttributeValue("href", $"/chapters/{chapterLink.PostId}");
             }
           }
         }
