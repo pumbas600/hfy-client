@@ -1,5 +1,6 @@
 .container {
   padding-block: 0.5rem;
+  font-family: var(--chapter-body-font);
 }
 
 .container p {
@@ -18,7 +19,7 @@
 
 .container ul,
 .container ol {
-  margin-inline-start: 1.2rem;
+  margin-inline-start: 1.1rem;
 }
 
 .container li {

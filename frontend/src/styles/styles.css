@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 @layer normalize {
   * {
@@ -180,9 +180,11 @@
 
     --border-radius: 0.2rem;
 
-    --body-font: "Atkinson Hyperlegible", system-ui, -apple-system,
-      BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --heading-font: "Noto Serif", serif;
+    --body-font: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    --chapter-body-font: "Atkinson Hyperlegible", var(--body-font);
+    --heading-font: "Noto Sans", serif;
+    --serif-heading-font: "Noto Serif", serif;
 
     accent-color: var(--primary-color);
     color-scheme: only light;

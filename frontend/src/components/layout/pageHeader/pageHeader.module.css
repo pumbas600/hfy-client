@@ -14,6 +14,7 @@
 .pageHeader h4,
 .pageHeader h5,
 .pageHeader h6 {
+  font-family: var(--serif-heading-font);
   color: var(--primary-color);
 }
 

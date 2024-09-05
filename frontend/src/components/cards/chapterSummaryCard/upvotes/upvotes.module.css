@@ -3,9 +3,9 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .upvotes strong {
-  font-family: var(--heading-font);
   user-select: none;
 }
