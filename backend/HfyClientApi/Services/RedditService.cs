@@ -14,10 +14,10 @@ namespace HfyClientApi.Services
       _redditClient = redditClient;
     }
 
-    public IEnumerable<SelfPost> GetNewSelfPosts(string subreddit)
+    public IEnumerable<SelfPost> GetNewSelfPosts(string subreddit, int limit = 50)
     {
       return _redditClient.Subreddit(subreddit).Posts
-        .GetNew()
+        .GetNew(limit: limit)
         .Where(p => p is SelfPost)
         .Cast<SelfPost>();
     }

@@ -65,7 +65,7 @@ builder.Services.AddScoped<IRedditSynchronisationService, RedditSynchronisationS
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
 
-builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
+// builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
 
 builder.Services.AddCors(options =>
 {

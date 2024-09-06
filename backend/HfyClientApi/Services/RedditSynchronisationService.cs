@@ -1,4 +1,6 @@
 
+using System.Diagnostics;
+
 namespace HfyClientApi.Services {
   public class RedditSynchronisationService : IRedditSynchronisationService
   {
@@ -16,11 +18,18 @@ namespace HfyClientApi.Services {
 
     public async Task StartSynchronisationAsync(CancellationToken stoppingToken)
     {
+      var stopwatch = new Stopwatch();
+      stopwatch.Start();
       await ProcessNewPostsAsync();
 
-      using PeriodicTimer timer = new(TimeSpan.FromMinutes(1));
+      using PeriodicTimer timer = new(TimeSpan.FromMinutes(2));
+
       try
       {
+        stopwatch.Stop();
+        _logger.LogInformation("Time since last synchronisation: {}", stopwatch.Elapsed);
+        stopwatch.Restart();
+
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
           await ProcessNewPostsAsync();
