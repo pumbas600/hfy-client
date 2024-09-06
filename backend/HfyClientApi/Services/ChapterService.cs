@@ -3,6 +3,7 @@ using HfyClientApi.Exceptions;
 using HfyClientApi.Models;
 using HfyClientApi.Repositories;
 using HfyClientApi.Utils;
+using Reddit.Controllers;
 
 namespace HfyClientApi.Services
 {
@@ -57,7 +58,12 @@ namespace HfyClientApi.Services
       }
 
       var selfPost = selfPostResult.Data;
-      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPost(selfPost);
+      return await ProcessChapterByPostAsync(selfPost);
+    }
+
+    public async Task<Result<FullChapterDto>> ProcessChapterByPostAsync(SelfPost post)
+    {
+      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPost(post);
 
       await UpdateChapterLinksAsync(parsedChapter);
 

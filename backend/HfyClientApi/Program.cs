@@ -1,3 +1,4 @@
+using HfyClientApi.BackgroundTasks;
 using HfyClientApi.Configuration;
 using HfyClientApi.Data;
 using HfyClientApi.Repositories;
@@ -59,9 +60,12 @@ builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 builder.Services.AddScoped<IChapterService, ChapterService>();
 builder.Services.AddScoped<IRedditService, RedditService>();
+builder.Services.AddScoped<IRedditSynchronisationService, RedditSynchronisationService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
+
+builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
 
 builder.Services.AddCors(options =>
 {

@@ -1,5 +1,6 @@
 using HfyClientApi.Dtos;
 using HfyClientApi.Utils;
+using Reddit.Controllers;
 
 namespace HfyClientApi.Services
 {
@@ -8,6 +9,8 @@ namespace HfyClientApi.Services
     Task<Result<FullChapterDto>> GetChapterByIdAsync(string id);
 
     Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id);
+
+    Task<Result<FullChapterDto>> ProcessChapterByPostAsync(SelfPost post);
 
     Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey);

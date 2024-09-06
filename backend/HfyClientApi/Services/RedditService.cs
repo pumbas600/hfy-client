@@ -14,6 +14,14 @@ namespace HfyClientApi.Services
       _redditClient = redditClient;
     }
 
+    public IEnumerable<SelfPost> GetNewSelfPosts(string subreddit)
+    {
+      return _redditClient.Subreddit(subreddit).Posts
+        .GetNew()
+        .Where(p => p is SelfPost)
+        .Cast<SelfPost>();
+    }
+
     public Result<SelfPost> GetSelfPostById(string postId)
     {
       var postFullname = $"t3_{postId}";
