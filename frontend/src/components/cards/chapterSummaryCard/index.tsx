@@ -1,8 +1,7 @@
 import { ChapterMetadata } from "@/types/chapter";
 import Link from "next/link";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
-import Upvotes from "./upvotes";
-import { UnderlinedLink } from "@/components/links";
+import Upvotes from "../../upvotes";
 import styles from "./chapterSummaryCard.module.css";
 import CoverArt from "@/components/images/coverArt";
 
