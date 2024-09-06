@@ -79,8 +79,10 @@ namespace HfyClientApi.Repositories
         await _context.Chapters
           .Where(c => c.Id == chapter.Id)
           .ExecuteUpdateAsync(builder =>
-            builder.SetProperty(c => c.PreviousChapterId, chapter.PreviousChapterId)
+            builder
+              .SetProperty(c => c.PreviousChapterId, chapter.PreviousChapterId)
               .SetProperty(c => c.NextChapterId, chapter.NextChapterId)
+              .SetProperty(c => c.FirstChapterId, chapter.FirstChapterId)
           );
       }
       else
@@ -135,7 +137,8 @@ namespace HfyClientApi.Repositories
         {
           Id = c.Id,
           PreviousChapterId = c.PreviousChapterId,
-          NextChapterId = c.NextChapterId
+          NextChapterId = c.NextChapterId,
+          FirstChapterId = c.FirstChapterId,
         })
         .Where(c => c.Id == chapter.PreviousChapterId || c.Id == chapter.NextChapterId)
         .ToListAsync();
@@ -154,7 +157,8 @@ namespace HfyClientApi.Repositories
         {
           Id = c.Id,
           PreviousChapterId = c.PreviousChapterId,
-          NextChapterId = c.NextChapterId
+          NextChapterId = c.NextChapterId,
+          FirstChapterId = c.FirstChapterId,
         })
         .Where(c => c.NextChapterId == nextLinkId)
         .FirstOrDefaultAsync();

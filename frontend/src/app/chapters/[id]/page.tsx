@@ -36,7 +36,9 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Params<{ id: string }>) {
-  const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`);
+  const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`, {
+    next: { revalidate: FIVE_MINUTES },
+  });
   const chapter: GetChapterRequest.ResBody = await res.json();
 
   if (!res.ok) {

@@ -99,6 +99,7 @@ namespace HfyClientApi.Services
     internal async Task UpdatePreviousChapterLinkAsync(
       Chapter originalChapter, Chapter? previousChapter)
     {
+      bool isPreviousChapterUpdated = false;
       if (previousChapter == null)
       {
         // Find a chapter with a next link to the original chapter.
@@ -111,7 +112,7 @@ namespace HfyClientApi.Services
       else if (previousChapter.NextChapterId == null)
       {
         previousChapter.NextChapterId = originalChapter.Id;
-        await _chapterRepository.UpdateChapterAsync(previousChapter, onlyLinks: true);
+        isPreviousChapterUpdated = true;
       }
       else if (previousChapter.NextChapterId != originalChapter.Id)
       {
@@ -120,10 +121,19 @@ namespace HfyClientApi.Services
           originalChapter.Id, previousChapter.NextChapterId
         );
       }
+
+      if (previousChapter != null) {
+        isPreviousChapterUpdated = isPreviousChapterUpdated || UpdateFirstLink(originalChapter, previousChapter);
+
+        if (isPreviousChapterUpdated) {
+          await _chapterRepository.UpdateChapterAsync(previousChapter, onlyLinks: true);
+        }
+      }
     }
 
     internal async Task UpdateNextChapterLinkAsync(Chapter originalChapter, Chapter? nextChapter)
     {
+      bool isNextChapterUpdated = false;
       if (nextChapter == null)
       {
         // Find a chapter with a previous link to the original chapter.
@@ -136,7 +146,7 @@ namespace HfyClientApi.Services
       else if (nextChapter.PreviousChapterId == null)
       {
         nextChapter.PreviousChapterId = originalChapter.Id;
-        await _chapterRepository.UpdateChapterAsync(nextChapter, onlyLinks: true);
+        isNextChapterUpdated = true;
       }
       else if (nextChapter.PreviousChapterId != originalChapter.Id)
       {
@@ -145,6 +155,34 @@ namespace HfyClientApi.Services
           originalChapter.Id, nextChapter.PreviousChapterId
         );
       }
+
+      if (nextChapter != null) {
+        isNextChapterUpdated = isNextChapterUpdated || UpdateFirstLink(originalChapter, nextChapter);
+
+        if (isNextChapterUpdated) {
+          await _chapterRepository.UpdateChapterAsync(nextChapter, onlyLinks: true);
+        }
+      }
+    }
+
+    internal bool UpdateFirstLink(Chapter targetChapter, Chapter sourceChapter) {
+      targetChapter.FirstChapterId ??= sourceChapter.FirstChapterId;
+
+      if (sourceChapter.FirstChapterId == null && targetChapter.FirstChapterId != null)
+      {
+        sourceChapter.FirstChapterId = targetChapter.FirstChapterId;
+        return true;
+      }
+
+      if (targetChapter.FirstChapterId != sourceChapter.FirstChapterId)
+      {
+        _logger.LogWarning(
+          "Chapter {} and {} have different first chapter links, despite being linked: {} != {}",
+          targetChapter.Id, sourceChapter.Id, targetChapter.FirstChapterId, sourceChapter.FirstChapterId
+        );
+      }
+
+      return false;
     }
   }
 }
