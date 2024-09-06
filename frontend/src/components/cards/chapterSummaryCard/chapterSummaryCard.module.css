@@ -22,6 +22,10 @@
   width: 6rem;
 }
 
+.card h4 {
+  margin-bottom: 0.5rem;
+}
+
 .authorContainer {
   display: flex;
   flex-direction: row;

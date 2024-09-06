@@ -28,8 +28,12 @@
   font-size: var(--step-0);
 }
 
-.title {
-  padding-bottom: 1rem;
+.metadataContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0.5rem;
+  gap: 0 1rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -43,5 +47,11 @@
 
   .authorContainer {
     flex-wrap: wrap;
+  }
+
+  .metadataContainer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    margin-top: 0;
   }
 }
