@@ -9,13 +9,17 @@ import { GetChapterRequest } from "@/types/api";
 import { Params } from "@/types/next";
 import { Metadata, ResolvingMetadata } from "next";
 
-export const revalidate = 5 * 60; // Incrementally regenerate every 5 minute
+const FIVE_MINUTES = 5 * 60;
+
+export const revalidate = FIVE_MINUTES; // Incrementally regenerate every 5 minute
 
 export async function generateMetadata(
   { params }: Params<{ id: string }>,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`);
+  const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`, {
+    next: { revalidate: FIVE_MINUTES },
+  });
   const chapter: GetChapterRequest.ResBody = await res.json();
 
   const images: string[] = [];

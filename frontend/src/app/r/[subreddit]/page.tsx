@@ -6,13 +6,18 @@ import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { Params } from "@/types/next";
 
-export const revalidate = 60; // Incrementally regenerate every 1 minute
+const ONE_MINUTE = 60;
+
+export const revalidate = ONE_MINUTE; // Incrementally regenerate every 1 minute
 
 export default async function Subreddit({
   params,
 }: Params<{ subreddit: string }>) {
   const res = await fetch(
-    `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
+    `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`,
+    {
+      next: { revalidate: ONE_MINUTE },
+    }
   );
   const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
 
