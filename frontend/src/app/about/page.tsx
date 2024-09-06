@@ -66,6 +66,13 @@ export default function About() {
               . Any other links to Reddit posts are changed to instead link to
               this website.
             </p>
+            <p>
+              Periodically, chapters are synchronised with their corresponding
+              Reddit post. The time between synchronisations is proportional to
+              how old the post is. As a result, any upvotes or edits to the
+              original Reddit post—including removing it all together—get
+              reflected here.
+            </p>
           </section>
           <section>
             <h3>Limitations</h3>
