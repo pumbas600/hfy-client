@@ -19,8 +19,10 @@ export default function Upvotes({ upvotes, downvotes }: UpvotesProps) {
     return votes.toString();
   };
 
+  const plural = totalVotes === 1 ? "" : "s";
+
   return (
-    <div className={styles.upvotes} title={`${totalVotes} upvotes`}>
+    <div className={styles.upvotes} title={`${totalVotes} upvote${plural}`}>
       <FontAwesomeIcon icon={faHeart} />
       <p>{formatVotes(upvotes - downvotes)}</p>
     </div>
