@@ -2,7 +2,7 @@
 
 import { PaginatedChapters } from "@/types/chapter";
 import ChapterSummaryCard from "../chapterSummaryCard";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GetNewChaptersRequest } from "@/types/api";
 
@@ -25,6 +25,12 @@ export default function ChapterCardList({
   const [nextKey, setNextKey] = useState(paginatedChapters.nextKey);
   const [chapters, setChapters] = useState(paginatedChapters.data);
   const [hasNext, setHasNext] = useState(hasMoreChapters(paginatedChapters));
+
+  useEffect(() => {
+    setNextKey(paginatedChapters.nextKey);
+    setChapters(paginatedChapters.data);
+    setHasNext(hasMoreChapters(paginatedChapters));
+  }, [paginatedChapters]);
 
   const fetchNext = async (): Promise<void> => {
     if (nextKey === null) {

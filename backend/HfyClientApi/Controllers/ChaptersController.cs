@@ -51,8 +51,8 @@ namespace HfyClientApi.Controllers
 
     [HttpGet("r/{subreddit}/search")]
     public async Task<ActionResult<ChapterPaginationDto>> GetNewSubredditChapters(
-      [FromRoute] string subreddit, [FromQuery] string title, [FromQuery] DateTime? lastCreated,
-      [FromQuery] string? lastId, [FromQuery] int pageSize = 20)
+      [FromRoute] string subreddit, [FromQuery] DateTime? lastCreated, [FromQuery] string? lastId,
+      [FromQuery] string title = "", [FromQuery] int pageSize = 20)
     {
       var nextKeyResult = ChapterPaginationKey.From(lastCreated, lastId);
       if (nextKeyResult.IsFailure)

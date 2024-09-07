@@ -1,6 +1,6 @@
 import ChapterCardList from "@/components/cards/chapterCardList";
 import Container from "@/components/container";
-import SearchInput from "@/components/inputs/searchInput";
+import ChapterSearchInput from "@/components/inputs/chapterSearchInput";
 import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
@@ -15,6 +15,8 @@ export default async function SubredditSearch({
   params,
   searchParams,
 }: Params<{ subreddit: string }, { q: string }>) {
+  console.log(searchParams.q);
+
   const endpointUrl = new URL(
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/search`
   );
@@ -31,11 +33,9 @@ export default async function SubredditSearch({
     <div>
       <PageHeader backLink={`/r/${params.subreddit}`}>
         <h1>r/{params.subreddit}</h1>
-        <SearchInput
-          name="q"
+        <ChapterSearchInput
+          subreddit={params.subreddit}
           defaultValue={searchParams.q}
-          placeholder="Search chapters..."
-          aria-label="Search for chapters by their title"
         />
       </PageHeader>
       <Container main>
