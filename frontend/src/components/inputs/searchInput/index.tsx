@@ -1,11 +1,12 @@
 export interface SearchInputProps {
+  "aria-label": string;
   placeholder: string;
 }
 
-export default function SearchInput({ placeholder }: SearchInputProps) {
+export default function SearchInput(props: SearchInputProps) {
   return (
-    <div>
-      <input type="text" placeholder={placeholder} />
-    </div>
+    <form role="search">
+      <input type="search" {...props} />
+    </form>
   );
 }

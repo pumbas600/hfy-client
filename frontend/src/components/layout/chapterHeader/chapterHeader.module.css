@@ -44,4 +44,8 @@
   .authorContainer {
     flex-wrap: wrap;
   }
+
+  .chapterHeader h2 {
+    font-size: var(--step-2);
+  }
 }

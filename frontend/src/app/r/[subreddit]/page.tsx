@@ -26,7 +26,10 @@ export default async function Subreddit({
     <div>
       <PageHeader>
         <h1>r/{params.subreddit}</h1>
-        <SearchInput placeholder="Search chapters..." />
+        <SearchInput
+          placeholder="Search chapters..."
+          aria-label="Search for chapters by their title"
+        />
       </PageHeader>
       <Container main>
         <ChapterCardList
