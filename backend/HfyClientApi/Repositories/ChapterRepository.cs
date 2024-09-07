@@ -235,8 +235,13 @@ namespace HfyClientApi.Repositories
 
     internal static string GetSearchableTitle(string title)
     {
-      return SpecialCharacterRegex().Replace(title, " ").ToLower();
+      var withEmptySpecialCharactersRemoved = EmptySpecialCharacterRegex().Replace(title, "");
+      return SpecialCharacterRegex().Replace(withEmptySpecialCharactersRemoved, " ").ToLower();
     }
+
+    [GeneratedRegex("['\"’]+")]
+    private static partial Regex EmptySpecialCharacterRegex();
+
 
     [GeneratedRegex(@"\W+")]
     private static partial Regex SpecialCharacterRegex();
