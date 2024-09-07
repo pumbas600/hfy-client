@@ -11,6 +11,8 @@ export interface ChapterCardListProps {
   endpointUrl: string;
 }
 
+const ONE_MINUTES = 60;
+
 function hasMoreChapters(paginatedChapters: PaginatedChapters): boolean {
   return (
     paginatedChapters.nextKey !== null &&
@@ -42,7 +44,9 @@ export default function ChapterCardList({
     const requestUrl = new URL(endpointUrl);
     requestUrl.searchParams.set("lastCreated", nextKey.lastCreatedAtUtc);
     requestUrl.searchParams.set("lastId", nextKey.lastPostId);
-    const res = await fetch(requestUrl.toString());
+    const res = await fetch(requestUrl.toString(), {
+      next: { revalidate: ONE_MINUTES },
+    });
 
     const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
 

@@ -239,7 +239,7 @@ namespace HfyClientApi.Repositories
       return SpecialCharacterRegex().Replace(withEmptySpecialCharactersRemoved, " ").ToLower();
     }
 
-    [GeneratedRegex("['\"’]+")]
+    [GeneratedRegex("['’]+")]
     private static partial Regex EmptySpecialCharacterRegex();
 
 
