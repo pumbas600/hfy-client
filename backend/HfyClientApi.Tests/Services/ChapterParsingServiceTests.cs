@@ -1,17 +1,19 @@
 using HfyClientApi.Services;
 using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using Reddit.Controllers;
 
 namespace HfyClientApi.Tests.Services
 {
   public class ChapterParsingServiceTests
   {
-    private readonly ChapterParsingService chapterParsingService = new();
+    private readonly ChapterParsingService chapterParsingService = new(
+      LoggerFactory.Create(b => { }).CreateLogger<ChapterParsingService>()
+    );
 
     [Fact]
     public void ParseRedditLink_WithValidChapterLink_IsParsed()
     {
-
       var link = "https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/";
       var linkElement = HtmlNode.CreateNode($"<a href=\"{link}\">Next</a>");
 
@@ -20,7 +22,19 @@ namespace HfyClientApi.Tests.Services
       Assert.NotNull(parsedLink);
       Assert.Equal("HFY", parsedLink.Subreddit);
       Assert.Equal("sdffas", parsedLink.PostId);
-      Assert.Equal("next", parsedLink.Label);
+    }
+
+    [Fact]
+    public void ParseRedditLink_WithOldRedditLink_IsParsed()
+    {
+      var link = "https://old.reddit.com/r/HFY/comments/sdffas/my_example_story/";
+      var linkElement = HtmlNode.CreateNode($"<a href=\"{link}\">Next</a>");
+
+      var parsedLink = ChapterParsingService.ParseRedditLink(linkElement);
+
+      Assert.NotNull(parsedLink);
+      Assert.Equal("HFY", parsedLink.Subreddit);
+      Assert.Equal("sdffas", parsedLink.PostId);
     }
 
     [Theory]
@@ -47,7 +61,7 @@ namespace HfyClientApi.Tests.Services
     [InlineData("⏮Previous")]
     [InlineData("⏮ Previous")]
     [InlineData("⏮Prev")]
-    public void ChapterFromPost_WithOnlyPreviousLink_ExtractsPreviousLink(string previousLinkLabel)
+    public async Task ChapterFromPost_WithOnlyPreviousLink_ExtractsPreviousLink(string previousLinkLabel)
     {
       var textHtml = BuildPostHtml(
         $"""
@@ -68,21 +82,21 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPostAsync(post);
+      var (chapter, _) = await chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
       Assert.Equal(BuildPostHtml(
         """
         <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Random Link</a> |
+          <a href="/chapters/sdffas">Random Link</a> |
            |
           Next
         </p>
         """,
         """
         <p>
-          <a href="https://www.reddit.com/r/HFY/comments/sdffas/my_example_story/">Random Link</a> |
+          <a href="/chapters/sdffas">Random Link</a> |
            |
           Next
         </p>
@@ -100,7 +114,7 @@ namespace HfyClientApi.Tests.Services
     [InlineData("Next Chapter")]
     [InlineData("Next⏭")]
     [InlineData("Next ⏭")]
-    public void ChapterFromPost_WithOnlyNextLink_ExtractsNextLink(string nextLinkLabel)
+    public async Task ChapterFromPost_WithOnlyNextLink_ExtractsNextLink(string nextLinkLabel)
     {
       var textHtml = BuildPostHtml(
         $"""
@@ -113,14 +127,14 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPostAsync(post);
+      var (chapter, _) = await chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
       Assert.Equal(BuildPostHtml("<p></p>", "<p></p>"), chapter.TextHtml);
       Assert.Equal("1exzyx5", chapter.NextChapterId);
+      Assert.Equal("sdfghj", chapter.FirstChapterId);
       Assert.Null(chapter.PreviousChapterId);
-      Assert.Null(chapter.FirstChapterId);
     }
 
     [Theory]
@@ -131,7 +145,7 @@ namespace HfyClientApi.Tests.Services
     [InlineData("First chapter")]
     [InlineData("⏮First")]
     [InlineData("⏮ First")]
-    public void ChapterFromPost_WithOnlyFirstLink_ExtractsFirstLink(string firstLinkLabel)
+    public async Task ChapterFromPost_WithOnlyFirstLink_ExtractsFirstLink(string firstLinkLabel)
     {
       var textHtml = BuildPostHtml(
         $"""
@@ -144,7 +158,7 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPostAsync(post);
+      var (chapter, _) = await chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
@@ -155,13 +169,13 @@ namespace HfyClientApi.Tests.Services
     }
 
     [Fact]
-    public void ChapterFromPost_WithNoLinks_ReturnsChapter()
+    public async Task ChapterFromPost_WithNoLinks_ReturnsChapter()
     {
       var textHtml = BuildPostHtml();
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPostAsync(post);
+      var (chapter, _) = await chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
@@ -178,7 +192,7 @@ namespace HfyClientApi.Tests.Services
         <p>
           <a href="https://www.patreon.com/sdfsdfsdf"> Patreon </a> |
           <a href="https://www.reddit.com/r/MySubreddit/"> Official Subreddit </a> |
-          <a href="https://www.royalroad.com/fiction/70060/my_example_story"> Royal Road </a>
+          <a href="https://not.royalroad.com/fiction/70060/my_example_story"> Royal Road </a>
         </p>
 
         <p><strong>Example text...</strong></p>

@@ -28,7 +28,7 @@ namespace HfyClientApi.Services
     /// <summary>
     /// A regex expression that allows the subreddit and post id to be extracted from a Reddit link.
     /// </summary>
-    private const string RedditLinkRegex = @$"{Config.RedditUrl}/r/(\w+)/comments/(\w+)/\w+/?";
+    private const string RedditLinkRegex = @$"(?:(?:{Config.RedditUrl})|(?:https://old.reddit.com))/r/(\w+)/comments/(\w+)/\w+/?";
 
     private readonly ILogger<ChapterParsingService> _logger;
 
