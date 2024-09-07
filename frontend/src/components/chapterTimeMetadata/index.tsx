@@ -13,7 +13,7 @@ export default function ChapterTimeMetadata({
   className,
 }: ChapterTimeMetadataProps) {
   return (
-    <p className={`${styles.timeMetadata} ${className}`}>
+    <p className={`${styles.timeMetadata} ${className ?? ""}`}>
       Posted <RelativeTime dateTimeUtc={createdAtUtc} /> • Synced{" "}
       <RelativeTime dateTimeUtc={syncedAtUtc} />
     </p>
