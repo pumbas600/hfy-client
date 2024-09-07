@@ -120,9 +120,11 @@ namespace HfyClientApi.Repositories
     public async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersMetadataByTitleAsync(
       string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey)
     {
+      var loweredTitle = title.ToLower();
+
       Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
-        ? c => c.Chapter.Subreddit == subreddit && c.Chapter.Title.Contains(title)
-        : c => c.Chapter.Subreddit == subreddit && c.Chapter.Title.Contains(title)
+        ? c => c.Chapter.Subreddit == subreddit && c.Chapter.Title.ToLower().Contains(loweredTitle)
+        : c => c.Chapter.Subreddit == subreddit && c.Chapter.Title.ToLower().Contains(loweredTitle)
           && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
           || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
