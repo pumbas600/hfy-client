@@ -17,8 +17,8 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
 
   return (
     <PageHeader
+      popBack
       className={styles.chapterHeader}
-      backLink={subredditLink}
       redditLink={chapter.redditPostLink}
       redditLinkTitle="Read on Reddit"
     >
