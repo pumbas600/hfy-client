@@ -1,8 +1,8 @@
 export default function NsfwIcon() {
   return (
     <svg
-      height="16"
-      width="16"
+      height="1em"
+      width="1em"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
     >
