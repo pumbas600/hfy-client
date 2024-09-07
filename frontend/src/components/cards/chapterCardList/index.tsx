@@ -5,11 +5,10 @@ import ChapterSummaryCard from "../chapterSummaryCard";
 import { Fragment, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GetNewChaptersRequest } from "@/types/api";
-import config from "@/config";
 
 export interface ChapterCardListProps {
-  subreddit: string;
   paginatedChapters: PaginatedChapters;
+  endpointUrl: URL;
 }
 
 function hasMoreChapters(paginatedChapters: PaginatedChapters): boolean {
@@ -20,8 +19,8 @@ function hasMoreChapters(paginatedChapters: PaginatedChapters): boolean {
 }
 
 export default function ChapterCardList({
-  subreddit,
   paginatedChapters,
+  endpointUrl,
 }: ChapterCardListProps) {
   const [nextKey, setNextKey] = useState(paginatedChapters.nextKey);
   const [chapters, setChapters] = useState(paginatedChapters.data);
@@ -34,9 +33,7 @@ export default function ChapterCardList({
 
     console.debug("[Paginated Chapters]: Fetching more chapters");
 
-    const requestUrl = new URL(
-      `${config.api.baseUrl}/chapters/r/${subreddit}/new`
-    );
+    const requestUrl = new URL(endpointUrl);
     requestUrl.searchParams.set("lastCreated", nextKey.lastCreatedAtUtc);
     requestUrl.searchParams.set("lastId", nextKey.lastPostId);
     const res = await fetch(requestUrl.toString());

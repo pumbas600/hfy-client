@@ -1,7 +1,9 @@
-export interface SearchInputProps {
-  "aria-label": string;
-  placeholder: string;
-}
+import { DetailedHTMLProps, InputHTMLAttributes } from "react";
+
+type SearchInputProps = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
 export default function SearchInput(props: SearchInputProps) {
   return (

@@ -4,25 +4,27 @@ import SearchInput from "@/components/inputs/searchInput";
 import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
-import { GetNewChaptersRequest } from "@/types/api";
+import { GetChaptersByTitleRequest } from "@/types/api";
 import { Params } from "@/types/next";
 
-const ONE_MINUTE = 60;
+const FIVE_MINUTES = 5 * 60;
 
-export const revalidate = ONE_MINUTE; // Incrementally regenerate every 1 minute
+export const reinvalidate = FIVE_MINUTES; // Incrementally regenerate every 5 minutes
 
-export default async function Subreddit({
+export default async function SubredditSearch({
   params,
-}: Params<{ subreddit: string }>) {
-  "use server";
+}: Params<{ subreddit: string; q: string }>) {
   const endpointUrl = new URL(
-    `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
+    `${config.api.baseUrl}/chapters/r/${params.subreddit}/search`
   );
 
+  endpointUrl.searchParams.set("title", params.q);
+
   const res = await fetch(endpointUrl.toString(), {
-    next: { revalidate: ONE_MINUTE },
+    next: { revalidate: FIVE_MINUTES },
   });
-  const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
+
+  const paginatedChapters: GetChaptersByTitleRequest.ResBody = await res.json();
 
   return (
     <div>

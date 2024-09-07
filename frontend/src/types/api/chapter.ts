@@ -22,3 +22,13 @@ export namespace GetNewChaptersRequest {
   export type ResBody = PaginatedChapters;
   export type ReqBody = never;
 }
+
+export namespace GetChaptersByTitleRequest {
+  export interface Params extends ChapterPaginationKey {
+    subreddit: ChapterMetadata["subreddit"];
+    title: string;
+  }
+
+  export type ResBody = PaginatedChapters;
+  export type ReqBody = never;
+}
