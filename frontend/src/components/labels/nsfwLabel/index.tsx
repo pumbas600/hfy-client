@@ -1,11 +1,7 @@
 import NsfwIcon from "@/icons/nsfwIcon";
 import styles from "./nsfwLabel.module.css";
+import Label from "../label";
 
 export default function NsfwLabel() {
-  return (
-    <span className={styles.label}>
-      <NsfwIcon />
-      <p>NSFW</p>
-    </span>
-  );
+  return <Label icon={<NsfwIcon />} label="NSFW" className={styles.label} />;
 }

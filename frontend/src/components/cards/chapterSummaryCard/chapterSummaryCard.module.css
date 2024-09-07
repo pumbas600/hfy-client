@@ -38,13 +38,6 @@
   color: var(--background-contrast-secondary);
 }
 
-.metadataContainer {
-  display: flex;
-  flex-direction: row;
-  gap: 0 1rem;
-  align-items: center;
-}
-
 @media screen and (max-width: 768px) {
   .card {
     border-radius: 0;

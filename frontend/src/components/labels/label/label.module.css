@@ -1,10 +1,11 @@
-.upvotes {
+.label {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  font-weight: 500;
 }
 
-.upvotes > p {
+.label > p {
   user-select: none;
 }

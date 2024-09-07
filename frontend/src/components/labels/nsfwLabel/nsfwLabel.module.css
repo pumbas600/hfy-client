@@ -1,11 +1,4 @@
 .label {
-  display: inline-flex;
-  gap: 0.5rem;
   color: var(--nsfw-color);
   fill: var(--nsfw-color);
-  font-weight: bold;
-}
-
-.label p {
-  font-size: var(--step--1);
 }

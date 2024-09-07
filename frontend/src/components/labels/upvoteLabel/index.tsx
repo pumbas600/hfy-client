@@ -1,14 +1,14 @@
 import { ChapterMetadata } from "@/types/chapter";
-import styles from "./upvotes.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons/faHeart";
+import Label from "../label";
 
-export interface UpvotesProps {
+export interface UpvoteLabelProps {
   upvotes: ChapterMetadata["upvotes"];
   downvotes: ChapterMetadata["downvotes"];
 }
 
-export default function Upvotes({ upvotes, downvotes }: UpvotesProps) {
+export default function UpvoteLabel({ upvotes, downvotes }: UpvoteLabelProps) {
   const totalVotes = upvotes - downvotes;
 
   const formatVotes = (votes: number): string => {
@@ -22,9 +22,10 @@ export default function Upvotes({ upvotes, downvotes }: UpvotesProps) {
   const plural = totalVotes === 1 ? "" : "s";
 
   return (
-    <div className={styles.upvotes} title={`${totalVotes} upvote${plural}`}>
-      <FontAwesomeIcon icon={faHeart} />
-      <p>{formatVotes(upvotes - downvotes)}</p>
-    </div>
+    <Label
+      icon={<FontAwesomeIcon icon={faHeart} />}
+      label={formatVotes(upvotes - downvotes)}
+      title={`${totalVotes} upvote${plural}`}
+    />
   );
 }

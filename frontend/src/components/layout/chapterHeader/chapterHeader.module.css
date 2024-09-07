@@ -28,11 +28,8 @@
   font-size: var(--step-0);
 }
 
-.metadataContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0 1rem;
+.timeMetadata {
+  margin-block: 0.25rem;
 }
 
 @media screen and (max-width: 768px) {
