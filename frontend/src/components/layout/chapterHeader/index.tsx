@@ -5,6 +5,7 @@ import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
 import { UnderlinedLink } from "@/components/links";
 import CoverArt from "@/components/images/coverArt";
 import Upvotes from "@/components/upvotes";
+import NsfwLabel from "@/components/labels/nsfwLabel";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
@@ -33,12 +34,13 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
           </UnderlinedLink>
         </div>
         <h2 className={styles.title}>{chapter.title}</h2>
+        <ChapterTimeMetadata
+          createdAtUtc={chapter.createdAtUtc}
+          syncedAtUtc={chapter.syncedAtUtc}
+        />
         <div className={styles.metadataContainer}>
           <Upvotes upvotes={chapter.upvotes} downvotes={chapter.downvotes} />
-          <ChapterTimeMetadata
-            createdAtUtc={chapter.createdAtUtc}
-            syncedAtUtc={chapter.syncedAtUtc}
-          />
+          {chapter.isNsfw && <NsfwLabel />}
         </div>
       </div>
     </PageHeader>

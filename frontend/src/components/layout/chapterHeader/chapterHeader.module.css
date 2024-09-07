@@ -32,7 +32,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 0.5rem;
   gap: 0 1rem;
 }
 
@@ -47,11 +46,5 @@
 
   .authorContainer {
     flex-wrap: wrap;
-  }
-
-  .metadataContainer {
-    flex-direction: column-reverse;
-    align-items: flex-start;
-    margin-top: 0;
   }
 }
