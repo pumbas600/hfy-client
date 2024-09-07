@@ -13,12 +13,13 @@ export const reinvalidate = FIVE_MINUTES; // Incrementally regenerate every 5 mi
 
 export default async function SubredditSearch({
   params,
-}: Params<{ subreddit: string; q: string }>) {
+  searchParams,
+}: Params<{ subreddit: string }, { q: string }>) {
   const endpointUrl = new URL(
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/search`
   );
 
-  endpointUrl.searchParams.set("title", params.q);
+  endpointUrl.searchParams.set("title", searchParams.q);
 
   const res = await fetch(endpointUrl.toString(), {
     next: { revalidate: FIVE_MINUTES },
@@ -28,10 +29,11 @@ export default async function SubredditSearch({
 
   return (
     <div>
-      <PageHeader>
+      <PageHeader backLink={`/r/${params.subreddit}`}>
         <h1>r/{params.subreddit}</h1>
         <SearchInput
           name="q"
+          defaultValue={searchParams.q}
           placeholder="Search chapters..."
           aria-label="Search for chapters by their title"
         />
@@ -39,7 +41,7 @@ export default async function SubredditSearch({
       <Container main>
         <ChapterCardList
           paginatedChapters={paginatedChapters}
-          endpointUrl={endpointUrl}
+          endpointUrl={endpointUrl.toString()}
         />
       </Container>
       <PageFooter />

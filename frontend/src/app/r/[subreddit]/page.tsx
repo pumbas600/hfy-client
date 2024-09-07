@@ -37,7 +37,7 @@ export default async function Subreddit({
       <Container main>
         <ChapterCardList
           paginatedChapters={paginatedChapters}
-          endpointUrl={endpointUrl}
+          endpointUrl={endpointUrl.toString()}
         />
       </Container>
       <PageFooter />

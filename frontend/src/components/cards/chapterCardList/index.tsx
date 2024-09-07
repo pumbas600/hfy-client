@@ -8,7 +8,7 @@ import { GetNewChaptersRequest } from "@/types/api";
 
 export interface ChapterCardListProps {
   paginatedChapters: PaginatedChapters;
-  endpointUrl: URL;
+  endpointUrl: string;
 }
 
 function hasMoreChapters(paginatedChapters: PaginatedChapters): boolean {
