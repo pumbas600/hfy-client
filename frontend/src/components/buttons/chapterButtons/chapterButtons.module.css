@@ -1,9 +1,25 @@
 .buttonGroup {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding-block: 1rem;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  column-gap: 1px;
+}
+
+.buttonGroup.noFirst {
+  grid-template-columns: 1fr max-content;
+}
+
+.buttonGroup:not(.noFirst) a:first-child button {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.buttonGroup:not(.noFirst) a:nth-child(2) button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 
 .previousButtons {
@@ -27,6 +43,21 @@
 
 @media screen and (max-width: 768px) {
   .buttonGroup {
-    gap: 1px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .buttonGroup:not(.noFirst) button {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .buttonGroup:not(.noFirst) a:nth-child(2) button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .buttonGroup:not(.noFirst) a:last-child > button {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
 }

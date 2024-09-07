@@ -26,23 +26,27 @@ export default function ChapterButtons({
       ? "The previous chapter cannot be determined"
       : undefined;
 
+  const hasFirstButton = !(hideFirstLink || isFirst);
+
   return (
-    <div className={styles.buttonGroup}>
-      <div className={styles.previousButtons}>
-        {!(hideFirstLink || isFirst) && (
-          <ChapterButton chapterId={chapter.firstChapterId}>
-            <FontAwesomeIcon icon={faAnglesLeft} />
-            First
-          </ChapterButton>
-        )}
-        <ChapterButton
-          chapterId={chapter.previousChapterId}
-          tooltip={previousChapterTooltip}
-        >
-          <FontAwesomeIcon icon={faAngleLeft} />
-          Previous
+    <div
+      className={`${styles.buttonGroup} ${
+        hasFirstButton ? undefined : styles.noFirst
+      }`}
+    >
+      {hasFirstButton && (
+        <ChapterButton chapterId={chapter.firstChapterId}>
+          <FontAwesomeIcon icon={faAnglesLeft} />
+          First
         </ChapterButton>
-      </div>
+      )}
+      <ChapterButton
+        chapterId={chapter.previousChapterId}
+        tooltip={previousChapterTooltip}
+      >
+        <FontAwesomeIcon icon={faAngleLeft} />
+        Previous
+      </ChapterButton>
       <ChapterButton chapterId={chapter.nextChapterId}>
         Next
         <FontAwesomeIcon icon={faAngleRight} />
