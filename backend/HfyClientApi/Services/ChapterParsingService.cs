@@ -200,10 +200,24 @@ namespace HfyClientApi.Services
     internal protected async Task<string?> GetCoverArtUrlFromRoyalRoadLink(
       string royalRoadLink)
     {
-      _logger.LogInformation("Fetching cover art from Royal Road link: {}", royalRoadLink);
-      var graph = await OpenGraph.ParseUrlAsync(royalRoadLink);
-      return graph.Image?.ToString();
+      _logger.LogInformation("Fetching cover art from Royal Road link: {} ", royalRoadLink);
+      try
+      {
+        var graph = await OpenGraph.ParseUrlAsync(royalRoadLink);
+        var imageUrl = graph.Image?.ToString();
 
+        // Default Royal Road cover art
+        if (imageUrl == "/dist/img/nocover-new-min.png") {
+          return null;
+        }
+
+        return imageUrl;
+      }
+      catch (HttpRequestException e)
+      {
+        _logger.LogError(e, "Failed to fetch cover art from Royal Road link: {}", royalRoadLink);
+        return null;
+      }
     }
   }
 }
