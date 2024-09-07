@@ -28,7 +28,7 @@ namespace HfyClientApi.Utils
     }
 
     public static Result Success() => new(Error.None);
-    public static Result<T> Success<T>(T data) => new(data, Error.None);
+    public static Result<T> Success<T>(T? data) => new(data, Error.None);
     public static Result<T> Failure<T>(Error error) => new(default, error);
 
     public static implicit operator Result(Error error) => new(error);

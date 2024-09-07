@@ -38,24 +38,14 @@ namespace HfyClientApi.Controllers
       [FromRoute] string subreddit, [FromQuery] DateTime? lastCreated,
       [FromQuery] string? lastId, [FromQuery] int pageSize = 20)
     {
-      ChapterPaginationKey? nextKey = null;
-
-      if (lastCreated != null && lastId != null)
+      var nextKeyResult = ChapterPaginationKey.From(lastCreated, lastId);
+      if (nextKeyResult.IsFailure)
       {
-        nextKey = new ChapterPaginationKey()
-        {
-          // For some reason, C# doesn't realise that lastCreated is not null.
-          LastCreatedAtUtc = lastCreated.Value.ToUniversalTime(),
-          LastPostId = lastId,
-        };
-      }
-      else if (lastCreated != null || lastId != null)
-      {
-        return Errors.ChapterPaginationPartialKeyset.ToActionResult();
+        return nextKeyResult.Error.ToActionResult();
       }
 
       var chapterPaginationDto = await _chapterService.GetPaginatedNewChaptersMetadataAsync(
-        subreddit, pageSize, nextKey);
+        subreddit, pageSize, nextKeyResult.Data);
 
       return Ok(chapterPaginationDto);
     }
