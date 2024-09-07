@@ -31,11 +31,14 @@ export default function ChapterButtons({
   return (
     <div
       className={`${styles.buttonGroup} ${
-        hasFirstButton ? undefined : styles.noFirst
+        hasFirstButton ? "" : styles.noFirst
       }`}
     >
       {hasFirstButton && (
-        <ChapterButton chapterId={chapter.firstChapterId}>
+        <ChapterButton
+          chapterId={chapter.firstChapterId}
+          className={styles.first}
+        >
           <FontAwesomeIcon icon={faAnglesLeft} />
           First
         </ChapterButton>
@@ -43,11 +46,12 @@ export default function ChapterButtons({
       <ChapterButton
         chapterId={chapter.previousChapterId}
         tooltip={previousChapterTooltip}
+        className={styles.prev}
       >
         <FontAwesomeIcon icon={faAngleLeft} />
         Previous
       </ChapterButton>
-      <ChapterButton chapterId={chapter.nextChapterId}>
+      <ChapterButton chapterId={chapter.nextChapterId} className={styles.next}>
         Next
         <FontAwesomeIcon icon={faAngleRight} />
       </ChapterButton>
