@@ -52,7 +52,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  options.UseNpgsql(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+    npgOptions => npgOptions.UseFuzzyStringMatch());
 });
 
 builder.Services.AddSingleton(reddit);

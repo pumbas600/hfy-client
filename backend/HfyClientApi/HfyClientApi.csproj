@@ -14,6 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.FuzzyStringMatch" Version="5.0.10" />
     <PackageReference Include="OpenGraph-Net" Version="4.0.1" />
     <PackageReference Include="Reddit" Version="1.5.2" />
     <PackageReference Include="Reddit.AuthTokenRetrieverLib" Version="1.5.2" />
