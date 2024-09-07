@@ -271,10 +271,31 @@
   button:not(:disabled):hover {
     background-color: var(--primary-darkened);
   }
+
+  input,
+  textarea {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    font-size: var(--step--1);
+    font-family: inherit;
+    min-width: 250px;
+    border-radius: var(--border-radius);
+    resize: none;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline-color: var(--primary-color);
+  }
 }
 
 @media screen and (max-width: 768px) {
   button {
+    min-width: auto;
+  }
+
+  input,
+  textarea {
     min-width: auto;
   }
 }

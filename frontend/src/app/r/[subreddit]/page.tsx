@@ -1,5 +1,6 @@
 import ChapterCardList from "@/components/cards/chapterCardList";
 import Container from "@/components/container";
+import SearchInput from "@/components/inputs/searchInput";
 import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
@@ -25,6 +26,7 @@ export default async function Subreddit({
     <div>
       <PageHeader>
         <h1>r/{params.subreddit}</h1>
+        <SearchInput placeholder="Search chapters..." />
       </PageHeader>
       <Container main>
         <ChapterCardList
