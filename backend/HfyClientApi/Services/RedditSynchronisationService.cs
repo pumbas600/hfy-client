@@ -26,12 +26,11 @@ namespace HfyClientApi.Services {
 
       try
       {
-        stopwatch.Stop();
-        _logger.LogInformation("Time since last synchronisation: {}", stopwatch.Elapsed);
-        stopwatch.Restart();
-
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
+          stopwatch.Stop();
+          _logger.LogInformation("Time since last synchronisation: {}", stopwatch.Elapsed);
+          stopwatch.Restart();
           await ProcessNewPostsAsync();
         }
       }
@@ -46,6 +45,8 @@ namespace HfyClientApi.Services {
 
       var newPosts = _redditService.GetNewSelfPosts("HFY");
       await _chapterService.ProcessChaptersByPostAsync(newPosts);
+
+      _logger.LogInformation("Finished processing new posts in r/HFY");
     }
   }
 }

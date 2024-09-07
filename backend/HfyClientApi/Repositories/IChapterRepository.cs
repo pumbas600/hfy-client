@@ -23,9 +23,10 @@ namespace HfyClientApi.Repositories
     Task<Chapter?> GetChapterByPreviousLinkIdAsync(string previousLinkId);
 
     Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter);
-    Task<Chapter> CreateChapterAsync(Chapter chapter);
 
-    Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false);
+    Task<Chapter> CreateChapterAsync(Chapter chapter, bool track = false);
+
+    Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false, bool track = false);
 
     Task<IEnumerable<CombinedChapter>> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey);

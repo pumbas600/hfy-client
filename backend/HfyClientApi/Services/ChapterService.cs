@@ -61,28 +61,35 @@ namespace HfyClientApi.Services
       return await ProcessChapterByPostAsync(selfPost);
     }
 
-    public async Task ProcessChaptersByPostAsync(IEnumerable<SelfPost> posts) {
+    public async Task ProcessChaptersByPostAsync(IEnumerable<SelfPost> posts)
+    {
       var chapters = await _chapterRepository.GetChaptersByIdsAsync(posts.Select(post => post.Id));
       var chapterMap = chapters.ToDictionary(c => c.Id);
 
-      // TODO: Does this work with upvotes..?
-
-      var updatePostTasks = posts.Where(
-        // Only update posts if it's new, or the chapter has been edited since.
-        p => !chapterMap.TryGetValue(p.Id, out Chapter? c) || c.EditedAtUtc < p.Edited)
-        .Select(p => {
-          if (chapterMap.TryGetValue(p.Id, out Chapter? c))
-          {
-            return UpdateChapterAsync(p);
-          }
-
-          return CreateChapterAsync(p);
-        });
-
-      await Task.WhenAll(updatePostTasks);
+      foreach (var post in posts)
+      {
+        if (chapterMap.TryGetValue(post.Id, out Chapter? chapter))
+        {
+          await UpdateChapterAsync(chapter, post);
+        }
+        else
+        {
+          await CreateChapterAsync(post);
+        }
+      }
     }
 
-    internal async Task UpdateChapterAsync(SelfPost post) {
+    internal async Task UpdateChapterAsync(Chapter chapter, SelfPost post)
+    {
+      if (chapter.EditedAtUtc >= post.Edited)
+      {
+        if (chapter.Upvotes == post.UpVotes && chapter.Downvotes == post.DownVotes)
+        {
+          return;
+        }
+        await _chapterRepository.UpdateChapterAsync(chapter);
+      }
+
       var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
       await UpdateChapterLinksAsync(parsedChapter);
 
@@ -94,7 +101,8 @@ namespace HfyClientApi.Services
       await _chapterRepository.UpdateChapterAsync(parsedChapter);
     }
 
-    internal async Task CreateChapterAsync(SelfPost post) {
+    internal async Task CreateChapterAsync(SelfPost post)
+    {
       var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
       await UpdateChapterLinksAsync(parsedChapter);
 
@@ -173,10 +181,12 @@ namespace HfyClientApi.Services
         );
       }
 
-      if (previousChapter != null) {
+      if (previousChapter != null)
+      {
         isPreviousChapterUpdated = isPreviousChapterUpdated || UpdateFirstLink(originalChapter, previousChapter);
 
-        if (isPreviousChapterUpdated) {
+        if (isPreviousChapterUpdated)
+        {
           await _chapterRepository.UpdateChapterAsync(previousChapter, onlyLinks: true);
         }
       }
@@ -207,16 +217,19 @@ namespace HfyClientApi.Services
         );
       }
 
-      if (nextChapter != null) {
+      if (nextChapter != null)
+      {
         isNextChapterUpdated = isNextChapterUpdated || UpdateFirstLink(originalChapter, nextChapter);
 
-        if (isNextChapterUpdated) {
+        if (isNextChapterUpdated)
+        {
           await _chapterRepository.UpdateChapterAsync(nextChapter, onlyLinks: true);
         }
       }
     }
 
-    internal bool UpdateFirstLink(Chapter targetChapter, Chapter sourceChapter) {
+    internal bool UpdateFirstLink(Chapter targetChapter, Chapter sourceChapter)
+    {
       targetChapter.FirstChapterId ??= sourceChapter.FirstChapterId;
 
       if (sourceChapter.FirstChapterId == null && targetChapter.FirstChapterId != null)

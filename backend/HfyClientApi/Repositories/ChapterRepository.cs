@@ -72,7 +72,7 @@ namespace HfyClientApi.Repositories
       return combinedChapter;
     }
 
-    public async Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false)
+    public async Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false, bool track = false)
     {
       if (onlyLinks)
       {
@@ -84,13 +84,20 @@ namespace HfyClientApi.Repositories
               .SetProperty(c => c.NextChapterId, chapter.NextChapterId)
               .SetProperty(c => c.FirstChapterId, chapter.FirstChapterId)
           );
+        await _context.SaveChangesAsync();
       }
       else
       {
         chapter.SyncedAtUtc = DateTime.UtcNow;
-        _context.Chapters.Update(chapter);
+        var entity = _context.Chapters.Update(chapter);
+        await _context.SaveChangesAsync();
+
+        if (!track)
+        {
+          entity.State = EntityState.Detached;
+        }
       }
-      await _context.SaveChangesAsync();
+
       return chapter;
     }
 
@@ -185,10 +192,15 @@ namespace HfyClientApi.Repositories
         .ToListAsync();
     }
 
-    public async Task<Chapter> CreateChapterAsync(Chapter chapter)
+    public async Task<Chapter> CreateChapterAsync(Chapter chapter, bool track = false)
     {
-      await _context.Chapters.AddAsync(chapter);
+      var entity = await _context.Chapters.AddAsync(chapter);
       await _context.SaveChangesAsync();
+
+      if (!track)
+      {
+        entity.State = EntityState.Detached;
+      }
 
       return chapter;
     }
