@@ -37,6 +37,11 @@ namespace HfyClientApi.Services
       _logger = logger;
     }
 
+    public DateTime GetEditedAtUtc(SelfPost post)
+    {
+      return post.Edited == default ? post.Created : post.Edited;
+    }
+
     public async Task<(Chapter, StoryMetadata?)> ChapterFromPostAsync(SelfPost post)
     {
       var document = new HtmlDocument();
@@ -149,7 +154,7 @@ namespace HfyClientApi.Services
         TextHtml = document.DocumentNode.InnerHtml,
         IsNsfw = post.NSFW,
         CreatedAtUtc = post.Created,
-        EditedAtUtc = post.Edited == default ? post.Created : post.Edited,
+        EditedAtUtc = GetEditedAtUtc(post),
         SyncedAtUtc = DateTime.UtcNow,
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
@@ -207,7 +212,8 @@ namespace HfyClientApi.Services
         var imageUrl = graph.Image?.ToString();
 
         // Default Royal Road cover art
-        if (imageUrl == "/dist/img/nocover-new-min.png") {
+        if (imageUrl == "/dist/img/nocover-new-min.png")
+        {
           return null;
         }
 

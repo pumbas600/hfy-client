@@ -81,14 +81,19 @@ namespace HfyClientApi.Services
 
     internal async Task UpdateChapterAsync(Chapter chapter, SelfPost post)
     {
-      if (chapter.EditedAtUtc >= post.Edited)
+      var postEditedAtUtc = _chapterParsingService.GetEditedAtUtc(post);
+      if (chapter.EditedAtUtc == postEditedAtUtc)
       {
-        if (chapter.Upvotes == post.UpVotes && chapter.Downvotes == post.DownVotes)
+        if (chapter.Upvotes != post.UpVotes || chapter.Downvotes != post.DownVotes)
         {
-          return;
+          await _chapterRepository.UpdateChapterAsync(chapter);
         }
-        await _chapterRepository.UpdateChapterAsync(chapter);
+        return;
       }
+
+      _logger.LogInformation(
+        "Updating chapter {}. Post was edited at {}. Chapter was edited at {}",
+        chapter.Id, postEditedAtUtc, chapter.EditedAtUtc);
 
       var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
       await UpdateChapterLinksAsync(parsedChapter);
