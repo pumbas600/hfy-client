@@ -114,6 +114,24 @@ namespace HfyClientApi.Repositories
         : c => c.Chapter.Subreddit == subreddit && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
           || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
+      return await GetPaginatedChaptersAsync(predicate, pageSize);
+    }
+
+    public async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersMetadataByTitleAsync(
+      string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey)
+    {
+      Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
+        ? c => c.Chapter.Subreddit == subreddit && c.Chapter.Title.Contains(title)
+        : c => c.Chapter.Subreddit == subreddit && c.Chapter.Title.Contains(title)
+          && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
+          || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
+
+      return await GetPaginatedChaptersAsync(predicate, pageSize);
+    }
+
+    internal async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersAsync(
+      Expression<Func<CombinedChapter, bool>> predicate, int pageSize)
+    {
       return await _context.Chapters
         // This is essentially doing a LEFT JOIN
         .GroupJoin(
