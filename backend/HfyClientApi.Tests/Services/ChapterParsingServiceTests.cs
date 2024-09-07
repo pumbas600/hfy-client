@@ -68,7 +68,7 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPost(post);
+      var chapter = chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
@@ -113,7 +113,7 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPost(post);
+      var chapter = chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
@@ -144,7 +144,7 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPost(post);
+      var chapter = chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);
@@ -161,7 +161,7 @@ namespace HfyClientApi.Tests.Services
 
       SelfPost post = new(null, "HFY", "My Example Story", "pumbas600", null, textHtml, "sdfghj");
 
-      var chapter = chapterParsingService.ChapterFromPost(post);
+      var chapter = chapterParsingService.ChapterFromPostAsync(post);
 
       Assert.Equal("My Example Story", chapter.Title);
       Assert.Equal("sdfghj", chapter.Id);

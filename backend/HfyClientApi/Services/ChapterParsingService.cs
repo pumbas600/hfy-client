@@ -37,7 +37,7 @@ namespace HfyClientApi.Services
       _logger = logger;
     }
 
-    public async Task<(Chapter, StoryMetadata?)> ChapterFromPost(SelfPost post)
+    public async Task<(Chapter, StoryMetadata?)> ChapterFromPostAsync(SelfPost post)
     {
       var document = new HtmlDocument();
       document.LoadHtml(post.SelfTextHTML);

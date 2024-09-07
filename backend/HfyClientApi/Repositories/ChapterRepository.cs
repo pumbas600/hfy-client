@@ -176,5 +176,21 @@ namespace HfyClientApi.Repositories
         .Where(c => c.PreviousChapterId == previousLinkId)
         .FirstOrDefaultAsync();
     }
+
+    public async Task<IEnumerable<Chapter>> GetChaptersByIdsAsync(IEnumerable<string> ids)
+    {
+      return await _context.Chapters
+        .AsNoTracking()
+        .Where(c => ids.Contains(c.Id))
+        .ToListAsync();
+    }
+
+    public async Task<Chapter> CreateChapterAsync(Chapter chapter)
+    {
+      await _context.Chapters.AddAsync(chapter);
+      await _context.SaveChangesAsync();
+
+      return chapter;
+    }
   }
 }

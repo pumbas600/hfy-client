@@ -5,8 +5,8 @@ namespace HfyClientApi.Repositories
 {
   public interface IStoryMetadataRepository
   {
-    Task<StoryMetadata?> GetMetadata(string firstChapterId);
+    Task<StoryMetadata?> GetMetadataAsync(string firstChapterId);
 
-    Task<Result> UpsertMetadata(StoryMetadata metadata);
+    Task<Result> UpsertMetadataAsync(StoryMetadata metadata);
   }
 }

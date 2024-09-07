@@ -12,6 +12,7 @@ namespace HfyClientApi.Repositories
 
   public interface IChapterRepository
   {
+    Task<IEnumerable<Chapter>> GetChaptersByIdsAsync(IEnumerable<string> ids);
 
     Task<Result<CombinedChapter>> GetChapterByIdAsync(string id);
 
@@ -22,6 +23,7 @@ namespace HfyClientApi.Repositories
     Task<Chapter?> GetChapterByPreviousLinkIdAsync(string previousLinkId);
 
     Task<Result<Chapter>> UpsertChapterAsync(Chapter chapter);
+    Task<Chapter> CreateChapterAsync(Chapter chapter);
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false);
 

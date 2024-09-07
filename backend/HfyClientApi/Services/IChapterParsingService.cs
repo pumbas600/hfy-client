@@ -5,6 +5,6 @@ namespace HfyClientApi.Services
 {
   public interface IChapterParsingService
   {
-    Task<(Chapter, StoryMetadata?)> ChapterFromPost(SelfPost post);
+    Task<(Chapter, StoryMetadata?)> ChapterFromPostAsync(SelfPost post);
   }
 }

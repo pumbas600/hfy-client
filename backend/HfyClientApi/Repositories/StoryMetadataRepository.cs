@@ -17,12 +17,12 @@ namespace HfyClientApi.Repositories
       _logger = logger;
     }
 
-    public async Task<StoryMetadata?> GetMetadata(string firstChapterId)
+    public async Task<StoryMetadata?> GetMetadataAsync(string firstChapterId)
     {
       return await _context.StoryMetadata.FindAsync(firstChapterId);
     }
 
-    public async Task<Result> UpsertMetadata(StoryMetadata metadata)
+    public async Task<Result> UpsertMetadataAsync(StoryMetadata metadata)
     {
       for (int attempt = 1; attempt <= MaxUpsertAttempts; attempt++)
       {
@@ -30,7 +30,7 @@ namespace HfyClientApi.Repositories
 
         try
         {
-          var storyMetadata = await GetMetadata(metadata.FirstChapterId);
+          var storyMetadata = await GetMetadataAsync(metadata.FirstChapterId);
           if (storyMetadata != null)
           {
             storyMetadata.CoverArtUrl = metadata.CoverArtUrl;

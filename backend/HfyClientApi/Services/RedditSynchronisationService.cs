@@ -44,9 +44,8 @@ namespace HfyClientApi.Services {
     internal async Task ProcessNewPostsAsync() {
       _logger.LogInformation("Processing new posts in r/HFY");
 
-      foreach (var post in _redditService.GetNewSelfPosts("HFY")) {
-        await _chapterService.ProcessChapterByPostAsync(post);
-      }
+      var newPosts = _redditService.GetNewSelfPosts("HFY");
+      await _chapterService.ProcessChaptersByPostAsync(newPosts);
     }
   }
 }

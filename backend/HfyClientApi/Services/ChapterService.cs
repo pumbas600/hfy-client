@@ -61,9 +61,54 @@ namespace HfyClientApi.Services
       return await ProcessChapterByPostAsync(selfPost);
     }
 
+    public async Task ProcessChaptersByPostAsync(IEnumerable<SelfPost> posts) {
+      var chapters = await _chapterRepository.GetChaptersByIdsAsync(posts.Select(post => post.Id));
+      var chapterMap = chapters.ToDictionary(c => c.Id);
+
+      // TODO: Does this work with upvotes..?
+
+      var updatePostTasks = posts.Where(
+        // Only update posts if it's new, or the chapter has been edited since.
+        p => !chapterMap.TryGetValue(p.Id, out Chapter? c) || c.EditedAtUtc < p.Edited)
+        .Select(p => {
+          if (chapterMap.TryGetValue(p.Id, out Chapter? c))
+          {
+            return UpdateChapterAsync(p);
+          }
+
+          return CreateChapterAsync(p);
+        });
+
+      await Task.WhenAll(updatePostTasks);
+    }
+
+    internal async Task UpdateChapterAsync(SelfPost post) {
+      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
+      await UpdateChapterLinksAsync(parsedChapter);
+
+      if (storyMetadata != null)
+      {
+        await _storyMetadataRepository.UpsertMetadataAsync(storyMetadata);
+      }
+
+      await _chapterRepository.UpdateChapterAsync(parsedChapter);
+    }
+
+    internal async Task CreateChapterAsync(SelfPost post) {
+      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
+      await UpdateChapterLinksAsync(parsedChapter);
+
+      if (storyMetadata != null)
+      {
+        await _storyMetadataRepository.UpsertMetadataAsync(storyMetadata);
+      }
+
+      await _chapterRepository.CreateChapterAsync(parsedChapter);
+    }
+
     public async Task<Result<FullChapterDto>> ProcessChapterByPostAsync(SelfPost post)
     {
-      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPost(post);
+      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
 
       await UpdateChapterLinksAsync(parsedChapter);
 
@@ -78,11 +123,11 @@ namespace HfyClientApi.Services
 
       if (storyMetadata != null)
       {
-        await _storyMetadataRepository.UpsertMetadata(storyMetadata);
+        await _storyMetadataRepository.UpsertMetadataAsync(storyMetadata);
       }
       else if (createdChapter.FirstChapterId != null)
       {
-        storyMetadata = await _storyMetadataRepository.GetMetadata(createdChapter.FirstChapterId);
+        storyMetadata = await _storyMetadataRepository.GetMetadataAsync(createdChapter.FirstChapterId);
       }
 
       return _mapper.ToFullChapterDto(new CombinedChapter
