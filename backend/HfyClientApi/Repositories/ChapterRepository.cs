@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using HfyClientApi.Data;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
-  public class ChapterRepository : IChapterRepository
+  public partial class ChapterRepository : IChapterRepository
   {
     private const int MaxUpsertAttempts = 3;
     private readonly AppDbContext _context;
@@ -35,8 +36,7 @@ namespace HfyClientApi.Repositories
           }
           else
           {
-            await _context.Chapters.AddAsync(chapter);
-            await _context.SaveChangesAsync();
+            await CreateChapterAsync(chapter);
           }
 
           await transaction.CommitAsync();
@@ -89,6 +89,7 @@ namespace HfyClientApi.Repositories
       else
       {
         chapter.SyncedAtUtc = DateTime.UtcNow;
+        chapter.SearchableTitle = GetSearchableTitle(chapter.Title);
         var entity = _context.Chapters.Update(chapter);
         await _context.SaveChangesAsync();
 
@@ -120,9 +121,11 @@ namespace HfyClientApi.Repositories
     public async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersMetadataByTitleAsync(
       string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey)
     {
+      var searchableTitle = GetSearchableTitle(title);
+
       Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
-        ? c => c.Chapter.Subreddit == subreddit && EF.Functions.ILike(c.Chapter.Title, $"%{title}%")
-        : c => c.Chapter.Subreddit == subreddit && EF.Functions.ILike(c.Chapter.Title, $"%{title}%")
+        ? c => c.Chapter.Subreddit == subreddit && c.Chapter.SearchableTitle.Contains(searchableTitle)
+        : c => c.Chapter.Subreddit == subreddit && c.Chapter.SearchableTitle.Contains(searchableTitle)
           && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
           || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
@@ -130,9 +133,10 @@ namespace HfyClientApi.Repositories
     }
 
     internal async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersAsync(
-      Expression<Func<CombinedChapter, bool>> predicate, int pageSize)
+      Expression<Func<CombinedChapter, bool>> predicate, int pageSize,
+      Expression<Func<CombinedChapter, object>>? orderBy = null)
     {
-      return await _context.Chapters
+      var query = _context.Chapters
         // This is essentially doing a LEFT JOIN
         .GroupJoin(
           _context.StoryMetadata,
@@ -147,8 +151,13 @@ namespace HfyClientApi.Repositories
             Chapter = chapter.Chapter,
             StoryMetadata = story
           }
-        )
-        .OrderByDescending(c => c.Chapter.CreatedAtUtc)
+        );
+
+      var orderedQuery = orderBy != null
+        ? query.OrderBy(orderBy).ThenByDescending(c => c.Chapter.CreatedAtUtc)
+        : query.OrderByDescending(c => c.Chapter.CreatedAtUtc);
+
+      return await orderedQuery
         .ThenBy(c => c.Chapter.Id)
         .Where(predicate)
         .Take(pageSize)
@@ -212,6 +221,7 @@ namespace HfyClientApi.Repositories
 
     public async Task<Chapter> CreateChapterAsync(Chapter chapter, bool track = false)
     {
+      chapter.SearchableTitle = GetSearchableTitle(chapter.Title);
       var entity = await _context.Chapters.AddAsync(chapter);
       await _context.SaveChangesAsync();
 
@@ -222,5 +232,13 @@ namespace HfyClientApi.Repositories
 
       return chapter;
     }
+
+    internal static string GetSearchableTitle(string title)
+    {
+      return SpecialCharacterRegex().Replace(title, " ").ToLower();
+    }
+
+    [GeneratedRegex(@"\W+")]
+    private static partial Regex SpecialCharacterRegex();
   }
 }

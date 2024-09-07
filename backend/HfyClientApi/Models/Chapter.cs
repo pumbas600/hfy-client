@@ -14,6 +14,11 @@ namespace HfyClientApi.Models
     public string Author { get; set; } = null!;
     public string Subreddit { get; set; } = null!;
     public string Title { get; set; } = null!;
+
+    /// <summary>
+    /// A lowercase, special character stripped version of the title used for searching.
+    /// </summary>
+    public string SearchableTitle { get; set; } = null!;
     public int Upvotes { get; set; }
     public int Downvotes { get; set; }
     public string TextHtml { get; set; } = null!;
