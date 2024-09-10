@@ -15,19 +15,23 @@ export default async function SubredditSearch({
   params,
   searchParams,
 }: Params<{ subreddit: string }, { q: string }>) {
-  console.log(searchParams.q);
-
   const endpointUrl = new URL(
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/search`
   );
 
   endpointUrl.searchParams.set("title", searchParams.q);
 
-  const res = await fetch(endpointUrl.toString(), {
-    next: { revalidate: FIVE_MINUTES },
-  });
+  let paginatedChapters: GetChaptersByTitleRequest.ResBody;
+  try {
+    const res = await fetch(endpointUrl.toString(), {
+      next: { revalidate: FIVE_MINUTES },
+    });
 
-  const paginatedChapters: GetChaptersByTitleRequest.ResBody = await res.json();
+    paginatedChapters = await res.json();
+  } catch (error) {
+    console.error(error);
+    paginatedChapters = { pageSize: 20, nextKey: null, data: [] };
+  }
 
   return (
     <div>

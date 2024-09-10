@@ -7,6 +7,7 @@ import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
 import { GetChapterRequest } from "@/types/api";
 import { Params } from "@/types/next";
+import { Api } from "@/util/api";
 import { Metadata, ResolvingMetadata } from "next";
 
 const FIVE_MINUTES = 5 * 60;
@@ -17,37 +18,54 @@ export async function generateMetadata(
   { params }: Params<{ id: string }>,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`, {
-    next: { revalidate: FIVE_MINUTES },
-  });
-  const chapter: GetChapterRequest.ResBody = await res.json();
+  try {
+    const chapter = await Api.get<GetChapterRequest.ResBody>(
+      `${config.api.baseUrl}/chapters/${params.id}`,
+      { revalidate: FIVE_MINUTES }
+    );
 
-  const images: string[] = [];
-  if (chapter.coverArtUrl) {
-    images.push(chapter.coverArtUrl);
+    const images: string[] = [];
+    if (chapter.coverArtUrl) {
+      images.push(chapter.coverArtUrl);
+    }
+
+    return {
+      title: chapter.title,
+      openGraph: {
+        images: images,
+      },
+    };
+  } catch (error) {
+    const parentMetadata = await parent;
+    return {
+      title: parentMetadata.title,
+      openGraph: {
+        images: parentMetadata.openGraph?.images,
+      },
+    };
   }
-
-  return {
-    title: chapter.title,
-    openGraph: {
-      images: images,
-    },
-  };
 }
 
 export default async function Page({ params }: Params<{ id: string }>) {
-  const res = await fetch(`${config.api.baseUrl}/chapters/${params.id}`, {
-    next: { revalidate: FIVE_MINUTES },
-  });
-  const chapter: GetChapterRequest.ResBody = await res.json();
+  let chapter: GetChapterRequest.ResBody;
 
-  if (!res.ok) {
-    return (
-      <div>
-        <h2>Error!</h2>
-        <p>{JSON.stringify(chapter, undefined, 4)}</p>
-      </div>
+  try {
+    chapter = await Api.get<GetChapterRequest.ResBody>(
+      `${config.api.baseUrl}/chapters/${params.id}`,
+      { revalidate: FIVE_MINUTES }
     );
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      return (
+        <div>
+          <h2>Error!</h2>
+          <p>{error.message}</p>
+        </div>
+      );
+    }
+
+    return null;
   }
 
   return (

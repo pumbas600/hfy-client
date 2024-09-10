@@ -18,10 +18,16 @@ export default async function Subreddit({
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
   );
 
-  const res = await fetch(endpointUrl.toString(), {
-    next: { revalidate: ONE_MINUTE },
-  });
-  const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
+  let paginatedChapters: GetNewChaptersRequest.ResBody;
+  try {
+    const res = await fetch(endpointUrl.toString(), {
+      next: { revalidate: ONE_MINUTE },
+    });
+    paginatedChapters = await res.json();
+  } catch (error) {
+    console.error(error);
+    paginatedChapters = { pageSize: 20, nextKey: null, data: [] };
+  }
 
   return (
     <div>
