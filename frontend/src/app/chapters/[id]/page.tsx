@@ -55,7 +55,6 @@ export default async function Page({ params }: Params<{ id: string }>) {
       { revalidate: FIVE_MINUTES }
     );
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       return (
         <div>

@@ -6,6 +6,7 @@ import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
 import { GetChaptersByTitleRequest } from "@/types/api";
 import { Params } from "@/types/next";
+import { Api } from "@/util/api";
 
 const FIVE_MINUTES = 5 * 60;
 
@@ -21,17 +22,13 @@ export default async function SubredditSearch({
 
   endpointUrl.searchParams.set("title", searchParams.q);
 
-  let paginatedChapters: GetChaptersByTitleRequest.ResBody;
-  try {
-    const res = await fetch(endpointUrl.toString(), {
-      next: { revalidate: FIVE_MINUTES },
-    });
-
-    paginatedChapters = await res.json();
-  } catch (error) {
-    console.error(error);
-    paginatedChapters = { pageSize: 20, nextKey: null, data: [] };
-  }
+  const paginatedChapters = await Api.get<GetChaptersByTitleRequest.ResBody>(
+    endpointUrl,
+    {
+      revalidate: FIVE_MINUTES,
+      default: { pageSize: 20, nextKey: null, data: [] },
+    }
+  );
 
   return (
     <div>

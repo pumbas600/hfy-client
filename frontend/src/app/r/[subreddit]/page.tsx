@@ -6,6 +6,7 @@ import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { Params } from "@/types/next";
+import { Api } from "@/util/api";
 
 const ONE_MINUTE = 60;
 
@@ -18,16 +19,13 @@ export default async function Subreddit({
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
   );
 
-  let paginatedChapters: GetNewChaptersRequest.ResBody;
-  try {
-    const res = await fetch(endpointUrl.toString(), {
-      next: { revalidate: ONE_MINUTE },
-    });
-    paginatedChapters = await res.json();
-  } catch (error) {
-    console.error(error);
-    paginatedChapters = { pageSize: 20, nextKey: null, data: [] };
-  }
+  const paginatedChapters = await Api.get<GetNewChaptersRequest.ResBody>(
+    endpointUrl,
+    {
+      revalidate: ONE_MINUTE,
+      default: { pageSize: 20, nextKey: null, data: [] },
+    }
+  );
 
   return (
     <div>
