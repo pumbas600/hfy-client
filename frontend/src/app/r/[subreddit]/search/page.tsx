@@ -9,7 +9,7 @@ import { Params } from "@/types/next";
 
 const FIVE_MINUTES = 5 * 60;
 
-export const reinvalidate = FIVE_MINUTES; // Incrementally regenerate every 5 minutes
+export const revalidate = FIVE_MINUTES; // Incrementally regenerate every 5 minutes
 
 export default async function SubredditSearch({
   params,
