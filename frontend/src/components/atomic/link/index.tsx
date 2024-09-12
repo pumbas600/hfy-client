@@ -2,12 +2,12 @@ import Link from "next/link";
 import styles from "./links.module.css";
 
 export interface BaseLinkProps {
-  href: string;
   children?: React.ReactNode;
   className?: string;
+  href: string;
 }
 
-export default function CreateBaseLink(variantClassName: string) {
+function CreateBaseLink(variantClassName: string) {
   return function BaseLink({ className, ...props }: BaseLinkProps) {
     if (props.href.startsWith("/")) {
       return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import IconButton from "../iconButton";
+import { IconButton } from "@/components/atomic";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

@@ -1,4 +1,4 @@
-import RelativeTime from "../times/relativeTime";
+import { RelativeTime } from "@/components/atomic";
 import styles from "./chapterTimeMetadata.module.css";
 
 export interface ChapterTimeMetadataProps {

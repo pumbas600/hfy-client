@@ -1,7 +1,7 @@
-import Container, { ContainerProps } from "@/components/container";
+import Container, { ContainerProps } from "@/components/atomic/container";
 import styles from "./pageHeader.module.css";
 import Link from "next/link";
-import IconButton from "@/components/buttons/iconButton";
+import IconButton from "@/components/atomic/iconButton";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faReddit } from "@fortawesome/free-brands-svg-icons";
 import { useRouter } from "next/navigation";

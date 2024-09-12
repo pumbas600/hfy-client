@@ -2,7 +2,7 @@ import { FullChapter } from "@/types/chapter";
 import PageHeader from "../pageHeader";
 import styles from "./chapterHeader.module.css";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
-import { UnderlinedLink } from "@/components/links";
+import { UnderlinedLink } from "@/components/atomic/link";
 import CoverArt from "@/components/images/coverArt";
 import UpvoteLabel from "@/components/labels/upvoteLabel";
 import NsfwLabel from "@/components/labels/nsfwLabel";

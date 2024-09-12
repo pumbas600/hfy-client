@@ -1,4 +1,4 @@
-import Container from "@/components/container";
+import Container from "@/components/atomic/container";
 import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
 import TextLayout from "@/components/layout/textLayout";

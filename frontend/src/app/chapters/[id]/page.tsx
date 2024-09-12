@@ -1,6 +1,6 @@
 import ChapterButtons from "@/components/buttons/chapterButtons";
 import ScrollToTopButton from "@/components/buttons/scrollToTopButton";
-import Container from "@/components/container";
+import Container from "@/components/atomic/container";
 import ChapterHeader from "@/components/layout/chapterHeader";
 import PageFooter from "@/components/layout/pageFooter";
 import TextLayout from "@/components/layout/textLayout";

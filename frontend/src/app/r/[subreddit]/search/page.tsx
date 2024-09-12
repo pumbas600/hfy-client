@@ -1,5 +1,5 @@
 import ChapterCardList from "@/components/cards/chapterCardList";
-import Container from "@/components/container";
+import Container from "@/components/atomic/container";
 import ChapterSearchInput from "@/components/inputs/chapterSearchInput";
 import PageFooter from "@/components/layout/pageFooter";
 import PageHeader from "@/components/layout/pageHeader";
