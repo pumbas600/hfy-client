@@ -1,15 +1,19 @@
 .iconButton {
-  min-width: auto;
-  width: 2.25rem;
+  background-color: transparent;
+  border-radius: 50%;
+  color: var(--primary-color);
   height: 2.25rem;
   padding: 0;
-  background-color: transparent;
-  color: var(--primary-color);
-  border-radius: 50%;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
-}
+  transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+  width: 2.25rem;
 
-.iconButton:hover {
-  background-color: var(--hover-color);
-  color: var(--primary-darkened);
+  &:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-hover);
+  }
+
+  &:active {
+    background-color: var(--hover-color);
+    color: var(--primary-active);
+  }
 }

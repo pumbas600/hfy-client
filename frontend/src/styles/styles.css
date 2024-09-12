@@ -157,6 +157,9 @@
   :root {
     /* Colors */
     --primary-color: #06402b;
+    --primary-hover: oklch(from var(--primary-color) calc(l * 0.94) c h);
+    --primary-active: oklch(from var(--primary-color) calc(l * 0.88) c h);
+
     --primary-darkened: #042d1f;
     --primary-contrast: #ebf7ed;
     --primary-contrast-secondary: #c3e4d2;
@@ -188,6 +191,7 @@
     --box-shadow: 0 0.25rem var(--step-0) 0 oklch(0 0 0 / 6%);
     --hairline: max(0.0625rem, 1px);
     --border-radius: 0.4rem;
+    --border: var(--hairline) solid var(--border-color);
 
     /* Fonts */
     --body-font: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont,
@@ -254,14 +258,14 @@
 
   hr {
     margin-block: 0.25rem;
-    border: var(--hairline) solid var(--divider-color);
+    border: var(--border);
   }
 
   button,
   input,
   select,
   textarea {
-    border: var(--hairline) solid var(--border-color);
+    border: var(--border);
     border-radius: var(--border-radius);
     font-family: inherit;
     outline-color: var(--primary-color);
@@ -295,10 +299,10 @@
 
     &:not(:disabled) {
       &:hover {
-        background-color: oklch(from var(--primary-color) calc(l * 0.94) c h);
+        background-color: var(--primary-hover);
       }
       &:active {
-        background-color: oklch(from var(--primary-color) calc(l * 0.88) c h);
+        background-color: var(--primary-active);
       }
     }
   }

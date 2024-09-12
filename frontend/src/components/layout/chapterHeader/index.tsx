@@ -27,8 +27,8 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
       )}
       <div>
         <div className={styles.authorContainer}>
-          <UnderlinedLink href={subredditLink}>
-            <strong>r/{chapter.subreddit}</strong>
+          <UnderlinedLink href={subredditLink} className={styles.subreddit}>
+            r/{chapter.subreddit}
           </UnderlinedLink>
           <UnderlinedLink href={chapter.redditAuthorLink}>
             u/{chapter.author}

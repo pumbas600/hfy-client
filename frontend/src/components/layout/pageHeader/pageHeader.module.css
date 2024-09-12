@@ -1,41 +1,30 @@
 .pageHeader {
   background-color: var(--background-acent);
-  padding-block-end: 3rem;
-}
+  padding-block-end: var(--step-4);
 
-/* Page headers which don't have a nav bar preceeding it */
-.pageHeader:not(nav ~ .pageHeader) {
-  padding-block-start: 2rem;
-}
+  /* Page headers which don't have a nav bar preceeding it */
+  &:not(nav ~ .pageHeader) {
+    padding-block-start: var(--step-2);
+  }
 
-.pageHeader h1,
-.pageHeader h2,
-.pageHeader h3,
-.pageHeader h4,
-.pageHeader h5,
-.pageHeader h6 {
-  font-family: var(--serif-heading-font);
-  color: var(--primary-color);
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    color: var(--primary-color);
+    font-family: var(--serif-heading-font);
+  }
 }
 
 .navContainer {
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 }
 
 .navBar {
   background-color: var(--background-acent);
-}
-
-@media screen and (max-width: 768px) {
-  .pageHeader {
-    padding-block-end: 2rem;
-  }
-
-  /* Page headers which don't have a nav bar preceeding it */
-  .pageHeader:not(nav ~ .pageHeader) {
-    padding-block-start: 1rem;
-  }
 }

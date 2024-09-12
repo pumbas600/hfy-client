@@ -4,15 +4,20 @@ import styles from "./links.module.css";
 export interface BaseLinkProps {
   href: string;
   children?: React.ReactNode;
+  className?: string;
 }
 
-export default function CreateBaseLink(className: string) {
-  return function BaseLink(props: BaseLinkProps) {
+export default function CreateBaseLink(variantClassName: string) {
+  return function BaseLink({ className, ...props }: BaseLinkProps) {
     if (props.href.startsWith("/")) {
-      return <Link {...props} className={className} />;
+      return (
+        <Link {...props} className={`${variantClassName} ${className ?? ""}`} />
+      );
     }
 
-    return <a {...props} className={className} />;
+    return (
+      <a {...props} className={`${variantClassName} ${className ?? ""}`} />
+    );
   };
 }
 

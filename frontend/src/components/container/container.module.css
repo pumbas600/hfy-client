@@ -1,8 +1,8 @@
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding-block: 0.75rem;
-  padding-inline: 1rem;
+  max-width: 50rem;
+  margin-inline: auto;
+  padding-block: var(--step--2);
+  padding-inline: var(--step--1);
 }
 
 @media screen and (max-width: 768px) {

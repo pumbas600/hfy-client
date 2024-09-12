@@ -2,12 +2,28 @@
   display: grid;
   grid-template-columns: max-content max-content 1fr max-content;
   grid-template-areas: "first prev . next";
-  column-gap: 1px;
-}
+  column-gap: var(--hairline);
 
-.buttonGroup.noFirst {
-  grid-template-columns: max-content 1fr max-content;
-  grid-template-areas: "prev . next";
+  &.noFirst {
+    grid-template-columns: max-content 1fr max-content;
+    grid-template-areas: "prev . next";
+  }
+
+  &:not(.noFirst) {
+    & > a:first-child > button {
+      border-top-left-radius: var(--border-radius);
+      border-bottom-left-radius: var(--border-radius);
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    & > a:nth-child(2) > button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top-right-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
+    }
+  }
 }
 
 .first {
@@ -22,44 +38,32 @@
   grid-area: next;
 }
 
-.buttonGroup:not(.noFirst) > a:first-child > button {
-  border-top-left-radius: var(--border-radius);
-  border-bottom-left-radius: var(--border-radius);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.buttonGroup:not(.noFirst) > a:nth-child(2) > button {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-}
-
 @media screen and (max-width: 768px) {
   .buttonGroup {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "first prev next";
-  }
 
-  .buttonGroup.noFirst {
-    grid-template-columns: max-content 1fr max-content;
-    grid-template-areas: "prev . next";
-  }
+    &.noFirst {
+      grid-template-columns: max-content 1fr max-content;
+      grid-template-areas: "prev . next";
+    }
 
-  .buttonGroup:not(.noFirst) button {
-    width: 100%;
-    border-radius: 0;
-  }
+    &:not(.noFirst) {
+      & button {
+        width: 100%;
+        border-radius: 0;
+      }
 
-  .buttonGroup:not(.noFirst) > a:nth-child(2) button {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
+      & > a:nth-child(2) button {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
 
-  .buttonGroup:not(.noFirst) > a:last-child > button,
-  .buttonGroup:not(.noFirst) > button:last-child {
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+      & > a:last-child > button,
+      & > button:last-child {
+        border-top-right-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 .labelContainer {
+  align-items: center;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 0 1rem;
+  column-gap: var(--step--1);
 }
