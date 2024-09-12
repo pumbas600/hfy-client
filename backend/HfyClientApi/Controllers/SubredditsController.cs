@@ -6,11 +6,11 @@ namespace HfyClientApi.Controllers
 {
   [ApiController]
   [Route("api/v1/[controller]")]
-  public class SubredditController : ControllerBase
+  public class SubredditsController : ControllerBase
   {
     private readonly ISubredditService _subredditService;
 
-    public SubredditController(ISubredditService subredditService)
+    public SubredditsController(ISubredditService subredditService)
     {
       _subredditService = subredditService;
     }
