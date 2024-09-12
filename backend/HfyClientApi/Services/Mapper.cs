@@ -1,5 +1,6 @@
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
+using HfyClientApi.Models;
 using HfyClientApi.Repositories;
 
 namespace HfyClientApi.Services
@@ -68,6 +69,17 @@ namespace HfyClientApi.Services
         NextKey = nextKey,
         PageSize = pageSize,
         Data = combinedChapters.Select(ToChapterMetadataDto)
+      };
+    }
+
+    public SubredditDto ToSubredditDto(Subreddit subreddit)
+    {
+      return new()
+      {
+        Name = subreddit.Name,
+        Title = subreddit.Title,
+        Description = subreddit.Description,
+        IconUrl = subreddit.IconUrl
       };
     }
   }

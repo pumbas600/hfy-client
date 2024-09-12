@@ -14,6 +14,7 @@ namespace HfyClientApi.Exceptions
       public const string StoryMetadataUpsertFailed = "StoryMetadata.UpsertFailed";
       public const string ChapterPaginationPartialKeyset = "Chapter.PaginationPartialKeyset";
       public const string UserNotFound = "User.NotFound";
+      public const string SubredditNotFound = "Subreddit.NotFound";
     }
 
     public static Error PostNotFound(string postId) =>
@@ -32,5 +33,9 @@ namespace HfyClientApi.Exceptions
 
     public static Error UserNotFound(string username) =>
       new(Codes.UserNotFound, $"User {username} not found", HttpStatusCode.NotFound);
+
+    public static Error SubredditNotFound(string name) =>
+      new(Codes.SubredditNotFound, $"Subreddit {name} not found", HttpStatusCode.NotFound);
+
   }
 }

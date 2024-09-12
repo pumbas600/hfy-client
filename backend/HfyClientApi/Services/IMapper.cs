@@ -1,4 +1,5 @@
 using HfyClientApi.Dtos;
+using HfyClientApi.Models;
 using HfyClientApi.Repositories;
 
 namespace HfyClientApi.Services
@@ -10,5 +11,7 @@ namespace HfyClientApi.Services
     ChapterMetadataDto ToChapterMetadataDto(CombinedChapter combinedChapter);
 
     ChapterPaginationDto ToPaginatedChapterMetadataDto(int pageSize, IEnumerable<CombinedChapter> combinedChapters);
+
+    SubredditDto ToSubredditDto(Subreddit subreddit);
   }
 }
