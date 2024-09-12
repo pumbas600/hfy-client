@@ -7,6 +7,7 @@ namespace HfyClientApi.Data
   {
     public DbSet<Chapter> Chapters { get; set; }
     public DbSet<StoryMetadata> StoryMetadata { get; set; }
+    public DbSet<Subreddit> Subreddits { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
