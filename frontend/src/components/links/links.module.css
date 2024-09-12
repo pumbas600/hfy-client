@@ -9,7 +9,7 @@
 
 .underlinedLink {
   font-size: inherit;
-  color: var(--background-contrast);
+  color: var(--color-foreground);
   text-decoration: none;
 }
 

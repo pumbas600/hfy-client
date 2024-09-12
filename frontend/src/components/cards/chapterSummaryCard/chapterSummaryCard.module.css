@@ -37,7 +37,7 @@
 }
 
 .subtitle {
-  color: var(--background-contrast-secondary);
+  color: var(--color-foreground-secondary);
 }
 
 @media screen and (max-width: 768px) {

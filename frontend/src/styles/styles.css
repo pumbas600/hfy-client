@@ -161,14 +161,19 @@
     --primary-contrast: #ebf7ed;
     --primary-contrast-secondary: #c3e4d2;
     --background-acent: #c9eae6;
-    --background-contrast: #000000;
-    --background-contrast-secondary: #888;
     --nsfw-color: red;
     --border-color: #e0e0e0;
     --divider-color: #ccc;
     --hover-color: rgba(0, 0, 0, 0.05);
 
+    --color-foreground: black;
+    --color-foreground-secondary: oklch(
+      from var(--color-foreground) l c h / 55%
+    );
+
     /* Type scale */
+    --step--4: clamp(0.4751rem, 0.4837rem + -0.0072vw, 0.4823rem);
+    --step--3: clamp(0.5787rem, 0.5678rem + 0.0546vw, 0.6333rem);
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
     --step--1: clamp(0.8333rem, 0.7749rem + 0.2919vw, 1.1253rem);
     --step-0: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
@@ -177,9 +182,14 @@
     --step-3: clamp(1.44rem, 1.1949rem + 1.2253vw, 2.6653rem);
     --step-4: clamp(1.728rem, 1.363rem + 1.8249vw, 3.5529rem);
     --step-5: clamp(2.0736rem, 1.5411rem + 2.6624vw, 4.736rem);
+    --step-6: clamp(2.4883rem, 1.7234rem + 3.8248vw, 6.3131rem);
 
-    --border-radius: 0.2rem;
+    /* Misc */
+    --box-shadow: 0 0.25rem var(--step-0) 0 oklch(0 0 0 / 6%);
+    --hairline: max(0.0625rem, 1px);
+    --border-radius: 0.4rem;
 
+    /* Fonts */
     --body-font: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont,
       "Segoe UI", sans-serif;
     --chapter-body-font: "Atkinson Hyperlegible", var(--body-font);
@@ -187,10 +197,10 @@
     --serif-heading-font: "Noto Serif", serif;
 
     accent-color: var(--primary-color);
+    color: var(--color-foreground);
     color-scheme: only light;
     font-family: var(--body-font);
     font-size: 16px;
-    color: var(--background-contrast);
   }
 
   h1,
@@ -235,67 +245,82 @@
 
   a {
     transition: color 0.15s ease-in-out;
-  }
 
-  a:has(> button) {
-    display: inline-flex;
-    text-decoration: none;
+    &:has(> button) {
+      display: inline-flex;
+      text-decoration: none;
+    }
   }
 
   hr {
     margin-block: 0.25rem;
-    border: 1px solid var(--divider-color);
+    border: var(--hairline) solid var(--divider-color);
   }
 
-  button {
-    border: none;
-    background-color: var(--primary-color);
-    color: var(--primary-contrast);
-    letter-spacing: 0.5px;
-    font-size: var(--step--1);
-    padding: 0.5rem 1.5rem;
-    min-width: 120px;
-    border-radius: var(--border-radius);
-    font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  button:disabled {
-    background-color: #ccc;
-    color: #666;
-  }
-
-  button:not(:disabled):hover {
-    background-color: var(--primary-darkened);
-  }
-
+  button,
   input,
+  select,
   textarea {
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1rem;
-    font-size: var(--step-0);
-    font-family: inherit;
-    min-width: 250px;
+    border: var(--hairline) solid var(--border-color);
     border-radius: var(--border-radius);
-    resize: none;
-  }
-
-  input:focus-visible,
-  textarea:focus-visible {
+    font-family: inherit;
     outline-color: var(--primary-color);
-  }
-}
+    padding-inline: var(--step-1);
+    padding-block: var(--step--3);
 
-@media screen and (max-width: 768px) {
-  button {
-    min-width: auto;
+    &:disabled {
+      cursor: not-allowed;
+      filter: grayscale();
+      opacity: 40%;
+    }
   }
 
-  input,
-  textarea {
-    min-width: auto;
+  button,
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"] {
+    align-items: center;
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--primary-contrast);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: var(--step--1);
+    font-weight: 500;
+    gap: var(--step--3);
+    justify-content: center;
+    letter-spacing: 0.05em;
+    padding-inline: var(--step-2);
+    transition: background-color 150ms ease;
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: oklch(from var(--primary-color) calc(l * 0.94) c h);
+      }
+      &:active {
+        background-color: oklch(from var(--primary-color) calc(l * 0.88) c h);
+      }
+    }
+  }
+
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="text"],
+  input[type="time"],
+  input[type="week"] {
+    background: white;
+    font-size: var(--step-0);
+
+    &::placeholder {
+      color: var(--color-foreground-secondary);
+    }
+    &:disabled {
+      background-color: var(--color-light-gray);
+    }
   }
 }
