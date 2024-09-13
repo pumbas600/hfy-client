@@ -28,7 +28,7 @@ export default function ChapterSearchInput({
       return;
     }
 
-    const searchUrl = `/r/${subreddit}/search?q=${searchQuery}`;
+    const searchUrl = `/r/${subreddit}?q=${searchQuery}`;
     router.push(searchUrl);
   };
 

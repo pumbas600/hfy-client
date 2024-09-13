@@ -1,4 +1,4 @@
-import ChapterSearchInput from "@/components/inputs/chapterSearchInput";
+import ChapterSearchInput from "@/components/subreddit/chapterSearchInput";
 import PageHeader from "@/components/layout/pageHeader";
 import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditHeader.module.css";

@@ -1,8 +1,6 @@
 import ChapterCardList from "@/components/cards/chapterCardList";
 import { Container } from "@/components/atomic";
-import ChapterSearchInput from "@/components/inputs/chapterSearchInput";
 import PageFooter from "@/components/layout/pageFooter";
-import PageHeader from "@/components/layout/pageHeader";
 import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { GetSubredditRequest } from "@/types/api/subreddit";
@@ -16,9 +14,16 @@ export const revalidate = ONE_MINUTE; // Incrementally regenerate every 1 minute
 
 export default async function Subreddit({
   params,
-}: Params<{ subreddit: string }>) {
+  searchParams,
+}: Params<{ subreddit: string }, { q?: string }>) {
   const subredditUrl = `${config.api.baseUrl}/subreddits/${params.subreddit}`;
-  const newChaptersUrl = `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`;
+  const newChaptersUrl = new URL(
+    `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`
+  );
+
+  if (searchParams.q !== undefined && searchParams.q.trim() !== "") {
+    newChaptersUrl.searchParams.set("title", searchParams.q);
+  }
 
   const [subreddit, paginatedChapters] = await Promise.all([
     Api.get<GetSubredditRequest.ResBody>(subredditUrl, {
@@ -36,7 +41,7 @@ export default async function Subreddit({
       <Container main>
         <ChapterCardList
           paginatedChapters={paginatedChapters}
-          endpointUrl={newChaptersUrl}
+          endpointUrl={newChaptersUrl.toString()}
         />
       </Container>
       <PageFooter />
