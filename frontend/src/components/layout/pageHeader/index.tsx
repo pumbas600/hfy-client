@@ -22,28 +22,23 @@ export default function PageHeader({
   redditLinkTitle = "View on Reddit",
   ...containerProps
 }: PageHeaderProps) {
-  const hasNavBar =
-    popBack === false || backLink !== undefined || redditLink !== undefined;
-
   return (
     <>
-      {hasNavBar && (
-        <nav className={styles.navBar}>
-          <Container className={styles.navContainer}>
-            {(backLink || popBack) && (
-              <BackButton link={backLink} title={backTitle} />
-            )}
-            {navContent}
-            {redditLink && (
-              <a href={redditLink}>
-                <IconButton icon={faReddit} title={redditLinkTitle} />
-              </a>
-            )}
-          </Container>
-        </nav>
-      )}
+      <nav className={styles.navBar}>
+        <Container className={styles.navContainer} noBlockPadding>
+          {(backLink || popBack) && (
+            <BackButton link={backLink} title={backTitle} />
+          )}
+          {navContent}
+          {redditLink && (
+            <a href={redditLink}>
+              <IconButton icon={faReddit} title={redditLinkTitle} />
+            </a>
+          )}
+        </Container>
+      </nav>
       <header className={styles.pageHeader}>
-        <Container {...containerProps} />
+        <Container noBlockPadding {...containerProps} />
       </header>
     </>
   );

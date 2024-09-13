@@ -1,8 +1,11 @@
 .container {
   max-width: 50rem;
   margin-inline: auto;
-  padding-block: var(--step--2);
   padding-inline: var(--step--1);
+}
+
+.blockPadding {
+  padding-block: var(--step--2);
 }
 
 @media screen and (max-width: 768px) {

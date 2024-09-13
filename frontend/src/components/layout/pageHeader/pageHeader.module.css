@@ -1,11 +1,6 @@
 .pageHeader {
-  background-color: var(--background-acent);
+  background-color: var(--primary-color);
   padding-block-end: var(--step-4);
-
-  /* Page headers which don't have a nav bar preceeding it */
-  &:not(nav ~ .pageHeader) {
-    padding-block-start: var(--step-2);
-  }
 
   & h1,
   & h2,
@@ -23,8 +18,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: var(--step-1);
 }
 
 .navBar {
-  background-color: var(--background-acent);
+  background-color: var(--primary-color);
+  padding-block-start: var(--step-4);
 }

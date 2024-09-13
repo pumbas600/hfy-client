@@ -269,8 +269,8 @@
     border-radius: var(--border-radius);
     font-family: inherit;
     outline-color: var(--primary-color);
-    padding-inline: var(--step-1);
-    padding-block: var(--step--3);
+    padding-inline: var(--step--1);
+    padding-block: var(--step--4);
 
     &:disabled {
       cursor: not-allowed;

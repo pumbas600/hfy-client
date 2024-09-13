@@ -10,13 +10,24 @@ export interface SubredditHeaderProps {
 export default function SubredditHeader({ subreddit }: SubredditHeaderProps) {
   return (
     <PageHeader
-      navContent={<ChapterSearchInput subreddit={subreddit.name} />}
+      navContent={
+        <>
+          <img
+            src={subreddit.iconUrl}
+            alt={`${subreddit.name}'s icon`}
+            className={styles.subredditIcon}
+          />
+          <ChapterSearchInput
+            subreddit={subreddit.name}
+            className={styles.searchInput}
+          />
+        </>
+      }
       className={styles.wrapper}
     >
-      <img src={subreddit.iconUrl} alt={`${subreddit.name}'s icon`} />
       <div>
-        <h3 className={styles.subredditName}>r/{subreddit.name}</h3>
-        <h2>{subreddit.title}</h2>
+        <h3>r/{subreddit.name}</h3>
+        <h2 className={styles.subredditTitle}>{subreddit.title}</h2>
       </div>
     </PageHeader>
   );
