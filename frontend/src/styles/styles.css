@@ -160,9 +160,8 @@
     --primary-hover: oklch(from var(--primary-color) calc(l * 0.94) c h);
     --primary-active: oklch(from var(--primary-color) calc(l * 0.88) c h);
 
-    --primary-darkened: #042d1f;
     --primary-contrast: #ebf7ed;
-    --primary-contrast-secondary: #c3e4d2;
+    --primary-contrast-secondary: #cbe9d8;
     --background-acent: #c9eae6;
     --nsfw-color: red;
     --border-color: #e0e0e0;

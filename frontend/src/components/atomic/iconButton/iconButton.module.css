@@ -1,5 +1,5 @@
 .iconButton {
-  background-color: transparent;
+  background-color: var(--primary-contrast);
   border-radius: 50%;
   color: var(--primary-color);
   height: 2.25rem;
@@ -8,12 +8,12 @@
   width: 2.25rem;
 
   &:hover {
-    background-color: var(--hover-color);
+    background-color: var(--primary-contrast-secondary);
     color: var(--primary-hover);
   }
 
   &:active {
-    background-color: var(--hover-color);
+    background-color: var(--primary-contrast-secondary);
     color: var(--primary-active);
   }
 }

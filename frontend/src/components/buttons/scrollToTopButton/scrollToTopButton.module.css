@@ -1,6 +1,4 @@
 .scrollToTopButton {
-  background-color: white;
-  border-radius: 50%;
   bottom: var(--step-2);
   position: fixed;
   right: var(--step-2);
