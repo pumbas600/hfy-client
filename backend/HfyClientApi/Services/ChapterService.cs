@@ -41,20 +41,17 @@ namespace HfyClientApi.Services
     }
 
     public async Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
-      string subreddit, int pageSize, ChapterPaginationKey? nextKey)
+      string subreddit, string? title, int pageSize, ChapterPaginationKey? nextKey)
     {
-      var chapters = await _chapterRepository.GetPaginatedNewChaptersMetadataAsync(
-        subreddit, pageSize, nextKey);
-
-      return _mapper.ToPaginatedChapterMetadataDto(pageSize, chapters);
-    }
-
-    public async Task<ChapterPaginationDto> GetPaginatedChaptersMetadataByTitleAsync(
-      string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey)
-    {
-      var chapters = await _chapterRepository.GetPaginatedChaptersMetadataByTitleAsync(
-        subreddit, title, pageSize, nextKey);
-
+      IEnumerable<CombinedChapter> chapters;
+      if (title != null)
+      {
+        chapters = await _chapterRepository.GetPaginatedChaptersMetadataByTitleAsync(
+          subreddit, title, pageSize, nextKey);
+      } else {
+        chapters = await _chapterRepository.GetPaginatedNewChaptersMetadataAsync(
+          subreddit, pageSize, nextKey);
+      }
       return _mapper.ToPaginatedChapterMetadataDto(pageSize, chapters);
     }
 

@@ -15,9 +15,7 @@ namespace HfyClientApi.Services
     Task ProcessChaptersByPostAsync(IEnumerable<SelfPost> posts);
 
     Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
-      string subreddit, int pageSize, ChapterPaginationKey? nextKey);
+      string subreddit, string? title, int pageSize, ChapterPaginationKey? nextKey);
 
-    Task<ChapterPaginationDto> GetPaginatedChaptersMetadataByTitleAsync(
-      string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey);
   }
 }
