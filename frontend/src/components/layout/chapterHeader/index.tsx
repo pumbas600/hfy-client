@@ -7,6 +7,9 @@ import CoverArt from "@/components/images/coverArt";
 import UpvoteLabel from "@/components/labels/upvoteLabel";
 import NsfwLabel from "@/components/labels/nsfwLabel";
 import LabelContainer from "../labelContainer";
+import BackButton from "@/components/buttons/backButton";
+import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
+import { IconButton } from "@/components/atomic";
 
 export interface ChapterHeaderProps {
   chapter: FullChapter;
@@ -17,23 +20,33 @@ export default function ChapterHeader({ chapter }: ChapterHeaderProps) {
 
   return (
     <PageHeader
-      popBack
       className={styles.chapterHeader}
-      redditLink={chapter.redditPostLink}
-      redditLinkTitle="Read on Reddit"
+      navStart={<BackButton link={subredditLink} title="Back to subreddit" />}
+      navContent={
+        <div>
+          <div className={styles.authorWrapper}>
+            <UnderlinedLink href={subredditLink} className={styles.subreddit}>
+              r/{chapter.subreddit}
+            </UnderlinedLink>
+            <UnderlinedLink
+              href={chapter.redditAuthorLink}
+              className={styles.author}
+            >
+              u/{chapter.author}
+            </UnderlinedLink>
+          </div>
+        </div>
+      }
+      navEnd={
+        <a href={chapter.redditPostLink}>
+          <IconButton icon={faReddit} title="Read on Reddit" />
+        </a>
+      }
     >
       {chapter.coverArtUrl && (
         <CoverArt url={chapter.coverArtUrl} chapterTitle={chapter.title} />
       )}
       <div>
-        <div className={styles.authorContainer}>
-          <UnderlinedLink href={subredditLink} className={styles.subreddit}>
-            r/{chapter.subreddit}
-          </UnderlinedLink>
-          <UnderlinedLink href={chapter.redditAuthorLink}>
-            u/{chapter.author}
-          </UnderlinedLink>
-        </div>
         <h2 className={styles.title}>{chapter.title}</h2>
         <ChapterTimeMetadata
           className={styles.timeMetadata}

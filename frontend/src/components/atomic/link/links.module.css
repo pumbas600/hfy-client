@@ -8,7 +8,7 @@
 }
 
 .underlinedLink {
-  color: var(--color-foreground);
+  color: inherit;
   font-size: inherit;
   text-decoration: none;
 

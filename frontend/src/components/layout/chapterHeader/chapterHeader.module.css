@@ -9,18 +9,21 @@
   }
 }
 
-.authorContainer {
-  align-items: baseline;
+.authorWrapper {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  font-size: var(--step-0);
-  gap: 0.5rem;
+  flex-direction: column;
+
+  & a {
+    color: var(--primary-contrast-secondary);
+  }
 }
 
 .subreddit {
-  font-weight: bold;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
+}
+
+.author {
+  font-weight: 600;
 }
 
 .timeMetadata {

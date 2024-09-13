@@ -14,6 +14,7 @@ export default function SubredditHeader({ subreddit }: SubredditHeaderProps) {
         <img
           src={subreddit.iconUrl}
           alt={`${subreddit.name}'s icon`}
+          title={subreddit.name}
           className={styles.icon}
         />
       }

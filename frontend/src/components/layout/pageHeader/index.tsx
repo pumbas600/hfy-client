@@ -1,8 +1,5 @@
 import Container, { ContainerProps } from "@/components/atomic/container";
 import styles from "./pageHeader.module.css";
-import IconButton from "@/components/atomic/iconButton";
-import { faReddit } from "@fortawesome/free-brands-svg-icons";
-import BackButton from "@/components/buttons/backButton";
 
 export interface PageHeaderProps extends ContainerProps {
   popBack?: boolean;
@@ -31,15 +28,7 @@ export default function PageHeader({
       <nav className={styles.navBar}>
         <Container className={styles.navContainer} noBlockPadding>
           {navStart ?? <div />}
-          {(backLink || popBack) && (
-            <BackButton link={backLink} title={backTitle} />
-          )}
           {navContent ?? <div />}
-          {redditLink && (
-            <a href={redditLink}>
-              <IconButton icon={faReddit} title={redditLinkTitle} />
-            </a>
-          )}
           {navEnd ?? <div />}
         </Container>
       </nav>
