@@ -18,8 +18,14 @@ export default function SubredditHeader({ subreddit }: SubredditHeaderProps) {
           className={styles.icon}
         />
       }
-      navContent={<ChapterSearchInput subreddit={subreddit.name} />}
+      navContent={
+        <ChapterSearchInput
+          subreddit={subreddit.name}
+          className={styles.searchInput}
+        />
+      }
       className={styles.wrapper}
+      navClassName={styles.navBar}
     >
       <div>
         <h3 className={styles.name}>r/{subreddit.name}</h3>

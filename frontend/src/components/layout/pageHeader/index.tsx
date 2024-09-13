@@ -6,10 +6,7 @@ export interface PageHeaderProps extends ContainerProps {
   navStart?: React.ReactNode;
   navContent?: React.ReactNode;
   navEnd?: React.ReactNode;
-  backLink?: string;
-  backTitle?: string;
-  redditLink?: string;
-  redditLinkTitle?: string;
+  navClassName?: string;
 }
 
 export default function PageHeader({
@@ -17,15 +14,12 @@ export default function PageHeader({
   navStart,
   navContent,
   navEnd,
-  backLink,
-  backTitle,
-  redditLink,
-  redditLinkTitle = "View on Reddit",
+  navClassName,
   ...containerProps
 }: PageHeaderProps) {
   return (
     <>
-      <nav className={styles.navBar}>
+      <nav className={`${styles.navBar} ${navClassName ?? ""}`}>
         <Container className={styles.navContainer} noBlockPadding>
           {navStart ?? <div />}
           {navContent ?? <div />}
