@@ -1,0 +1,14 @@
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--step--1);
+
+  & img {
+    width: 8rem;
+  }
+}
+
+.subredditName {
+  font-weight: 500;
+}

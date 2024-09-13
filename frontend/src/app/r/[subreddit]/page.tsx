@@ -8,6 +8,7 @@ import { GetNewChaptersRequest } from "@/types/api";
 import { GetSubredditRequest } from "@/types/api/subreddit";
 import { Params } from "@/types/next";
 import { Api } from "@/util/api";
+import SubredditHeader from "@/components/subreddit/subredditHeader";
 
 const ONE_MINUTE = 60;
 
@@ -31,12 +32,7 @@ export default async function Subreddit({
 
   return (
     <div>
-      <PageHeader>
-        <img src={subreddit.iconUrl} alt={`${subreddit.name}'s icon`} />
-        <h2>r/{params.subreddit}</h2>
-        <h3>{subreddit.title}</h3>
-        <ChapterSearchInput subreddit={params.subreddit} />
-      </PageHeader>
+      <SubredditHeader subreddit={subreddit} />
       <Container main>
         <ChapterCardList
           paginatedChapters={paginatedChapters}

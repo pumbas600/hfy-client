@@ -1,14 +1,12 @@
 import Container, { ContainerProps } from "@/components/atomic/container";
 import styles from "./pageHeader.module.css";
-import Link from "next/link";
 import IconButton from "@/components/atomic/iconButton";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faReddit } from "@fortawesome/free-brands-svg-icons";
-import { useRouter } from "next/navigation";
 import BackButton from "@/components/buttons/backButton";
 
 export interface PageHeaderProps extends ContainerProps {
   popBack?: boolean;
+  navContent?: React.ReactNode;
   backLink?: string;
   backTitle?: string;
   redditLink?: string;
@@ -17,6 +15,7 @@ export interface PageHeaderProps extends ContainerProps {
 
 export default function PageHeader({
   popBack = false,
+  navContent,
   backLink,
   backTitle,
   redditLink,
@@ -34,6 +33,7 @@ export default function PageHeader({
             {(backLink || popBack) && (
               <BackButton link={backLink} title={backTitle} />
             )}
+            {navContent}
             {redditLink && (
               <a href={redditLink}>
                 <IconButton icon={faReddit} title={redditLinkTitle} />
