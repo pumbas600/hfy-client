@@ -1,6 +1,6 @@
 .pageHeader {
   background-color: var(--primary-color);
-  padding-block-end: var(--step-4);
+  padding-block-end: var(--step-6);
 
   & h1,
   & h2,
@@ -8,20 +8,21 @@
   & h4,
   & h5,
   & h6 {
-    color: var(--primary-color);
+    color: var(--primary-contrast);
     font-family: var(--serif-heading-font);
   }
 }
 
 .navContainer {
   align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: var(--step-1);
+  display: grid;
+  column-gap: var(--step-2);
+  grid-template-columns: max-content 1fr max-content;
 }
 
 .navBar {
   background-color: var(--primary-color);
-  padding-block-start: var(--step-4);
+  padding-block: var(--step-1);
+  position: sticky;
+  top: 0;
 }

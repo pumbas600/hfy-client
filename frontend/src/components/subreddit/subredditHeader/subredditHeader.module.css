@@ -1,16 +1,27 @@
-.subredditIcon {
+.description {
+  color: var(--primary-contrast-secondary);
+  font-size: var(--step--1);
+  letter-spacing: 0.03em;
+  max-width: 60ch;
+}
+
+.icon {
   background-color: white;
   border-radius: 50%;
   height: 2.75rem;
 }
 
-.subredditTitle {
-  font-weight: 400;
+.name {
+  font-weight: 500;
+}
+
+.title {
+  font-weight: 300;
 }
 
 .wrapper {
-  align-items: center;
   display: flex;
-  flex-direction: row;
-  gap: var(--step--1);
+  flex-direction: column;
+  padding-block-start: var(--step-3);
+  gap: var(--step-4);
 }

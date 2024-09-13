@@ -6,7 +6,9 @@ import BackButton from "@/components/buttons/backButton";
 
 export interface PageHeaderProps extends ContainerProps {
   popBack?: boolean;
+  navStart?: React.ReactNode;
   navContent?: React.ReactNode;
+  navEnd?: React.ReactNode;
   backLink?: string;
   backTitle?: string;
   redditLink?: string;
@@ -15,7 +17,9 @@ export interface PageHeaderProps extends ContainerProps {
 
 export default function PageHeader({
   popBack = false,
+  navStart,
   navContent,
+  navEnd,
   backLink,
   backTitle,
   redditLink,
@@ -26,15 +30,17 @@ export default function PageHeader({
     <>
       <nav className={styles.navBar}>
         <Container className={styles.navContainer} noBlockPadding>
+          {navStart ?? <div />}
           {(backLink || popBack) && (
             <BackButton link={backLink} title={backTitle} />
           )}
-          {navContent}
+          {navContent ?? <div />}
           {redditLink && (
             <a href={redditLink}>
               <IconButton icon={faReddit} title={redditLinkTitle} />
             </a>
           )}
+          {navEnd ?? <div />}
         </Container>
       </nav>
       <header className={styles.pageHeader}>

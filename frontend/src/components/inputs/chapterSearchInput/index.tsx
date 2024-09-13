@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React from "react";
+import styles from "./chapterSearchInput.module.css";
 
 export interface CharacterSearchInputProps
   extends React.DetailedHTMLProps<
@@ -39,6 +40,7 @@ export default function ChapterSearchInput({
         placeholder="Search chapters..."
         aria-label="Search for chapters by their title"
         {...props}
+        className={`${styles.searchInput} ${props.className ?? ""}`}
       />
     </form>
   );
