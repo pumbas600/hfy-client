@@ -1,3 +1,4 @@
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using HfyClientApi.Configuration;
@@ -5,6 +6,7 @@ using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using HtmlAgilityPack;
 using OpenGraphNet;
+using Reddit;
 using Reddit.Controllers;
 
 [assembly: InternalsVisibleTo("HfyClientApi.Tests")]
@@ -30,10 +32,16 @@ namespace HfyClientApi.Services
     /// </summary>
     private const string RedditLinkRegex = @$"(?:(?:{Config.RedditUrl})|(?:{Config.OldRedditUrl}))/r/(\w+)/comments/(\w+)/\w+/?";
 
+    private readonly RedditClient _redditClient;
+    private readonly IHttpClientFactory _clientFactory;
     private readonly ILogger<ChapterParsingService> _logger;
 
-    public ChapterParsingService(ILogger<ChapterParsingService> logger)
+    public ChapterParsingService(
+      RedditClient redditClient, IHttpClientFactory clientFactory,
+      ILogger<ChapterParsingService> logger)
     {
+      _redditClient = redditClient;
+      _clientFactory = clientFactory;
       _logger = logger;
     }
 
@@ -224,6 +232,27 @@ namespace HfyClientApi.Services
         _logger.LogError(e, "Failed to fetch cover art from Royal Road link: {}", royalRoadLink);
         return null;
       }
+    }
+
+    public async Task<string?> GetShortLinkLocationAsync(string shortLink)
+    {
+      using HttpClient client = _clientFactory.CreateClient(Config.Clients.NoRedirect);
+
+      try {
+        var request = new HttpRequestMessage(HttpMethod.Head, shortLink);
+        var accessToken = _redditClient.Models.OAuthCredentials.AccessToken;
+        request.Headers.Add("Authorization", $"Bearer {accessToken}");
+
+        var response = await client.SendAsync(request);
+        if (response.StatusCode == HttpStatusCode.MovedPermanently
+            || response.StatusCode == HttpStatusCode.Redirect) {
+          return response.Headers.Location?.ToString();
+        }
+      } catch (HttpRequestException e) {
+        _logger.LogError(e, "Failed to fetch short link location header: {}", shortLink);
+      }
+
+      return null;
     }
   }
 }

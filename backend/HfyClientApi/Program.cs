@@ -22,6 +22,8 @@ var reddit = new RedditClient(
   userAgent: Config.UserAgent
 );
 
+// reddit.Models.OAuthCredentials.AccessToken
+
 // var hfySubreddit = reddit.Subreddit("HFY");
 // var latestPost = hfySubreddit.Posts.New[0].About();
 // Console.WriteLine(latestPost.Title);
@@ -42,9 +44,6 @@ var reddit = new RedditClient(
 //   // Console.WriteLine(currentFlair.FlairPosition);
 //   Console.WriteLine(selfPost.SelfTextHTML);
 // }
-
-
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -69,6 +68,18 @@ builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
 builder.Services.AddScoped<ISubredditRepository, SubredditRepository>();
 
 builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
+
+builder.Services.AddHttpClient(
+  Config.Clients.NoRedirect,
+  client => {
+    client.DefaultRequestHeaders.UserAgent.ParseAdd(Config.UserAgent);
+  }
+).ConfigurePrimaryHttpMessageHandler(() => {
+  return new HttpClientHandler()
+  {
+    AllowAutoRedirect = false
+  };
+});
 
 builder.Services.AddCors(options =>
 {
