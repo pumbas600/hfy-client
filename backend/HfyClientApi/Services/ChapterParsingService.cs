@@ -250,6 +250,7 @@ namespace HfyClientApi.Services
         // We need to make requests to the OAuth Reddit URL
         shareLink = shareLink.Replace(Config.RedditUrl, Config.OauthRedditUrl);
 
+        // It seems like Reddit doesn't ratelimit this thankfully :)
         var request = new HttpRequestMessage(HttpMethod.Head, shareLink);
         var accessToken = _redditClient.Models.OAuthCredentials.AccessToken;
         request.Headers.Add("Authorization", $"Bearer {accessToken}");
@@ -258,6 +259,12 @@ namespace HfyClientApi.Services
         if (response.StatusCode == HttpStatusCode.MovedPermanently
             || response.StatusCode == HttpStatusCode.Redirect)
         {
+          // Just to be safe, check to ensure we're not being ratelimited for this request
+          var ratelimitUsed = response.Headers.GetValues("x-ratelimit-used").FirstOrDefault();
+          if (ratelimitUsed != null) {
+            _logger.LogWarning("IMPORTANT: Reddit ratelimit used parsing share link: {}", ratelimitUsed);
+          }
+
           var shareLinkLocation = response.Headers.Location?.ToString();
           if (shareLinkLocation != null)
           {
