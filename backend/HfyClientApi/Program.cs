@@ -45,28 +45,6 @@ var reddit = new RedditClient(
 //   Console.WriteLine(selfPost.SelfTextHTML);
 // }
 
-// Console.WriteLine(reddit.Models.OAuthCredentials.AccessToken);
-
-// var httpClientHandler = new HttpClientHandler()
-// {
-//   AllowAutoRedirect = false
-// };
-// var client = new HttpClient(httpClientHandler);
-// var request = new HttpRequestMessage(HttpMethod.Head, "https://oauth.reddit.com/r/HFY/s/V42RVh2fvi");
-// request.Headers.Add("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlNIQTI1NjpzS3dsMnlsV0VtMjVmcXhwTU40cWY4MXE2OWFFdWFyMnpLMUdhVGxjdWNZIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzI2Mzk4Mjk1Ljk3Mjk5NSwiaWF0IjoxNzI2MzExODk1Ljk3Mjk5NCwianRpIjoiYmZEeG9FbDRFdW1UUVhwb2lsZ095QTJlOWUzVWNnIiwiY2lkIjoiYWZCTWE2TDdVY1Z2VzlyVDA1ZjZkZyIsImxpZCI6InQyXzM2cDVuZGFsIiwiYWlkIjoidDJfMzZwNW5kYWwiLCJsY2EiOjE1NDk2ODg5NzcyMzgsInNjcCI6ImVKeEVqa0Z1eFRBSVJPX0NPamVxdXNBRzU2UGFJUUtjS3JldnFQUGIzV2dHWnQ0SFZHTWlDWWNOaGxMVkkwektETFhIR1NqOUwydXl3d1ktaTFlVHdxbkRabzFwVEI1MzUzeTZOREw1bGk5aGtzam4yMmY1M19GWnh2S1Z1dTVMbk9wdmlOWlJMT193NHVWb3ZQZ1h5QmdKTmpoTkxnd2U3STQ3ci1CVXkwNGhQa0xpaGcyNlhEend3RDFic0ZhZHg3TWFocTFKZlNpZjBqZXNVcHBMT2ZjR0c3ekVReTA3Rjl2blR3QUFBUF9fT1NCc2h3IiwicmNpZCI6IkQwNGhrMjlqU2ZQV0xmaUcya3lNVDVFQ3hwVE5KSkdIWlZhUmZ3UG4xNjgiLCJmbG8iOjh9.HF1DMTPCvGniRFSyRwHj0eDUHi43-ydgCZSU_Gs66amAJEaFe6d_BP3P3aWNvzrUIZJ11b-A-yyIqqzFGhaHuy4-FMwhE4oCqmuodMUaMn_kgWBsslGBulhfBpm4HFecnJvanz_yr5vMOgWrpE7THn4vSkS9by5no5jlO91bR1vr2fzokrJuwUDPbx1cYbvX1EIPSDM2qI7YtdQSB16rkEwYrqqmwI6p6i8OUNIKzNCFnmVVgEuMCXcrnCO_QC7U6oYXYfAE0e8U7On-Kwb1-BxRXtw7aYf5qyUe-nfVwQifd5RSHqvqnssNwiRf6gFmHwPLGrj17xYouCQLDnyn9Q");
-// request.Headers.Add("User-Agent", "HfyClientApi/1.0");
-// var response = await client.SendAsync(request);
-// response.Headers.ToList().ForEach(header =>
-// {
-//   var value = string.Join(",", header.Value);
-//   Console.WriteLine($"{header.Key}: {value}");
-// });
-// Console.WriteLine(response.StatusCode);
-// var html = await response.Content.ReadAsStringAsync();
-// Console.WriteLine(html);
-
-// return;
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -256,8 +256,14 @@ namespace HfyClientApi.Services
 
         var response = await client.SendAsync(request);
         if (response.StatusCode == HttpStatusCode.MovedPermanently
-            || response.StatusCode == HttpStatusCode.Redirect) {
-          return response.Headers.Location?.ToString();
+            || response.StatusCode == HttpStatusCode.Redirect)
+        {
+          var shareLinkLocation = response.Headers.Location?.ToString();
+          if (shareLinkLocation != null)
+          {
+            _logger.LogInformation("Resolved share link {} to {}", shareLink, shareLinkLocation);
+          }
+          return shareLinkLocation;
         }
       } catch (HttpRequestException e) {
         _logger.LogError(e, "Failed to fetch share link location header: {}", shareLink);
