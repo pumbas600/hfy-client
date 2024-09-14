@@ -260,9 +260,8 @@ namespace HfyClientApi.Services
             || response.StatusCode == HttpStatusCode.Redirect)
         {
           // Just to be safe, check to ensure we're not being ratelimited for this request
-          var ratelimitUsed = response.Headers.GetValues("x-ratelimit-used").FirstOrDefault();
-          if (ratelimitUsed != null) {
-            _logger.LogWarning("IMPORTANT: Reddit ratelimit used parsing share link: {}", ratelimitUsed);
+          if (response.Headers.Contains("x-ratelimit-used")) {
+            _logger.LogWarning("IMPORTANT: Reddit ratelimit used parsing share link!");
           }
 
           var shareLinkLocation = response.Headers.Location?.ToString();
