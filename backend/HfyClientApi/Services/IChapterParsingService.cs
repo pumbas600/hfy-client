@@ -7,7 +7,7 @@ namespace HfyClientApi.Services
   {
     DateTime GetEditedAtUtc(SelfPost post);
 
-    Task<string?> GetShortLinkLocationAsync(string shortLink);
+    Task<string?> GetShareLinkLocationAsync(string shortLink);
 
     Task<(Chapter, StoryMetadata?)> ChapterFromPostAsync(SelfPost post);
   }

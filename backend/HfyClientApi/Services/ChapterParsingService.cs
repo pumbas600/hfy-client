@@ -234,7 +234,7 @@ namespace HfyClientApi.Services
       }
     }
 
-    public async Task<string?> GetShortLinkLocationAsync(string shortLink)
+    public async Task<string?> GetShareLinkLocationAsync(string shortLink)
     {
       using HttpClient client = _clientFactory.CreateClient(Config.Clients.NoRedirect);
 
@@ -249,7 +249,7 @@ namespace HfyClientApi.Services
           return response.Headers.Location?.ToString();
         }
       } catch (HttpRequestException e) {
-        _logger.LogError(e, "Failed to fetch short link location header: {}", shortLink);
+        _logger.LogError(e, "Failed to fetch share link location header: {}", shortLink);
       }
 
       return null;
