@@ -3,4 +3,5 @@ export interface Subreddit {
   title: string;
   description: string;
   iconUrl: string;
+  iconBackgroundColor: string;
 }

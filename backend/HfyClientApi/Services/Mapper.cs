@@ -79,7 +79,8 @@ namespace HfyClientApi.Services
         Name = subreddit.Name,
         Title = subreddit.Title,
         Description = subreddit.Description,
-        IconUrl = subreddit.IconUrl
+        IconUrl = subreddit.IconUrl,
+        IconBackgroundColor = subreddit.IconBackgroundColor
       };
     }
   }

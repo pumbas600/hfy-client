@@ -16,6 +16,7 @@ export default function SubredditHeader({ subreddit }: SubredditHeaderProps) {
           alt={`${subreddit.name}'s icon`}
           title={subreddit.name}
           className={styles.icon}
+          style={{ backgroundColor: subreddit.iconBackgroundColor }}
         />
       }
       navContent={

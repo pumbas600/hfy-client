@@ -6,9 +6,9 @@
 }
 
 .icon {
-  background-color: white;
   border-radius: 50%;
   height: 2.75rem;
+  padding: 0.125rem;
 }
 
 .name {
