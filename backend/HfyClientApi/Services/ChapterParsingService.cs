@@ -30,7 +30,7 @@ namespace HfyClientApi.Services
     /// <summary>
     /// A regex expression that allows the subreddit and post id to be extracted from a Reddit link.
     /// </summary>
-    private const string RedditLinkRegex = @$"(?:(?:{Config.RedditUrl})|(?:{Config.OldRedditUrl}))/r/(\w+)/comments/(\w+)/\w+/?";
+    private const string RedditLinkRegex = @$"/r/(\w+)/comments/(\w+)/\w+/?";
 
     private readonly RedditClient _redditClient;
     private readonly IHttpClientFactory _clientFactory;
@@ -87,7 +87,7 @@ namespace HfyClientApi.Services
           }
           else
           {
-            var chapterLink = ParseRedditLink(linkElement);
+            var chapterLink = await ParseRedditLink(linkElement);
             if (chapterLink == null)
             {
               continue;
@@ -172,13 +172,21 @@ namespace HfyClientApi.Services
       return (chapter, storyMetadata);
     }
 
-    internal protected static ChapterLink? ParseRedditLink(HtmlNode linkElement)
+    internal async protected Task<ChapterLink?> ParseRedditLink(HtmlNode linkElement)
     {
       var link = linkElement.GetAttributeValue("href", null);
+
+      // Handle share links from mobile /s/
+      if (link != null && link.Contains("/s/")) {
+        link = await GetShareLinkLocationAsync(link);
+      }
+
       if (link == null)
       {
         return null;
       }
+
+      link = link.Replace(Config.RedditUrl, "").Replace(Config.OldRedditUrl, "");
 
       var match = Regex.Match(link, RedditLinkRegex, RegexOptions.IgnoreCase);
       if (!match.Success || match.Groups.Count < 3)
@@ -234,12 +242,15 @@ namespace HfyClientApi.Services
       }
     }
 
-    public async Task<string?> GetShareLinkLocationAsync(string shortLink)
+    public async Task<string?> GetShareLinkLocationAsync(string shareLink)
     {
       using HttpClient client = _clientFactory.CreateClient(Config.Clients.NoRedirect);
 
       try {
-        var request = new HttpRequestMessage(HttpMethod.Head, shortLink);
+        // We need to make requests to the OAuth Reddit URL
+        shareLink = shareLink.Replace(Config.RedditUrl, Config.OauthRedditUrl);
+
+        var request = new HttpRequestMessage(HttpMethod.Head, shareLink);
         var accessToken = _redditClient.Models.OAuthCredentials.AccessToken;
         request.Headers.Add("Authorization", $"Bearer {accessToken}");
 
@@ -249,7 +260,7 @@ namespace HfyClientApi.Services
           return response.Headers.Location?.ToString();
         }
       } catch (HttpRequestException e) {
-        _logger.LogError(e, "Failed to fetch share link location header: {}", shortLink);
+        _logger.LogError(e, "Failed to fetch share link location header: {}", shareLink);
       }
 
       return null;
