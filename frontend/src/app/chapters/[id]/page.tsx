@@ -31,6 +31,7 @@ export async function generateMetadata(
 
     return {
       title: chapter.title,
+      authors: [{ name: chapter.author, url: chapter.redditAuthorLink }],
       openGraph: {
         images: images,
       },
