@@ -80,7 +80,8 @@ namespace HfyClientApi.Services
         Title = subreddit.Title,
         Description = subreddit.Description,
         IconUrl = subreddit.IconUrl,
-        IconBackgroundColor = subreddit.IconBackgroundColor
+        IconBackgroundColor = subreddit.IconBackgroundColor,
+        RedditLink = $"{Config.RedditUrl}/r/{subreddit.Name}"
       };
     }
   }

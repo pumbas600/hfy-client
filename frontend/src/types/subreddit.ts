@@ -4,4 +4,5 @@ export interface Subreddit {
   description: string;
   iconUrl: string;
   iconBackgroundColor: string;
+  redditLink: string;
 }

@@ -2,10 +2,11 @@ namespace HfyClientApi.Dtos
 {
   public class SubredditDto
   {
-    public string Name { get; set; } = null!;
-    public string Title { get; set; } = null!;
-    public string Description { get; set; } = null!;
-    public string IconUrl { get; set; } = null!;
-    public string IconBackgroundColor { get; set; } = null!;
+    public required string Name { get; set; }
+    public required string Title { get; set; }
+    public required string Description { get; set; }
+    public required string IconUrl { get; set; }
+    public required string IconBackgroundColor { get; set; }
+    public required string RedditLink { get; set; }
   }
 }

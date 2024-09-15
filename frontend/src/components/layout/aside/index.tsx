@@ -25,7 +25,7 @@ export default function Aside({ className }: AsideProps) {
       <nav className={styles.nav}>
         <Subtitle>Subreddits</Subtitle>
         {linksToListItems(SupportedSubreddits)}
-        <Subtitle>Links</Subtitle>
+        <Subtitle>Info</Subtitle>
         {linksToListItems(Links)}
       </nav>
     </aside>

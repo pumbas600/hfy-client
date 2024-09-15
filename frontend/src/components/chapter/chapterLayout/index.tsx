@@ -10,6 +10,7 @@ import UpvoteLabel from "@/components/labels/upvoteLabel";
 import NsfwLabel from "@/components/labels/nsfwLabel";
 import CoverArt from "@/components/images/coverArt";
 import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
+import RedditLink from "@/components/buttons/redditLink";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
@@ -41,9 +42,7 @@ export default function ChapterLayout({
         </div>
       }
       stickyEnd={
-        <a href={chapter.redditPostLink} target="_blank">
-          <IconButton icon={faReddit} title="Read on Reddit" />
-        </a>
+        <RedditLink href={chapter.redditPostLink} title="Read on Reddit" />
       }
       headerClassName={styles.header}
       headerContent={

@@ -2,6 +2,7 @@ import PageLayout from "@/components/layout/pageLayout";
 import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
+import RedditLink from "@/components/buttons/redditLink";
 
 export interface SubredditLayoutProps {
   children?: React.ReactNode;
@@ -28,6 +29,9 @@ export default function SubredditLayout({
           subreddit={subreddit.name}
           className={styles.searchInput}
         />
+      }
+      stickyEnd={
+        <RedditLink href={subreddit.redditLink} title="View on Reddit" />
       }
       headerClassName={styles.header}
       headerContent={
