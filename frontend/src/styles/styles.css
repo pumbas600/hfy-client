@@ -212,7 +212,6 @@
       --primary-color: #127551;
 
       --border-color: #666;
-      /* --border-color: #adadad; */
       --divider-color: #666;
 
       --color-background: #1f1f1f;
@@ -336,6 +335,7 @@
   input[type="time"],
   input[type="week"] {
     background: var(--color-background);
+    color: var(--color-foreground);
     font-size: var(--step-0);
 
     &::placeholder {
