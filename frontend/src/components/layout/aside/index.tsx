@@ -10,7 +10,7 @@ function linksToListItems(links: Record<string, string>): React.ReactNode {
   return (
     <ul className={styles.linkList}>
       {Object.entries(links).map(([label, link]) => (
-        <li key={link}>
+        <li key={link} className={styles.listItem}>
           <SubtleLink href={link}>{label}</SubtleLink>
         </li>
       ))}
