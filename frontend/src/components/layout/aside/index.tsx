@@ -24,7 +24,7 @@ export default function Aside({ className }: AsideProps) {
   } as const;
 
   return (
-    <aside className={className}>
+    <aside className={`${styles.aside} ${className ?? ""}`}>
       <nav className={styles.nav}>
         <Subtitle>Subreddits</Subtitle>
         {linksToListItems(subredditLinks)}

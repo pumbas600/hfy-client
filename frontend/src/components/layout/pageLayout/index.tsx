@@ -41,7 +41,9 @@ export default function PageLayout({
           {headerContent}
         </div>
       </header>
-      <Aside className={styles.aside} />
+      <div className={styles.aside}>
+        <Aside />
+      </div>
       <main
         className={`${styles.main} ${mainPaddingClassName} ${
           mainClassName ?? ""

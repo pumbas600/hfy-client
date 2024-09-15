@@ -1,3 +1,9 @@
+.aside {
+  position: sticky;
+  top: calc(3rem + 3 * calc(var(--step-1))); /* Height of sticky header */
+  z-index: 1;
+}
+
 .linkList {
   margin-block-end: var(--step-1);
   list-style-type: none;
