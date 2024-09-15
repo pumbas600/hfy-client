@@ -16,7 +16,11 @@ function CreateBaseLink(variantClassName: string) {
     }
 
     return (
-      <a {...props} className={`${variantClassName} ${className ?? ""}`} />
+      <a
+        target="_blank"
+        {...props}
+        className={`${variantClassName} ${className ?? ""}`}
+      />
     );
   };
 }
