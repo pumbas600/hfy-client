@@ -207,6 +207,19 @@
     font-size: 16px;
   }
 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary-color: #127551;
+
+      --border-color: #666;
+      /* --border-color: #adadad; */
+      --divider-color: #666;
+
+      --color-background: #1f1f1f;
+      --color-foreground: #dddddd;
+    }
+  }
+
   body {
     background-color: var(--color-background);
     font-size: var(--step-0);
@@ -322,7 +335,7 @@
   input[type="text"],
   input[type="time"],
   input[type="week"] {
-    background: white;
+    background: var(--color-background);
     font-size: var(--step-0);
 
     &::placeholder {
