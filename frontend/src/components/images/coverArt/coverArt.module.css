@@ -1,5 +1,5 @@
 .coverArt {
-  background-color: var(--color-background);
+  background-color: var(--primary-contrast);
   border: var(--border);
   width: 7rem;
   padding: 0.1875rem;
