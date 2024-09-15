@@ -219,6 +219,10 @@
     }
   }
 
+  * {
+    outline-color: var(--primary-color);
+  }
+
   body {
     background-color: var(--color-background);
     font-size: var(--step-0);
@@ -285,7 +289,6 @@
     border: var(--border);
     border-radius: var(--border-radius);
     font-family: inherit;
-    outline-color: var(--primary-color);
     padding-inline: var(--step--1);
     padding-block: var(--step--4);
 
