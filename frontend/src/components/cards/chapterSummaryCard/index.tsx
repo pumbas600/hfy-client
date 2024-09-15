@@ -16,7 +16,7 @@ export default function ChapterSummaryCard({
 }: ChapterSummaryCardProps) {
   return (
     <Link href={`/chapters/${metadata.id}`} className={styles.cardLink}>
-      <article className={styles.card}>
+      <div className={styles.card}>
         <div>
           <div className={styles.authorContainer}>
             <p>u/{metadata.author}</p>
@@ -38,7 +38,7 @@ export default function ChapterSummaryCard({
         {metadata.coverArtUrl && (
           <CoverArt url={metadata.coverArtUrl} chapterTitle={metadata.title} />
         )}
-      </article>
+      </div>
     </Link>
   );
 }
