@@ -39,6 +39,7 @@ export default function SubredditLayout({
           <p className={styles.description}>{subreddit.description}</p>
         </>
       }
+      noMainPadding
     >
       {children}
     </PageLayout>

@@ -60,6 +60,10 @@
   grid-area: main;
 }
 
+.mainPadding {
+  padding-inline: var(--step-0);
+}
+
 .footer {
   display: grid;
   grid-area: footer;

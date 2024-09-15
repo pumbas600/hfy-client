@@ -9,6 +9,7 @@ import { GetChapterRequest } from "@/types/api";
 import { Params } from "@/types/next";
 import { Api } from "@/util/api";
 import { Metadata, ResolvingMetadata } from "next";
+import ChapterLayout from "@/components/chapter/chapterLayout";
 
 const FIVE_MINUTES = 5 * 60;
 
@@ -69,15 +70,11 @@ export default async function Page({ params }: Params<{ id: string }>) {
   }
 
   return (
-    <div>
-      <ChapterHeader chapter={chapter} />
-      <Container>
-        <ChapterButtons chapter={chapter} />
-        <TextLayout textHtml={chapter.textHtml} />
-        <ChapterButtons chapter={chapter} hideFirstLink />
-        <ScrollToTopButton />
-      </Container>
-      <PageFooter />
-    </div>
+    <ChapterLayout chapter={chapter}>
+      <ChapterButtons chapter={chapter} />
+      <TextLayout textHtml={chapter.textHtml} />
+      <ChapterButtons chapter={chapter} hideFirstLink />
+      <ScrollToTopButton />
+    </ChapterLayout>
   );
 }
