@@ -48,7 +48,9 @@ namespace HfyClientApi.Services
       {
         chapters = await _chapterRepository.GetPaginatedChaptersMetadataByTitleAsync(
           subreddit, title, pageSize, nextKey);
-      } else {
+      }
+      else
+      {
         chapters = await _chapterRepository.GetPaginatedNewChaptersMetadataAsync(
           subreddit, pageSize, nextKey);
       }

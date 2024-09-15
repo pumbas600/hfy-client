@@ -1,0 +1,45 @@
+.pageLayout {
+  display: grid;
+  column-gap: var(--step-0);
+  grid-template-columns:
+    [full-start] auto [aside-start] 8rem [content-start] min(100%, 50rem)
+    [content-end] auto [full-end];
+  grid-template-areas:
+    "sticky sticky sticky sticky"
+    "header header header header"
+    ". aside main ."
+    "footer footer footer footer";
+}
+
+.sticky {
+  background-color: var(--primary-color);
+  display: grid;
+  grid-area: sticky;
+  grid-template-columns: subgrid;
+}
+
+.header {
+  background-color: var(--primary-color);
+  display: grid;
+  grid-area: header;
+  grid-template-columns: subgrid;
+}
+
+.aside {
+  grid-area: aside;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  display: grid;
+  grid-area: footer;
+  grid-template-columns: subgrid;
+}
+
+.content {
+  grid-column-start: content-start;
+  grid-column-end: content-end;
+}

@@ -22,20 +22,18 @@ var reddit = new RedditClient(
   userAgent: Config.UserAgent
 );
 
-// reddit.Models.OAuthCredentials.AccessToken
-
-// var hfySubreddit = reddit.Subreddit("HFY");
-// var latestPost = hfySubreddit.Posts.New[0].About();
-// Console.WriteLine(latestPost.Title);
-// Console.WriteLine(latestPost.Author);
-// Console.WriteLine(latestPost.Id);
-// Console.WriteLine(latestPost.Created); // UTC Time
-// Console.WriteLine(latestPost.Edited);
-// Console.WriteLine(latestPost.UpVotes);
-// Console.WriteLine(latestPost.DownVotes);
-// Console.WriteLine(latestPost.Score);
-// Console.WriteLine(latestPost.Permalink);
-// Console.WriteLine(latestPost.NSFW);
+var hfySubreddit = reddit.Subreddit("HFY");
+var latestPost = hfySubreddit.Posts.New[0].About();
+Console.WriteLine(latestPost.Title);
+Console.WriteLine(latestPost.Author);
+Console.WriteLine(latestPost.Id);
+Console.WriteLine(latestPost.Created); // UTC Time
+Console.WriteLine(latestPost.Edited);
+Console.WriteLine(latestPost.UpVotes);
+Console.WriteLine(latestPost.DownVotes);
+Console.WriteLine(latestPost.Score);
+Console.WriteLine(latestPost.Permalink);
+Console.WriteLine(latestPost.NSFW);
 // if (latestPost is SelfPost selfPost)
 // {
 //   // Console.WriteLine(currentFlair.FlairText);
