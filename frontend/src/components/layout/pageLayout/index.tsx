@@ -1,4 +1,4 @@
-import { Subtitle } from "@/components/typography";
+import { Subtitle } from "@/components/atomic/typography";
 import styles from "./pageLayout.module.css";
 import Aside from "../aside";
 

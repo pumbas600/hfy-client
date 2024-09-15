@@ -1,0 +1,7 @@
+.linkList {
+  list-style-type: none;
+}
+
+.nav {
+  font-size: var(--step--1);
+}

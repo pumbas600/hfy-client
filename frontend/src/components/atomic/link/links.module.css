@@ -1,9 +1,14 @@
 .subtleLink {
-  color: var(--primary-contrast);
+  color: var(--color-foreground-secondary);
+  font-size: inherit;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   text-decoration: none;
 
   &:hover {
-    color: var(--primary-contrast-secondary);
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-decoration-color: var(--primary-color);
   }
 }
 
