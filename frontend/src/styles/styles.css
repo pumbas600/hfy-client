@@ -168,6 +168,7 @@
     --divider-color: #ccc;
     --hover-color: rgba(0, 0, 0, 0.05);
 
+    --color-background: white;
     --color-foreground: black;
     --color-foreground-secondary: oklch(
       from var(--color-foreground) l c h / 55%
@@ -207,6 +208,7 @@
   }
 
   body {
+    background-color: var(--color-background);
     font-size: var(--step-0);
   }
 
