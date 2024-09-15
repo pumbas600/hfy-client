@@ -2,8 +2,8 @@
   display: grid;
   column-gap: var(--step-0);
   grid-template-columns:
-    [full-start] auto [aside-start] 8rem [content-start] min(100%, 50rem)
-    [content-end] auto [full-end];
+    [full-start] minmax(0, auto) [aside-start] 8rem
+    [content-start] min(100%, 50rem) [content-end] minmax(0, auto) [full-end];
   grid-template-areas:
     "sticky sticky sticky sticky"
     "header header header header"
@@ -36,6 +36,7 @@
   display: grid;
   grid-area: header;
   grid-template-columns: subgrid;
+  margin-block-end: var(--step-1);
   padding-block-start: var(--step-3);
   padding-block-end: var(--step-6);
   padding-inline: var(--step-0);
@@ -63,6 +64,7 @@
   display: grid;
   grid-area: footer;
   grid-template-columns: subgrid;
+  margin-block-start: var(--step-1);
   padding-block-start: var(--step-4);
   padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-4));
   padding-inline: var(--step-0);
@@ -74,7 +76,7 @@
   grid-column-end: content-end;
 }
 
-@media screen and (max-width: 44rem) {
+@media screen and (max-width: 50rem) {
   .pageLayout {
     column-gap: 0;
     grid-template-columns: [content-start] min(100%, 50rem) [content-end];
