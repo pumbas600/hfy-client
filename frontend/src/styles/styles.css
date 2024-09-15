@@ -168,6 +168,7 @@
     --divider-color: #ccc;
     --hover-color: rgba(0, 0, 0, 0.05);
 
+    --color-link: #0000ee;
     --color-background: white;
     --color-foreground: black;
     --color-foreground-secondary: oklch(
@@ -214,6 +215,7 @@
       --border-color: #666;
       --divider-color: #666;
 
+      --color-link: #5ba6e7;
       --color-background: #1f1f1f;
       --color-foreground: #dddddd;
     }

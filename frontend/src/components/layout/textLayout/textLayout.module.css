@@ -2,6 +2,10 @@
   font-family: var(--chapter-body-font);
   padding-block: 0.5rem;
 
+  & a {
+    color: var(--color-link);
+  }
+
   & p {
     margin-block: 1em;
   }
