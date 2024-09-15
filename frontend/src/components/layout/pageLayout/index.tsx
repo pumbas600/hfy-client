@@ -1,4 +1,6 @@
+import { Subtitle } from "@/components/typography";
 import styles from "./pageLayout.module.css";
+import Aside from "../aside";
 
 export interface PageLayoutProps {
   stickyStart?: React.ReactNode;
@@ -39,11 +41,7 @@ export default function PageLayout({
           {headerContent}
         </div>
       </header>
-      <aside className={styles.aside}>
-        <nav>
-          <h4>Aside</h4>
-        </nav>
-      </aside>
+      <Aside className={styles.aside} />
       <main
         className={`${styles.main} ${mainPaddingClassName} ${
           mainClassName ?? ""

@@ -14,13 +14,19 @@ export default function About() {
         <h3>{config.title}</h3>
         <p>
           {config.title} is a simplified Reddit client optimised for reading
-          stories on the <a href="https://www.reddit.com/r/HFY/">r/HFY</a>{" "}
+          stories on the{" "}
+          <a href="https://www.reddit.com/r/HFY/" target="_blank">
+            r/HFY
+          </a>{" "}
           subreddit. Being designed for stories, it allows for an improved user
           experience and story-specific features.
         </p>
         <p>
-          This project is <a href={config.githubUrl}>open source</a>. Any and
-          all contributions are welcome!
+          This project is{" "}
+          <a href={config.githubUrl} target="_blank">
+            open source
+          </a>
+          . Any and all contributions are welcome!
         </p>
         <h3>Behind the scenes</h3>
         <p>
