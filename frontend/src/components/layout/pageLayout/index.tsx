@@ -6,6 +6,8 @@ export interface PageLayoutProps {
   stickyEnd?: React.ReactNode;
   stickyClassName?: string;
   headerContent?: React.ReactNode;
+  headerClassName?: string;
+  mainClassName?: string;
   children?: React.ReactNode;
 }
 
@@ -16,10 +18,12 @@ export default function PageLayout({
   stickyEnd,
   stickyClassName,
   headerContent,
+  headerClassName,
+  mainClassName,
 }: PageLayoutProps) {
   return (
     <div className={styles.pageLayout}>
-      <div className={`${styles.sticky} ${stickyClassName}`}>
+      <div className={`${styles.sticky} ${stickyClassName ?? ""}`}>
         <div className={styles.stickyContent}>
           {stickyStart ?? <div />}
           {stickyContent ?? <div />}
@@ -27,14 +31,18 @@ export default function PageLayout({
         </div>
       </div>
       <header className={styles.header}>
-        <div className={styles.content}>{headerContent}</div>
+        <div className={`${styles.content} ${headerClassName ?? ""}`}>
+          {headerContent}
+        </div>
       </header>
       <aside className={styles.aside}>
         <nav>
           <h4>Aside</h4>
         </nav>
       </aside>
-      <main className={styles.main}>{children}</main>
+      <main className={`${styles.main} ${mainClassName ?? ""}`}>
+        {children}
+      </main>
       <footer className={styles.footer}>
         <div className={styles.content}>
           <p>Footer</p>

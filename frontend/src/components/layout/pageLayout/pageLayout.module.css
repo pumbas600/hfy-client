@@ -17,6 +17,7 @@
   grid-area: sticky;
   grid-template-columns: subgrid;
   padding-block: var(--step-1);
+  padding-inline: var(--step-0);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -37,6 +38,7 @@
   grid-template-columns: subgrid;
   padding-block-start: var(--step-3);
   padding-block-end: var(--step-6);
+  padding-inline: var(--step-0);
 
   & h1,
   & h2,
@@ -63,6 +65,7 @@
   grid-template-columns: subgrid;
   padding-block-start: var(--step-4);
   padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-4));
+  padding-inline: var(--step-0);
 }
 
 .content,
@@ -73,13 +76,16 @@
 
 @media screen and (max-width: 44rem) {
   .pageLayout {
-    grid-template-columns:
-      [full-start] auto [content-start] min(100%, 50rem)
-      [content-end] auto [full-end];
+    column-gap: 0;
+    grid-template-columns: [content-start] min(100%, 50rem) [content-end];
     grid-template-areas:
-      "sticky sticky sticky"
-      "header header header"
-      ". main ."
-      "footer footer footer";
+      "sticky"
+      "header"
+      "main"
+      "footer";
+  }
+
+  .aside {
+    display: none;
   }
 }

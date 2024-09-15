@@ -1,13 +1,11 @@
 import ChapterCardList from "@/components/cards/chapterCardList";
-import { Container } from "@/components/atomic";
-import PageFooter from "@/components/layout/pageFooter";
 import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { GetSubredditRequest } from "@/types/api/subreddit";
 import { Params } from "@/types/next";
 import { Api } from "@/util/api";
-import SubredditHeader from "@/components/subreddit/subredditHeader";
 import { Metadata, ResolvingMetadata } from "next";
+import SubredditLayout from "@/components/subreddit/subredditLayout";
 
 const ONE_MINUTE = 60;
 
@@ -57,15 +55,11 @@ export default async function Subreddit({
   ]);
 
   return (
-    <div>
-      <SubredditHeader subreddit={subreddit} />
-      <Container main>
-        <ChapterCardList
-          paginatedChapters={paginatedChapters}
-          endpointUrl={newChaptersUrl.toString()}
-        />
-      </Container>
-      <PageFooter />
-    </div>
+    <SubredditLayout subreddit={subreddit}>
+      <ChapterCardList
+        paginatedChapters={paginatedChapters}
+        endpointUrl={newChaptersUrl.toString()}
+      />
+    </SubredditLayout>
   );
 }
