@@ -1,7 +1,8 @@
 .pageFooter {
   background-color: var(--primary-color);
   color: var(--primary-contrast-secondary);
-  padding-block: 3rem;
+  padding-block-start: var(--step-4);
+  padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-4));
 }
 
 .pageFooter > div {

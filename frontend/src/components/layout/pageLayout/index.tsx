@@ -1,22 +1,40 @@
 import styles from "./pageLayout.module.css";
 
-export default function PageLayout() {
+export interface PageLayoutProps {
+  stickyStart?: React.ReactNode;
+  stickyContent?: React.ReactNode;
+  stickyEnd?: React.ReactNode;
+  stickyClassName?: string;
+  headerContent?: React.ReactNode;
+  children?: React.ReactNode;
+}
+
+export default function PageLayout({
+  children,
+  stickyStart,
+  stickyContent,
+  stickyEnd,
+  stickyClassName,
+  headerContent,
+}: PageLayoutProps) {
   return (
     <div className={styles.pageLayout}>
-      <div className={styles.sticky}>
-        <div className={styles.content}>Sticky header</div>
+      <div className={`${styles.sticky} ${stickyClassName}`}>
+        <div className={styles.stickyContent}>
+          {stickyStart ?? <div />}
+          {stickyContent ?? <div />}
+          {stickyEnd ?? <div />}
+        </div>
       </div>
       <header className={styles.header}>
-        <div className={styles.content}>
-          <h1>Page</h1>
-        </div>
+        <div className={styles.content}>{headerContent}</div>
       </header>
       <aside className={styles.aside}>
-        <h4>Aside</h4>
+        <nav>
+          <h4>Aside</h4>
+        </nav>
       </aside>
-      <main className={styles.main}>
-        <p>Content goes here</p>
-      </main>
+      <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
         <div className={styles.content}>
           <p>Footer</p>
