@@ -203,7 +203,7 @@
 
     accent-color: var(--primary-color);
     color: var(--color-foreground);
-    color-scheme: only light;
+    color-scheme: light dark;
     font-family: var(--body-font);
     font-size: 16px;
   }
