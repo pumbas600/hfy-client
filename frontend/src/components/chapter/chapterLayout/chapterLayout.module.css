@@ -1,0 +1,37 @@
+.header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--step-2);
+}
+
+.authorWrapper {
+  display: flex;
+  flex-direction: column;
+
+  & a {
+    color: var(--primary-contrast-secondary);
+  }
+}
+
+.subreddit {
+  letter-spacing: 0.05em;
+}
+
+.author {
+  font-weight: 600;
+}
+
+.timeMetadata {
+  margin-block: 0.25rem;
+}
+
+.title {
+  font-weight: 500;
+}
+
+@media screen and (max-width: 50rem) {
+  .title {
+    font-size: var(--step-2);
+  }
+}

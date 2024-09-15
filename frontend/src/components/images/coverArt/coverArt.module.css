@@ -1,5 +1,12 @@
 .coverArt {
-  padding: 0.1875rem;
   background-color: white;
   border: var(--border);
+  width: 7rem;
+  padding: 0.1875rem;
+}
+
+@media screen and (max-width: 50rem) {
+  .coverArt {
+    width: 5rem;
+  }
 }
