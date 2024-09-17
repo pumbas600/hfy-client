@@ -1,5 +1,5 @@
 import { FullChapter } from "@/types/chapter";
-import ChapterButton from "@/components/buttons/chapterButton";
+import ChapterButton from "@/components/chapter/chapterButton";
 import styles from "./chapterButtons.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft } from "@fortawesome/free-solid-svg-icons/faAnglesLeft";

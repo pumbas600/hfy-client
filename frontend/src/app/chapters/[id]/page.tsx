@@ -1,5 +1,5 @@
-import ChapterButtons from "@/components/buttons/chapterButtons";
-import ScrollToTopButton from "@/components/buttons/scrollToTopButton";
+import ChapterButtons from "@/components/chapter/chapterButtons";
+import ScrollToTopButton from "@/components/composite/scrollToTopButton";
 import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
 import { GetChapterRequest } from "@/types/api";

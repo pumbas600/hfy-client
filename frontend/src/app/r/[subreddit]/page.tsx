@@ -1,4 +1,4 @@
-import ChapterCardList from "@/components/cards/chapterCardList";
+import ChapterCardList from "@/components/subreddit/chapterCardList";
 import config from "@/config";
 import { GetNewChaptersRequest } from "@/types/api";
 import { GetSubredditRequest } from "@/types/api/subreddit";

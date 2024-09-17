@@ -1,10 +1,10 @@
 import { ChapterMetadata } from "@/types/chapter";
 import Link from "next/link";
-import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
-import UpvoteLabel from "../../labels/upvoteLabel";
+import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
+import UpvoteLabel from "../../composite/upvoteLabel";
 import styles from "./chapterSummaryCard.module.css";
-import CoverArt from "@/components/images/coverArt";
-import NsfwLabel from "@/components/labels/nsfwLabel";
+import CoverArt from "@/components/atomic/coverArt";
+import NsfwLabel from "@/components/composite/nsfwLabel";
 import LabelContainer from "@/components/layout/labelContainer";
 
 export interface ChapterSummaryCardProps {

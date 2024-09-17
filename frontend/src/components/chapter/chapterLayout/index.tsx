@@ -7,14 +7,14 @@ import { FullChapter } from "@/types/chapter";
 import React from "react";
 import styles from "./chapterLayout.module.css";
 import { IconButton, UnderlinedLink } from "@/components/atomic";
-import BackButton from "@/components/buttons/backButton";
+import BackButton from "@/components/composite/backButton";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 import LabelContainer from "@/components/layout/labelContainer";
-import UpvoteLabel from "@/components/labels/upvoteLabel";
-import NsfwLabel from "@/components/labels/nsfwLabel";
-import CoverArt from "@/components/images/coverArt";
-import ChapterTimeMetadata from "@/components/chapterTimeMetadata";
-import RedditLink from "@/components/buttons/redditLink";
+import UpvoteLabel from "@/components/composite/upvoteLabel";
+import NsfwLabel from "@/components/composite/nsfwLabel";
+import CoverArt from "@/components/atomic/coverArt";
+import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
+import RedditLink from "@/components/composite/redditLink";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
