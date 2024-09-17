@@ -7,18 +7,25 @@
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   background-color: var(--color-background);
-  min-width: 10rem;
+  min-width: 9rem;
 
   & > li {
+    align-items: center;
+    display: flex;
+    gap: var(--step--2);
     padding-block: var(--step--3);
     padding-inline: var(--step-0);
+
+    & svg {
+      min-width: 1.5rem;
+    }
+
+    &.selected svg {
+      color: var(--primary-color);
+    }
 
     &:hover {
       background-color: var(--hover-color);
     }
-  }
-
-  & svg {
-    min-width: 2rem;
   }
 }

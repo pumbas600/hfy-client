@@ -17,6 +17,10 @@ const ThemeIcons: Record<Theme, IconProp> = {
   system: faCog,
 };
 
+function capitalise(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export default function ThemeSwitcher() {
   const selectedTheme: Theme = "light";
   const resolvedTheme: Exclude<Theme, "system"> = selectedTheme;
@@ -29,18 +33,15 @@ export default function ThemeSwitcher() {
       }
       transition
     >
-      <MenuItem>
-        <FontAwesomeIcon icon={ThemeIcons.light} size="lg" />
-        Light
-      </MenuItem>
-      <MenuItem>
-        <FontAwesomeIcon icon={ThemeIcons.dark} size="lg" />
-        Dark
-      </MenuItem>
-      <MenuItem>
-        <FontAwesomeIcon icon={ThemeIcons.system} size="lg" />
-        System
-      </MenuItem>
+      {Object.entries(ThemeIcons).map(([theme, icon]) => (
+        <MenuItem
+          key={theme}
+          className={theme == selectedTheme ? styles.selected : ""}
+        >
+          <FontAwesomeIcon icon={icon} size="lg" />
+          {capitalise(theme)}
+        </MenuItem>
+      ))}
     </Menu>
   );
 }
