@@ -1,5 +1,6 @@
 using HfyClientApi.Data;
 using HfyClientApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
@@ -14,7 +15,9 @@ namespace HfyClientApi.Repositories
 
     public async Task<Subreddit?> GetSubredditByNameAsync(string name)
     {
-      return await _context.Subreddits.FindAsync(name);
+      var uppercaseName = name.ToUpper();
+      return await _context.Subreddits
+        .FirstOrDefaultAsync(s => s.Name.ToUpper() == uppercaseName);
     }
   }
 }

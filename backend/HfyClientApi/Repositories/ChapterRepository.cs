@@ -110,9 +110,12 @@ namespace HfyClientApi.Repositories
     public async Task<IEnumerable<CombinedChapter>> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey)
     {
+      var uppercaseSubreddit = subreddit.ToUpper();
+
       Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
-        ? c => c.Chapter.Subreddit == subreddit
-        : c => c.Chapter.Subreddit == subreddit && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
+        ? c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
+        : c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
+          && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
           || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
       return await GetPaginatedChaptersAsync(predicate, pageSize);
@@ -121,11 +124,14 @@ namespace HfyClientApi.Repositories
     public async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersMetadataByTitleAsync(
       string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey)
     {
+      var uppercaseSubreddit = subreddit.ToUpper();
       var searchableTitle = GetSearchableTitle(title);
 
       Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
-        ? c => c.Chapter.Subreddit == subreddit && c.Chapter.SearchableTitle.Contains(searchableTitle)
-        : c => c.Chapter.Subreddit == subreddit && c.Chapter.SearchableTitle.Contains(searchableTitle)
+        ? c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
+          && c.Chapter.SearchableTitle.Contains(searchableTitle)
+        : c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
+          && c.Chapter.SearchableTitle.Contains(searchableTitle)
           && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
           || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
 
