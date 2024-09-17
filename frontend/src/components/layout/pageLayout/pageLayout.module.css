@@ -64,10 +64,6 @@
   grid-area: main;
 }
 
-.mainPadding {
-  padding-inline: var(--step-0);
-}
-
 .footer {
   display: grid;
   grid-area: footer;
@@ -97,5 +93,9 @@
 
   .aside {
     display: none;
+  }
+
+  .mainPadding {
+    padding-inline: var(--step-0);
   }
 }
