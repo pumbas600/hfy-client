@@ -1,3 +1,4 @@
+import ThemeSwitcher from "@/components/composite/themeSwitcher";
 import styles from "./pageLayout.module.css";
 
 export interface RegionProps {
@@ -18,7 +19,12 @@ export function Sticky({ start, children, end, className }: StickyProps) {
       <div className={styles.stickyContent}>
         {start ?? <div />}
         {children ?? <div />}
-        {end ?? <div />}
+        {(
+          <div>
+            {end}
+            <ThemeSwitcher />
+          </div>
+        ) ?? <ThemeSwitcher />}
       </div>
     </div>
   );

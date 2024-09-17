@@ -2,7 +2,7 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from "@fortawesome/react-fontawesome";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 import styles from "./iconButton.module.css";
 
 export interface IconButtonProps
@@ -11,13 +11,18 @@ export interface IconButtonProps
   size?: FontAwesomeIconProps["size"];
 }
 
-export default function IconButton({ icon, size, ...props }: IconButtonProps) {
-  return (
-    <button
-      {...props}
-      className={`${styles.iconButton} ${props.className ?? ""}`}
-    >
-      <FontAwesomeIcon icon={icon} size={size ?? "xl"} />
-    </button>
-  );
-}
+const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ icon, size, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        {...props}
+        className={`${styles.iconButton} ${props.className ?? ""}`}
+      >
+        <FontAwesomeIcon icon={icon} size={size ?? "xl"} />
+      </button>
+    );
+  }
+);
+
+export default IconButton;
