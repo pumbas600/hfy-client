@@ -5,6 +5,7 @@ import ChapterSummaryCard from "../chapterSummaryCard";
 import { Fragment, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GetNewChaptersRequest } from "@/types/api";
+import { Api } from "@/util/api";
 
 export interface ChapterCardListProps {
   paginatedChapters: PaginatedChapters;
@@ -44,15 +45,17 @@ export default function ChapterCardList({
     const requestUrl = new URL(endpointUrl);
     requestUrl.searchParams.set("lastCreated", nextKey.lastCreatedAtUtc);
     requestUrl.searchParams.set("lastId", nextKey.lastPostId);
-    const res = await fetch(requestUrl.toString(), {
-      next: { revalidate: ONE_MINUTES },
-    });
 
-    const paginatedChapters: GetNewChaptersRequest.ResBody = await res.json();
+    try {
+      const paginatedChapters = await Api.get<GetNewChaptersRequest.ResBody>(
+        requestUrl.toString(),
+        { revalidate: ONE_MINUTES }
+      );
 
-    setNextKey(paginatedChapters.nextKey);
-    setChapters([...chapters, ...paginatedChapters.data]);
-    setHasNext(hasMoreChapters(paginatedChapters));
+      setNextKey(paginatedChapters.nextKey);
+      setChapters([...chapters, ...paginatedChapters.data]);
+      setHasNext(hasMoreChapters(paginatedChapters));
+    } catch (err) {}
   };
 
   return (
