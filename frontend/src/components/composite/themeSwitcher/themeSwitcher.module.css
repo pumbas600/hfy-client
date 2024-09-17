@@ -1,4 +1,18 @@
-.menu {
+@keyframes menuShow {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes menuHide {
+  to {
+    opacity: 0;
+  }
+}
+
+.menu,
+.menuOpening,
+.menuClosing {
   z-index: 100;
   list-style: none;
   user-select: none;
@@ -28,4 +42,12 @@
       background-color: var(--hover-color);
     }
   }
+}
+
+.menuOpening {
+  animation: menuShow 0.15s ease-out;
+}
+
+.menuClosing {
+  animation: menuHide 0.2s ease-out forwards;
 }

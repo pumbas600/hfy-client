@@ -6,7 +6,7 @@ import { faMoon } from "@fortawesome/free-solid-svg-icons/faMoon";
 import { faSun } from "@fortawesome/free-solid-svg-icons/faSun";
 import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Menu, MenuItem } from "@szhsin/react-menu";
+import { Menu, MenuItem, MenuModifiers } from "@szhsin/react-menu";
 import styles from "./themeSwitcher.module.css";
 import { useMemo, useState } from "react";
 import { ObjectUtils } from "@/util/object";
@@ -41,10 +41,17 @@ export default function ThemeSwitcher() {
     [selectedTheme]
   );
 
+  const menuClassName = ({ state }: MenuModifiers) =>
+    state === "opening"
+      ? styles.menuOpening
+      : state === "closing"
+      ? styles.menuClosing
+      : styles.menu;
+
   return (
     <Menu
       transition
-      menuClassName={styles.menu}
+      menuClassName={menuClassName}
       menuButton={
         <IconButton icon={ThemeIcons[resolvedTheme]} title="Select theme" />
       }
