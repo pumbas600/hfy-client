@@ -50,6 +50,10 @@
     color: var(--primary-contrast);
     font-family: var(--serif-heading-font);
   }
+
+  &:not(:has(~ .sticky)) {
+    padding-block-start: var(--step-5);
+  }
 }
 
 .aside {
