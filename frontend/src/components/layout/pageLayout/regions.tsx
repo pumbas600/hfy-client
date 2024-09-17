@@ -7,17 +7,17 @@ export interface RegionProps {
 
 export interface StickyProps {
   start?: React.ReactNode;
-  content?: React.ReactNode;
+  children?: React.ReactNode;
   end?: React.ReactNode;
   className?: string;
 }
 
-export function Sticky({ start, content, end, className }: StickyProps) {
+export function Sticky({ start, children, end, className }: StickyProps) {
   return (
     <div className={`${styles.sticky} ${className ?? ""}`}>
       <div className={styles.stickyContent}>
         {start ?? <div />}
-        {content ?? <div />}
+        {children ?? <div />}
         {end ?? <div />}
       </div>
     </div>
