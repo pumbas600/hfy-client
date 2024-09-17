@@ -7,6 +7,7 @@ import { faSun } from "@fortawesome/free-solid-svg-icons/faSun";
 import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu, MenuItem } from "@szhsin/react-menu";
+import styles from "./themeSwitcher.module.css";
 
 type Theme = "light" | "dark" | "system";
 
@@ -22,21 +23,22 @@ export default function ThemeSwitcher() {
 
   return (
     <Menu
+      menuClassName={styles.menu}
       menuButton={
         <IconButton icon={ThemeIcons[resolvedTheme]} title="Select theme" />
       }
       transition
     >
       <MenuItem>
-        <FontAwesomeIcon icon={ThemeIcons.light} />
+        <FontAwesomeIcon icon={ThemeIcons.light} size="lg" />
         Light
       </MenuItem>
       <MenuItem>
-        <FontAwesomeIcon icon={ThemeIcons.dark} />
+        <FontAwesomeIcon icon={ThemeIcons.dark} size="lg" />
         Dark
       </MenuItem>
       <MenuItem>
-        <FontAwesomeIcon icon={ThemeIcons.system} />
+        <FontAwesomeIcon icon={ThemeIcons.system} size="lg" />
         System
       </MenuItem>
     </Menu>

@@ -166,7 +166,7 @@
     --nsfw-color: red;
     --border-color: #e0e0e0;
     --divider-color: #ccc;
-    --hover-color: rgba(0, 0, 0, 0.05);
+    --hover-color: rgb(0 0 0 / 0.05);
 
     --color-link: #0000ee;
     --color-background: white;
@@ -214,6 +214,7 @@
 
       --border-color: #666;
       --divider-color: #666;
+      --hover-color: rgb(255 255 255 / 0.025);
 
       --color-link: #5ba6e7;
       --color-background: #1f1f1f;
