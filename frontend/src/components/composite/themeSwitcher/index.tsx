@@ -24,14 +24,23 @@ function capitalise(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+const IS_SERVER = typeof window === "undefined";
+
 function resolveTheme(theme: Theme): ResolvedTheme {
-  if (theme !== "system") {
-    return theme;
+  if (theme === "system") {
+    if (IS_SERVER) {
+      // We can't set the documentElement theme attribute
+      return "dark";
+    }
+
+    theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  // TODO: Do this in Next <Head> component!!!
+  document.documentElement.setAttribute("data-theme", theme);
+  return theme;
 }
 
 export default function ThemeSwitcher() {

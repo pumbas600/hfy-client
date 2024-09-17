@@ -208,18 +208,16 @@
     font-size: 16px;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --primary-color: #127551;
+  [data-theme="dark"] {
+    --primary-color: #127551;
 
-      --border-color: #666;
-      --divider-color: #666;
-      --hover-color: rgb(255 255 255 / 0.025);
+    --border-color: #666;
+    --divider-color: #666;
+    --hover-color: rgb(255 255 255 / 0.025);
 
-      --color-link: #5ba6e7;
-      --color-background: #1f1f1f;
-      --color-foreground: #dddddd;
-    }
+    --color-link: #5ba6e7;
+    --color-background: #1f1f1f;
+    --color-foreground: #dddddd;
   }
 
   * {
