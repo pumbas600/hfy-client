@@ -1,5 +1,6 @@
-import ThemeSwitcher from "@/components/composite/themeSwitcher";
+import StatefulThemeSwitcher from "@/components/composite/themeSwitcher/StatefulThemeSwitcher";
 import styles from "./pageLayout.module.css";
+import ThemeSwitcher from "@/components/composite/themeSwitcher";
 
 export interface RegionProps {
   className?: string;

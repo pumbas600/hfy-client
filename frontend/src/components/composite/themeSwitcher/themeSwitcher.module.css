@@ -23,7 +23,7 @@
   background-color: var(--color-background);
   min-width: 9rem;
 
-  & > li {
+  & li {
     align-items: center;
     display: flex;
     gap: var(--step--2);

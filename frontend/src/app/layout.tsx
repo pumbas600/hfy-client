@@ -5,6 +5,8 @@ import "@/styles/styles.css";
 import { config as fontAwesomeConfig } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import config from "@/config";
+import { cookies } from "next/headers";
+
 fontAwesomeConfig.autoAddCss = false;
 
 export const metadata: Metadata = {
@@ -17,8 +19,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const theme = cookieStore.get("theme")?.value;
+
   return (
-    <html lang="en">
+    <html lang="en" data-theme={theme}>
       <body>{children}</body>
     </html>
   );
