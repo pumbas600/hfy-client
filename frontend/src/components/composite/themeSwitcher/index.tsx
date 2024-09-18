@@ -14,6 +14,8 @@ import { ObjectUtils } from "@/util/object";
 type Theme = "light" | "dark" | "system";
 type ResolvedTheme = Exclude<Theme, "system">;
 
+export const THEME_KEY = "hfy-theme";
+
 const ThemeIcons: Record<Theme, IconProp> = {
   light: faSun,
   dark: faMoon,
@@ -38,13 +40,21 @@ function resolveTheme(theme: Theme): ResolvedTheme {
       : "light";
   }
 
-  // TODO: Do this in Next <Head> component!!!
   document.documentElement.setAttribute("data-theme", theme);
   return theme;
 }
 
 export default function ThemeSwitcher() {
-  const [selectedTheme, setSelectedTheme] = useState<Theme>("system");
+  const [selectedTheme, setSelectedTheme] = useState<Theme>(() => {
+    if (!IS_SERVER) {
+      const storedTheme = localStorage.getItem(THEME_KEY);
+      if (storedTheme) {
+        return storedTheme as Theme;
+      }
+    }
+
+    return "system";
+  });
   const resolvedTheme = useMemo(
     () => resolveTheme(selectedTheme),
     [selectedTheme]
@@ -56,6 +66,11 @@ export default function ThemeSwitcher() {
       : state === "closing"
       ? styles.menuClosing
       : styles.menu;
+
+  const handleThemeChange = (theme: Theme) => {
+    setSelectedTheme(theme);
+    localStorage.setItem(THEME_KEY, theme);
+  };
 
   return (
     <Menu
@@ -69,7 +84,7 @@ export default function ThemeSwitcher() {
         <MenuItem
           key={theme}
           className={theme == selectedTheme ? styles.selected : ""}
-          onClick={() => setSelectedTheme(theme)}
+          onClick={() => handleThemeChange(theme)}
         >
           <FontAwesomeIcon icon={icon} size="lg" />
           {capitalise(theme)}
