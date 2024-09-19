@@ -5,7 +5,7 @@ import "@/styles/styles.css";
 import { config as fontAwesomeConfig } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import config from "@/config";
-import { cookies } from "next/headers";
+import { getTheme } from "@/config/getTheme";
 
 fontAwesomeConfig.autoAddCss = false;
 
@@ -19,11 +19,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const theme = cookieStore.get("theme")?.value;
-
   return (
-    <html lang="en" data-theme={theme}>
+    <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getTheme }} />
+      </head>
       <body>{children}</body>
     </html>
   );
