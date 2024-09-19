@@ -11,7 +11,7 @@ import { UnderlinedLink } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import LabelContainer from "@/components/layout/labelContainer";
 import UpvoteLabel from "@/components/composite/upvoteLabel";
-import NsfwLabel from "@/components/composite/nsfwLabel";
+import NsfwBadge from "@/components/composite/nsfwBadge";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import RedditLink from "@/components/composite/redditLink";
@@ -64,7 +64,7 @@ export default function ChapterLayout({
               upvotes={chapter.upvotes}
               downvotes={chapter.downvotes}
             />
-            {chapter.isNsfw && <NsfwLabel />}
+            {chapter.isNsfw && <NsfwBadge />}
           </LabelContainer>
         </div>
       </Header>
