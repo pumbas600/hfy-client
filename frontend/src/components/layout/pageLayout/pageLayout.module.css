@@ -16,7 +16,7 @@
   display: grid;
   grid-area: sticky;
   grid-template-columns: subgrid;
-  padding-block: var(--step-1);
+  padding-block: var(--step--2);
   padding-inline: var(--step-0);
   position: sticky;
   top: 0;
