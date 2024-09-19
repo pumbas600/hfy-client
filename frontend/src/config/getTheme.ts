@@ -2,6 +2,7 @@ export type Theme = "light" | "dark" | "system";
 export type ResolvedTheme = Exclude<Theme, "system">;
 
 const code = function () {
+  // These have to be defined here because the function gets turned into a string.
   const ThemeKey = "hfy.theme";
   let theme: Theme = "system";
   let resolvedTheme: ResolvedTheme = "dark";
@@ -21,7 +22,6 @@ const code = function () {
     resolvedTheme = theme;
   }
 
-  console.log("Setting theme");
   document.documentElement.dataset.theme = resolvedTheme;
 };
 

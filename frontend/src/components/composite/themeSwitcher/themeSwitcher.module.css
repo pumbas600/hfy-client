@@ -29,16 +29,18 @@
     gap: var(--step--2);
     padding-block: var(--step--3);
     padding-inline: var(--step-0);
+    color: var(--color-foreground-secondary);
 
     & svg {
       min-width: 1.5rem;
     }
 
-    &.selected svg {
-      color: var(--primary-color);
+    &.selected {
+      color: var(--color-foreground);
     }
 
     &:hover {
+      color: var(--color-foreground);
       background-color: var(--hover-color);
     }
   }
