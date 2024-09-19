@@ -1,4 +1,10 @@
 .label {
-  color: var(--nsfw-color);
-  fill: var(--nsfw-color);
+  background-color: var(--nsfw-color);
+  border-radius: 99px;
+  color: var(--nsfw-contrast-color);
+  fill: var(--nsfw-contrast-color);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding-inline: var(--step--4);
 }

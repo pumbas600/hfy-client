@@ -164,6 +164,7 @@
     --primary-contrast-secondary: #cbe9d8;
     --background-acent: #c9eae6;
     --nsfw-color: red;
+    --nsfw-contrast-color: white;
     --border-color: #e0e0e0;
     --divider-color: #ccc;
     --hover-color: rgb(0 0 0 / 0.05);
@@ -176,6 +177,7 @@
     );
 
     /* Type scale */
+    --step--5: clamp(0.4019rem, 0.4003rem + 0.0077vw, 0.4096rem);
     --step--4: clamp(0.4751rem, 0.4837rem + -0.0072vw, 0.4823rem);
     --step--3: clamp(0.5787rem, 0.5678rem + 0.0546vw, 0.6333rem);
     --step--2: clamp(0.6944rem, 0.6645rem + 0.1497vw, 0.8442rem);
