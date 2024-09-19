@@ -220,8 +220,8 @@
     --color-foreground: #dddddd;
   }
 
-  * {
-    outline-color: var(--primary-color);
+  *:focus-visible {
+    outline: calc(2 * var(--hairline)) solid var(--color-foreground);
   }
 
   body {

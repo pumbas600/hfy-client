@@ -1,7 +1,10 @@
 .cardLink {
   color: inherit;
-  outline-color: var(--primary-color);
   text-decoration: none;
+
+  &:focus-visible {
+    outline: auto; /* On Chrome no outline is shown when we set an outline :( */
+  }
 }
 
 .card {
@@ -11,6 +14,7 @@
   flex-direction: row;
   gap: 0.25rem;
   justify-content: space-between;
+  margin: var(--step--4);
   padding-inline: var(--step-2);
   padding-block: var(--step--1);
 
