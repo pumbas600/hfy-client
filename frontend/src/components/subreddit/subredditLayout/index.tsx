@@ -1,4 +1,5 @@
-import PageLayout, {
+import {
+  PageLayout,
   Header,
   Main,
   Sticky,
@@ -7,6 +8,7 @@ import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
 import RedditLink from "@/components/composite/redditLink";
+import Aside from "@/components/layout/pageLayout/aside";
 
 export interface SubredditLayoutProps {
   children?: React.ReactNode;
@@ -43,6 +45,7 @@ export default function SubredditLayout({
         </div>
         <p className={styles.description}>{subreddit.description}</p>
       </Header>
+      <Aside />
       <Main noInlinePadding>{children}</Main>
     </PageLayout>
   );

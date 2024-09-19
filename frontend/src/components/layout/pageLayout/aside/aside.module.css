@@ -1,3 +1,7 @@
+.container {
+  grid-area: aside;
+}
+
 .aside {
   position: sticky;
   top: calc(3rem + 3 * calc(var(--step-1))); /* Height of sticky header */

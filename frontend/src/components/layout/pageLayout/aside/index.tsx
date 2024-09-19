@@ -21,13 +21,15 @@ function linksToListItems(links: Record<string, string>): React.ReactNode {
 
 export default function Aside({ className }: AsideProps) {
   return (
-    <aside className={`${styles.aside} ${className ?? ""}`}>
-      <nav className={styles.nav}>
-        <Subtitle>Subreddits</Subtitle>
-        {linksToListItems(SupportedSubreddits)}
-        <Subtitle>Info</Subtitle>
-        {linksToListItems(Links)}
-      </nav>
-    </aside>
+    <div className={styles.container}>
+      <aside className={`${styles.aside} ${className ?? ""}`}>
+        <nav className={styles.nav}>
+          <Subtitle>Subreddits</Subtitle>
+          {linksToListItems(SupportedSubreddits)}
+          <Subtitle>Info</Subtitle>
+          {linksToListItems(Links)}
+        </nav>
+      </aside>
+    </div>
   );
 }

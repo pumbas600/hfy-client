@@ -1,4 +1,5 @@
-import PageLayout, {
+import {
+  PageLayout,
   Header,
   Main,
   Sticky,
@@ -6,15 +7,15 @@ import PageLayout, {
 import { FullChapter } from "@/types/chapter";
 import React from "react";
 import styles from "./chapterLayout.module.css";
-import { IconButton, UnderlinedLink } from "@/components/atomic";
+import { UnderlinedLink } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
-import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 import LabelContainer from "@/components/layout/labelContainer";
 import UpvoteLabel from "@/components/composite/upvoteLabel";
 import NsfwLabel from "@/components/composite/nsfwLabel";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import RedditLink from "@/components/composite/redditLink";
+import Aside from "@/components/layout/pageLayout/aside";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
@@ -67,6 +68,7 @@ export default function ChapterLayout({
           </LabelContainer>
         </div>
       </Header>
+      <Aside />
       <Main>{children}</Main>
     </PageLayout>
   );
