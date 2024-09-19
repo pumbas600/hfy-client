@@ -31,6 +31,7 @@ namespace HfyClientApi.Services
     /// A regex expression that allows the subreddit and post id to be extracted from a Reddit link.
     /// </summary>
     private const string RedditLinkRegex = @$"/r/(\w+)/comments/(\w+)/\w+/?";
+    private readonly List<string> RedditLinkBases = [Config.RedditUrl, Config.UnprefixedRedditUrl, Config.OldRedditUrl];
 
     private readonly RedditClient _redditClient;
     private readonly IHttpClientFactory _clientFactory;
@@ -74,7 +75,8 @@ namespace HfyClientApi.Services
             continue;
           }
 
-          if (!link.StartsWith(Config.RedditUrl) && !link.StartsWith(Config.OldRedditUrl))
+          bool isRedditLink = IsRedditLink(link);
+          if (isRedditLink)
           {
             if (label.Contains("cover") && IsImageUrl(link))
             {
@@ -172,12 +174,18 @@ namespace HfyClientApi.Services
       return (chapter, storyMetadata);
     }
 
+    internal bool IsRedditLink(string link)
+    {
+      return RedditLinkBases.Any(link.StartsWith);
+    }
+
     internal async protected Task<ChapterLink?> ParseRedditLink(HtmlNode linkElement)
     {
       var link = linkElement.GetAttributeValue("href", null);
 
       // Handle share links from mobile /s/
-      if (link != null && link.Contains("/s/")) {
+      if (link != null && link.Contains("/s/"))
+      {
         link = await GetShareLinkLocationAsync(link);
       }
 
@@ -186,7 +194,10 @@ namespace HfyClientApi.Services
         return null;
       }
 
-      link = link.Replace(Config.RedditUrl, "").Replace(Config.OldRedditUrl, "");
+      foreach (var redditLinkBase in RedditLinkBases)
+      {
+        link = link.Replace(redditLinkBase, "");
+      }
 
       var match = Regex.Match(link, RedditLinkRegex, RegexOptions.IgnoreCase);
       if (!match.Success || match.Groups.Count < 3)
@@ -246,7 +257,8 @@ namespace HfyClientApi.Services
     {
       using HttpClient client = _clientFactory.CreateClient(Config.Clients.NoRedirect);
 
-      try {
+      try
+      {
         // We need to make requests to the OAuth Reddit URL
         shareLink = shareLink.Replace(Config.RedditUrl, Config.OauthRedditUrl);
 
@@ -260,7 +272,8 @@ namespace HfyClientApi.Services
             || response.StatusCode == HttpStatusCode.Redirect)
         {
           // Just to be safe, check to ensure we're not being ratelimited for this request
-          if (response.Headers.Contains("x-ratelimit-used")) {
+          if (response.Headers.Contains("x-ratelimit-used"))
+          {
             _logger.LogWarning("IMPORTANT: Reddit ratelimit used parsing share link!");
           }
 
@@ -271,7 +284,9 @@ namespace HfyClientApi.Services
           }
           return shareLinkLocation;
         }
-      } catch (HttpRequestException e) {
+      }
+      catch (HttpRequestException e)
+      {
         _logger.LogError(e, "Failed to fetch share link location header: {}", shareLink);
       }
 

@@ -17,6 +17,7 @@ namespace HfyClientApi.Configuration
 
     public const string UserAgent = "hfy-client/v0-0-1";
     public const string RedditUrl = "https://www.reddit.com";
+    public const string UnprefixedRedditUrl = "https://reddit.com";
     public const string OldRedditUrl = "https://old.reddit.com";
     public const string OauthRedditUrl = "https://oauth.reddit.com";
 
