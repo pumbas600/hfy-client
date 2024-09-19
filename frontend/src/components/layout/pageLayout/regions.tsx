@@ -1,4 +1,3 @@
-import StatefulThemeSwitcher from "@/components/composite/themeSwitcher/StatefulThemeSwitcher";
 import styles from "./pageLayout.module.css";
 import ThemeSwitcher from "@/components/composite/themeSwitcher";
 
@@ -21,7 +20,7 @@ export function Sticky({ start, children, end, className }: StickyProps) {
         {start ?? <div />}
         {children ?? <div />}
         {(
-          <div>
+          <div className={styles.row}>
             {end}
             <ThemeSwitcher />
           </div>
