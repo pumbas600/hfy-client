@@ -76,7 +76,7 @@ namespace HfyClientApi.Services
           }
 
           bool isRedditLink = IsRedditLink(link);
-          if (isRedditLink)
+          if (!isRedditLink)
           {
             if (label.Contains("cover") && IsImageUrl(link))
             {
