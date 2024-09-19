@@ -1,6 +1,5 @@
 .subtleLink {
   color: var(--color-foreground-secondary);
-  font-size: inherit;
   font-weight: 450;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -14,7 +13,6 @@
 
 .underlinedLink {
   color: inherit;
-  font-size: inherit;
   text-decoration: none;
 
   &:hover {
