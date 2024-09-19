@@ -15,7 +15,8 @@ export default function ChapterButtons({
   chapter,
   hideFirstLink = false,
 }: ChapterButtonsProps) {
-  const isFirst = chapter.firstChapterId === chapter.id;
+  const isFirst =
+    chapter.firstChapterId === chapter.id && chapter.previousChapterId === null;
 
   if (isFirst && chapter.nextChapterId === null) {
     return;
