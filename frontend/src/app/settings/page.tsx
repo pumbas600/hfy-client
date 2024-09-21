@@ -1,3 +1,4 @@
+import { SecureBadge } from "@/components/composite/badges";
 import {
   Aside,
   Header,
@@ -28,9 +29,9 @@ export default async function Settings() {
       <Aside />
       <Main>
         <p>API</p>
-        <p>
-          url: {infoUrl.hostname} ({isApiSecure ? "secure" : "insecure"})
-        </p>
+        <div>
+          <p>url: {infoUrl.hostname}</p> <SecureBadge isSecure={isApiSecure} />
+        </div>
         <p>version: {apiInfo.apiVersion}</p>
         <p>environment: {apiInfo.environment}</p>
 

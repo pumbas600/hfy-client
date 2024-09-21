@@ -2,3 +2,8 @@
   background-color: var(--nsfw-color);
   color: var(--nsfw-contrast-color);
 }
+
+.secure {
+  background-color: var(--color-foreground-secondary);
+  color: var(--color-background);
+}
