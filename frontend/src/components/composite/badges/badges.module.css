@@ -3,7 +3,12 @@
   color: var(--nsfw-contrast-color);
 }
 
-.secure {
+.insecure {
   background-color: var(--color-foreground-secondary);
   color: var(--color-background);
+}
+
+.secure {
+  background-color: var(--primary-color);
+  color: var(--primary-contrast-color);
 }

@@ -1,0 +1,16 @@
+.apiInfo {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: var(--step-1);
+  row-gap: var(--step--5);
+}
+
+.urlWrapper {
+  align-items: center;
+  display: flex;
+  gap: var(--step--3);
+}
+
+.title {
+  font-weight: 600;
+}

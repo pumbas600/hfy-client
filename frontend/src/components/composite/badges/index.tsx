@@ -16,12 +16,13 @@ export interface SecureBadgeProps {
 export function SecureBadge({ isSecure }: SecureBadgeProps) {
   const icon = isSecure ? faLock : faLockOpen;
   const label = isSecure ? "Secure" : "Insecure";
+  const className = isSecure ? styles.secure : styles.insecure;
 
   return (
     <Badge
       icon={<FontAwesomeIcon icon={icon} />}
       label={label}
-      className={styles.secure}
+      className={className}
     />
   );
 }

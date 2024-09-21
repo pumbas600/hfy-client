@@ -9,9 +9,9 @@ export interface LabelProps {
 
 export default function Label({ icon, label, className, title }: LabelProps) {
   return (
-    <div className={`${styles.label} ${className ?? ""}`} title={title}>
+    <span className={`${styles.label} ${className ?? ""}`} title={title}>
       {icon}
       <p>{label}</p>
-    </div>
+    </span>
   );
 }

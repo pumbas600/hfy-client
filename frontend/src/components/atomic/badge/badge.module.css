@@ -7,5 +7,6 @@
   padding-inline: var(--step--4);
   text-transform: uppercase;
   gap: 0.25rem;
-  line-height: 0.02em;
+  letter-spacing: 0.02em;
+  height: max-content;
 }
