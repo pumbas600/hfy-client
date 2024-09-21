@@ -58,9 +58,9 @@ export default function ThemeSelect() {
   };
 
   return (
-    <form>
+    <form className={styles.wrapper}>
       <label id="theme-select-label">Theme</label>
-      <div className={styles.wrapper}>
+      <div className={styles.themeSelect}>
         <div className={styles.iconWrapper}>
           <FontAwesomeIcon icon={ThemeIcons[selectedTheme]} size="lg" />
         </div>
@@ -69,7 +69,6 @@ export default function ThemeSelect() {
           name="theme"
           value={selectedTheme}
           onChange={handleThemeChange}
-          className={styles.themeSelect}
         >
           <option value="light">Light</option>
           <option value="dark">Dark</option>

@@ -1,11 +1,6 @@
 .wrapper {
-  display: grid;
-  grid-template-columns: max-content auto;
-
-  & select {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .iconWrapper {
@@ -21,5 +16,11 @@
 }
 
 .themeSelect {
-  width: min(100%, 15rem);
+  display: grid;
+  grid-template-columns: max-content minmax(min-content, 15rem);
+
+  & select {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }
