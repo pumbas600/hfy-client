@@ -8,6 +8,7 @@ namespace HfyClientApi.Configuration
       public const string RedditAppSecret = "RedditAppSecret";
       public const string RedditRefreshToken = "RedditRefreshToken";
       public const string RedditAccessToken = "RedditAccessToken";
+      public const string RedditRedirectUri = "RedditRedirectUri";
     }
 
     public class Clients
