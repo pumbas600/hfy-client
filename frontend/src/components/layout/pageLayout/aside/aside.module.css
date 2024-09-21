@@ -4,8 +4,14 @@
 
 .aside {
   position: sticky;
-  top: calc(3rem + 3 * calc(var(--step-1))); /* Height of sticky header */
+  top: calc(2.5em + 3 * calc(var(--step--2))); /* Height of sticky header */
   z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .aside {
+    display: none;
+  }
 }
 
 .linkList {

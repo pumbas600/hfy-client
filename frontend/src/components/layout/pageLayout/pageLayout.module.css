@@ -92,10 +92,6 @@
       "footer";
   }
 
-  .aside {
-    display: none;
-  }
-
   .mainPadding {
     padding-inline: var(--step-0);
   }
