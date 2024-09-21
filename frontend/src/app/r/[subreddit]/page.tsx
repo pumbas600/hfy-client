@@ -1,7 +1,6 @@
 import ChapterCardList from "@/components/subreddit/chapterCardList";
 import config from "@/config";
-import { GetNewChaptersRequest } from "@/types/api";
-import { GetSubredditRequest } from "@/types/api/subreddit";
+import { GetNewChaptersRequest, GetSubredditRequest } from "@/types/api";
 import { Params } from "@/types/next";
 import { Api } from "@/util/api";
 import { Metadata, ResolvingMetadata } from "next";

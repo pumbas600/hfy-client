@@ -3,7 +3,7 @@ import ThemeSwitcher from "@/components/composite/themeSwitcher";
 
 export interface RegionProps {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface StickyProps {
