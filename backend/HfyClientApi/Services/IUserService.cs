@@ -1,7 +1,9 @@
+using HfyClientApi.Dtos;
+
 namespace HfyClientApi.Services
 {
   public interface IUserService
   {
-    string GetAuthorizationUrl();
+    AuthorizationUrlDto GetAuthorizationUrl();
   }
 }

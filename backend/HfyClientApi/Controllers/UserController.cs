@@ -1,3 +1,4 @@
+using HfyClientApi.Dtos;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,12 @@ namespace HfyClientApi.Controllers
     public UserController(IUserService userService)
     {
       _userService = userService;
+    }
+
+    [HttpGet("authorize")]
+    public ActionResult<AuthorizationUrlDto> GetAuthorizationUrl()
+    {
+      return Ok(_userService.GetAuthorizationUrl());
     }
   }
 }

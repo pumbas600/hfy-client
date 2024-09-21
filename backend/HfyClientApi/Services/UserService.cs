@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using HfyClientApi.Configuration;
+using HfyClientApi.Dtos;
 
 namespace HfyClientApi.Services
 {
@@ -14,17 +15,20 @@ namespace HfyClientApi.Services
       _configuration = configuration;
     }
 
-    public string GetAuthorizationUrl()
+    public AuthorizationUrlDto GetAuthorizationUrl()
     {
       var appId = _configuration[Config.Keys.RedditAppId];
       var redirectUrl = _configuration[Config.Keys.RedditRedirectUri];
       var scope = "identity";
       var state = RandomString(64);
 
-      return Config.RedditUrl + "/api/v1/authorize?client_id=" + appId + "&response_type=code"
-        + "&state=" + state
-        + "&redirect_uri=" + redirectUrl
-        + "&scope=" + scope;
+      return new AuthorizationUrlDto()
+      {
+        Url = Config.RedditUrl + "/api/v1/authorize?client_id=" + appId + "&response_type=code"
+          + "&state=" + state
+          + "&redirect_uri=" + redirectUrl
+          + "&scope=" + scope
+      };
     }
 
     internal static string RandomString(int length)
