@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HfyClientApi.Controllers
 {
-  [Route("api/v1/[controller]")]
   [ApiController]
+  [Route("api/v1/[controller]")]
   public class InfoController : ControllerBase
   {
     private readonly IWebHostEnvironment _environment;
