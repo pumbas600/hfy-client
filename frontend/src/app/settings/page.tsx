@@ -5,6 +5,7 @@ import {
   PageLayout,
 } from "@/components/layout/pageLayout";
 import ApiInfo from "@/components/settings/apiInfo";
+import ThemeSelect from "@/components/settings/themeSelect";
 
 export default async function Settings() {
   return (
@@ -17,11 +18,7 @@ export default async function Settings() {
       <Main>
         <ApiInfo />
 
-        <form>
-          <select>
-            <option>Dark</option>
-          </select>
-        </form>
+        <ThemeSelect />
       </Main>
     </PageLayout>
   );
