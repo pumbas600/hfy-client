@@ -1,7 +1,7 @@
 import NsfwIcon from "@/icons/nsfwIcon";
 import styles from "./nsfwLabel.module.css";
-import Label from "../../atomic/label";
+import { Badge } from "@/components/atomic";
 
 export default function NsfwBadge() {
-  return <Label icon={<NsfwIcon />} label="NSFW" className={styles.label} />;
+  return <Badge icon={<NsfwIcon />} label="NSFW" className={styles.nsfw} />;
 }
