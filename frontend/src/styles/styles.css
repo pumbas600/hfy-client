@@ -290,8 +290,6 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin-block-start: var(--step--1);
-    margin-block-end: var(--step--4);
   }
 
   button,

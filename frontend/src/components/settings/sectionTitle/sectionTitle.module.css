@@ -1,0 +1,7 @@
+.sectionTitle {
+  margin-block-end: var(--step-0);
+
+  &:not(:first-child) {
+    margin-block-start: var(--step-5);
+  }
+}

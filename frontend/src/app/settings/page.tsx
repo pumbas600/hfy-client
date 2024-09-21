@@ -5,6 +5,7 @@ import {
   PageLayout,
 } from "@/components/layout/pageLayout";
 import ApiInfo from "@/components/settings/apiInfo";
+import SectionTitle from "@/components/settings/sectionTitle";
 import ThemeSelect from "@/components/settings/themeSelect";
 
 export default async function Settings() {
@@ -16,9 +17,11 @@ export default async function Settings() {
       </Header>
       <Aside />
       <Main>
-        <ApiInfo />
-
+        <SectionTitle>Appearance</SectionTitle>
         <ThemeSelect />
+
+        <SectionTitle>Behind the scenes</SectionTitle>
+        <ApiInfo />
       </Main>
     </PageLayout>
   );

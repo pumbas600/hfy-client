@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  gap: var(--step--1);
 }
 
 .iconWrapper {
