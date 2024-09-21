@@ -16,16 +16,19 @@ export default async function ApiInfo() {
   });
 
   return (
-    <div className={styles.apiInfo}>
-      <p className={styles.title}>URL</p>
-      <div className={styles.urlWrapper}>
-        <p>{infoUrl.hostname}</p>
-        <SecureBadge isSecure={isApiSecure} />
+    <>
+      <h4>Application Details</h4>
+      <div className={styles.apiInfo}>
+        <p className={styles.title}>URL</p>
+        <div className={styles.urlWrapper}>
+          <p>{infoUrl.hostname}</p>
+          <SecureBadge isSecure={isApiSecure} />
+        </div>
+        <p className={styles.title}>Version</p>
+        <p>{apiInfo.apiVersion}</p>
+        <p className={styles.title}>Environment</p>
+        <p>{apiInfo.environment}</p>
       </div>
-      <p className={styles.title}>Version</p>
-      <p>{apiInfo.apiVersion}</p>
-      <p className={styles.title}>Environment</p>
-      <p>{apiInfo.environment}</p>
-    </div>
+    </>
   );
 }

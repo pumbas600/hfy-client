@@ -15,7 +15,6 @@ export default async function Settings() {
       </Header>
       <Aside />
       <Main>
-        <p>API</p>
         <ApiInfo />
 
         <form>
