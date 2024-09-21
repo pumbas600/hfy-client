@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using HfyClientApi.BackgroundTasks;
 using HfyClientApi.Configuration;
 using HfyClientApi.Data;
@@ -11,7 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+  .AddJsonOptions(options =>
+  {
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+  });
 
 
 var reddit = new RedditClient(
@@ -22,18 +27,18 @@ var reddit = new RedditClient(
   userAgent: Config.UserAgent
 );
 
-var hfySubreddit = reddit.Subreddit("HFY");
-var latestPost = hfySubreddit.Posts.New[0].About();
-Console.WriteLine(latestPost.Title);
-Console.WriteLine(latestPost.Author);
-Console.WriteLine(latestPost.Id);
-Console.WriteLine(latestPost.Created); // UTC Time
-Console.WriteLine(latestPost.Edited);
-Console.WriteLine(latestPost.UpVotes);
-Console.WriteLine(latestPost.DownVotes);
-Console.WriteLine(latestPost.Score);
-Console.WriteLine(latestPost.Permalink);
-Console.WriteLine(latestPost.NSFW);
+// var hfySubreddit = reddit.Subreddit("HFY");
+// var latestPost = hfySubreddit.Posts.New[0].About();
+// Console.WriteLine(latestPost.Title);
+// Console.WriteLine(latestPost.Author);
+// Console.WriteLine(latestPost.Id);
+// Console.WriteLine(latestPost.Created); // UTC Time
+// Console.WriteLine(latestPost.Edited);
+// Console.WriteLine(latestPost.UpVotes);
+// Console.WriteLine(latestPost.DownVotes);
+// Console.WriteLine(latestPost.Score);
+// Console.WriteLine(latestPost.Permalink);
+// Console.WriteLine(latestPost.NSFW);
 // if (latestPost is SelfPost selfPost)
 // {
 //   // Console.WriteLine(currentFlair.FlairText);
@@ -45,7 +50,10 @@ Console.WriteLine(latestPost.NSFW);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen((config) =>
+{
+  config.UseInlineDefinitionsForEnums();
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -69,10 +77,12 @@ builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
 
 builder.Services.AddHttpClient(
   Config.Clients.NoRedirect,
-  client => {
+  client =>
+  {
     client.DefaultRequestHeaders.UserAgent.ParseAdd(Config.UserAgent);
   }
-).ConfigurePrimaryHttpMessageHandler(() => {
+).ConfigurePrimaryHttpMessageHandler(() =>
+{
   return new HttpClientHandler()
   {
     AllowAutoRedirect = false
