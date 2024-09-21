@@ -1,4 +1,5 @@
 import {
+  Aside,
   PageLayout,
   Header,
   Main,
@@ -8,7 +9,6 @@ import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
 import RedditLink from "@/components/composite/redditLink";
-import Aside from "@/components/layout/pageLayout/aside";
 
 export interface SubredditLayoutProps {
   children?: React.ReactNode;

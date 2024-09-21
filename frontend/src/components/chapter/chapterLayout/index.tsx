@@ -1,4 +1,5 @@
 import {
+  Aside,
   PageLayout,
   Header,
   Main,
@@ -15,7 +16,6 @@ import NsfwBadge from "@/components/composite/nsfwBadge";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import RedditLink from "@/components/composite/redditLink";
-import Aside from "@/components/layout/pageLayout/aside";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;

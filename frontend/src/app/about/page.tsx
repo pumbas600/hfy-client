@@ -1,4 +1,9 @@
-import PageLayout, { Header, Main } from "@/components/layout/pageLayout";
+import {
+  PageLayout,
+  Header,
+  Main,
+  Aside,
+} from "@/components/layout/pageLayout";
 import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
 import { Metadata } from "next";
@@ -13,6 +18,7 @@ export default function About() {
       <Header>
         <h2>About</h2>
       </Header>
+      <Aside />
       <Main>
         <TextLayout>
           <h3>{config.title}</h3>
