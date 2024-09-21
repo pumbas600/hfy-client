@@ -4,7 +4,7 @@ import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import UpvoteLabel from "../../composite/upvoteLabel";
 import styles from "./chapterSummaryCard.module.css";
 import CoverArt from "@/components/atomic/coverArt";
-import NsfwBadge from "@/components/composite/nsfwBadge";
+import { NsfwBadge } from "@/components/composite/badges";
 import LabelContainer from "@/components/layout/labelContainer";
 
 export interface ChapterSummaryCardProps {

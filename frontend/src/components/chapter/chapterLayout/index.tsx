@@ -12,7 +12,7 @@ import { UnderlinedLink } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import LabelContainer from "@/components/layout/labelContainer";
 import UpvoteLabel from "@/components/composite/upvoteLabel";
-import NsfwBadge from "@/components/composite/nsfwBadge";
+import { NsfwBadge } from "@/components/composite/badges";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import RedditLink from "@/components/composite/redditLink";
