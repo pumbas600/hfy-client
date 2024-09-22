@@ -3,16 +3,20 @@ using System.Text;
 using System.Web;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
+using HfyClientApi.Models;
+using HfyClientApi.Repositories;
 using Reddit;
 
 namespace HfyClientApi.Services
 {
   public class UserService : IUserService
   {
+    private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
 
-    public UserService(IConfiguration configuration)
+    public UserService(IUserRepository userRepository, IConfiguration configuration)
     {
+      _userRepository = userRepository;
       _configuration = configuration;
     }
 
@@ -33,7 +37,7 @@ namespace HfyClientApi.Services
       };
     }
 
-    public void LoginWithReddit(string accessToken)
+    public async void LoginWithReddit(string accessToken)
     {
       var reddit = new RedditClient(
         appId: _configuration[Config.Keys.RedditAppId],
@@ -45,7 +49,16 @@ namespace HfyClientApi.Services
       // TODO: Add try-catch block
       var redditUser = reddit.Account.GetMe();
 
-      // TODO: Save user to database
+      // TODO: Clean up access token by revoking it
+
+      var user = new User()
+      {
+        Id = redditUser.Id,
+        Username = redditUser.Name,
+        IconUrl = redditUser.IconImg,
+      };
+
+      await _userRepository.UpsertUserAsync(user);
       // TODO: Generate JWT token
     }
 
