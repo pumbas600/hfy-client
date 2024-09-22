@@ -37,4 +37,13 @@
   & pre {
     white-space: break-spaces;
   }
+
+  & blockquote {
+    border-inline-start: 0.25rem solid var(--color-foreground-secondary);
+    padding-inline-start: var(--step--2);
+
+    & > p {
+      padding-block: var(--step--5);
+    }
+  }
 }
