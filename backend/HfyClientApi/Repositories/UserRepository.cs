@@ -1,5 +1,6 @@
 using HfyClientApi.Data;
 using HfyClientApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
@@ -12,14 +13,17 @@ namespace HfyClientApi.Repositories
       _context = context;
     }
 
-    public Task<User> CreateUserAsync(User user)
+    public async Task<User> UpsertUserAsync(User user)
     {
-      throw new NotImplementedException();
+      await _context.Users.Upsert(user).RunAsync();
+      await _context.SaveChangesAsync();
+
+      return user;
     }
 
-    public Task<User?> GetUserByIdAsync(string id)
+    public async Task<User?> GetUserByIdAsync(string id)
     {
-      throw new NotImplementedException();
+      return await _context.Users.FindAsync(id);
     }
   }
 }
