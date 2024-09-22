@@ -15,7 +15,7 @@ namespace HfyClientApi.Controllers
       _userService = userService;
     }
 
-    [HttpGet("/authorize/reddit")]
+    [HttpGet("/reddit/authorize")]
     public ActionResult<AuthorizationUrlDto> GetAuthorizationUrl()
     {
       return _userService.GetAuthorizationUrl();
