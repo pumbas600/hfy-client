@@ -3,6 +3,7 @@ using System.Text;
 using System.Web;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
+using Reddit;
 
 namespace HfyClientApi.Services
 {
@@ -27,8 +28,25 @@ namespace HfyClientApi.Services
         Url = Config.RedditUrl + "/api/v1/authorize?client_id=" + appId + "&response_type=code"
           + "&state=" + state
           + "&redirect_uri=" + redirectUrl
-          + "&scope=" + scope
+          + "&scope=" + scope,
+        State = state
       };
+    }
+
+    public void LoginWithReddit(string accessToken)
+    {
+      var reddit = new RedditClient(
+        appId: _configuration[Config.Keys.RedditAppId],
+        appSecret: _configuration[Config.Keys.RedditAppSecret],
+        accessToken: accessToken,
+        userAgent: Config.UserAgent
+      );
+
+      // TODO: Add try-catch block
+      var redditUser = reddit.Account.GetMe();
+
+      // TODO: Save user to database
+      // TODO: Generate JWT token
     }
 
     internal static string RandomString(int length)

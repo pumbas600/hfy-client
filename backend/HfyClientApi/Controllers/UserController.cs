@@ -15,10 +15,10 @@ namespace HfyClientApi.Controllers
       _userService = userService;
     }
 
-    [HttpGet("authorize")]
+    [HttpGet("/authorize/reddit")]
     public ActionResult<AuthorizationUrlDto> GetAuthorizationUrl()
     {
-      return Ok(_userService.GetAuthorizationUrl());
+      return _userService.GetAuthorizationUrl();
     }
   }
 }
