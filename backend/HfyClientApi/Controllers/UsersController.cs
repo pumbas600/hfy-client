@@ -1,6 +1,7 @@
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,13 @@ namespace HfyClientApi.Controllers
       Response.Cookies.Append(Config.Cookies.AccessToken, loginDto.AccessToken, options);
 
       return loginDto.User;
+    }
+
+    [HttpGet("@me")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<ActionResult<string>> GetSelf()
+    {
+      return "Authenticated!";
     }
   }
 }
