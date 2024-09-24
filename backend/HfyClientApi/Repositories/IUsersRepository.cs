@@ -2,7 +2,7 @@ using HfyClientApi.Models;
 
 namespace HfyClientApi.Repositories
 {
-  public interface IUserRepository
+  public interface IUsersRepository
   {
     Task<User?> GetUserByIdAsync(string id);
 

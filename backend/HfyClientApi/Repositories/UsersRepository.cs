@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
-  public class UserRepository : IUserRepository
+  public class UsersRepository : IUsersRepository
   {
     private readonly AppDbContext _context;
 
-    public UserRepository(AppDbContext context)
+    public UsersRepository(AppDbContext context)
     {
       _context = context;
     }

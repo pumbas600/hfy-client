@@ -10,15 +10,15 @@ using Reddit;
 
 namespace HfyClientApi.Services
 {
-  public class UserService : IUserService
+  public class UsersService : IUsersService
   {
-    private readonly IUserRepository _userRepository;
+    private readonly IUsersRepository _userRepository;
     private readonly Config.Jwt _jwtConfig;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
-    public UserService(
-      IUserRepository userRepository, Config.Jwt jwtConfig, IConfiguration configuration, IMapper mapper)
+    public UsersService(
+      IUsersRepository userRepository, Config.Jwt jwtConfig, IConfiguration configuration, IMapper mapper)
     {
       _userRepository = userRepository;
       _jwtConfig = jwtConfig;
