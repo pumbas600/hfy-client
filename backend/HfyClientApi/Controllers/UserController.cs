@@ -18,14 +18,14 @@ namespace HfyClientApi.Controllers
     }
 
     [AllowAnonymous]
-    [HttpGet("/reddit/authorize")]
+    [HttpGet("reddit/authorize")]
     public ActionResult<AuthorizationUrlDto> GetAuthorizationUrl()
     {
       return _userService.GetAuthorizationUrl();
     }
 
     [AllowAnonymous]
-    [HttpPost("/reddit/login")]
+    [HttpPost("reddit/login")]
     public async Task<ActionResult<UserDto>> LoginWithReddit([FromBody] string accessToken)
     {
       var loginDto = await _userService.LoginWithRedditAsync(accessToken);
