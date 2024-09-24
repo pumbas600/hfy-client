@@ -75,7 +75,7 @@ namespace HfyClientApi.Services
       {
         Id = redditUser.Id,
         Name = redditUser.Name,
-        IconUrl = redditUser.IconImg,
+        IconUrl = redditUser.IconImg.Replace("&amp;", "&"), // Idk why Reddit does this 🤔
         SyncedAt = DateTime.UtcNow
       };
 
