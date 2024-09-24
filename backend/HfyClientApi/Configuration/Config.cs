@@ -9,6 +9,15 @@ namespace HfyClientApi.Configuration
       public const string RedditRefreshToken = "RedditRefreshToken";
       public const string RedditAccessToken = "RedditAccessToken";
       public const string RedditRedirectUri = "RedditRedirectUri";
+      public const string JwtIssuer = "JwtIssuer";
+      public const string JwtAudience = "JwtAudience";
+      public const string JwtKey = "JwtKey";
+    }
+
+    public class Cookies
+    {
+      public const string AccessToken = "AccessToken";
+      public const string RefreshToken = "RefreshToken";
     }
 
     public class Clients

@@ -1,10 +1,13 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using HfyClientApi.BackgroundTasks;
 using HfyClientApi.Configuration;
 using HfyClientApi.Data;
 using HfyClientApi.Repositories;
 using HfyClientApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Reddit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -98,6 +101,30 @@ builder.Services.AddCors(options =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
   });
 });
+
+var jwtKey = builder.Configuration[Config.Keys.JwtKey] ?? throw new ArgumentNullException(Config.Keys.JwtKey);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+  .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+  {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+      ValidateIssuer = true,
+      ValidateAudience = true,
+      ValidateLifetime = true,
+      ValidIssuer = builder.Configuration[Config.Keys.JwtIssuer],
+      ValidAudience = builder.Configuration[Config.Keys.JwtAudience],
+      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration[Config.Keys.JwtKey]!))
+    };
+    options.Events = new JwtBearerEvents
+    {
+      OnMessageReceived = context =>
+      {
+        context.Token = context.Request.Cookies[Config.Cookies.AccessToken];
+        return Task.CompletedTask;
+      }
+    };
+  });
 
 var app = builder.Build();
 
