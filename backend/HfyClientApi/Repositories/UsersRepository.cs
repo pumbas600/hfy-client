@@ -21,9 +21,9 @@ namespace HfyClientApi.Repositories
       return user;
     }
 
-    public async Task<User?> GetUserByIdAsync(string id)
+    public async Task<User?> GetUserByUsernameAsync(string username)
     {
-      return await _context.Users.FindAsync(id);
+      return await _context.Users.FirstOrDefaultAsync(u => u.Name == username);
     }
   }
 }

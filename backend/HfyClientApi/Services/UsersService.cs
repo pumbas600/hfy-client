@@ -5,8 +5,10 @@ using System.Text;
 using System.Web;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
+using HfyClientApi.Exceptions;
 using HfyClientApi.Models;
 using HfyClientApi.Repositories;
+using HfyClientApi.Utils;
 using Reddit;
 
 namespace HfyClientApi.Services
@@ -44,6 +46,17 @@ namespace HfyClientApi.Services
       };
     }
 
+    public async Task<Result<UserDto>> GetUserByUsernameAsync(string username)
+    {
+      var user = await _userRepository.GetUserByUsernameAsync(username);
+      if (user == null)
+      {
+        return Errors.UserNotFound(username);
+      }
+
+      return _mapper.ToUserDto(user);
+    }
+
     public async Task<LoginDto> LoginWithRedditAsync(string redditAccessToken)
     {
       var reddit = new RedditClient(
@@ -67,7 +80,7 @@ namespace HfyClientApi.Services
       };
 
       var claims = new List<Claim> {
-        new (JwtRegisteredClaimNames.Sub, user.Id),
+        new (JwtRegisteredClaimNames.Sub, user.Name),
       };
 
       await _userRepository.UpsertUserAsync(user);

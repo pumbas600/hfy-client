@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
+using HfyClientApi.Exceptions;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -49,9 +50,14 @@ namespace HfyClientApi.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<string>> GetSelf()
     {
-      var userId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-      // User.FindFirst(ClaimTypes.)
-      return "Authenticated! " + userId;
+      var username = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+      if (username == null)
+      {
+        return Errors.AuthSubjectMissing.ToActionResult();
+      }
+
+      var userResult = await _userService.GetUserByUsernameAsync(username);
+      return userResult.ToActionResult(Ok);
     }
   }
 }

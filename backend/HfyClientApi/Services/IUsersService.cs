@@ -1,4 +1,5 @@
 using HfyClientApi.Dtos;
+using HfyClientApi.Utils;
 
 namespace HfyClientApi.Services
 {
@@ -7,5 +8,7 @@ namespace HfyClientApi.Services
     AuthorizationUrlDto GetAuthorizationUrl();
 
     Task<LoginDto> LoginWithRedditAsync(string redditAccessToken);
+
+    Task<Result<UserDto>> GetUserByUsernameAsync(string username);
   }
 }
