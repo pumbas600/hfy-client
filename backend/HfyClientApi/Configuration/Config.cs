@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
@@ -33,12 +34,13 @@ namespace HfyClientApi.Configuration
         SigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Keys.JwtKey]!));
       }
 
-      public JwtSecurityToken CreateToken()
+      public JwtSecurityToken CreateToken(List<Claim> claims)
       {
         return new JwtSecurityToken(
           issuer: Issuer,
           audience: Audience,
           expires: DateTime.UtcNow.AddMinutes(ExpiresInMinutes),
+          claims: claims,
           signingCredentials: new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256)
         );
       }

@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -65,12 +66,16 @@ namespace HfyClientApi.Services
         SyncedAt = DateTime.UtcNow
       };
 
+      var claims = new List<Claim> {
+        new (JwtRegisteredClaimNames.Sub, user.Id),
+      };
+
       await _userRepository.UpsertUserAsync(user);
-      var token = _jwtConfig.CreateToken();
+      var token = _jwtConfig.CreateToken(claims);
 
       return new LoginDto
       {
-        AccessToken = new JwtSecurityTokenHandler().WriteToken(_jwtConfig.CreateToken()),
+        AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
         AccessTokenExpiresAt = token.ValidTo,
         User = _mapper.ToUserDto(user),
       };

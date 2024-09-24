@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Services;
@@ -47,7 +49,9 @@ namespace HfyClientApi.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<string>> GetSelf()
     {
-      return "Authenticated!";
+      var userId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+      // User.FindFirst(ClaimTypes.)
+      return "Authenticated! " + userId;
     }
   }
 }
