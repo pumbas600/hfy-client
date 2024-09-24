@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -12,12 +13,17 @@ namespace HfyClientApi.Services
   public class UserService : IUserService
   {
     private readonly IUserRepository _userRepository;
+    private readonly Config.Jwt _jwtConfig;
     private readonly IConfiguration _configuration;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IConfiguration configuration)
+    public UserService(
+      IUserRepository userRepository, Config.Jwt jwtConfig, IConfiguration configuration, IMapper mapper)
     {
       _userRepository = userRepository;
+      _jwtConfig = jwtConfig;
       _configuration = configuration;
+      _mapper = mapper;
     }
 
     public AuthorizationUrlDto GetAuthorizationUrl()
@@ -37,12 +43,12 @@ namespace HfyClientApi.Services
       };
     }
 
-    public async void LoginWithReddit(string accessToken)
+    public async Task<LoginDto> LoginWithRedditAsync(string redditAccessToken)
     {
       var reddit = new RedditClient(
         appId: _configuration[Config.Keys.RedditAppId],
         appSecret: _configuration[Config.Keys.RedditAppSecret],
-        accessToken: accessToken,
+        accessToken: redditAccessToken,
         userAgent: Config.UserAgent
       );
 
@@ -60,7 +66,13 @@ namespace HfyClientApi.Services
       };
 
       await _userRepository.UpsertUserAsync(user);
-      // TODO: Generate JWT token
+      var accessToken = new JwtSecurityTokenHandler().WriteToken(_jwtConfig.CreateToken());
+
+      return new LoginDto
+      {
+        AccessToken = accessToken,
+        User = _mapper.ToUserDto(user),
+      };
     }
 
     internal static string RandomString(int length)

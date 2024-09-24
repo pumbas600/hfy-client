@@ -8,6 +8,7 @@ namespace HfyClientApi.Models
   public class User : IdentityRole
   {
     public string IconUrl { get; set; } = null!;
+    public new string Name { get; set; } = null!;
     public DateTime SyncedAt { get; set; }
   }
 }

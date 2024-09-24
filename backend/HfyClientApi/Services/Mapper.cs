@@ -84,5 +84,15 @@ namespace HfyClientApi.Services
         RedditLink = $"{Config.RedditUrl}/r/{subreddit.Name}"
       };
     }
+
+    public UserDto ToUserDto(User user)
+    {
+      return new UserDto
+      {
+        Id = user.Id,
+        Name = user.Name,
+        IconUrl = user.IconUrl
+      };
+    }
   }
 }

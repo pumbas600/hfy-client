@@ -33,12 +33,12 @@ namespace HfyClientApi.Configuration
         SigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Keys.JwtKey]!));
       }
 
-      public JwtSecurityToken GetToken()
+      public JwtSecurityToken CreateToken()
       {
         return new JwtSecurityToken(
           issuer: Issuer,
           audience: Audience,
-          expires: DateTime.UtcNow.AddMinutes(15),
+          expires: DateTime.UtcNow.AddMinutes(ExpiresInMinutes),
           signingCredentials: new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256)
         );
       }

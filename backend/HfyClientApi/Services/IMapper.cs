@@ -13,5 +13,7 @@ namespace HfyClientApi.Services
     ChapterPaginationDto ToPaginatedChapterMetadataDto(int pageSize, IEnumerable<CombinedChapter> combinedChapters);
 
     SubredditDto ToSubredditDto(Subreddit subreddit);
+
+    UserDto ToUserDto(User user);
   }
 }
