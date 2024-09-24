@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json.Serialization;
 using HfyClientApi.BackgroundTasks;
 using HfyClientApi.Configuration;
@@ -11,8 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using Reddit;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers()

@@ -80,7 +80,7 @@ namespace HfyClientApi.Services
       };
 
       var claims = new List<Claim> {
-        new (JwtRegisteredClaimNames.Sub, user.Name),
+        new (ClaimTypes.NameIdentifier, user.Name),
       };
 
       await _userRepository.UpsertUserAsync(user);

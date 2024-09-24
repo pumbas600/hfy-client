@@ -50,7 +50,7 @@ namespace HfyClientApi.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<string>> GetSelf()
     {
-      var username = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+      var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
       if (username == null)
       {
         return Errors.AuthSubjectMissing.ToActionResult();
