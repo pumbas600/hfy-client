@@ -10,6 +10,7 @@ namespace HfyClientApi.Dtos
   public class LoginDto
   {
     public required string AccessToken { get; set; }
+    public required DateTime AccessTokenExpiresAt { get; set; }
     public required UserDto User { get; set; }
   }
 }

@@ -66,11 +66,12 @@ namespace HfyClientApi.Services
       };
 
       await _userRepository.UpsertUserAsync(user);
-      var accessToken = new JwtSecurityTokenHandler().WriteToken(_jwtConfig.CreateToken());
+      var token = _jwtConfig.CreateToken();
 
       return new LoginDto
       {
-        AccessToken = accessToken,
+        AccessToken = new JwtSecurityTokenHandler().WriteToken(_jwtConfig.CreateToken()),
+        AccessTokenExpiresAt = token.ValidTo,
         User = _mapper.ToUserDto(user),
       };
     }
