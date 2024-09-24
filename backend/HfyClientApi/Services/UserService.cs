@@ -54,8 +54,9 @@ namespace HfyClientApi.Services
       var user = new User()
       {
         Id = redditUser.Id,
-        Username = redditUser.Name,
+        Name = redditUser.Name,
         IconUrl = redditUser.IconImg,
+        SyncedAt = DateTime.UtcNow
       };
 
       await _userRepository.UpsertUserAsync(user);

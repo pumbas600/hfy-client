@@ -1,14 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Models
 {
-  [Index(nameof(Username), IsUnique = true)]
-  public class User
+  [Index(nameof(Name), IsUnique = true)]
+  public class User : IdentityRole
   {
-    [Key]
-    public string Id { get; set; } = null!;
-    public string Username { get; set; } = null!;
     public string IconUrl { get; set; } = null!;
+    public DateTime SyncedAt { get; set; }
   }
 }
