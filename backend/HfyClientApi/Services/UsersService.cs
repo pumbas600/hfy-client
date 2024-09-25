@@ -112,9 +112,36 @@ namespace HfyClientApi.Services
       };
     }
 
-    public async Task<Result<TokenDto>> RefreshAccessTokenAsync(string refreshToken)
+    public async Task<Result<TokenPairDto>> RefreshAccessTokenAsync(string refreshToken)
     {
-      throw new NotImplementedException();
+      var storedRefreshToken = await _refreshTokenRepository.GetRefreshTokenAsync(refreshToken);
+      if (storedRefreshToken == null)
+      {
+        return Errors.AuthInvalidRefreshToken;
+      }
+
+      if (storedRefreshToken.ExpiresAt < DateTime.UtcNow)
+      {
+        return Errors.AuthExpiredRefreshToken;
+      }
+
+      var accessToken = _tokenService.GenerateAccessToken(storedRefreshToken.Username);
+      var newRefreshToken = _tokenService.GenerateRefreshToken(storedRefreshToken.Username);
+
+      await _refreshTokenRepository.UpdateRefreshTokenAsync(new RefreshToken()
+      {
+        Token = newRefreshToken.Value,
+        ExpiresAt = newRefreshToken.ExpiresAt,
+        Username = storedRefreshToken.Username,
+      });
+
+      var tokenPair = new TokenPairDto()
+      {
+        AccessToken = accessToken,
+        RefreshToken = newRefreshToken,
+      };
+
+      return tokenPair;
     }
 
     internal static string RandomString(int length)

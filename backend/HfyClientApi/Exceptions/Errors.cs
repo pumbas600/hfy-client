@@ -17,6 +17,8 @@ namespace HfyClientApi.Exceptions
       public const string SubredditNotFound = "Subreddit.NotFound";
       public const string AuthSubjectMissing = "Auth.SubjectMissing";
       public const string AuthInvalidRedditAccessToken = "Auth.InvalidRedditAccessToken";
+      public const string AuthInvalidRefreshToken = "Auth.InvalidRefreshToken";
+      public const string AuthExpiredRefreshToken = "Auth.ExpiredRefreshToken";
     }
 
     public static Error PostNotFound(string postId) =>
@@ -44,5 +46,11 @@ namespace HfyClientApi.Exceptions
 
     public static readonly Error AuthInvalidRedditAccessToken =
       new(Codes.AuthInvalidRedditAccessToken, "The Reddit access token is invalid", HttpStatusCode.Unauthorized);
+
+    public static readonly Error AuthInvalidRefreshToken =
+      new(Codes.AuthInvalidRefreshToken, "The refresh token is invalid", HttpStatusCode.Unauthorized);
+
+    public static readonly Error AuthExpiredRefreshToken =
+      new(Codes.AuthExpiredRefreshToken, "The refresh token has expired. Please login to get a new refresh token", HttpStatusCode.Unauthorized);
   }
 }

@@ -7,10 +7,14 @@ namespace HfyClientApi.Dtos
     public required string IconUrl { get; set; }
   }
 
-  public class LoginDto
+  public class TokenPairDto
   {
     public required TokenDto AccessToken { get; set; }
     public required TokenDto RefreshToken { get; set; }
+  }
+
+  public class LoginDto : TokenPairDto
+  {
     public required UserDto User { get; set; }
   }
 
