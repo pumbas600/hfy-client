@@ -130,6 +130,7 @@ namespace HfyClientApi.Services
 
       await _refreshTokenRepository.UpdateRefreshTokenAsync(new RefreshToken()
       {
+        Id = storedRefreshToken.Id,
         Token = newRefreshToken.Value,
         ExpiresAt = newRefreshToken.ExpiresAt,
         Username = storedRefreshToken.Username,

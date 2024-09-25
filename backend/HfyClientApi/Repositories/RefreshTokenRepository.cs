@@ -1,5 +1,6 @@
 using HfyClientApi.Data;
 using HfyClientApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HfyClientApi.Repositories
 {
@@ -15,7 +16,7 @@ namespace HfyClientApi.Repositories
 
     public async Task<RefreshToken?> GetRefreshTokenAsync(string refreshToken)
     {
-      return await _context.RefreshTokens.FindAsync(refreshToken);
+      return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.Token == refreshToken);
     }
 
     public async Task<RefreshToken> SaveRefreshTokenAsync(RefreshToken refreshToken)
