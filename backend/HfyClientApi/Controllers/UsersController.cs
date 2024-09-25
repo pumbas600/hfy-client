@@ -67,7 +67,7 @@ namespace HfyClientApi.Controllers
 
     [HttpGet("@me")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<ActionResult<string>> GetSelf()
+    public async Task<ActionResult<LoginDto>> GetSelf()
     {
       var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
       if (username == null)
