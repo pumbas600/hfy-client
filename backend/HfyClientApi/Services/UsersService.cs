@@ -16,15 +16,16 @@ namespace HfyClientApi.Services
   public class UsersService : IUsersService
   {
     private readonly IUsersRepository _userRepository;
-    private readonly Config.Jwt _jwtConfig;
+    private readonly JwtSettings _jwtSettings;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
     public UsersService(
-      IUsersRepository userRepository, Config.Jwt jwtConfig, IConfiguration configuration, IMapper mapper)
+      IUsersRepository userRepository, JwtSettings jwtSettings,
+      IConfiguration configuration, IMapper mapper)
     {
       _userRepository = userRepository;
-      _jwtConfig = jwtConfig;
+      _jwtSettings = jwtSettings;
       _configuration = configuration;
       _mapper = mapper;
     }
@@ -84,7 +85,8 @@ namespace HfyClientApi.Services
       };
 
       await _userRepository.UpsertUserAsync(user);
-      var token = _jwtConfig.CreateToken(claims);
+      // var token = jwtSettings.CreateToken(claims);
+      JwtSecurityToken token = null;
 
       return new LoginDto
       {

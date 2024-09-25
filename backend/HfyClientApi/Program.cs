@@ -27,7 +27,8 @@ var reddit = new RedditClient(
   userAgent: Config.UserAgent
 );
 
-var jwtConfig = new Config.Jwt(builder.Configuration);
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()
+  ?? throw new ArgumentNullException("JwtSettings section in configuration is required");
 
 // var hfySubreddit = reddit.Subreddit("HFY");
 // var latestPost = hfySubreddit.Posts.New[0].About();
@@ -64,7 +65,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddSingleton(reddit);
-builder.Services.AddSingleton(jwtConfig);
 builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 builder.Services.AddScoped<IChapterService, ChapterService>();
@@ -112,9 +112,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
       ValidateIssuer = true,
       ValidateAudience = true,
       ValidateLifetime = true,
-      ValidIssuer = jwtConfig.Issuer,
-      ValidAudience = jwtConfig.Audience,
-      IssuerSigningKey = jwtConfig.SigningKey,
+      ValidIssuer = jwtSettings.Issuer,
+      ValidAudience = jwtSettings.Audience,
+      IssuerSigningKey = jwtSettings.SigningKey,
     };
     options.Events = new JwtBearerEvents
     {
