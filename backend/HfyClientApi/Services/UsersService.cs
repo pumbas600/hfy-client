@@ -15,16 +15,19 @@ namespace HfyClientApi.Services
   {
     private readonly IUsersRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IRedditService _redditService;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
     public UsersService(
       IUsersRepository userRepository, ITokenService tokenService,
-      IRedditService redditService, IConfiguration configuration, IMapper mapper)
+      IRefreshTokenRepository refreshTokenRepository, IRedditService redditService,
+      IConfiguration configuration, IMapper mapper)
     {
       _userRepository = userRepository;
       _tokenService = tokenService;
+      _refreshTokenRepository = refreshTokenRepository;
       _redditService = redditService;
       _configuration = configuration;
       _mapper = mapper;
@@ -90,7 +93,16 @@ namespace HfyClientApi.Services
       await _userRepository.UpsertUserAsync(user);
 
       var accessToken = _tokenService.GenerateAccessToken(user.Name);
-      var refreshToken = await _tokenService.GenerateNewRefreshTokenAsync(user.Name);
+      var refreshToken = _tokenService.GenerateRefreshToken(user.Name);
+
+      var storedRefreshToken = new RefreshToken()
+      {
+        Token = refreshToken.Value,
+        ExpiresAt = refreshToken.ExpiresAt,
+        Username = user.Name,
+      };
+
+      await _refreshTokenRepository.SaveRefreshTokenAsync(storedRefreshToken);
 
       return new LoginDto
       {
@@ -98,6 +110,11 @@ namespace HfyClientApi.Services
         RefreshToken = refreshToken,
         User = _mapper.ToUserDto(user),
       };
+    }
+
+    public async Task<Result<TokenDto>> RefreshAccessTokenAsync(string refreshToken)
+    {
+      throw new NotImplementedException();
     }
 
     internal static string RandomString(int length)
