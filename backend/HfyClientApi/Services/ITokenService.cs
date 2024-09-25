@@ -5,6 +5,6 @@ namespace HfyClientApi.Services
   public interface ITokenService
   {
     TokenDto GenerateAccessToken(string username);
-    TokenDto GenerateRefreshToken(string username);
+    Task<TokenDto> GenerateNewRefreshTokenAsync(string username);
   }
 }

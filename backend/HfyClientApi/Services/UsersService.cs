@@ -80,9 +80,13 @@ namespace HfyClientApi.Services
 
       await _userRepository.UpsertUserAsync(user);
 
+      var accessToken = _tokenService.GenerateAccessToken(user.Name);
+      var refreshToken = await _tokenService.GenerateNewRefreshTokenAsync(user.Name);
+
       return new LoginDto
       {
-        AccessToken = _tokenService.GenerateAccessToken(user.Name),
+        AccessToken = accessToken,
+        RefreshToken = refreshToken,
         User = _mapper.ToUserDto(user),
       };
     }
