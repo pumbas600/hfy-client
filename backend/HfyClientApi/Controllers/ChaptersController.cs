@@ -1,9 +1,11 @@
 using HfyClientApi.Dtos;
 using HfyClientApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HfyClientApi.Controllers
 {
+  [Authorize]
   [ApiController]
   [Route("api/v1/[controller]")]
   public class ChaptersController : ControllerBase

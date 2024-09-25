@@ -3,7 +3,6 @@ using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
 using HfyClientApi.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,8 +64,8 @@ namespace HfyClientApi.Controllers
       return NoContent();
     }
 
+    [Authorize]
     [HttpGet("@me")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<LoginDto>> GetSelf()
     {
       var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
