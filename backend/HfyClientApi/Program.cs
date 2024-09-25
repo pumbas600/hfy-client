@@ -65,6 +65,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddSingleton(reddit);
+builder.Services.AddSingleton(jwtSettings);
 builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
 builder.Services.AddScoped<IChapterService, ChapterService>();
@@ -103,8 +104,6 @@ builder.Services.AddCors(options =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
   });
 });
-
-var jwtKey = builder.Configuration[Config.Keys.JwtKey] ?? throw new ArgumentNullException(Config.Keys.JwtKey);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>

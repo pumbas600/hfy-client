@@ -14,36 +14,6 @@ namespace HfyClientApi.Configuration
       public const string RedditRefreshToken = "RedditRefreshToken";
       public const string RedditAccessToken = "RedditAccessToken";
       public const string RedditRedirectUri = "RedditRedirectUri";
-      public const string JwtIssuer = "JwtIssuer";
-      public const string JwtAudience = "JwtAudience";
-      public const string JwtKey = "JwtKey";
-    }
-
-    public class Jwt
-    {
-      public string Issuer { get; private set; }
-      public string Audience { get; private set; }
-      public int ExpiresInMinutes { get; private set; }
-      public SymmetricSecurityKey SigningKey { get; private set; }
-
-      public Jwt(IConfiguration configuration)
-      {
-        Issuer = configuration[Keys.JwtIssuer]!;
-        Audience = configuration[Keys.JwtAudience]!;
-        ExpiresInMinutes = 15;
-        SigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[Keys.JwtKey]!));
-      }
-
-      public JwtSecurityToken CreateToken(List<Claim> claims)
-      {
-        return new JwtSecurityToken(
-          issuer: Issuer,
-          audience: Audience,
-          expires: DateTime.UtcNow.AddMinutes(ExpiresInMinutes),
-          claims: claims,
-          signingCredentials: new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256)
-        );
-      }
     }
 
     public class Cookies
