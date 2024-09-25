@@ -28,10 +28,11 @@ namespace HfyClientApi.Controllers
     }
 
     [AllowAnonymous]
-    [HttpPost("reddit/login")]
-    public async Task<ActionResult<UserDto>> LoginWithReddit([FromBody] string accessToken)
+    [HttpPost("login")]
+    public async Task<ActionResult<UserDto>> LoginWithReddit(
+      [FromBody] RedditAccessTokenDto accessTokenDto)
     {
-      var loginResultDto = await _userService.LoginWithRedditAsync(accessToken);
+      var loginResultDto = await _userService.LoginWithRedditAsync(accessTokenDto.RedditAccessToken);
       if (!loginResultDto.IsSuccess)
       {
         return loginResultDto.Error.ToActionResult();
@@ -46,6 +47,13 @@ namespace HfyClientApi.Controllers
       Response.Cookies.Append(Config.Cookies.RefreshToken, loginDto.RefreshToken.Value, refreshTokenOptions);
 
       return loginDto.User;
+    }
+
+    [AllowAnonymous]
+    [HttpPost("refresh")]
+    public async Task<ActionResult> RefreshAccessToken()
+    {
+      return NoContent();
     }
 
     [HttpGet("@me")]

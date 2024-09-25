@@ -13,4 +13,9 @@ namespace HfyClientApi.Dtos
     public required TokenDto RefreshToken { get; set; }
     public required UserDto User { get; set; }
   }
+
+  public class RedditAccessTokenDto
+  {
+    public required string RedditAccessToken { get; set; }
+  }
 }
