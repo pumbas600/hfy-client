@@ -15,15 +15,17 @@ namespace HfyClientApi.Services
   {
     private readonly IUsersRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly IRedditService _redditService;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
     public UsersService(
       IUsersRepository userRepository, ITokenService tokenService,
-      IConfiguration configuration, IMapper mapper)
+      IRedditService redditService, IConfiguration configuration, IMapper mapper)
     {
       _userRepository = userRepository;
       _tokenService = tokenService;
+      _redditService = redditService;
       _configuration = configuration;
       _mapper = mapper;
     }
@@ -74,7 +76,8 @@ namespace HfyClientApi.Services
       {
         return Errors.AuthInvalidRedditAccessToken;
       }
-      // TODO: Clean up access token by revoking it
+
+      await _redditService.RevokeAccessTokenAsync(redditAccessToken);
 
       var user = new User()
       {
