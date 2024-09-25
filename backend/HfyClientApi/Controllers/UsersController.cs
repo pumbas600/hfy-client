@@ -40,11 +40,7 @@ namespace HfyClientApi.Controllers
 
       var loginDto = loginResultDto.Data;
 
-      var accessTokenOptions = CreateCookieOptions(loginDto.AccessToken.ExpiresAt);
-      var refreshTokenOptions = CreateCookieOptions(loginDto.RefreshToken.ExpiresAt);
-
-      Response.Cookies.Append(Config.Cookies.AccessToken, loginDto.AccessToken.Value, accessTokenOptions);
-      Response.Cookies.Append(Config.Cookies.RefreshToken, loginDto.RefreshToken.Value, refreshTokenOptions);
+      SetTokenCookies(loginDto);
 
       return loginDto.User;
     }
@@ -53,6 +49,19 @@ namespace HfyClientApi.Controllers
     [HttpPost("refresh")]
     public async Task<ActionResult> RefreshAccessToken()
     {
+      if (!Request.Cookies.TryGetValue(Config.Cookies.RefreshToken, out var refreshToken))
+      {
+        return Errors.AuthRefreshTokenMissing.ToActionResult();
+      }
+
+      var refreshResultDto = await _userService.RefreshAccessTokenAsync(refreshToken);
+      if (!refreshResultDto.IsSuccess)
+      {
+        return refreshResultDto.Error.ToActionResult();
+      }
+
+      SetTokenCookies(refreshResultDto.Data);
+
       return NoContent();
     }
 
@@ -68,6 +77,16 @@ namespace HfyClientApi.Controllers
 
       var userResult = await _userService.GetUserByUsernameAsync(username);
       return userResult.ToActionResult(Ok);
+    }
+
+    internal void SetTokenCookies(TokenPairDto tokenPair)
+    {
+      var accessTokenOptions = CreateCookieOptions(tokenPair.AccessToken.ExpiresAt);
+      var refreshTokenOptions = CreateCookieOptions(tokenPair.RefreshToken.ExpiresAt);
+
+      Response.Cookies.Append(Config.Cookies.AccessToken, tokenPair.AccessToken.Value, accessTokenOptions);
+      Response.Cookies.Append(Config.Cookies.RefreshToken, tokenPair.RefreshToken.Value, refreshTokenOptions);
+
     }
 
     internal static CookieOptions CreateCookieOptions(DateTime expiresAt)

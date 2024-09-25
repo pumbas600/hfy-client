@@ -19,6 +19,7 @@ namespace HfyClientApi.Exceptions
       public const string AuthInvalidRedditAccessToken = "Auth.InvalidRedditAccessToken";
       public const string AuthInvalidRefreshToken = "Auth.InvalidRefreshToken";
       public const string AuthExpiredRefreshToken = "Auth.ExpiredRefreshToken";
+      public const string AuthRefreshTokenMissing = "Auth.RefreshTokenMissing";
     }
 
     public static Error PostNotFound(string postId) =>
@@ -52,5 +53,8 @@ namespace HfyClientApi.Exceptions
 
     public static readonly Error AuthExpiredRefreshToken =
       new(Codes.AuthExpiredRefreshToken, "The refresh token has expired. Please login to get a new refresh token", HttpStatusCode.Unauthorized);
+
+    public static readonly Error AuthRefreshTokenMissing =
+      new(Codes.AuthRefreshTokenMissing, "Missing refresh token cookie", HttpStatusCode.Unauthorized);
   }
 }

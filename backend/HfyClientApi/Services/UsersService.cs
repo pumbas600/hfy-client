@@ -128,13 +128,10 @@ namespace HfyClientApi.Services
       var accessToken = _tokenService.GenerateAccessToken(storedRefreshToken.Username);
       var newRefreshToken = _tokenService.GenerateRefreshToken(storedRefreshToken.Username);
 
-      await _refreshTokenRepository.UpdateRefreshTokenAsync(new RefreshToken()
-      {
-        Id = storedRefreshToken.Id,
-        Token = newRefreshToken.Value,
-        ExpiresAt = newRefreshToken.ExpiresAt,
-        Username = storedRefreshToken.Username,
-      });
+      storedRefreshToken.Token = newRefreshToken.Value;
+      storedRefreshToken.ExpiresAt = newRefreshToken.ExpiresAt;
+
+      await _refreshTokenRepository.UpdateRefreshTokenAsync(storedRefreshToken);
 
       var tokenPair = new TokenPairDto()
       {
