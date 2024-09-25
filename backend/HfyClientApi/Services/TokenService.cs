@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using Microsoft.IdentityModel.Tokens;
@@ -39,7 +40,14 @@ namespace HfyClientApi.Services
 
     public TokenDto GenerateRefreshToken(string username)
     {
-      throw new NotImplementedException();
+      var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+      var expiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationInDays);
+
+      return new TokenDto()
+      {
+        Value = token,
+        ExpiresAt = expiresAt,
+      };
     }
   }
 }

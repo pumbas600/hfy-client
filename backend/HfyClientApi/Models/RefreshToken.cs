@@ -1,11 +1,12 @@
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
-namespace HfyClientApi.Models {
-
-  [PrimaryKey(nameof(Username), nameof(Token))]
-  public class RefreshToken {
-    public string Username { get; set; } = null!;
+namespace HfyClientApi.Models
+{
+  public class RefreshToken
+  {
+    [Key]
     public string Token { get; set; } = null!;
+    public string Username { get; set; } = null!;
     public DateTime ExpiresAt { get; set; }
   }
 }
