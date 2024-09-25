@@ -31,16 +31,19 @@ namespace HfyClientApi.Controllers
     [HttpPost("reddit/login")]
     public async Task<ActionResult<UserDto>> LoginWithReddit([FromBody] string accessToken)
     {
-      var loginDto = await _userService.LoginWithRedditAsync(accessToken);
-      var options = new CookieOptions
+      var loginResultDto = await _userService.LoginWithRedditAsync(accessToken);
+      if (!loginResultDto.IsSuccess)
       {
-        HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.Strict,
-        Expires = loginDto.AccessToken.ExpiresAt
-      };
+        return loginResultDto.Error.ToActionResult();
+      }
 
-      Response.Cookies.Append(Config.Cookies.AccessToken, loginDto.AccessToken.Value, options);
+      var loginDto = loginResultDto.Data;
+
+      var accessTokenOptions = CreateCookieOptions(loginDto.AccessToken.ExpiresAt);
+      var refreshTokenOptions = CreateCookieOptions(loginDto.RefreshToken.ExpiresAt);
+
+      Response.Cookies.Append(Config.Cookies.AccessToken, loginDto.AccessToken.Value, accessTokenOptions);
+      Response.Cookies.Append(Config.Cookies.RefreshToken, loginDto.RefreshToken.Value, refreshTokenOptions);
 
       return loginDto.User;
     }
@@ -57,6 +60,17 @@ namespace HfyClientApi.Controllers
 
       var userResult = await _userService.GetUserByUsernameAsync(username);
       return userResult.ToActionResult(Ok);
+    }
+
+    internal static CookieOptions CreateCookieOptions(DateTime expiresAt)
+    {
+      return new CookieOptions
+      {
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.Strict,
+        Expires = expiresAt
+      };
     }
   }
 }
