@@ -2,7 +2,7 @@
   display: grid;
   column-gap: var(--step-0);
   grid-template-columns:
-    [full-start] auto [aside-start] 8rem
+    [full-start] auto [aside-start] 9rem
     [content-start] minmax(min-content, 50rem) [content-end] auto [full-end];
   grid-template-areas:
     "sticky sticky sticky sticky"

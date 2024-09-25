@@ -1,7 +1,11 @@
 import { SubtleLink } from "@/components/atomic";
 import { Subtitle } from "@/components/atomic/typography";
 import styles from "./aside.module.css";
-import { Links, SupportedSubreddits } from "@/config/constants";
+import {
+  DevelopmentLinks,
+  Links,
+  SupportedSubreddits,
+} from "@/config/constants";
 
 export interface AsideProps {
   className?: string;
@@ -28,6 +32,8 @@ export default function Aside({ className }: AsideProps) {
           {linksToListItems(SupportedSubreddits)}
           <Subtitle>Info</Subtitle>
           {linksToListItems(Links)}
+          <Subtitle>Development</Subtitle>
+          {linksToListItems(DevelopmentLinks)}
         </nav>
       </aside>
     </div>
