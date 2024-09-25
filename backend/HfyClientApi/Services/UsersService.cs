@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -16,16 +14,16 @@ namespace HfyClientApi.Services
   public class UsersService : IUsersService
   {
     private readonly IUsersRepository _userRepository;
-    private readonly JwtSettings _jwtSettings;
+    private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
     public UsersService(
-      IUsersRepository userRepository, JwtSettings jwtSettings,
+      IUsersRepository userRepository, ITokenService tokenService,
       IConfiguration configuration, IMapper mapper)
     {
       _userRepository = userRepository;
-      _jwtSettings = jwtSettings;
+      _tokenService = tokenService;
       _configuration = configuration;
       _mapper = mapper;
     }
@@ -80,18 +78,11 @@ namespace HfyClientApi.Services
         SyncedAt = DateTime.UtcNow
       };
 
-      var claims = new List<Claim> {
-        new (ClaimTypes.NameIdentifier, user.Name),
-      };
-
       await _userRepository.UpsertUserAsync(user);
-      // var token = jwtSettings.CreateToken(claims);
-      JwtSecurityToken token = null;
 
       return new LoginDto
       {
-        AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-        AccessTokenExpiresAt = token.ValidTo,
+        AccessToken = _tokenService.GenerateAccessToken(user.Name),
         User = _mapper.ToUserDto(user),
       };
     }

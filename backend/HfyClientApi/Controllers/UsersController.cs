@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
@@ -38,10 +37,10 @@ namespace HfyClientApi.Controllers
         HttpOnly = true,
         Secure = true,
         SameSite = SameSiteMode.Strict,
-        Expires = loginDto.AccessTokenExpiresAt
+        Expires = loginDto.AccessToken.ExpiresAt
       };
 
-      Response.Cookies.Append(Config.Cookies.AccessToken, loginDto.AccessToken, options);
+      Response.Cookies.Append(Config.Cookies.AccessToken, loginDto.AccessToken.Value, options);
 
       return loginDto.User;
     }

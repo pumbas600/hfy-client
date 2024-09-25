@@ -72,6 +72,7 @@ builder.Services.AddScoped<IRedditService, RedditService>();
 builder.Services.AddScoped<IRedditSynchronisationService, RedditSynchronisationService>();
 builder.Services.AddScoped<ISubredditService, SubredditService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
