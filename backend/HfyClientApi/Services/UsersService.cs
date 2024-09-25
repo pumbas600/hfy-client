@@ -56,7 +56,7 @@ namespace HfyClientApi.Services
       return _mapper.ToUserDto(user);
     }
 
-    public async Task<LoginDto> LoginWithRedditAsync(string redditAccessToken)
+    public async Task<Result<LoginDto>> LoginWithRedditAsync(string redditAccessToken)
     {
       var reddit = new RedditClient(
         appId: _configuration[Config.Keys.RedditAppId],
@@ -65,9 +65,15 @@ namespace HfyClientApi.Services
         userAgent: Config.UserAgent
       );
 
-      // TODO: Add try-catch block
-      var redditUser = reddit.Account.GetMe();
-
+      Reddit.Controllers.User redditUser;
+      try
+      {
+        redditUser = reddit.Account.GetMe();
+      }
+      catch (Reddit.Exceptions.RedditUnauthorizedException)
+      {
+        return Errors.AuthInvalidRedditAccessToken;
+      }
       // TODO: Clean up access token by revoking it
 
       var user = new User()

@@ -16,6 +16,7 @@ namespace HfyClientApi.Exceptions
       public const string UserNotFound = "User.NotFound";
       public const string SubredditNotFound = "Subreddit.NotFound";
       public const string AuthSubjectMissing = "Auth.SubjectMissing";
+      public const string AuthInvalidRedditAccessToken = "Auth.InvalidRedditAccessToken";
     }
 
     public static Error PostNotFound(string postId) =>
@@ -38,6 +39,10 @@ namespace HfyClientApi.Exceptions
     public static Error SubredditNotFound(string name) =>
       new(Codes.SubredditNotFound, $"Subreddit {name} not found", HttpStatusCode.NotFound);
 
-    public static Error AuthSubjectMissing => new(Codes.AuthSubjectMissing, "The subject claim is missing from the JWT", HttpStatusCode.Unauthorized);
+    public static readonly Error AuthSubjectMissing =
+      new(Codes.AuthSubjectMissing, "The subject claim is missing from the JWT", HttpStatusCode.Unauthorized);
+
+    public static readonly Error AuthInvalidRedditAccessToken =
+      new(Codes.AuthInvalidRedditAccessToken, "The Reddit access token is invalid", HttpStatusCode.Unauthorized);
   }
 }

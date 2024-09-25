@@ -7,7 +7,7 @@ namespace HfyClientApi.Services
   {
     AuthorizationUrlDto GetAuthorizationUrl();
 
-    Task<LoginDto> LoginWithRedditAsync(string redditAccessToken);
+    Task<Result<LoginDto>> LoginWithRedditAsync(string redditAccessToken);
 
     Task<Result<UserDto>> GetUserByUsernameAsync(string username);
   }
