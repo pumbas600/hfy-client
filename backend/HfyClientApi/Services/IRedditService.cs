@@ -10,5 +10,7 @@ namespace HfyClientApi.Services
     IEnumerable<SelfPost> GetNewSelfPosts(string subreddit, int limit = 50);
 
     Task RevokeAccessTokenAsync(string accessToken);
+
+    Task<Result<string>> GetAccessTokenAsync(string code);
   }
 }

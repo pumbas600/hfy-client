@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using HfyClientApi.Configuration;
 using HfyClientApi.Exceptions;
 using HfyClientApi.Utils;
@@ -11,14 +12,55 @@ namespace HfyClientApi.Services
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly RedditClient _redditClient;
     private readonly ILogger<RedditService> _logger;
+    private readonly IConfiguration _configuration;
 
     public RedditService(
       IHttpClientFactory httpClientFactory, RedditClient redditClient,
-      ILogger<RedditService> logger)
+      ILogger<RedditService> logger, IConfiguration configuration)
     {
       _httpClientFactory = httpClientFactory;
       _redditClient = redditClient;
       _logger = logger;
+      _configuration = configuration;
+    }
+
+    public async Task<Result<string>> GetAccessTokenAsync(string code)
+    {
+      using HttpClient client = _httpClientFactory.CreateClient();
+
+      var redirectUri = _configuration[Config.Keys.RedditRedirectUri]!;
+      var appId = _configuration[Config.Keys.RedditAppId]!;
+      var appSecret = _configuration[Config.Keys.RedditAppSecret]!;
+
+      try
+      {
+        var content = new FormUrlEncodedContent(new Dictionary<string, string>
+          {
+            { "grant_type", "authorization_code" },
+            { "code", code },
+            { "redirect_uri", redirectUri },
+          }
+        );
+
+        content.Headers.Add("User-Agent", Config.UserAgent);
+        content.Headers.Add("Authorization", $"Basic {appId}:{appSecret}");
+
+        var response = await client.PostAsync(Config.RedditUrl + "/api/v1/access_token", content);
+        response.EnsureSuccessStatusCode();
+
+        var accessTokenResponse = await response.Content.ReadFromJsonAsync<AccessTokenResponse>();
+        if (accessTokenResponse?.AccessToken == null)
+        {
+          return Errors.AuthCodeExchangeError;
+        }
+
+        return accessTokenResponse.AccessToken;
+      }
+      catch (HttpRequestException e)
+      {
+        _logger.LogError(e, "Failed to exchange code for access token.");
+        return Errors.AuthCodeExchangeError;
+      }
     }
 
     public IEnumerable<SelfPost> GetNewSelfPosts(string subreddit, int limit = 50)
@@ -54,6 +96,8 @@ namespace HfyClientApi.Services
           }
         );
 
+        content.Headers.Add("User-Agent", Config.UserAgent);
+
         var response = await client.PostAsync(Config.RedditUrl + "/api/v1/revoke_token", content);
         response.EnsureSuccessStatusCode();
       }
@@ -62,5 +106,14 @@ namespace HfyClientApi.Services
         _logger.LogError(e, "Failed to revoke Reddit access token.");
       }
     }
+  }
+
+  /// <summary>
+  /// https://github.com/reddit-archive/reddit/wiki/OAuth2#retrieving-the-access-token
+  /// </summary>
+  internal class AccessTokenResponse
+  {
+    [JsonPropertyName("access_token")]
+    public string AccessToken { get; set; } = null!;
   }
 }
