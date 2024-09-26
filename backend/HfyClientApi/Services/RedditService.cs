@@ -46,6 +46,11 @@ namespace HfyClientApi.Services
         content.Headers.Add("Authorization", $"Basic {appId}:{appSecret}");
 
         var response = await client.PostAsync(Config.RedditUrl + "/api/v1/access_token", content);
+        if (response.Headers.Contains("x-ratelimit-used"))
+        {
+          _logger.LogCritical("Reddit ratelimit used exchanging code for access token!");
+        }
+
         response.EnsureSuccessStatusCode();
 
         var accessTokenResponse = await response.Content.ReadFromJsonAsync<AccessTokenResponse>();
@@ -99,6 +104,11 @@ namespace HfyClientApi.Services
         content.Headers.Add("User-Agent", Config.UserAgent);
 
         var response = await client.PostAsync(Config.RedditUrl + "/api/v1/revoke_token", content);
+        if (response.Headers.Contains("x-ratelimit-used"))
+        {
+          _logger.LogCritical("Reddit ratelimit used revoking access token!");
+        }
+
         response.EnsureSuccessStatusCode();
       }
       catch (HttpRequestException e)

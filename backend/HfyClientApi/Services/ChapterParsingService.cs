@@ -268,14 +268,15 @@ namespace HfyClientApi.Services
         request.Headers.Add("Authorization", $"Bearer {accessToken}");
 
         var response = await client.SendAsync(request);
+        // Just to be safe, check to ensure we're not being ratelimited for this request
+        if (response.Headers.Contains("x-ratelimit-used"))
+        {
+          _logger.LogCritical("Reddit ratelimit used parsing share link!");
+        }
+
         if (response.StatusCode == HttpStatusCode.MovedPermanently
             || response.StatusCode == HttpStatusCode.Redirect)
         {
-          // Just to be safe, check to ensure we're not being ratelimited for this request
-          if (response.Headers.Contains("x-ratelimit-used"))
-          {
-            _logger.LogWarning("IMPORTANT: Reddit ratelimit used parsing share link!");
-          }
 
           var shareLinkLocation = response.Headers.Location?.ToString();
           if (shareLinkLocation != null)
@@ -284,6 +285,8 @@ namespace HfyClientApi.Services
           }
           return shareLinkLocation;
         }
+
+        response.EnsureSuccessStatusCode();
       }
       catch (HttpRequestException e)
       {
