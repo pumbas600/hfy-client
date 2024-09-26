@@ -2,6 +2,7 @@
 
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
+import { PostLoginRequest } from "@/types/api";
 import { Api } from "@/util/api";
 import { useEffect } from "react";
 
@@ -27,16 +28,18 @@ export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
   useEffect(() => {
     const login = async (): Promise<void> => {
       try {
-        await Api.post(`${config.api.baseUrl}/users/login`, {
-          redditCode: code,
-        });
+        var userDto = await Api.post<PostLoginRequest.ResBody>(
+          `${config.api.baseUrl}/users/login`,
+          { redditCode: code }
+        );
         console.log("[Authorize]: Logged in");
+        console.log(userDto);
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (state && stateMatches(state) && code) {
+    if (!IS_SERVER && state && stateMatches(state) && code) {
       login();
     }
   }, [code]);
