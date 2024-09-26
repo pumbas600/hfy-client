@@ -46,7 +46,7 @@ namespace HfyClientApi.Services
       {
         Url = Config.RedditUrl + "/api/v1/authorize?client_id=" + appId + "&response_type=code"
           + "&state=" + state
-          + "&redirect_uri=" + redirectUrl
+          + "&redirect_uri=" + HttpUtility.UrlEncode(redirectUrl, Encoding.UTF8)
           + "&scope=" + scope,
         State = state
       };

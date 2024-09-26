@@ -1,6 +1,8 @@
 "use client";
 
+import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
+import { Api } from "@/util/api";
 import { useEffect } from "react";
 
 const IS_SERVER = typeof window === "undefined";
@@ -20,8 +22,19 @@ export interface AuthorizeProps {
 
 export default function Authorize({ code, state }: AuthorizeProps) {
   useEffect(() => {
+    const login = async (): Promise<void> => {
+      try {
+        await Api.post(`${config.api.baseUrl}/users/login`, {
+          redditCode: code,
+        });
+        console.log("[Authorize] Logged in");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (state && state === getState(state) && code) {
-      // await Api.post()
+      login();
     }
   }, [code]);
 
