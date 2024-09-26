@@ -40,15 +40,12 @@ namespace HfyClientApi.Services
       var appId = _configuration[Config.Keys.RedditAppId];
       var redirectUrl = _configuration[Config.Keys.RedditRedirectUri];
       var scope = "identity";
-      var state = RandomString(64);
 
-      return new AuthorizationUrlDto()
+      return new()
       {
         Url = Config.RedditUrl + "/api/v1/authorize?client_id=" + appId + "&response_type=code"
-          + "&state=" + state
           + "&redirect_uri=" + HttpUtility.UrlEncode(redirectUrl, Encoding.UTF8)
-          + "&scope=" + scope,
-        State = state
+          + "&scope=" + scope
       };
     }
 
@@ -151,14 +148,6 @@ namespace HfyClientApi.Services
       };
 
       return tokenPair;
-    }
-
-    internal static string RandomString(int length)
-    {
-      return HttpUtility.UrlEncode(
-        Convert.ToBase64String(RandomNumberGenerator.GetBytes(length)),
-        Encoding.UTF8
-      );
     }
   }
 }
