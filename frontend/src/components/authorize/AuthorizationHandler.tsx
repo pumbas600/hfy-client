@@ -45,8 +45,5 @@ export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
     return <div>There's something suspicious about this login request...</div>;
   }
 
-  console.log(state);
-  console.log(code);
-
   return null;
 }

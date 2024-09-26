@@ -32,20 +32,25 @@ namespace HfyClientApi.Services
       var appId = _configuration[Config.Keys.RedditAppId]!;
       var appSecret = _configuration[Config.Keys.RedditAppSecret]!;
 
-      try
+      var request = new HttpRequestMessage
       {
-        var content = new FormUrlEncodedContent(new Dictionary<string, string>
+        Method = HttpMethod.Post,
+        RequestUri = new Uri(Config.RedditUrl + "/api/v1/access_token"),
+        Headers = {
+            { "User-Agent", Config.UserAgent },
+            { "Authorization", $"Basic {appId}:{appSecret}" },
+          },
+        Content = new FormUrlEncodedContent(new Dictionary<string, string>
           {
             { "grant_type", "authorization_code" },
             { "code", code },
             { "redirect_uri", redirectUri },
-          }
-        );
+          }),
+      };
 
-        content.Headers.Add("User-Agent", Config.UserAgent);
-        content.Headers.Add("Authorization", $"Basic {appId}:{appSecret}");
-
-        var response = await client.PostAsync(Config.RedditUrl + "/api/v1/access_token", content);
+      try
+      {
+        var response = await client.SendAsync(request);
         if (response.Headers.Contains("x-ratelimit-used"))
         {
           _logger.LogCritical("Reddit ratelimit used exchanging code for access token!");
@@ -92,18 +97,23 @@ namespace HfyClientApi.Services
     {
       using HttpClient client = _httpClientFactory.CreateClient();
 
+      var request = new HttpRequestMessage
+      {
+        Method = HttpMethod.Post,
+        RequestUri = new Uri(Config.RedditUrl + "/api/v1/revoke_token"),
+        Headers = {
+          { "User-Agent", Config.UserAgent },
+        },
+        Content = new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+          { "token", accessToken },
+          { "token_type_hint", "access_token" }
+        }),
+      };
+
       try
       {
-        var content = new FormUrlEncodedContent(new Dictionary<string, string>
-          {
-            { "token", accessToken },
-            { "token_type_hint", "access_token" }
-          }
-        );
-
-        content.Headers.Add("User-Agent", Config.UserAgent);
-
-        var response = await client.PostAsync(Config.RedditUrl + "/api/v1/revoke_token", content);
+        var response = await client.SendAsync(request);
         if (response.Headers.Contains("x-ratelimit-used"))
         {
           _logger.LogCritical("Reddit ratelimit used revoking access token!");

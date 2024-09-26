@@ -11,7 +11,10 @@ export default function Authorize({
 
   return (
     <PageLayout>
-      <AuthorizationHandler />
+      <AuthorizationHandler
+        code={searchParams.code}
+        state={searchParams.state}
+      />
       <Main>
         <h2>Authorizing...</h2>
       </Main>
