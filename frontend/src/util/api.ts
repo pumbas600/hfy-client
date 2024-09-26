@@ -4,13 +4,29 @@ export namespace Api {
     default?: T;
   }
 
-  export async function get<T>(
+  export async function post<T>(
     url: string | URL,
+    body: object,
+    options?: FetchOptions<T>
+  ) {
+    return request<T>(url, "POST", JSON.stringify(body), options);
+  }
+
+  export async function get<T>(url: string | URL, options?: FetchOptions<T>) {
+    return request<T>(url, "GET", undefined, options);
+  }
+
+  async function request<T>(
+    url: string | URL,
+    method: string,
+    body?: string,
     options?: FetchOptions<T>
   ): Promise<T> {
     let response: Response;
     try {
       response = await fetch(url, {
+        method,
+        body,
         next: { revalidate: options?.revalidate },
       });
     } catch (error) {
