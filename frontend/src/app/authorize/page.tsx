@@ -1,4 +1,5 @@
 import AuthorizationHandler from "@/components/authorize/AuthorizationHandler";
+import { Main, PageLayout } from "@/components/layout/pageLayout";
 import { Params } from "@/types/next";
 
 export default function Authorize({
@@ -8,5 +9,12 @@ export default function Authorize({
     return <div>Failed to log in: {searchParams.error}</div>;
   }
 
-  return <AuthorizationHandler />;
+  return (
+    <PageLayout>
+      <AuthorizationHandler />
+      <Main>
+        <h2>Authorizing...</h2>
+      </Main>
+    </PageLayout>
+  );
 }

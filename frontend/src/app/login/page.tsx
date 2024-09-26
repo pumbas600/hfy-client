@@ -5,8 +5,14 @@ import config from "@/config";
 import { GetAuthorizationUrlRequest } from "@/types/api";
 import { AuthorizationUrlDto } from "@/types/user";
 import { Api } from "@/util/api";
+import { randomBytes } from "crypto";
+
+function generateRandomString(length: number): string {
+  return randomBytes(length).toString("hex");
+}
 
 export default async function Login() {
+  const state = generateRandomString(32);
   let authorizationUrl: AuthorizationUrlDto;
   try {
     authorizationUrl = await Api.get<GetAuthorizationUrlRequest.ResBody>(
@@ -21,7 +27,7 @@ export default async function Login() {
     <PageLayout>
       <Main>
         <BackButton />
-        <RedditLogin authorizationUrl={authorizationUrl.url} />
+        <RedditLogin authorizationUrl={authorizationUrl.url} state={state} />
       </Main>
     </PageLayout>
   );

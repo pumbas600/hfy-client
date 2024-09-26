@@ -3,20 +3,18 @@
 import { LocalStorageKeys } from "@/config/localStorage";
 import Link from "next/link";
 import { useEffect } from "react";
-import { randomBytes } from "crypto";
 
 const IS_SERVER = typeof window === "undefined";
 
 export interface RedditLoginProps {
   authorizationUrl: string;
+  state: string;
 }
 
-function generateRandomString(length: number): string {
-  return randomBytes(length).toString("hex");
-}
-
-export default function RedditLogin({ authorizationUrl }: RedditLoginProps) {
-  const state = generateRandomString(32);
+export default function RedditLogin({
+  authorizationUrl,
+  state,
+}: RedditLoginProps) {
   const url = new URL(authorizationUrl);
   url.searchParams.set("state", state);
 
