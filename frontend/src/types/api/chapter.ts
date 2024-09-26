@@ -10,8 +10,8 @@ export namespace GetChapterRequest {
     chapterId: ChapterMetadata["id"];
   }
 
-  export type ResBody = FullChapter;
   export type ReqBody = never;
+  export type ResBody = FullChapter;
 }
 
 export namespace GetNewChaptersRequest {
@@ -19,8 +19,8 @@ export namespace GetNewChaptersRequest {
     subreddit: ChapterMetadata["subreddit"];
   }
 
-  export type ResBody = PaginatedChapters;
   export type ReqBody = never;
+  export type ResBody = PaginatedChapters;
 }
 
 export namespace GetChaptersByTitleRequest {
@@ -29,6 +29,6 @@ export namespace GetChaptersByTitleRequest {
     title: string;
   }
 
-  export type ResBody = PaginatedChapters;
   export type ReqBody = never;
+  export type ResBody = PaginatedChapters;
 }

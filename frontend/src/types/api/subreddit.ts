@@ -5,6 +5,6 @@ export namespace GetSubredditRequest {
     name: Subreddit["name"];
   }
 
-  export type ResBody = Subreddit;
   export type ReqBody = never;
+  export type ResBody = Subreddit;
 }
