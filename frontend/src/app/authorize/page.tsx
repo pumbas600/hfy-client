@@ -2,7 +2,7 @@ import AuthorizationHandler from "@/components/authorize/AuthorizationHandler";
 import { Main, PageLayout } from "@/components/layout/pageLayout";
 import { Params } from "@/types/next";
 
-export default function Authorize({
+export default function AuthorizePage({
   searchParams,
 }: Params<never, { error?: string; code?: string; state?: string }>) {
   return (

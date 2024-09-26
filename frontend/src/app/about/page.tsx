@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: `About | ${config.title}`,
 };
 
-export default function About() {
+export default function AboutPage() {
   return (
     <PageLayout>
       <Header>

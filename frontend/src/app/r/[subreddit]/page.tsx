@@ -5,6 +5,8 @@ import { Params } from "@/types/next";
 import { Api } from "@/util/api";
 import { Metadata, ResolvingMetadata } from "next";
 import SubredditLayout from "@/components/subreddit/subredditLayout";
+import { PaginatedChapters } from "@/types/chapter";
+import { Subreddit } from "@/types/subreddit";
 
 const ONE_MINUTE = 60;
 
@@ -32,7 +34,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function Subreddit({
+export default async function SubredditPage({
   params,
   searchParams,
 }: Params<{ subreddit: string }, { q?: string }>) {
@@ -45,13 +47,19 @@ export default async function Subreddit({
     newChaptersUrl.searchParams.set("title", searchParams.q);
   }
 
-  const [subreddit, paginatedChapters] = await Promise.all([
-    Api.get<GetSubredditRequest.ResBody>(subredditUrl),
-    Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
-      revalidate: ONE_MINUTE,
-      default: { pageSize: 20, nextKey: null, data: [] },
-    }),
-  ]);
+  let subreddit: Subreddit;
+  let paginatedChapters: PaginatedChapters;
+  try {
+    [subreddit, paginatedChapters] = await Promise.all([
+      Api.get<GetSubredditRequest.ResBody>(subredditUrl),
+      Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
+        revalidate: ONE_MINUTE,
+        default: { pageSize: 20, nextKey: null, data: [] },
+      }),
+    ]);
+  } catch (err) {
+    return <div>Failed to load subreddit</div>;
+  }
 
   return (
     <SubredditLayout subreddit={subreddit}>

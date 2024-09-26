@@ -45,7 +45,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function Page({ params }: Params<{ id: string }>) {
+export default async function ChapterPage({ params }: Params<{ id: string }>) {
   let chapter: GetChapterRequest.ResBody;
 
   try {

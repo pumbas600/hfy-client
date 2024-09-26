@@ -11,7 +11,7 @@ function generateRandomString(length: number): string {
   return randomBytes(length).toString("hex");
 }
 
-export default async function Login() {
+export default async function LoginPage() {
   const state = generateRandomString(32);
   let authorizationUrl: AuthorizationUrlDto;
   try {

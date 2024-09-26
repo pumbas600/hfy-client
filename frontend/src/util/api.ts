@@ -47,7 +47,7 @@ export namespace Api {
       throw error;
     }
 
-    const json = await response.json();
+    const json = response.bodyUsed ? await response.json() : undefined;
 
     if (response.ok) {
       return json as T;
@@ -55,6 +55,10 @@ export namespace Api {
 
     if (options?.default !== undefined) {
       return options.default;
+    }
+
+    if (json === undefined) {
+      throw new Error(response.statusText);
     }
 
     throw new Error(JSON.stringify(json, undefined, 4));
