@@ -70,7 +70,7 @@ namespace HfyClientApi.Services
       }
       catch (HttpRequestException e)
       {
-        _logger.LogError(e, "Failed to exchange code for access token.");
+        _logger.LogDebug(e, "Failed to exchange code for access token.");
         return Errors.AuthCodeExchangeError;
       }
     }
@@ -125,7 +125,7 @@ namespace HfyClientApi.Services
       }
       catch (HttpRequestException e)
       {
-        _logger.LogError(e, "Failed to revoke Reddit access token.");
+        _logger.LogDebug(e, "Failed to revoke Reddit access token.");
       }
     }
   }

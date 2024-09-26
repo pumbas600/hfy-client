@@ -285,8 +285,6 @@ namespace HfyClientApi.Services
           }
           return shareLinkLocation;
         }
-
-        response.EnsureSuccessStatusCode();
       }
       catch (HttpRequestException e)
       {

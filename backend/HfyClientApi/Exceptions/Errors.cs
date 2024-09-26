@@ -59,6 +59,6 @@ namespace HfyClientApi.Exceptions
       new(Codes.AuthRefreshTokenMissing, "Missing refresh token cookie", HttpStatusCode.Unauthorized);
 
     public static readonly Error AuthCodeExchangeError =
-      new(Codes.AuthCodeExchangeError, "Failed to exchange the code for a Reddit access token", HttpStatusCode.InternalServerError);
+      new(Codes.AuthCodeExchangeError, "Failed to exchange the code for a Reddit access token", HttpStatusCode.Unauthorized);
   }
 }
