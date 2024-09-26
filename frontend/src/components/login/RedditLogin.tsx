@@ -1,5 +1,6 @@
 "use client";
 
+import { LocalStorageKeys } from "@/config/localStorage";
 import { AuthorizationUrlDto } from "@/types/user";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -13,7 +14,10 @@ export interface RedditLoginProps {
 export default function RedditLogin({ authorizationUrl }: RedditLoginProps) {
   useEffect(() => {
     if (!IS_SERVER) {
-      localStorage.setItem("RedditState", authorizationUrl.state);
+      localStorage.setItem(
+        LocalStorageKeys.redditState,
+        authorizationUrl.state
+      );
     }
   }, [authorizationUrl]);
 

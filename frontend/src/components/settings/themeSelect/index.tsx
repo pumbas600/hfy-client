@@ -8,8 +8,8 @@ import { faSun } from "@fortawesome/free-solid-svg-icons/faSun";
 import { faMoon } from "@fortawesome/free-solid-svg-icons/faMoon";
 import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LocalStorageKeys } from "@/config/localStorage";
 
-export const ThemeKey = "hfy.theme";
 const DefaultTheme: Theme = "system";
 const DefaultResolvedTheme: ResolvedTheme = "dark";
 
@@ -33,7 +33,7 @@ function resolveTheme(theme: Theme): ResolvedTheme {
       : "light";
   }
 
-  localStorage.setItem(ThemeKey, theme);
+  localStorage.setItem(LocalStorageKeys.theme, theme);
   document.documentElement.dataset.theme = theme;
   return theme;
 }
@@ -41,7 +41,7 @@ function resolveTheme(theme: Theme): ResolvedTheme {
 export default function ThemeSelect() {
   const [selectedTheme, setSelectedTheme] = useState<Theme>(() => {
     if (!IS_SERVER) {
-      const storedTheme = localStorage.getItem(ThemeKey);
+      const storedTheme = localStorage.getItem(LocalStorageKeys.theme);
       if (storedTheme) {
         return storedTheme as Theme;
       }
