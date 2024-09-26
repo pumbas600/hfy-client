@@ -1,17 +1,12 @@
 import BackButton from "@/components/composite/backButton";
 import { Main, PageLayout } from "@/components/layout/pageLayout";
-import Authorize from "@/components/login/Authorize";
 import RedditLogin from "@/components/login/RedditLogin";
 import config from "@/config";
-import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
-import { Params } from "@/types/next";
 import { AuthorizationUrlDto } from "@/types/user";
 import { Api } from "@/util/api";
 
-export default async function Login({
-  searchParams,
-}: Params<never, { error?: string; code?: string; state?: string }>) {
+export default async function Login() {
   let authorizationUrl: AuthorizationUrlDto;
   try {
     authorizationUrl = await Api.get<GetAuthorizationUrlRequest.ResBody>(
@@ -22,16 +17,11 @@ export default async function Login({
     return <div>Failed to get authorization URL</div>;
   }
 
-  if (searchParams.error) {
-    return <div>Failed to log in: {searchParams.error}</div>;
-  }
-
   return (
     <PageLayout>
-      <Authorize code={searchParams.code} state={searchParams.state} />
       <Main>
         <BackButton />
-        <RedditLogin authorizationUrl={authorizationUrl} />
+        <RedditLogin authorizationUrl={authorizationUrl.url} />
       </Main>
     </PageLayout>
   );
