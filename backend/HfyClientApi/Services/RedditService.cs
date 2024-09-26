@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using HfyClientApi.Configuration;
 using HfyClientApi.Exceptions;
@@ -31,21 +32,22 @@ namespace HfyClientApi.Services
       var redirectUri = _configuration[Config.Keys.RedditRedirectUri]!;
       var appId = _configuration[Config.Keys.RedditAppId]!;
       var appSecret = _configuration[Config.Keys.RedditAppSecret]!;
+      var base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{appId}:{appSecret}"));
 
       var request = new HttpRequestMessage
       {
         Method = HttpMethod.Post,
         RequestUri = new Uri(Config.RedditUrl + "/api/v1/access_token"),
         Headers = {
-            { "User-Agent", Config.UserAgent },
-            { "Authorization", $"Basic {appId}:{appSecret}" },
-          },
+          { "User-Agent", Config.UserAgent },
+          { "Authorization", $"Basic {base64Token}" },
+        },
         Content = new FormUrlEncodedContent(new Dictionary<string, string>
-          {
-            { "grant_type", "authorization_code" },
-            { "code", code },
-            { "redirect_uri", redirectUri },
-          }),
+        {
+          { "grant_type", "authorization_code" },
+          { "code", code },
+          { "redirect_uri", redirectUri },
+        }),
       };
 
       try
