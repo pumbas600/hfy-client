@@ -9,17 +9,24 @@ export namespace Api {
     body: object,
     options?: FetchOptions<T>
   ) {
-    return request<T>(url, "POST", JSON.stringify(body), options);
+    return request<T>(
+      url,
+      "POST",
+      JSON.stringify(body),
+      { "Content-Type": "application/json" },
+      options
+    );
   }
 
   export async function get<T>(url: string | URL, options?: FetchOptions<T>) {
-    return request<T>(url, "GET", undefined, options);
+    return request<T>(url, "GET", undefined, undefined, options);
   }
 
   async function request<T>(
     url: string | URL,
     method: string,
     body?: string,
+    headers?: HeadersInit,
     options?: FetchOptions<T>
   ): Promise<T> {
     let response: Response;
@@ -27,6 +34,7 @@ export namespace Api {
       response = await fetch(url, {
         method,
         body,
+        headers,
         next: { revalidate: options?.revalidate },
       });
     } catch (error) {
