@@ -19,11 +19,12 @@ namespace HfyClientApi.Services
     private readonly IRedditService _redditService;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
+    private readonly ILogger<UsersService> _logger;
 
     public UsersService(
       IUsersRepository userRepository, ITokenService tokenService,
       IRefreshTokenRepository refreshTokenRepository, IRedditService redditService,
-      IConfiguration configuration, IMapper mapper)
+      IConfiguration configuration, IMapper mapper, ILogger<UsersService> logger)
     {
       _userRepository = userRepository;
       _tokenService = tokenService;
@@ -31,6 +32,7 @@ namespace HfyClientApi.Services
       _redditService = redditService;
       _configuration = configuration;
       _mapper = mapper;
+      _logger = logger;
     }
 
     public AuthorizationUrlDto GetAuthorizationUrl()
@@ -61,8 +63,16 @@ namespace HfyClientApi.Services
       return _mapper.ToUserDto(user);
     }
 
-    public async Task<Result<LoginDto>> LoginWithRedditAsync(string redditAccessToken)
+    public async Task<Result<LoginDto>> LoginWithRedditAsync(string redditCode)
     {
+      var accessTokenResult = await _redditService.GetAccessTokenAsync(redditCode);
+      if (accessTokenResult.IsFailure)
+      {
+        return accessTokenResult.Error;
+      }
+
+      var redditAccessToken = accessTokenResult.Data;
+
       var reddit = new RedditClient(
         appId: _configuration[Config.Keys.RedditAppId],
         appSecret: _configuration[Config.Keys.RedditAppSecret],
@@ -75,8 +85,9 @@ namespace HfyClientApi.Services
       {
         redditUser = reddit.Account.GetMe();
       }
-      catch (Reddit.Exceptions.RedditUnauthorizedException)
+      catch (Reddit.Exceptions.RedditException e)
       {
+        _logger.LogError(e, "Failed to get Reddit self with access token");
         return Errors.AuthInvalidRedditAccessToken;
       }
 

@@ -29,9 +29,9 @@ namespace HfyClientApi.Controllers
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> LoginWithReddit(
-      [FromBody] RedditAccessTokenDto accessTokenDto)
+      [FromBody] RedditCodeDto accessTokenDto)
     {
-      var loginResultDto = await _userService.LoginWithRedditAsync(accessTokenDto.RedditAccessToken);
+      var loginResultDto = await _userService.LoginWithRedditAsync(accessTokenDto.RedditCode);
       if (!loginResultDto.IsSuccess)
       {
         return loginResultDto.Error.ToActionResult();
