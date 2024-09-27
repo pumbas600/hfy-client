@@ -7,6 +7,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import SubredditLayout from "@/components/subreddit/subredditLayout";
 import { PaginatedChapters } from "@/types/chapter";
 import { Subreddit } from "@/types/subreddit";
+import { cookies } from "next/headers";
 
 const ONE_MINUTE = 60;
 
@@ -38,6 +39,10 @@ export default async function SubredditPage({
   params,
   searchParams,
 }: Params<{ subreddit: string }, { q?: string }>) {
+  const cookieStore = cookies();
+  console.log(cookieStore.get("RefreshToken"));
+  console.log(cookieStore.get("AccessToken"));
+
   const subredditUrl = `${config.api.baseUrl}/subreddits/${params.subreddit}`;
   const newChaptersUrl = new URL(
     `${config.api.baseUrl}/chapters/r/${params.subreddit}/new`

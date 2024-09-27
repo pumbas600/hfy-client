@@ -4,6 +4,8 @@ export namespace Api {
     default?: T;
   }
 
+  const IS_SERVER = typeof window === "undefined";
+
   export async function post<T>(
     url: string | URL,
     body: object,
@@ -30,12 +32,20 @@ export namespace Api {
     options?: FetchOptions<T>
   ): Promise<T> {
     let response: Response;
+    if (IS_SERVER) {
+      // TODO: This is a bit of a hack right now :sob:
+      headers ??= {};
+      const { cookies } = await import("next/headers");
+      (headers as Record<string, string>)["Cookie"] = cookies().toString();
+    }
+
     try {
       response = await fetch(url, {
         method,
         body,
         headers,
         next: { revalidate: options?.revalidate },
+        credentials: "same-origin",
       });
     } catch (error) {
       console.error(error);
