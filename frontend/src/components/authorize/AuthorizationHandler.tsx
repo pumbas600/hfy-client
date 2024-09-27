@@ -4,6 +4,7 @@ import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { PostLoginRequest } from "@/types/api";
 import { Api } from "@/util/api";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const IS_SERVER = typeof window === "undefined";
@@ -26,6 +27,7 @@ function stateMatches(state?: string): boolean {
 
 export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
   const lastCode = useRef<string>();
+  const router = useRouter();
 
   useEffect(() => {
     const login = async (): Promise<void> => {
@@ -42,6 +44,8 @@ export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
         );
         console.log("[Authorize]: Logged in");
         console.log(userDto);
+
+        router.push("/");
       } catch (error) {
         console.error(error);
       }
@@ -50,7 +54,7 @@ export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
     if (!IS_SERVER && state && stateMatches(state) && code) {
       login();
     }
-  }, [code, state]);
+  }, [code, state, router]);
 
   if (state && !stateMatches(state)) {
     return <div>There's something suspicious about this login request...</div>;
