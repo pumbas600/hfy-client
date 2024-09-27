@@ -4,7 +4,7 @@ import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { PostLoginRequest } from "@/types/api";
 import { Api } from "@/util/api";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const IS_SERVER = typeof window === "undefined";
 
@@ -25,8 +25,16 @@ function stateMatches(state?: string): boolean {
 }
 
 export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
+  const lastCode = useRef<string>();
+
   useEffect(() => {
     const login = async (): Promise<void> => {
+      if (code === lastCode.current) {
+        return;
+      }
+
+      lastCode.current = code;
+
       try {
         var userDto = await Api.post<PostLoginRequest.ResBody>(
           `${config.api.baseUrl}/users/login`,
@@ -42,7 +50,7 @@ export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
     if (!IS_SERVER && state && stateMatches(state) && code) {
       login();
     }
-  }, [code]);
+  }, [code, state]);
 
   if (state && !stateMatches(state)) {
     return <div>There's something suspicious about this login request...</div>;

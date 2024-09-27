@@ -47,7 +47,9 @@ export namespace Api {
       throw error;
     }
 
-    const json = response.bodyUsed ? await response.json() : undefined;
+    const hasBody = response.headers.get("Content-Length") !== "0";
+
+    const json = hasBody ? await response.json() : undefined;
 
     if (response.ok) {
       return json as T;
