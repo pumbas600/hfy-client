@@ -28,15 +28,15 @@ export namespace Api {
     url: string | URL,
     method: string,
     body?: string,
-    headers?: HeadersInit,
+    headers: Record<string, string> = {},
     options?: FetchOptions<T>
   ): Promise<T> {
     let response: Response;
     if (IS_SERVER) {
-      // TODO: This is a bit of a hack right now :sob:
-      headers ??= {};
+      // We can only import this in server-components.
       const { cookies } = await import("next/headers");
-      (headers as Record<string, string>)["Cookie"] = cookies().toString();
+      // Forward cookies from the server to the API.
+      headers["Cookie"] = cookies().toString();
     }
 
     try {
