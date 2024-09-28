@@ -92,9 +92,9 @@ namespace HfyClientApi.Controllers
     {
       return new CookieOptions
       {
-        HttpOnly = false,
-        Secure = false,
-        SameSite = SameSiteMode.Lax,
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.Strict,
         Expires = expiresAt
       };
     }

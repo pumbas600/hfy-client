@@ -101,8 +101,7 @@ builder.Services.AddCors(options =>
 {
   options.AddDefaultPolicy(policy =>
   {
-    // TODO: Derive from  redirect url
-    policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+    policy.WithOrigins(jwtSettings.Audience).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
   });
 });
 

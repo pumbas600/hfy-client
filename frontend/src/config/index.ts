@@ -14,6 +14,10 @@ const config = {
   },
   githubUrl: "https://github.com/pumbas600/hfy-client",
   title: "HFY Client",
+  cookies: {
+    refreshToken: "RefreshToken",
+    accessToken: "AccessToken",
+  },
 } as const;
 
 export default config;
