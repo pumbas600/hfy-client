@@ -1,3 +1,4 @@
+import { HeadMeta } from "@/components/atomic";
 import ChapterButtons from "@/components/chapter/chapterButtons";
 import ChapterLayout from "@/components/chapter/chapterLayout";
 import ScrollToTopButton from "@/components/composite/scrollToTopButton";
@@ -7,7 +8,6 @@ import { GetChapterRequest } from "@/types/api";
 import { FullChapter } from "@/types/chapter";
 import { Api } from "@/util/api";
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 
 export interface ChapterPageProps {
   chapter: FullChapter;
@@ -31,15 +31,11 @@ export const getServerSideProps = (async ({ params }) => {
 export default function ChapterPage({ chapter }: ChapterPageProps) {
   return (
     <>
-      <Head>
-        <title>{chapter.title}</title>
-        {chapter.coverArtUrl && (
-          <>
-            <meta name="og:image" content={chapter.coverArtUrl} />
-            <meta name="og:image:alt" content={`${chapter.title} cover art`} />
-          </>
-        )}
-      </Head>
+      <HeadMeta
+        title={chapter.title}
+        image={chapter.coverArtUrl}
+        imageAlt={`${chapter.title} cover art`}
+      />
       <ChapterLayout chapter={chapter}>
         <ChapterButtons chapter={chapter} />
         <TextLayout textHtml={chapter.textHtml} />

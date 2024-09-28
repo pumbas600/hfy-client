@@ -1,3 +1,4 @@
+import { HeadMeta } from "@/components/atomic";
 import ChapterCardList from "@/components/subreddit/chapterCardList";
 import SubredditLayout from "@/components/subreddit/subredditLayout";
 import config from "@/config";
@@ -59,10 +60,7 @@ export default function SubredditPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Head>
-        <title>{subreddit.title}</title>
-        <meta name="description" content={subreddit.description} />
-      </Head>
+      <HeadMeta title={subreddit.title} description={subreddit.description} />
       <SubredditLayout subreddit={subreddit}>
         <ChapterCardList
           paginatedChapters={paginatedChapters}
