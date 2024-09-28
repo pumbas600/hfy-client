@@ -120,12 +120,11 @@ export namespace Api {
   ): Promise<Response> {
     if (IS_SERVER) {
       // We can only import this in server-components.
-      const { headers: headersToForward } = await import("next/headers");
-
-      headers = {
-        ...headers,
-        ...Object.fromEntries(headersToForward().entries()),
-      };
+      // const { headers: headersToForward } = await import("next/headers");
+      // headers = {
+      //   ...headers,
+      //   ...Object.fromEntries(headersToForward().entries()),
+      // };
     }
 
     try {
