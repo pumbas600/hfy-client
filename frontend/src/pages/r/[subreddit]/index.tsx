@@ -7,7 +7,6 @@ import { PaginatedChapters } from "@/types/chapter";
 import { Subreddit } from "@/types/subreddit";
 import { Api } from "@/util/api";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Head from "next/head";
 
 interface SubredditPageProps {
   subreddit: Subreddit;
@@ -17,7 +16,7 @@ interface SubredditPageProps {
 
 const ONE_MINUTE = 60;
 
-export const getServerSideProps = (async ({ params, query }) => {
+export const getServerSideProps = (async ({ req, res, params, query }) => {
   if (!params) {
     return { notFound: true };
   }
@@ -33,10 +32,13 @@ export const getServerSideProps = (async ({ params, query }) => {
 
   try {
     const [subreddit, paginatedChapters] = await Promise.all([
-      Api.get<GetSubredditRequest.ResBody>(subredditUrl),
+      Api.get<GetSubredditRequest.ResBody>(subredditUrl, {
+        headers: { Cookie: req.headers.cookie },
+      }),
       Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
         revalidate: ONE_MINUTE,
         default: { pageSize: 20, nextKey: null, data: [] },
+        headers: { Cookie: req.headers.cookie },
       }),
     ]);
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HfyClientApi.Controllers
 {
-  // [Authorize]
+  [Authorize]
   [ApiController]
   [Route("api/v1/[controller]")]
   public class SubredditsController : ControllerBase

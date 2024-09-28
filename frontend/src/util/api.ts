@@ -1,33 +1,28 @@
-import config from "@/config";
-
 export namespace Api {
   export interface FetchOptions<T> {
     revalidate?: number;
     default?: T;
+    headers?: Record<string, string | undefined>;
     refreshOnUnauthorized?: boolean;
   }
-
-  const IS_SERVER = typeof window === "undefined";
 
   export async function post<T>(
     url: string | URL,
     body?: object,
     options: FetchOptions<T> = {}
   ) {
-    return request<T>(
-      url,
-      "POST",
-      JSON.stringify(body),
-      { "Content-Type": "application/json" },
-      { refreshOnUnauthorized: true, ...options }
-    );
+    return request<T>(url, "POST", JSON.stringify(body), {
+      refreshOnUnauthorized: true,
+      ...options,
+      headers: { ...options.headers, "Content-Type": "application/json" },
+    });
   }
 
   export async function get<T>(
     url: string | URL,
     options: FetchOptions<T> = {}
   ) {
-    return request<T>(url, "GET", undefined, undefined, {
+    return request<T>(url, "GET", undefined, {
       refreshOnUnauthorized: true,
       ...options,
     });
@@ -37,13 +32,12 @@ export namespace Api {
     url: string | URL,
     method: string,
     body?: string,
-    headers: Record<string, string> = {},
     options?: FetchOptions<T>
   ): Promise<T> {
     let response: Response;
 
     try {
-      response = await makeRequest(method, url, body, headers, options);
+      response = await makeRequest(method, url, body, options);
     } catch (error) {
       if (options?.default !== undefined) {
         return options.default;
@@ -115,23 +109,20 @@ export namespace Api {
     method: string,
     url: string | URL,
     body: string | undefined,
-    headers: Record<string, string>,
     options: FetchOptions<T> = {}
   ): Promise<Response> {
-    if (IS_SERVER) {
-      // We can only import this in server-components.
-      // const { headers: headersToForward } = await import("next/headers");
-      // headers = {
-      //   ...headers,
-      //   ...Object.fromEntries(headersToForward().entries()),
-      // };
-    }
+    const headers = options.headers ?? {};
+    Object.keys(headers).forEach((key) => {
+      if (headers[key] === undefined) {
+        delete headers[key];
+      }
+    });
 
     try {
       return await fetch(url, {
         method,
         body,
-        headers,
+        headers: headers as Record<string, string>,
         next: { revalidate: options?.revalidate },
         credentials: "include",
       });
