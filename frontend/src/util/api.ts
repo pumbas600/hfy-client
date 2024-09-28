@@ -48,6 +48,8 @@ export namespace Api {
       headers["Cookie"] = cookies().toString();
     }
 
+    console.log(url + " " + JSON.stringify(headers, undefined, 4));
+
     try {
       response = await fetch(url, {
         method,
@@ -87,7 +89,9 @@ export namespace Api {
           refreshOnUnauthorized: false,
           ...options,
         });
-      } catch (_) {}
+      } catch (_) {
+        console.debug("[User Session]: Access token refresh failed");
+      }
     }
 
     if (options?.default !== undefined) {

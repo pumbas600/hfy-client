@@ -40,7 +40,8 @@ export default function AuthorizationHandler({ code, state }: AuthorizeProps) {
       try {
         var userDto = await Api.post<PostLoginRequest.ResBody>(
           `${config.api.baseUrl}/users/login`,
-          { redditCode: code }
+          { redditCode: code },
+          { refreshOnUnauthorized: false }
         );
         console.log("[Authorize]: Logged in");
         console.log(userDto);
