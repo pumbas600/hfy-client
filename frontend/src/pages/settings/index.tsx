@@ -13,6 +13,8 @@ import { GetInfo } from "@/types/api";
 import { Api } from "@/util/api";
 import { GetStaticProps } from "next";
 
+const ONE_DAY = 60 * 60 * 24;
+
 export const getStaticProps = (async () => {
   const infoUrl = `${config.api.baseUrl}/info`;
 
@@ -25,6 +27,7 @@ export const getStaticProps = (async () => {
 
   return {
     props: { infoUrl, info: infoResponse.data },
+    revalidate: ONE_DAY,
   };
 }) satisfies GetStaticProps<ApiInfoProps>;
 

@@ -18,10 +18,10 @@ interface LoginPageProps {
   state: string;
 }
 
-export const getServerSideProps = (async ({ req }) => {
+export const getServerSideProps = (async ({ req, res }) => {
   const urlResponse = await Api.get<GetAuthorizationUrlRequest.ResBody>(
     `${config.api.baseUrl}/users/reddit/authorize`,
-    { req }
+    { req, res }
   );
 
   const state = generateRandomString(32);

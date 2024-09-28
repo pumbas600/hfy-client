@@ -15,7 +15,7 @@ export interface ChapterPageProps {
 
 const FIVE_MINUTES = 5 * 60;
 
-export const getServerSideProps = (async ({ req, params }) => {
+export const getServerSideProps = (async ({ req, res, params }) => {
   if (!params) {
     return { notFound: true };
   }
@@ -25,6 +25,7 @@ export const getServerSideProps = (async ({ req, params }) => {
     {
       revalidate: FIVE_MINUTES,
       req,
+      res,
     }
   );
 

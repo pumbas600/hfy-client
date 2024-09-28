@@ -30,15 +30,19 @@ export const getServerSideProps = (async ({ req, res, params, query }) => {
     newChaptersUrl.searchParams.set("title", query.q);
   }
 
+  console.log(req.headers.cookie);
+
   try {
     const [subredditResponse, paginatedChaptersResponse] = await Promise.all([
       Api.get<GetSubredditRequest.ResBody>(subredditUrl, {
         req,
+        res,
       }),
       Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
         revalidate: ONE_MINUTE,
         default: { pageSize: 20, nextKey: null, data: [] },
         req,
+        res,
       }),
     ]);
 
