@@ -19,12 +19,12 @@ interface LoginPageProps {
 }
 
 export const getServerSideProps = (async () => {
-  const { url } = await Api.get<GetAuthorizationUrlRequest.ResBody>(
+  const urlResponse = await Api.get<GetAuthorizationUrlRequest.ResBody>(
     `${config.api.baseUrl}/users/reddit/authorize`
   );
 
   const state = generateRandomString(32);
-  const authorizationUrl = new URL(url);
+  const authorizationUrl = new URL(urlResponse.data.url);
   authorizationUrl.searchParams.set("state", state);
 
   return {

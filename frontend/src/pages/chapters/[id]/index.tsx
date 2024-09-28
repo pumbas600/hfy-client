@@ -20,12 +20,12 @@ export const getServerSideProps = (async ({ params }) => {
     return { notFound: true };
   }
 
-  const chapter = await Api.get<GetChapterRequest.ResBody>(
+  const chapterResponse = await Api.get<GetChapterRequest.ResBody>(
     `${config.api.baseUrl}/chapters/${params.id}`,
     { revalidate: FIVE_MINUTES }
   );
 
-  return { props: { chapter } };
+  return { props: { chapter: chapterResponse.data } };
 }) satisfies GetServerSideProps<ChapterPageProps, { id: string }>;
 
 export default function ChapterPage({ chapter }: ChapterPageProps) {

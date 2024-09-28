@@ -31,7 +31,7 @@ export const getServerSideProps = (async ({ req, res, params, query }) => {
   }
 
   try {
-    const [subreddit, paginatedChapters] = await Promise.all([
+    const [subredditResponse, paginatedChaptersResponse] = await Promise.all([
       Api.get<GetSubredditRequest.ResBody>(subredditUrl, {
         headers: { Cookie: req.headers.cookie },
       }),
@@ -44,8 +44,8 @@ export const getServerSideProps = (async ({ req, res, params, query }) => {
 
     return {
       props: {
-        subreddit,
-        paginatedChapters,
+        subreddit: subredditResponse.data,
+        paginatedChapters: paginatedChaptersResponse.data,
         newChaptersUrl: newChaptersUrl.toString(),
       },
     };

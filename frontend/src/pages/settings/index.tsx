@@ -16,7 +16,7 @@ import { GetStaticProps } from "next";
 export const getStaticProps = (async () => {
   const infoUrl = `${config.api.baseUrl}/info`;
 
-  const info = await Api.get<GetInfo.ResBody>(infoUrl, {
+  const infoResponse = await Api.get<GetInfo.ResBody>(infoUrl, {
     default: {
       apiVersion: "unknown",
       environment: "unknown",
@@ -24,7 +24,7 @@ export const getStaticProps = (async () => {
   });
 
   return {
-    props: { infoUrl, info },
+    props: { infoUrl, info: infoResponse.data },
   };
 }) satisfies GetStaticProps<ApiInfoProps>;
 

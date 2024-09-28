@@ -1,4 +1,8 @@
 export namespace Api {
+  export interface ResponseData<T> {
+    data: T;
+    headers: Headers;
+  }
   export interface FetchOptions<T> {
     revalidate?: number;
     default?: T;
@@ -21,7 +25,7 @@ export namespace Api {
   export async function get<T>(
     url: string | URL,
     options: FetchOptions<T> = {}
-  ) {
+  ): Promise<ResponseData<T>> {
     return request<T>(url, "GET", undefined, {
       refreshOnUnauthorized: true,
       ...options,
@@ -33,14 +37,17 @@ export namespace Api {
     method: string,
     body?: string,
     options?: FetchOptions<T>
-  ): Promise<T> {
+  ): Promise<ResponseData<T>> {
     let response: Response;
 
     try {
       response = await makeRequest(method, url, body, options);
     } catch (error) {
       if (options?.default !== undefined) {
-        return options.default;
+        return {
+          data: options.default,
+          headers: new Headers(),
+        };
       }
 
       throw error;
@@ -53,7 +60,10 @@ export namespace Api {
     const json = hasBody ? await response.json() : undefined;
 
     if (response.ok) {
-      return json as T;
+      return {
+        data: json as T,
+        headers: response.headers,
+      };
     }
 
     // if (response.status === 401 && options?.refreshOnUnauthorized) {
@@ -95,7 +105,10 @@ export namespace Api {
     // }
 
     if (options?.default !== undefined) {
-      return options.default;
+      return {
+        data: options.default,
+        headers: response.headers,
+      };
     }
 
     if (json === undefined) {
