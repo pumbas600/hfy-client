@@ -64,6 +64,21 @@ namespace HfyClientApi.Controllers
       return NoContent();
     }
 
+    [AllowAnonymous]
+    [HttpPost("logout")]
+    public async Task<ActionResult> Logout()
+    {
+      if (Request.Cookies.TryGetValue(Config.Cookies.RefreshToken, out var refreshToken))
+      {
+        await _userService.LogoutAsync(refreshToken);
+      }
+
+      Response.Cookies.Delete(Config.Cookies.AccessToken);
+      Response.Cookies.Delete(Config.Cookies.RefreshToken);
+
+      return NoContent();
+    }
+
     [Authorize]
     [HttpGet("@me")]
     public async Task<ActionResult<LoginDto>> GetSelf()

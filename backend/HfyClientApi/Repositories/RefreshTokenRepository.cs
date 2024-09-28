@@ -32,5 +32,11 @@ namespace HfyClientApi.Repositories
       await _context.SaveChangesAsync();
       return refreshToken;
     }
+
+    public async Task DeleteRefreshTokenAsync(string refreshToken)
+    {
+      await _context.RefreshTokens.Where(r => r.Token == refreshToken).ExecuteDeleteAsync();
+      await _context.SaveChangesAsync();
+    }
   }
 }

@@ -120,6 +120,11 @@ namespace HfyClientApi.Services
       };
     }
 
+    public async Task LogoutAsync(string refreshToken)
+    {
+      await _refreshTokenRepository.DeleteRefreshTokenAsync(refreshToken);
+    }
+
     public async Task<Result<TokenPairDto>> RefreshAccessTokenAsync(string refreshToken)
     {
       var storedRefreshToken = await _refreshTokenRepository.GetRefreshTokenAsync(refreshToken);

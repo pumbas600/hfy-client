@@ -9,5 +9,7 @@ namespace HfyClientApi.Repositories
     Task<RefreshToken> SaveRefreshTokenAsync(RefreshToken refreshToken);
 
     Task<RefreshToken> UpdateRefreshTokenAsync(RefreshToken refreshToken);
+
+    Task DeleteRefreshTokenAsync(string refreshToken);
   }
 }

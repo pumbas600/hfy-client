@@ -11,6 +11,8 @@ namespace HfyClientApi.Services
 
     Task<Result<TokenPairDto>> RefreshAccessTokenAsync(string refreshToken);
 
+    Task LogoutAsync(string refreshToken);
+
     Task<Result<UserDto>> GetUserByUsernameAsync(string username);
   }
 }
