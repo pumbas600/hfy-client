@@ -6,6 +6,7 @@ import { PaginatedChapters } from "@/types/chapter";
 import { Subreddit } from "@/types/subreddit";
 import { Api } from "@/util/api";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Head from "next/head";
 
 interface SubredditPageProps {
   subreddit: Subreddit;
@@ -57,11 +58,17 @@ export default function SubredditPage({
   newChaptersUrl,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <SubredditLayout subreddit={subreddit}>
-      <ChapterCardList
-        paginatedChapters={paginatedChapters}
-        endpointUrl={newChaptersUrl}
-      />
-    </SubredditLayout>
+    <>
+      <Head>
+        <title>{subreddit.title}</title>
+        <meta name="description" content={subreddit.description} />
+      </Head>
+      <SubredditLayout subreddit={subreddit}>
+        <ChapterCardList
+          paginatedChapters={paginatedChapters}
+          endpointUrl={newChaptersUrl}
+        />
+      </SubredditLayout>
+    </>
   );
 }
