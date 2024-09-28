@@ -13,10 +13,12 @@ namespace HfyClientApi.Controllers
   public class UsersController : ControllerBase
   {
     private readonly IUsersService _userService;
+    private readonly JwtSettings _jwtSettings;
 
-    public UsersController(IUsersService userService)
+    public UsersController(IUsersService userService, JwtSettings jwtSettings)
     {
       _userService = userService;
+      _jwtSettings = jwtSettings;
     }
 
     [AllowAnonymous]
@@ -103,14 +105,15 @@ namespace HfyClientApi.Controllers
 
     }
 
-    internal static CookieOptions CreateCookieOptions(DateTime expiresAt)
+    internal CookieOptions CreateCookieOptions(DateTime expiresAt)
     {
+      var cookieExpiresAt = expiresAt.AddMinutes(_jwtSettings.CookieEarlyExpirationOffsetMinutes);
       return new CookieOptions
       {
         HttpOnly = true,
         Secure = true,
         SameSite = SameSiteMode.Strict,
-        Expires = expiresAt
+        Expires = cookieExpiresAt
       };
     }
   }
