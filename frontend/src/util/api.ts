@@ -2,6 +2,9 @@ import config from "@/config";
 import { IncomingMessage, OutgoingMessage } from "http";
 
 export namespace Api {
+  export interface NextIncomingMessage extends IncomingMessage {
+    cookies: Record<string, string | undefined>;
+  }
   export interface ResponseData<T> {
     data: T;
     headers: Headers;
@@ -10,7 +13,7 @@ export namespace Api {
     revalidate?: number;
     default?: T;
     headers?: Record<string, string | undefined>;
-    req?: IncomingMessage;
+    req?: NextIncomingMessage;
     res?: OutgoingMessage;
     refreshOnUnauthorized?: boolean;
   }
@@ -77,7 +80,7 @@ export namespace Api {
 
     if (response.status === 401 && options?.refreshOnUnauthorized) {
       try {
-        await refreshAccessToken(headers, options.res);
+        headers["Cookie"] = await refreshAccessToken(headers, options.res);
 
         // Retry the original request
         return request(url, method, body, {
@@ -131,10 +134,20 @@ export namespace Api {
     }
   }
 
+  export async function assertAccessTokenPresent(
+    req: NextIncomingMessage,
+    res: FetchOptions<unknown>["res"]
+  ): Promise<void> {
+    if (!req.cookies[config.cookies.accessToken]) {
+      const headers = { Cookie: req.headers.cookie };
+      req.headers.cookie = await refreshAccessToken(headers, res);
+    }
+  }
+
   async function refreshAccessToken(
     headers: Record<string, string | undefined>,
     res: FetchOptions<unknown>["res"]
-  ) {
+  ): Promise<string> {
     console.debug("[User Session]: Access token expired. Refreshing...");
 
     const refreshTokenResponse = await post(
@@ -149,12 +162,13 @@ export namespace Api {
     // Forward the new cookies to the client
     res?.setHeader("Set-Cookie", refreshTokenResponse.headers.getSetCookie());
 
-    // Update the request headers with the new cookies. Note this will overwrite any other cookies.
-    headers["Cookie"] = refreshTokenResponse.headers
+    console.log("[User Session]: Access token refreshed");
+
+    const newCookies = (headers["Cookie"] = refreshTokenResponse.headers
       .getSetCookie()
       .map((cookie) => cookie.split(";")[0])
-      .join("; ");
+      .join("; "));
 
-    console.log("[User Session]: Access token refreshed");
+    return newCookies;
   }
 }

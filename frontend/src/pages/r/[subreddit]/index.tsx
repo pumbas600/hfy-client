@@ -33,6 +33,7 @@ export const getServerSideProps = (async ({ req, res, params, query }) => {
   console.log(req.headers.cookie);
 
   try {
+    await Api.assertAccessTokenPresent(req, res);
     const [subredditResponse, paginatedChaptersResponse] = await Promise.all([
       Api.get<GetSubredditRequest.ResBody>(subredditUrl, {
         req,
