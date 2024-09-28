@@ -1,27 +1,36 @@
+import config from "@/config";
+
 export namespace Api {
   export interface FetchOptions<T> {
     revalidate?: number;
     default?: T;
+    refreshOnUnauthorized?: boolean;
   }
 
   const IS_SERVER = typeof window === "undefined";
 
   export async function post<T>(
     url: string | URL,
-    body: object,
-    options?: FetchOptions<T>
+    body?: object,
+    options: FetchOptions<T> = {}
   ) {
     return request<T>(
       url,
       "POST",
       JSON.stringify(body),
       { "Content-Type": "application/json" },
-      options
+      { refreshOnUnauthorized: true, ...options }
     );
   }
 
-  export async function get<T>(url: string | URL, options?: FetchOptions<T>) {
-    return request<T>(url, "GET", undefined, undefined, options);
+  export async function get<T>(
+    url: string | URL,
+    options: FetchOptions<T> = {}
+  ) {
+    return request<T>(url, "GET", undefined, undefined, {
+      refreshOnUnauthorized: true,
+      ...options,
+    });
   }
 
   async function request<T>(
@@ -63,6 +72,22 @@ export namespace Api {
 
     if (response.ok) {
       return json as T;
+    }
+
+    if (response.status === 401 && options?.refreshOnUnauthorized) {
+      try {
+        await post(`${config.api.baseUrl}/users/refresh`, undefined, {
+          refreshOnUnauthorized: false,
+        });
+
+        console.log("[User Session]: Access token refreshed");
+
+        // Retry the original request
+        return request(url, method, body, headers, {
+          refreshOnUnauthorized: false,
+          ...options,
+        });
+      } catch (_) {}
     }
 
     if (options?.default !== undefined) {
