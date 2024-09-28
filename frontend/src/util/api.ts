@@ -87,8 +87,8 @@ export namespace Api {
           refreshOnUnauthorized: false,
           ...options,
         });
-      } catch (_) {
-        console.debug("[User Session]: Access token refresh failed");
+      } catch (e) {
+        console.debug("[User Session]: Access token refresh failed.", e);
       }
     }
 
