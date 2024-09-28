@@ -56,7 +56,7 @@ export namespace Api {
         body,
         headers,
         next: { revalidate: options?.revalidate },
-        credentials: "same-origin",
+        credentials: "include",
       });
     } catch (error) {
       console.error(error);
