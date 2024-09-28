@@ -41,24 +41,10 @@ export namespace Api {
     options?: FetchOptions<T>
   ): Promise<T> {
     let response: Response;
-    if (IS_SERVER) {
-      // We can only import this in server-components.
-      const { cookies } = await import("next/headers");
-      // Forward cookies from the server to the API.
-      headers["Cookie"] = cookies().toString();
-    }
 
     try {
-      response = await fetch(url, {
-        method,
-        body,
-        headers,
-        next: { revalidate: options?.revalidate },
-        credentials: "include",
-      });
+      response = await makeRequest(method, url, body, headers, options);
     } catch (error) {
-      console.error(error);
-
       if (options?.default !== undefined) {
         return options.default;
       }
@@ -66,7 +52,9 @@ export namespace Api {
       throw error;
     }
 
-    const hasBody = response.headers.get("Content-Length") !== "0";
+    // For some reason NoContent responses don't have the Content-Length header.
+    const hasBody =
+      response.status !== 204 && response.headers.get("Content-Length") !== "0";
 
     const json = hasBody ? await response.json() : undefined;
 
@@ -74,23 +62,43 @@ export namespace Api {
       return json as T;
     }
 
-    if (response.status === 401 && options?.refreshOnUnauthorized) {
-      try {
-        await post(`${config.api.baseUrl}/users/refresh`, undefined, {
-          refreshOnUnauthorized: false,
-        });
+    // if (response.status === 401 && options?.refreshOnUnauthorized) {
+    //   try {
+    //     const refreshTokenResponse = await makeRequest(
+    //       "POST",
+    //       `${config.api.baseUrl}/users/refresh`,
+    //       undefined,
+    //       headers,
+    //       {
+    //         refreshOnUnauthorized: false,
+    //       }
+    //     );
 
-        console.log("[User Session]: Access token refreshed");
+    //     if (refreshTokenResponse.ok) {
+    //       // Update the cookies with the new access token.
+    //       // IMPORTANT: This wont work if there are other cookies that need to be preserved.
+    //       console.log(refreshTokenResponse.headers);
+    //       headers["Cookie"] = refreshTokenResponse.headers
+    //         .getSetCookie()
+    //         .map((cookie) => cookie.split(";")[0])
+    //         .join("; ");
 
-        // Retry the original request
-        return request(url, method, body, headers, {
-          refreshOnUnauthorized: false,
-          ...options,
-        });
-      } catch (e) {
-        console.debug("[User Session]: Access token refresh failed.", e);
-      }
-    }
+    //       console.log(refreshTokenResponse.headers.getSetCookie());
+
+    //       console.log("[User Session]: Access token refreshed");
+
+    //       // Retry the original request
+    //       return request(url, method, body, headers, {
+    //         ...options,
+    //         refreshOnUnauthorized: false,
+    //       });
+    //     } else {
+    //       console.debug("[User Session]: Access token refresh failed.");
+    //     }
+    //   } catch (e) {
+    //     console.debug("[User Session]: Access token refresh failed.", e);
+    //   }
+    // }
 
     if (options?.default !== undefined) {
       return options.default;
@@ -101,5 +109,36 @@ export namespace Api {
     }
 
     throw new Error(JSON.stringify(json, undefined, 4));
+  }
+
+  async function makeRequest<T>(
+    method: string,
+    url: string | URL,
+    body: string | undefined,
+    headers: Record<string, string>,
+    options: FetchOptions<T> = {}
+  ): Promise<Response> {
+    if (IS_SERVER) {
+      // We can only import this in server-components.
+      const { headers: headersToForward } = await import("next/headers");
+
+      headers = {
+        ...headers,
+        ...Object.fromEntries(headersToForward().entries()),
+      };
+    }
+
+    try {
+      return await fetch(url, {
+        method,
+        body,
+        headers,
+        next: { revalidate: options?.revalidate },
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 }
