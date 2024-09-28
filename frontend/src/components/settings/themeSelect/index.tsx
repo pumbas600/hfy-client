@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { ResolvedTheme, Theme } from "@/config/getTheme";
 import styles from "./themeSelect.module.css";
@@ -11,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LocalStorageKeys } from "@/config/localStorage";
 
 const DefaultTheme: Theme = "system";
-const DefaultResolvedTheme: ResolvedTheme = "dark";
+const IS_SERVER = typeof window === "undefined";
 
 const ThemeIcons: Record<Theme, IconProp> = {
   light: faSun,
@@ -19,15 +17,8 @@ const ThemeIcons: Record<Theme, IconProp> = {
   system: faCog,
 };
 
-const IS_SERVER = typeof window === "undefined";
-
 function resolveTheme(theme: Theme): ResolvedTheme {
   if (theme === "system") {
-    if (IS_SERVER) {
-      // We can't detect the system theme on the server, so default to dark
-      return DefaultResolvedTheme;
-    }
-
     theme = window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
