@@ -15,14 +15,17 @@ export interface ChapterPageProps {
 
 const FIVE_MINUTES = 5 * 60;
 
-export const getServerSideProps = (async ({ params }) => {
+export const getServerSideProps = (async ({ req, params }) => {
   if (!params) {
     return { notFound: true };
   }
 
   const chapterResponse = await Api.get<GetChapterRequest.ResBody>(
     `${config.api.baseUrl}/chapters/${params.id}`,
-    { revalidate: FIVE_MINUTES }
+    {
+      revalidate: FIVE_MINUTES,
+      req,
+    }
   );
 
   return { props: { chapter: chapterResponse.data } };

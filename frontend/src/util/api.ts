@@ -1,3 +1,5 @@
+import { IncomingMessage } from "http";
+
 export namespace Api {
   export interface ResponseData<T> {
     data: T;
@@ -7,6 +9,7 @@ export namespace Api {
     revalidate?: number;
     default?: T;
     headers?: Record<string, string | undefined>;
+    req?: IncomingMessage;
     refreshOnUnauthorized?: boolean;
   }
 
@@ -36,10 +39,14 @@ export namespace Api {
     url: string | URL,
     method: string,
     body?: string,
-    options?: FetchOptions<T>
+    options: FetchOptions<T> = {}
   ): Promise<ResponseData<T>> {
-    let response: Response;
+    if (options.req) {
+      options.headers ??= {};
+      options.headers["Cookie"] = options.req.headers.cookie;
+    }
 
+    let response: Response;
     try {
       response = await makeRequest(method, url, body, options);
     } catch (error) {
