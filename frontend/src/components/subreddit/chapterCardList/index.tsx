@@ -47,10 +47,10 @@ export default function ChapterCardList({
     requestUrl.searchParams.set("lastId", nextKey.lastPostId);
 
     try {
-      const paginatedChapters = await Api.get<GetNewChaptersRequest.ResBody>(
-        requestUrl.toString(),
-        { revalidate: ONE_MINUTES }
-      );
+      const { data: paginatedChapters } =
+        await Api.get<GetNewChaptersRequest.ResBody>(requestUrl.toString(), {
+          revalidate: ONE_MINUTES,
+        });
 
       setNextKey(paginatedChapters.nextKey);
       setChapters([...chapters, ...paginatedChapters.data]);
