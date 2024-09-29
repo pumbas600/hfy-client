@@ -9,15 +9,19 @@ import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
 import RedditLink from "@/components/composite/redditLink";
+import SelfProfile from "@/components/composite/selfProfile";
+import { User } from "@/types/user";
 
 export interface SubredditLayoutProps {
   children?: React.ReactNode;
   subreddit: Subreddit;
+  self: User;
 }
 
 export default function SubredditLayout({
   children,
   subreddit,
+  self,
 }: SubredditLayoutProps) {
   return (
     <PageLayout>
@@ -31,7 +35,14 @@ export default function SubredditLayout({
             style={{ backgroundColor: subreddit.iconBackgroundColor }}
           />
         }
-        end={<RedditLink href={subreddit.redditLink} title="View on Reddit" />}
+        end={[
+          <RedditLink
+            key="reddit"
+            href={subreddit.redditLink}
+            title="View on Reddit"
+          />,
+          <SelfProfile key="profile" user={self} />,
+        ]}
       >
         <ChapterSearchInput
           subreddit={subreddit.name}
