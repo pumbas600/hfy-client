@@ -30,13 +30,11 @@ export const getServerSideProps = (async ({ req, res, params }) => {
       {
         revalidate: FIVE_MINUTES,
         req,
-        res,
       }
     ),
     Api.get<GetSelf.ResBody>(`${config.api.baseUrl}/users/@me`, {
       revalidate: THIRTY_MINUTES,
       req,
-      res,
     }),
   ]);
 

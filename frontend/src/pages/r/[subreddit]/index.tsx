@@ -41,20 +41,15 @@ export const getServerSideProps = (async ({ req, res, params, query }) => {
     await Api.assertAccessTokenPresent(req, res);
     const [subredditResponse, paginatedChaptersResponse, selfResponse] =
       await Promise.all([
-        Api.get<GetSubredditRequest.ResBody>(subredditUrl, {
-          req,
-          res,
-        }),
+        Api.get<GetSubredditRequest.ResBody>(subredditUrl, { req }),
         Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
           revalidate: ONE_MINUTE,
           default: { pageSize: 20, nextKey: null, data: [] },
           req,
-          res,
         }),
         Api.get<GetSelf.ResBody>(`${config.api.baseUrl}/users/@me`, {
           revalidate: THIRTY_MINUTES,
           req,
-          res,
         }),
       ]);
 
