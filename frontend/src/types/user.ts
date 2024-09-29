@@ -2,7 +2,7 @@ export interface AuthorizationUrlDto {
   url: string;
 }
 
-export interface UserDto {
+export interface User {
   id: string;
   name: string;
   iconUrl: string;

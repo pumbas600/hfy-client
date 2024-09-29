@@ -1,11 +1,11 @@
-import { UserDto } from "@/types/user";
+import { User } from "@/types/user";
 import styles from "./profilePicture.module.css";
 
 export interface ProfilePictureProps {
-  userDto: UserDto;
+  user: User;
 }
 
-export default function ProfilePicture({ userDto }: ProfilePictureProps) {
+export default function ProfilePicture({ user: userDto }: ProfilePictureProps) {
   return (
     <img
       src={userDto.iconUrl}

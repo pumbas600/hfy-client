@@ -18,7 +18,7 @@ export function Sticky({ start, children, end, className }: StickyProps) {
       <div className={styles.stickyContent}>
         {start ?? <div />}
         {children ?? <div />}
-        {end ?? <div />}
+        {<div className={styles.row}>{end}</div>}
       </div>
     </div>
   );

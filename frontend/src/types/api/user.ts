@@ -1,4 +1,11 @@
-import { AuthorizationUrlDto, UserDto } from "../user";
+import { AuthorizationUrlDto, User } from "../user";
+
+export namespace GetSelf {
+  export type Params = never;
+
+  export type ReqBody = never;
+  export type ResBody = User;
+}
 
 export namespace GetAuthorizationUrlRequest {
   export type Params = never;
@@ -13,5 +20,5 @@ export namespace PostLoginRequest {
   export type ReqBody = {
     redditCode: string;
   };
-  export type ResBody = UserDto;
+  export type ResBody = User;
 }

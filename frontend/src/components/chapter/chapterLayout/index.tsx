@@ -16,15 +16,19 @@ import { NsfwBadge } from "@/components/composite/badges";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import RedditLink from "@/components/composite/redditLink";
+import ProfilePicture from "@/components/atomic/profilePicture";
+import { User } from "@/types/user";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
   chapter: FullChapter;
+  self: User;
 }
 
 export default function ChapterLayout({
   children,
   chapter,
+  self,
 }: ChapterLayoutProps) {
   const subredditLink = `/r/${chapter.subreddit}`;
 
@@ -32,9 +36,14 @@ export default function ChapterLayout({
     <PageLayout>
       <Sticky
         start={<BackButton link={subredditLink} title="Back to subreddit" />}
-        end={
-          <RedditLink href={chapter.redditPostLink} title="Read on Reddit" />
-        }
+        end={[
+          <RedditLink
+            key="reddit"
+            href={chapter.redditPostLink}
+            title="Read on Reddit"
+          />,
+          <ProfilePicture key="profile" user={self} />,
+        ]}
       >
         <div className={styles.authorWrapper}>
           <UnderlinedLink href={subredditLink} className={styles.subreddit}>
