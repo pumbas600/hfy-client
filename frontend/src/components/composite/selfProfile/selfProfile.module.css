@@ -1,0 +1,11 @@
+.selfProfile {
+  width: 2.5rem;
+
+  &:hover {
+    outline: calc(2 * var(--hairline)) solid var(--primary-contrast);
+  }
+
+  &:active {
+    outline-color: var(--primary-contrast-secondary);
+  }
+}

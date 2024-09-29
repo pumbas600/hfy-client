@@ -1,5 +1,5 @@
 .profilePicture {
   aspect-ratio: 1/1;
+  background-color: var(--primary-contrast);
   border-radius: 50%;
-  width: 2.5rem;
 }

@@ -18,6 +18,7 @@ import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import RedditLink from "@/components/composite/redditLink";
 import ProfilePicture from "@/components/atomic/profilePicture";
 import { User } from "@/types/user";
+import SelfProfile from "@/components/composite/selfProfile";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
@@ -42,7 +43,7 @@ export default function ChapterLayout({
             href={chapter.redditPostLink}
             title="Read on Reddit"
           />,
-          <ProfilePicture key="profile" user={self} />,
+          <SelfProfile key="profile" user={self} />,
         ]}
       >
         <div className={styles.authorWrapper}>
