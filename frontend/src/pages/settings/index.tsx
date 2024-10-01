@@ -17,6 +17,7 @@ import { User } from "@/types/user";
 import { Api } from "@/util/api";
 import { GetServerSideProps } from "next";
 import styles from "@/components/settings/settings.module.css";
+import LogoutButton from "@/components/composite/LogoutButton";
 
 interface SettingsPageProps {
   apiInfo: ApiInfoProps;
@@ -65,6 +66,7 @@ export default function SettingsPage({ apiInfo, self }: SettingsPageProps) {
             <h2>Settings</h2>
             <h3>u/{self.name}</h3>
           </div>
+          <LogoutButton />
         </Header>
         <Aside />
         <Main>
