@@ -1,9 +1,11 @@
-import { HeadMeta } from "@/components/atomic";
+import { Button, HeadMeta, ProfilePicture } from "@/components/atomic";
+import BackButton from "@/components/composite/backButton";
 import {
   Aside,
   Header,
   Main,
   PageLayout,
+  Sticky,
 } from "@/components/layout/pageLayout";
 import ApiInfo, { ApiInfoProps } from "@/components/settings/apiInfo";
 import SectionTitle from "@/components/settings/sectionTitle";
@@ -14,6 +16,7 @@ import { Info } from "@/types/info";
 import { User } from "@/types/user";
 import { Api } from "@/util/api";
 import { GetServerSideProps } from "next";
+import styles from "@/components/settings/settings.module.css";
 
 interface SettingsPageProps {
   apiInfo: ApiInfoProps;
@@ -55,15 +58,18 @@ export default function SettingsPage({ apiInfo, self }: SettingsPageProps) {
     <>
       <HeadMeta title={`Settings | ${config.title}`} />
       <PageLayout>
-        <Header>
-          <h1>Settings</h1>
-          <h3>u/{self.name}</h3>
+        <Sticky start={<BackButton />} self={self} />
+        <Header className={styles.header}>
+          <ProfilePicture user={self} className={styles.profilePicture} />
+          <div>
+            <h2>Settings</h2>
+            <h3>u/{self.name}</h3>
+          </div>
         </Header>
         <Aside />
         <Main>
           <SectionTitle>Appearance</SectionTitle>
           <ThemeSelect />
-
           <SectionTitle>Behind the scenes</SectionTitle>
           <ApiInfo {...apiInfo} />
         </Main>

@@ -16,7 +16,6 @@ import { NsfwBadge } from "@/components/composite/badges";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import { User } from "@/types/user";
-import SelfProfile from "@/components/composite/selfProfile";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 
 export interface ChapterLayoutProps {
@@ -36,6 +35,7 @@ export default function ChapterLayout({
     <PageLayout>
       <Sticky
         start={<BackButton link={subredditLink} title="Back to subreddit" />}
+        self={self}
         end={[
           <Link
             variant="iconButton"
@@ -44,7 +44,6 @@ export default function ChapterLayout({
             title="Read on Reddit"
             icon={faReddit}
           />,
-          <SelfProfile key="profile" user={self} />,
         ]}
       >
         <div className={styles.authorWrapper}>
@@ -61,7 +60,7 @@ export default function ChapterLayout({
           <CoverArt url={chapter.coverArtUrl} chapterTitle={chapter.title} />
         )}
         <div>
-          <h2 className={styles.title}>{chapter.title}</h2>
+          <h2>{chapter.title}</h2>
           <ChapterTimeMetadata
             className={styles.timeMetadata}
             createdAtUtc={chapter.createdAtUtc}

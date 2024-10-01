@@ -13,7 +13,7 @@ export default function ApiInfo({ infoUrl, info }: ApiInfoProps) {
 
   return (
     <div className={styles.apiInfo}>
-      <p className={styles.title}>URL</p>
+      <p className={styles.title}>API URL</p>
       <div className={styles.urlWrapper}>
         <p>{infoUrlDetails.hostname}</p>
         <SecureBadge isSecure={isApiSecure} />

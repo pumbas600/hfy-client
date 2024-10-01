@@ -1,0 +1,11 @@
+.subtleButton {
+  background-color: oklch(from var(--primary-contrast) l c h / 5%);
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+
+  &:active {
+    background-color: var(--primary-active);
+  }
+}
