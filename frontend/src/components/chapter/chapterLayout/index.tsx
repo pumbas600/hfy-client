@@ -61,7 +61,7 @@ export default function ChapterLayout({
           <CoverArt url={chapter.coverArtUrl} chapterTitle={chapter.title} />
         )}
         <div>
-          <h2 className={styles.title}>{chapter.title}</h2>
+          <h2>{chapter.title}</h2>
           <ChapterTimeMetadata
             className={styles.timeMetadata}
             createdAtUtc={chapter.createdAtUtc}

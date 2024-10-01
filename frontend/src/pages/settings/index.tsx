@@ -63,7 +63,7 @@ export default function SettingsPage({ apiInfo, self }: SettingsPageProps) {
         <Header className={styles.header}>
           <ProfilePicture user={self} className={styles.profilePicture} />
           <div>
-            <h1>Settings</h1>
+            <h2>Settings</h2>
             <h3>u/{self.name}</h3>
           </div>
         </Header>
