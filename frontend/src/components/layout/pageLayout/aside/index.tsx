@@ -1,4 +1,4 @@
-import { SubtleLink } from "@/components/atomic";
+import { Link } from "@/components/atomic";
 import { Subtitle } from "@/components/atomic/typography";
 import styles from "./aside.module.css";
 import {
@@ -16,7 +16,9 @@ function linksToListItems(links: Record<string, string>): React.ReactNode {
     <ul className={styles.linkList}>
       {Object.entries(links).map(([label, link]) => (
         <li key={label + link} className={styles.listItem}>
-          <SubtleLink href={link}>{label}</SubtleLink>
+          <Link variant="subtle" href={link}>
+            {label}
+          </Link>
         </li>
       ))}
     </ul>
