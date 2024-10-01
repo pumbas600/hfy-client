@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
-using HfyClientApi.Repositories;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HfyClientApi.Services

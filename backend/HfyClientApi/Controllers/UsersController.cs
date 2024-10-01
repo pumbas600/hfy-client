@@ -113,7 +113,8 @@ namespace HfyClientApi.Controllers
         HttpOnly = true,
         Secure = true,
         SameSite = SameSiteMode.Strict,
-        Expires = cookieExpiresAt
+        Expires = cookieExpiresAt,
+        IsEssential = true,
       };
     }
   }
