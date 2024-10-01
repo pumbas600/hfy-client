@@ -1,9 +1,12 @@
 import { HeadMeta } from "@/components/atomic";
+import BackButton from "@/components/composite/backButton";
+import SelfProfile from "@/components/composite/selfProfile";
 import {
   Aside,
   Header,
   Main,
   PageLayout,
+  Sticky,
 } from "@/components/layout/pageLayout";
 import ApiInfo, { ApiInfoProps } from "@/components/settings/apiInfo";
 import SectionTitle from "@/components/settings/sectionTitle";
@@ -55,6 +58,7 @@ export default function SettingsPage({ apiInfo, self }: SettingsPageProps) {
     <>
       <HeadMeta title={`Settings | ${config.title}`} />
       <PageLayout>
+        <Sticky start={<BackButton />} end={<SelfProfile user={self} />} />
         <Header>
           <h1>Settings</h1>
           <h3>u/{self.name}</h3>
