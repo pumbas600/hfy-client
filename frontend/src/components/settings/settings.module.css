@@ -1,0 +1,10 @@
+.header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--step-2);
+}
+
+.profilePicture {
+  width: 6.5rem;
+}
