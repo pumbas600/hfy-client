@@ -8,7 +8,6 @@ import {
 import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
-import SelfProfile from "@/components/composite/selfProfile";
 import { User } from "@/types/user";
 import { Link } from "@/components/atomic";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
@@ -36,6 +35,7 @@ export default function SubredditLayout({
             style={{ backgroundColor: subreddit.iconBackgroundColor }}
           />
         }
+        self={self}
         end={[
           <Link
             variant="iconButton"
@@ -44,7 +44,6 @@ export default function SubredditLayout({
             title="View on Reddit"
             icon={faReddit}
           />,
-          <SelfProfile key="profile" user={self} />,
         ]}
       >
         <ChapterSearchInput

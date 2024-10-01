@@ -1,6 +1,5 @@
 import { HeadMeta, ProfilePicture } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
-import SelfProfile from "@/components/composite/selfProfile";
 import {
   Aside,
   Header,
@@ -59,7 +58,7 @@ export default function SettingsPage({ apiInfo, self }: SettingsPageProps) {
     <>
       <HeadMeta title={`Settings | ${config.title}`} />
       <PageLayout>
-        <Sticky start={<BackButton />} end={<SelfProfile user={self} />} />
+        <Sticky start={<BackButton />} self={self} />
         <Header className={styles.header}>
           <ProfilePicture user={self} className={styles.profilePicture} />
           <div>

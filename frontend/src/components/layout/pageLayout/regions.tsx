@@ -1,24 +1,31 @@
+import SelfProfile from "@/components/composite/selfProfile";
 import styles from "./pageLayout.module.css";
+import { User } from "@/types/user";
+import { ReactNode } from "react";
 
 export interface RegionProps {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export interface StickyProps {
-  start?: React.ReactNode;
-  children?: React.ReactNode;
-  end?: React.ReactNode;
+  start?: ReactNode;
+  children?: ReactNode;
+  end?: ReactNode;
+  self?: User;
   className?: string;
 }
 
-export function Sticky({ start, children, end, className }: StickyProps) {
+export function Sticky({ start, children, end, self, className }: StickyProps) {
   return (
     <div className={`${styles.sticky} ${className ?? ""}`}>
       <div className={styles.stickyContent}>
         {start ?? <div />}
         {children ?? <div />}
-        {<div className={styles.row}>{end}</div>}
+
+        <div className={styles.row}>
+          {end} {self && <SelfProfile key="profile" user={self} />}
+        </div>
       </div>
     </div>
   );
