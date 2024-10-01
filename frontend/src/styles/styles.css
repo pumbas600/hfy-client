@@ -292,6 +292,7 @@
     letter-spacing: 0.04em;
   }
 
+  a.button,
   button,
   input,
   select,
@@ -309,6 +310,7 @@
     }
   }
 
+  a.button,
   button,
   input[type="button"],
   input[type="reset"],

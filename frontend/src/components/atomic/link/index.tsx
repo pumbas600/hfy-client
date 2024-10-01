@@ -1,11 +1,13 @@
 import NextLink from "next/link";
 import styles from "./links.module.css";
+import { ReactNode } from "react";
 
 export interface BaseLinkProps {
-  variant?: "subtle" | "underlined" | "button" | "iconButton";
-  children?: React.ReactNode;
   className?: string;
+  children?: ReactNode;
   href: string;
+  title?: string;
+  variant?: "subtle" | "underlined" | "button" | "iconButton";
 }
 
 export default function Link({
@@ -29,7 +31,7 @@ export default function Link({
       break;
   }
 
-  if (props.href.startsWith("/")) {
+  if (props.href?.startsWith("/")) {
     return (
       <NextLink
         {...props}

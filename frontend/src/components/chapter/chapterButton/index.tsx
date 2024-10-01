@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/atomic";
 
 export interface ChapterButtonProps {
   chapterId: string | null;
@@ -22,8 +22,13 @@ export default function ChapterButton({
   }
 
   return (
-    <Link href={`/chapters/${chapterId}`} className={className}>
-      <button title={tooltip}>{children}</button>
+    <Link
+      variant="button"
+      href={`/chapters/${chapterId}`}
+      className={className}
+      title={tooltip}
+    >
+      {children}
     </Link>
   );
 }

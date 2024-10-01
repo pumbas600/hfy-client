@@ -19,3 +19,8 @@
     text-decoration: underline;
   }
 }
+
+.buttonLink,
+.iconButtonLink {
+  text-decoration: none;
+}
