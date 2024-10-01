@@ -10,15 +10,14 @@
   }
 
   &:not(.noFirst) {
-    & > a:first-child > button,
-    & > button:first-child {
+    & > :first-child {
       border-top-left-radius: var(--border-radius);
       border-bottom-left-radius: var(--border-radius);
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
 
-    & > a:nth-child(2) > button {
+    & > :nth-child(2) {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       border-top-right-radius: var(--border-radius);
@@ -50,18 +49,17 @@
     }
 
     &:not(.noFirst) {
-      & button {
+      & > * {
         width: 100%;
         border-radius: 0;
       }
 
-      & > a:nth-child(2) button {
+      & > :nth-child(2) {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
 
-      & > a:last-child > button,
-      & > button:last-child {
+      & > :last-child {
         border-top-right-radius: var(--border-radius);
         border-bottom-right-radius: var(--border-radius);
       }

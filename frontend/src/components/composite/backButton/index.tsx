@@ -1,9 +1,8 @@
 "use client";
 
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { IconButton } from "@/components/atomic";
+import { IconButton, Link } from "@/components/atomic";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export interface BackButtonProps {
   link?: string;
@@ -15,9 +14,7 @@ export default function BackButton({ link, title = "Back" }: BackButtonProps) {
 
   if (link !== undefined) {
     return (
-      <Link href={link}>
-        <IconButton icon={faArrowLeft} title={title} />
-      </Link>
+      <Link variant="iconButton" href={link} title="title" icon={faArrowLeft} />
     );
   }
 

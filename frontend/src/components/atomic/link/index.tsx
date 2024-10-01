@@ -1,30 +1,65 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import styles from "./links.module.css";
+import iconButtonStyles from "../iconButton/iconButton.module.css";
+import { ReactNode } from "react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface BaseLinkProps {
-  children?: React.ReactNode;
   className?: string;
+  children?: ReactNode;
   href: string;
+  title?: string;
+  target?: string;
+  icon?: IconProp;
+  variant?: "subtle" | "underlined" | "button" | "iconButton";
 }
 
-function CreateBaseLink(variantClassName: string) {
-  return function BaseLink({ className, ...props }: BaseLinkProps) {
-    if (props.href.startsWith("/")) {
-      return (
-        <Link {...props} className={`${variantClassName} ${className ?? ""}`} />
-      );
-    }
+export default function Link({
+  className,
+  children,
+  variant = "underlined",
+  icon,
+  ...props
+}: BaseLinkProps) {
+  let variantClassName = "";
+  switch (variant) {
+    case "subtle":
+      variantClassName = styles.subtleLink;
+      break;
+    case "underlined":
+      variantClassName = styles.underlinedLink;
+      break;
+    case "button":
+      variantClassName = `button ${styles.buttonLink}`;
+      break;
+    case "iconButton":
+      variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton}`;
+      if (icon) {
+        children = (
+          <>
+            <FontAwesomeIcon icon={icon} size="xl" />
+            {children}
+          </>
+        );
+      }
+  }
 
+  if (props.href?.startsWith("/")) {
     return (
-      <a
-        target="_blank"
-        {...props}
-        className={`${variantClassName} ${className ?? ""}`}
-      />
+      <NextLink {...props} className={`${variantClassName} ${className ?? ""}`}>
+        {children}
+      </NextLink>
     );
-  };
+  }
+
+  return (
+    <a
+      target="_blank"
+      {...props}
+      className={`${variantClassName} ${className ?? ""}`}
+    >
+      {children}
+    </a>
+  );
 }
-
-export const SubtleLink = CreateBaseLink(styles.subtleLink);
-
-export const UnderlinedLink = CreateBaseLink(styles.underlinedLink);
