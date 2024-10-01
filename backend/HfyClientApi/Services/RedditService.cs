@@ -5,6 +5,7 @@ using HfyClientApi.Exceptions;
 using HfyClientApi.Utils;
 using Reddit;
 using Reddit.Controllers;
+using Reddit.Exceptions;
 
 namespace HfyClientApi.Services
 {
@@ -77,10 +78,18 @@ namespace HfyClientApi.Services
 
     public IEnumerable<SelfPost> GetNewSelfPosts(string subreddit, int limit = 50)
     {
-      return _redditClient.Subreddit(subreddit).Posts
-        .GetNew(limit: limit)
-        .Where(p => p is SelfPost)
-        .Cast<SelfPost>();
+      try
+      {
+        return _redditClient.Subreddit(subreddit).Posts
+          .GetNew(limit: limit)
+          .Where(p => p is SelfPost)
+          .Cast<SelfPost>();
+      }
+      catch (RedditException e)
+      {
+        _logger.LogError(e, "Failed to get new posts from Reddit.");
+        return [];
+      }
     }
 
     public Result<SelfPost> GetSelfPostById(string postId)
