@@ -6,7 +6,7 @@ export function middleware(request: NextRequest): NextResponse {
   console.debug(`[Middleware]: User is authenticated: ${isAuthenticated}`);
 
   if (!isAuthenticated) {
-    return NextResponse.redirect("/login");
+    return NextResponse.redirect(appConfig.fontendBaseUrl + "/login");
   }
 
   return NextResponse.next();

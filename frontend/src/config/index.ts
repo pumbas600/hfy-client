@@ -12,6 +12,8 @@ const config = {
     baseUrl:
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5070/api/v1",
   },
+  fontendBaseUrl:
+    process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000",
   githubUrl: "https://github.com/pumbas600/hfy-client",
   title: "HFY Client",
   cookies: {
