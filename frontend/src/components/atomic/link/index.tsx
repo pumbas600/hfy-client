@@ -10,6 +10,7 @@ export interface BaseLinkProps {
   children?: ReactNode;
   href: string;
   title?: string;
+  target?: string;
   icon?: IconProp;
   variant?: "subtle" | "underlined" | "button" | "iconButton";
 }

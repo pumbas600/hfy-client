@@ -8,9 +8,10 @@ import {
 import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
-import RedditLink from "@/components/composite/redditLink";
 import SelfProfile from "@/components/composite/selfProfile";
 import { User } from "@/types/user";
+import { Link } from "@/components/atomic";
+import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 
 export interface SubredditLayoutProps {
   children?: React.ReactNode;
@@ -36,10 +37,12 @@ export default function SubredditLayout({
           />
         }
         end={[
-          <RedditLink
+          <Link
+            variant="iconButton"
             key="reddit"
             href={subreddit.redditLink}
             title="View on Reddit"
+            icon={faReddit}
           />,
           <SelfProfile key="profile" user={self} />,
         ]}

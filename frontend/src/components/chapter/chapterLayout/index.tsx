@@ -15,9 +15,9 @@ import UpvoteLabel from "@/components/composite/upvoteLabel";
 import { NsfwBadge } from "@/components/composite/badges";
 import CoverArt from "@/components/atomic/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
-import RedditLink from "@/components/composite/redditLink";
 import { User } from "@/types/user";
 import SelfProfile from "@/components/composite/selfProfile";
+import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
@@ -37,10 +37,12 @@ export default function ChapterLayout({
       <Sticky
         start={<BackButton link={subredditLink} title="Back to subreddit" />}
         end={[
-          <RedditLink
+          <Link
+            variant="iconButton"
             key="reddit"
             href={chapter.redditPostLink}
             title="Read on Reddit"
+            icon={faReddit}
           />,
           <SelfProfile key="profile" user={self} />,
         ]}
