@@ -2,6 +2,7 @@ import SelfProfile from "@/components/composite/selfProfile";
 import styles from "./pageLayout.module.css";
 import { User } from "@/types/user";
 import { ReactNode } from "react";
+import { Button } from "@/components/atomic";
 
 export interface RegionProps {
   className?: string;
@@ -24,7 +25,13 @@ export function Sticky({ start, children, end, self, className }: StickyProps) {
         {children ?? <div />}
 
         <div className={styles.row}>
-          {end} {self && <SelfProfile key="profile" user={self} />}
+          {end}{" "}
+          {self && (
+            <>
+              <SelfProfile key="profile" user={self} />
+              <Button variant="subtle">Log out</Button>
+            </>
+          )}
         </div>
       </div>
     </div>

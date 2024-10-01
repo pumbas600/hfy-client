@@ -1,4 +1,4 @@
-import { HeadMeta, ProfilePicture } from "@/components/atomic";
+import { Button, HeadMeta, ProfilePicture } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import {
   Aside,

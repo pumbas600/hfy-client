@@ -1,4 +1,5 @@
 export { default as Badge } from "./badge";
+export { default as Button } from "./button";
 export { default as Container } from "./container";
 export { default as CoverArt } from "./coverArt";
 export { default as IconButton } from "./iconButton";

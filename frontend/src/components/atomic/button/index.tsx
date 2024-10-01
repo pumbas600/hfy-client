@@ -3,7 +3,7 @@ import linkStyles from "../link/links.module.css";
 import styles from "./button.module.css";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "text";
+  variant?: "primary" | "subtle";
 }
 
 export default function Button({
@@ -13,8 +13,8 @@ export default function Button({
 }: ButtonProps) {
   let variantClassName = "";
   switch (variant) {
-    case "text":
-      variantClassName = `${styles.textButton} ${linkStyles.subtleLink}`;
+    case "subtle":
+      variantClassName = styles.subtleButton;
       break;
   }
 
