@@ -1,3 +1,4 @@
 .searchInput {
+  height: 2.5rem;
   width: min(100%, 25rem);
 }

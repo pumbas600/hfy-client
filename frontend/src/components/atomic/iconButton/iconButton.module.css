@@ -4,7 +4,7 @@
   border-radius: 50%;
   color: var(--primary-color);
   padding: 0;
-  transition: outline 100ms ease-in-out;
+  transition: outline 50ms ease-in-out;
   width: 2.5rem;
 
   &:hover {
