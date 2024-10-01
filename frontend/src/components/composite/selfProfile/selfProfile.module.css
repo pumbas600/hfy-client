@@ -1,5 +1,6 @@
 .selfProfile {
   width: 2.5rem;
+  transition: outline 100ms ease-in-out;
 
   &:hover {
     outline: calc(2 * var(--hairline)) solid var(--primary-contrast);

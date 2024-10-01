@@ -1,19 +1,17 @@
 .iconButton {
+  aspect-ratio: 1/1;
   background-color: var(--primary-contrast);
   border-radius: 50%;
   color: var(--primary-color);
-  height: 2.25rem;
   padding: 0;
-  transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
-  width: 2.25rem;
+  transition: outline 100ms ease-in-out;
+  width: 2.5rem;
 
   &:hover {
-    background-color: var(--primary-contrast-secondary);
-    color: var(--primary-hover);
+    outline: calc(2 * var(--hairline)) solid var(--primary-contrast);
   }
 
   &:active {
-    background-color: var(--primary-contrast-secondary);
-    color: var(--primary-active);
+    outline-color: var(--primary-contrast-secondary);
   }
 }
