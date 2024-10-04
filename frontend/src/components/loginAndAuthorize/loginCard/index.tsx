@@ -40,7 +40,7 @@ export default function LoginCard({ redditAuthUrl }: LoginCardProps) {
         href={redditAuthUrl}
         className={styles.redditButton}
       >
-        <FontAwesomeIcon icon={faReddit} size="xl" /> Sign in with Reddit
+        <FontAwesomeIcon icon={faReddit} /> Sign in with Reddit
       </Link>
       <p>
         Learn more about{" "}

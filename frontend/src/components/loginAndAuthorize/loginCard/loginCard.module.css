@@ -1,6 +1,6 @@
 .loginCard {
   align-items: flex-start;
-  border-radius: var(--border-radius);
+  border-radius: 1rem;
   background-color: var(--color-background);
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@
 
   & h3 {
     font-weight: 400;
-    margin-block: var(--step--2);
+    margin-block: var(--step--3);
   }
 
   & p {

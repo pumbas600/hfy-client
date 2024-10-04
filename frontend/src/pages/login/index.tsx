@@ -1,8 +1,8 @@
 import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import { Main, PageLayout, Sticky } from "@/components/layout/pageLayout";
-import LoginCard from "@/components/login/loginCard";
-import LoginLayout from "@/components/login/loginLayout";
+import LoginCard from "@/components/loginAndAuthorize/loginCard";
+import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
