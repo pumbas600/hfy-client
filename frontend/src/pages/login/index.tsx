@@ -1,6 +1,7 @@
 import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import { Main, PageLayout, Sticky } from "@/components/layout/pageLayout";
+import LoginLayout from "@/components/login/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
@@ -43,11 +44,13 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
   }, [state]);
 
   return (
-    <PageLayout>
+    <LoginLayout>
       <Sticky start={<BackButton />} />
       <Main>
-        <Link href={authorizationUrl}>Login with Reddit</Link>
+        <Link variant="button" href={authorizationUrl}>
+          Login with Reddit
+        </Link>
       </Main>
-    </PageLayout>
+    </LoginLayout>
   );
 }
