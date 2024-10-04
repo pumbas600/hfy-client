@@ -89,7 +89,6 @@ namespace HfyClientApi.Services
     {
       return new UserDto
       {
-        Id = user.Id,
         Name = user.Name,
         IconUrl = user.IconUrl
       };
