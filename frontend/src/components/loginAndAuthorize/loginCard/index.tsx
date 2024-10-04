@@ -1,14 +1,19 @@
 import { Link } from "@/components/atomic";
-import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./loginCard.module.css";
 import config from "@/config";
+import { ReactNode } from "react";
 
 interface LoginCardProps {
-  redditAuthUrl: string;
+  title: string;
+  primaryLinkUrl: string;
+  primaryLinkChildren: ReactNode;
 }
 
-export default function LoginCard({ redditAuthUrl }: LoginCardProps) {
+export default function LoginCard({
+  title,
+  primaryLinkUrl,
+  primaryLinkChildren,
+}: LoginCardProps) {
   return (
     <div className={styles.loginCard}>
       <Link href="/" className={styles.iconLink}>
@@ -20,7 +25,7 @@ export default function LoginCard({ redditAuthUrl }: LoginCardProps) {
       </Link>
       <div>
         <h3>Login</h3>
-        <h2>{config.title}</h2>
+        <h2>{title}</h2>
       </div>
       <p>
         {config.title} is currently in beta, with a whitelist of users allowed
@@ -37,10 +42,10 @@ export default function LoginCard({ redditAuthUrl }: LoginCardProps) {
       </p>
       <Link
         variant="button"
-        href={redditAuthUrl}
-        className={styles.redditButton}
+        href={primaryLinkUrl}
+        className={styles.primaryButton}
       >
-        <FontAwesomeIcon icon={faReddit} /> Sign in with Reddit
+        {primaryLinkChildren}
       </Link>
       <p>
         Learn more about{" "}

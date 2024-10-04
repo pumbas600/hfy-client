@@ -1,12 +1,13 @@
-import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
-import { Main, PageLayout, Sticky } from "@/components/layout/pageLayout";
+import { Main, Sticky } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
 import { Api } from "@/util/api";
+import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { randomBytes } from "crypto";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
@@ -48,7 +49,15 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
     <LoginLayout>
       <Sticky start={<BackButton />} />
       <Main noInlinePadding>
-        <LoginCard redditAuthUrl={authorizationUrl} />
+        <LoginCard
+          title={config.title}
+          primaryLinkUrl={authorizationUrl}
+          primaryLinkChildren={
+            <>
+              <FontAwesomeIcon icon={faReddit} /> Sign in with Reddit{" "}
+            </>
+          }
+        />
       </Main>
     </LoginLayout>
   );

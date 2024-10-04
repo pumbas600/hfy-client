@@ -1,4 +1,6 @@
 import { Main, PageLayout } from "@/components/layout/pageLayout";
+import LoginCard from "@/components/loginAndAuthorize/loginCard";
+import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { PostLoginRequest } from "@/types/api";
@@ -50,14 +52,18 @@ export default function AuthorizePage() {
   }, [router]);
 
   return (
-    <PageLayout>
+    <LoginLayout>
       <Main>
-        <h2>Authorizing...</h2>
+        <LoginCard
+          title="Authorizing"
+          primaryLinkUrl="/"
+          primaryLinkChildren="Go home"
+        />
         {error && <p>Failed to log in: {error}</p>}
         {!isStateCorrect && (
           <p>There's something suspicious about this login request...</p>
         )}
       </Main>
-    </PageLayout>
+    </LoginLayout>
   );
 }

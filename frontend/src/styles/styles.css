@@ -172,9 +172,7 @@
     --color-link: #0000ee;
     --color-background: white;
     --color-foreground: black;
-    --color-foreground-secondary: oklch(
-      from var(--color-foreground) l c h / 65%
-    );
+    --color-foreground-secondary: #5e5e5e;
 
     /* Type scale */
     --step--5: clamp(0.4019rem, 0.4003rem + 0.0077vw, 0.4096rem);
