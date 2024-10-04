@@ -48,8 +48,9 @@ function determineContent(
 export default function AuthorizePage() {
   const router = useRouter();
   const [isNotWhitelisted, setIsNotWhitelisted] = useState(false);
+  const [apiErrorCode, setApiErrorCode] = useState<string | undefined>();
   const lastCode = useRef<string>();
-  const { error, code, state } = router.query;
+  const { error = apiErrorCode, code, state } = router.query;
 
   const isStateCorrect = stateMatches(state);
 
@@ -73,8 +74,13 @@ export default function AuthorizePage() {
         router.push("/");
       } catch (error) {
         console.error(error);
-        if (error instanceof ApiError && error.code === "User.NotWhitelisted") {
-          setIsNotWhitelisted(true);
+
+        if (error instanceof ApiError) {
+          setApiErrorCode(error.code);
+
+          if (error.code === "User.NotWhitelisted") {
+            setIsNotWhitelisted(true);
+          }
         }
       }
     };
