@@ -105,7 +105,7 @@ namespace HfyClientApi.Services
 
       var storedRefreshToken = new RefreshToken()
       {
-        Token = refreshToken.Value,
+        Token = HashRefreshToken(refreshToken.Value),
         ExpiresAt = refreshToken.ExpiresAt,
         Username = user.Name,
       };
@@ -122,12 +122,13 @@ namespace HfyClientApi.Services
 
     public async Task LogoutAsync(string refreshToken)
     {
-      await _refreshTokenRepository.DeleteRefreshTokenAsync(refreshToken);
+      await _refreshTokenRepository.DeleteRefreshTokenAsync(HashRefreshToken(refreshToken));
     }
 
     public async Task<Result<TokenPairDto>> RefreshAccessTokenAsync(string refreshToken)
     {
-      var storedRefreshToken = await _refreshTokenRepository.GetRefreshTokenAsync(refreshToken);
+      var hashedRefreshToken = HashRefreshToken(refreshToken);
+      var storedRefreshToken = await _refreshTokenRepository.GetRefreshTokenAsync(hashedRefreshToken);
       if (storedRefreshToken == null)
       {
         return Errors.AuthInvalidRefreshToken;
@@ -141,7 +142,7 @@ namespace HfyClientApi.Services
       var accessToken = _tokenService.GenerateAccessToken(storedRefreshToken.Username);
       var newRefreshToken = _tokenService.GenerateRefreshToken(storedRefreshToken.Username);
 
-      storedRefreshToken.Token = newRefreshToken.Value;
+      storedRefreshToken.Token = HashRefreshToken(newRefreshToken.Value);
       storedRefreshToken.ExpiresAt = newRefreshToken.ExpiresAt;
 
       await _refreshTokenRepository.UpdateRefreshTokenAsync(storedRefreshToken);
@@ -155,7 +156,7 @@ namespace HfyClientApi.Services
       return tokenPair;
     }
 
-    internal string HashRefreshToken(string refreshToken)
+    internal static string HashRefreshToken(string refreshToken)
     {
       using var sha256 = SHA256.Create();
       var hash = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
