@@ -14,6 +14,7 @@ namespace HfyClientApi.Exceptions
       public const string StoryMetadataUpsertFailed = "StoryMetadata.UpsertFailed";
       public const string ChapterPaginationPartialKeyset = "Chapter.PaginationPartialKeyset";
       public const string UserNotFound = "User.NotFound";
+      public const string UserNotWhitelisted = "User.NotWhitelisted";
       public const string SubredditNotFound = "Subreddit.NotFound";
       public const string AuthSubjectMissing = "Auth.SubjectMissing";
       public const string AuthInvalidRedditAccessToken = "Auth.InvalidRedditAccessToken";
@@ -40,6 +41,8 @@ namespace HfyClientApi.Exceptions
 
     public static Error UserNotFound(string username) =>
       new(Codes.UserNotFound, $"User {username} not found", HttpStatusCode.NotFound);
+    public static Error UserNotWhitelisted(string username) =>
+      new(Codes.UserNotWhitelisted, $"User {username} is not whitelisted for beta access", HttpStatusCode.Forbidden);
 
     public static Error SubredditNotFound(string name) =>
       new(Codes.SubredditNotFound, $"Subreddit {name} not found", HttpStatusCode.NotFound);

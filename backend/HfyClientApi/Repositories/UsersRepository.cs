@@ -23,7 +23,9 @@ namespace HfyClientApi.Repositories
 
     public async Task<User?> GetUserByUsernameAsync(string username)
     {
-      return await _context.Users.FirstOrDefaultAsync(u => u.Name == username);
+      return await _context.Users
+        .Include(u => u.WhitelistedUser)
+        .FirstOrDefaultAsync(u => u.Name == username);
     }
   }
 }
