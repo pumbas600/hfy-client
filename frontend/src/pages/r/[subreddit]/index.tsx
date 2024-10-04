@@ -2,14 +2,9 @@ import { HeadMeta } from "@/components/atomic";
 import ChapterCardList from "@/components/subreddit/chapterCardList";
 import SubredditLayout from "@/components/subreddit/subredditLayout";
 import config from "@/config";
-import {
-  GetNewChaptersRequest,
-  GetSelf,
-  GetSubredditRequest,
-} from "@/types/api";
+import { GetNewChaptersRequest, GetSubredditRequest } from "@/types/api";
 import { PaginatedChapters } from "@/types/chapter";
 import { Subreddit } from "@/types/subreddit";
-import { User } from "@/types/user";
 import { Api } from "@/util/api";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
@@ -17,11 +12,9 @@ interface SubredditPageProps {
   subreddit: Subreddit;
   paginatedChapters: PaginatedChapters;
   newChaptersUrl: string;
-  self: User;
 }
 
 const ONE_MINUTE = 60;
-const THIRTY_MINUTES = 30 * 60;
 
 export const getServerSideProps = (async ({ req, res, params, query }) => {
   if (!params) {
@@ -39,26 +32,20 @@ export const getServerSideProps = (async ({ req, res, params, query }) => {
 
   try {
     await Api.assertAccessTokenPresent(req, res);
-    const [subredditResponse, paginatedChaptersResponse, selfResponse] =
-      await Promise.all([
-        Api.get<GetSubredditRequest.ResBody>(subredditUrl, { req }),
-        Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
-          revalidate: ONE_MINUTE,
-          default: { pageSize: 20, nextKey: null, data: [] },
-          req,
-        }),
-        Api.get<GetSelf.ResBody>(`${config.api.baseUrl}/users/@me`, {
-          revalidate: THIRTY_MINUTES,
-          req,
-        }),
-      ]);
+    const [subredditResponse, paginatedChaptersResponse] = await Promise.all([
+      Api.get<GetSubredditRequest.ResBody>(subredditUrl, { req }),
+      Api.get<GetNewChaptersRequest.ResBody>(newChaptersUrl, {
+        revalidate: ONE_MINUTE,
+        default: { pageSize: 20, nextKey: null, data: [] },
+        req,
+      }),
+    ]);
 
     return {
       props: {
         subreddit: subredditResponse.data,
         paginatedChapters: paginatedChaptersResponse.data,
         newChaptersUrl: newChaptersUrl.toString(),
-        self: selfResponse.data,
       },
     };
   } catch (err) {
@@ -71,12 +58,11 @@ export default function SubredditPage({
   subreddit,
   paginatedChapters,
   newChaptersUrl,
-  self,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <HeadMeta title={subreddit.title} description={subreddit.description} />
-      <SubredditLayout subreddit={subreddit} self={self}>
+      <SubredditLayout subreddit={subreddit}>
         <ChapterCardList
           paginatedChapters={paginatedChapters}
           endpointUrl={newChaptersUrl}

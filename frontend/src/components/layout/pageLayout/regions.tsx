@@ -12,11 +12,10 @@ export interface StickyProps {
   start?: ReactNode;
   children?: ReactNode;
   end?: ReactNode;
-  self?: User;
   className?: string;
 }
 
-export function Sticky({ start, children, end, self, className }: StickyProps) {
+export function Sticky({ start, children, end, className }: StickyProps) {
   return (
     <div className={`${styles.sticky} ${className ?? ""}`}>
       <div className={styles.stickyContent}>
@@ -24,7 +23,7 @@ export function Sticky({ start, children, end, self, className }: StickyProps) {
         {children ?? <div />}
 
         <div className={styles.row}>
-          {end} {self && <SelfProfile key="profile" />}
+          {end} <SelfProfile key="profile" />
         </div>
       </div>
     </div>

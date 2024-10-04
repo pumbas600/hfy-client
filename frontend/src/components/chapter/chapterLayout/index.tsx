@@ -21,13 +21,11 @@ import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 export interface ChapterLayoutProps {
   children?: React.ReactNode;
   chapter: FullChapter;
-  self: User;
 }
 
 export default function ChapterLayout({
   children,
   chapter,
-  self,
 }: ChapterLayoutProps) {
   const subredditLink = `/r/${chapter.subreddit}`;
 
@@ -35,7 +33,6 @@ export default function ChapterLayout({
     <PageLayout>
       <Sticky
         start={<BackButton link={subredditLink} title="Back to subreddit" />}
-        self={self}
         end={[
           <Link
             variant="iconButton"

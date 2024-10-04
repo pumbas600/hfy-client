@@ -12,11 +12,9 @@ import { GetServerSideProps } from "next";
 
 export interface ChapterPageProps {
   chapter: FullChapter;
-  self: User;
 }
 
 const FIVE_MINUTES = 5 * 60;
-const THIRTY_MINUTES = 30 * 60;
 
 export const getServerSideProps = (async ({ req, res, params }) => {
   if (!params) {
@@ -24,24 +22,18 @@ export const getServerSideProps = (async ({ req, res, params }) => {
   }
 
   await Api.assertAccessTokenPresent(req, res);
-  const [chapterResponse, selfResponse] = await Promise.all([
-    Api.get<GetChapterRequest.ResBody>(
-      `${config.api.baseUrl}/chapters/${params.id}`,
-      {
-        revalidate: FIVE_MINUTES,
-        req,
-      }
-    ),
-    Api.get<GetSelf.ResBody>(`${config.api.baseUrl}/users/@me`, {
-      revalidate: THIRTY_MINUTES,
+  const chapterResponse = await Api.get<GetChapterRequest.ResBody>(
+    `${config.api.baseUrl}/chapters/${params.id}`,
+    {
+      revalidate: FIVE_MINUTES,
       req,
-    }),
-  ]);
+    }
+  );
 
-  return { props: { chapter: chapterResponse.data, self: selfResponse.data } };
+  return { props: { chapter: chapterResponse.data } };
 }) satisfies GetServerSideProps<ChapterPageProps, { id: string }>;
 
-export default function ChapterPage({ chapter, self }: ChapterPageProps) {
+export default function ChapterPage({ chapter }: ChapterPageProps) {
   return (
     <>
       <HeadMeta
@@ -49,7 +41,7 @@ export default function ChapterPage({ chapter, self }: ChapterPageProps) {
         image={chapter.coverArtUrl}
         imageAlt={`${chapter.title} cover art`}
       />
-      <ChapterLayout chapter={chapter} self={self}>
+      <ChapterLayout chapter={chapter}>
         <ChapterButtons chapter={chapter} />
         <TextLayout textHtml={chapter.textHtml} />
         <ChapterButtons chapter={chapter} hideFirstLink />
