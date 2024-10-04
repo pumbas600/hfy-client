@@ -2,6 +2,7 @@ import { Main, PageLayout } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
+import { WhitelistMessage } from "@/config/constants";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { PostLoginRequest } from "@/types/api";
 import { Api, ApiError } from "@/util/api";
@@ -18,7 +19,15 @@ function stateMatches(state?: string | string[]): boolean {
   );
 }
 
-function determineContent(isStateCorrect: boolean, error?: string | string[]) {
+function determineContent(
+  isStateCorrect: boolean,
+  error: string | string[] | undefined,
+  isNotWhitelisted: boolean
+): React.ReactNode {
+  if (isNotWhitelisted) {
+    return WhitelistMessage;
+  }
+
   /* https://github.com/reddit-archive/reddit/wiki/OAuth2#token-retrieval-code-flow */
   if (error === "access_denied") {
     return (
@@ -75,7 +84,7 @@ export default function AuthorizePage() {
     }
   }, [router]);
 
-  const content = determineContent(isStateCorrect, error);
+  const content = determineContent(isStateCorrect, error, isNotWhitelisted);
   const isLinkVisible =
     !isStateCorrect || error !== undefined || isNotWhitelisted;
 

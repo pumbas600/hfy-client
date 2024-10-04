@@ -4,6 +4,7 @@ import { Main, Sticky } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
+import { WhitelistMessage } from "@/config/constants";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
 import { Api } from "@/util/api";
@@ -60,13 +61,7 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
             </>
           }
         >
-          {config.title} is currently in beta, with a whitelist of users allowed
-          to access it. If you're interested in joining the beta or staying up
-          to date with development, feel free join the{" "}
-          <Link href={config.discordInviteUrl} variant="subtle">
-            Discord
-          </Link>
-          .
+          {WhitelistMessage}
         </LoginCard>
       </Main>
     </LoginLayout>
