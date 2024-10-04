@@ -1,9 +1,11 @@
 import { HeadMeta } from "@/components/atomic";
+import BackButton from "@/components/composite/backButton";
 import {
   Aside,
   Header,
   Main,
   PageLayout,
+  Sticky,
 } from "@/components/layout/pageLayout";
 import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
@@ -13,6 +15,7 @@ export default function AboutPage() {
     <>
       <HeadMeta title={`About | ${config.title}`} />
       <PageLayout>
+        <Sticky start={<BackButton />} />
         <Header>
           <h2>About</h2>
         </Header>
