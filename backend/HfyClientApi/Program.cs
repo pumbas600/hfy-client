@@ -124,9 +124,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
       OnMessageReceived = context =>
       {
-        var cipherService = context.HttpContext.RequestServices.GetRequiredService<ICipherService>();
+        // If there's already an authorization header, don't bother checking for cookies
+        if (!context.Request.Headers.Authorization.IsNullOrEmpty())
+        {
+          return Task.CompletedTask;
+        }
+
         if (context.Request.Cookies.TryGetValue(Config.Cookies.AccessToken, out var accessToken))
         {
+          var cipherService = context.HttpContext.RequestServices.GetRequiredService<ICipherService>();
           context.Token = cipherService.Decrypt(accessToken);
         }
 
