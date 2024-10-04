@@ -74,6 +74,7 @@ builder.Services.AddScoped<IRedditSynchronisationService, RedditSynchronisationS
 builder.Services.AddScoped<ISubredditService, SubredditService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICipherService, CipherService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
@@ -82,6 +83,8 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
+
+builder.Services.AddDataProtection();
 
 builder.Services.AddHttpClient(
   Config.Clients.NoRedirect,
@@ -121,7 +124,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
       OnMessageReceived = context =>
       {
-        context.Token = context.Request.Cookies[Config.Cookies.AccessToken];
+        var cipherService = context.HttpContext.RequestServices.GetRequiredService<ICipherService>();
+        if (context.Request.Cookies.TryGetValue(Config.Cookies.AccessToken, out var accessToken))
+        {
+          context.Token = cipherService.Decrypt(accessToken);
+        }
+
         return Task.CompletedTask;
       }
     };
