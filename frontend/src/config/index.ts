@@ -15,6 +15,7 @@ const config = {
   fontendBaseUrl:
     process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000",
   githubUrl: "https://github.com/pumbas600/hfy-client",
+  discordInviteUrl: "https://discord.com",
   title: "HFY Client",
   cookies: {
     refreshToken: "RefreshToken",
