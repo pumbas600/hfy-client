@@ -40,6 +40,13 @@ export default function LoginCard({ redditAuthUrl }: LoginCardProps) {
       >
         <FontAwesomeIcon icon={faReddit} size="xl" /> Sign in with Reddit
       </Link>
+      <p>
+        Learn more about{" "}
+        <Link href="/about" variant="subtle" className={styles.inlineLink}>
+          {config.title}
+        </Link>
+        .
+      </p>
     </div>
   );
 }
