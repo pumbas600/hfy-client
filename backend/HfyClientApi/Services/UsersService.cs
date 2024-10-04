@@ -154,5 +154,12 @@ namespace HfyClientApi.Services
 
       return tokenPair;
     }
+
+    internal string HashRefreshToken(string refreshToken)
+    {
+      using var sha256 = SHA256.Create();
+      var hash = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
+      return Convert.ToBase64String(hash);
+    }
   }
 }
