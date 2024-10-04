@@ -21,6 +21,7 @@ namespace HfyClientApi.Exceptions
       public const string AuthExpiredRefreshToken = "Auth.ExpiredRefreshToken";
       public const string AuthRefreshTokenMissing = "Auth.RefreshTokenMissing";
       public const string AuthCodeExchangeError = "Auth.CodeExchangeError";
+      public const string DecryptMalformedCipherError = "Decrypt.MalformedCipherError";
     }
 
     public static Error PostNotFound(string postId) =>
@@ -60,5 +61,8 @@ namespace HfyClientApi.Exceptions
 
     public static readonly Error AuthCodeExchangeError =
       new(Codes.AuthCodeExchangeError, "Failed to exchange the code for a Reddit access token", HttpStatusCode.Unauthorized);
+
+    public static readonly Error DecryptMalformedCipherError =
+      new(Codes.DecryptMalformedCipherError, $"Failed to decrypt text", HttpStatusCode.Unauthorized);
   }
 }

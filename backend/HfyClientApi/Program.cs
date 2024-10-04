@@ -133,7 +133,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         if (context.Request.Cookies.TryGetValue(Config.Cookies.AccessToken, out var accessToken))
         {
           var cipherService = context.HttpContext.RequestServices.GetRequiredService<ICipherService>();
-          context.Token = cipherService.Decrypt(accessToken);
+          var decryptedResult = cipherService.Decrypt(accessToken);
+          if (decryptedResult.IsFailure)
+          {
+            context.Fail("Failed to decrypt access token cookie");
+            return Task.CompletedTask;
+          }
+
+          context.Token = decryptedResult.Data;
         }
 
         return Task.CompletedTask;

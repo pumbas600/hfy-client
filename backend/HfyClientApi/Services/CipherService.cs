@@ -1,3 +1,6 @@
+using System.Security.Cryptography;
+using HfyClientApi.Exceptions;
+using HfyClientApi.Utils;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace HfyClientApi.Services
@@ -11,9 +14,16 @@ namespace HfyClientApi.Services
       _protector = dataProtectionProvider.CreateProtector("HfyClientApi.Services.CipherService");
     }
 
-    public string Decrypt(string text)
+    public Result<string> Decrypt(string text)
     {
-      return _protector.Unprotect(text);
+      try
+      {
+        return _protector.Unprotect(text);
+      }
+      catch (CryptographicException)
+      {
+        return Errors.DecryptMalformedCipherError;
+      }
     }
 
     public string Encrypt(string text)
