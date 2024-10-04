@@ -86,6 +86,7 @@ namespace HfyClientApi.Controllers
 
       Response.Cookies.Delete(Config.Cookies.AccessToken);
       Response.Cookies.Delete(Config.Cookies.RefreshToken);
+      Response.Cookies.Delete(Config.Cookies.UserProfile);
 
       return NoContent();
     }
