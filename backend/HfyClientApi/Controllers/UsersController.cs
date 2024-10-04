@@ -17,6 +17,10 @@ namespace HfyClientApi.Controllers
     private readonly ICipherService _cipherService;
     private readonly IUsersService _userService;
     private readonly JwtSettings _jwtSettings;
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+      PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
 
     public UsersController(
       ICipherService cipherService, IUsersService userService, JwtSettings jwtSettings)
@@ -116,9 +120,9 @@ namespace HfyClientApi.Controllers
 
     }
 
-    internal static string SerializeUserProfileCookieValue(UserDto userDto)
+    internal string SerializeUserProfileCookieValue(UserDto userDto)
     {
-      var userProfile = JsonSerializer.Serialize(userDto);
+      var userProfile = JsonSerializer.Serialize(userDto, _jsonSerializerOptions);
       return Convert.ToBase64String(Encoding.UTF8.GetBytes(userProfile));
     }
 
