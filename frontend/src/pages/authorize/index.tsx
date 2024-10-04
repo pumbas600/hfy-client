@@ -75,7 +75,7 @@ export default function AuthorizePage() {
 
   return (
     <LoginLayout>
-      <Main>
+      <Main noInlinePadding>
         <LoginCard
           title="Authorizing"
           primaryLinkUrl="/login"

@@ -2,7 +2,8 @@
   background-color: var(--primary-color);
 
   & main {
-    align-self: center;
-    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -9,6 +9,7 @@
   padding-block-end: var(--step-5);
   padding-inline: var(--step-5);
   max-width: 35rem;
+  width: 100%;
 
   & h2 {
     font-weight: 600;
