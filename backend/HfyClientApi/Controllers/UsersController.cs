@@ -60,13 +60,13 @@ namespace HfyClientApi.Controllers
         return Errors.AuthRefreshTokenMissing.ToActionResult();
       }
 
-      var refreshResultDto = await _userService.RefreshAccessTokenAsync(refreshToken);
-      if (!refreshResultDto.IsSuccess)
+      var loginResultDto = await _userService.RefreshAccessTokenAsync(refreshToken);
+      if (!loginResultDto.IsSuccess)
       {
-        return refreshResultDto.Error.ToActionResult();
+        return loginResultDto.Error.ToActionResult();
       }
 
-      // SetCookies(refreshResultDto.Data);
+      SetCookies(loginResultDto.Data);
 
       return NoContent();
     }

@@ -9,7 +9,7 @@ namespace HfyClientApi.Services
 
     Task<Result<LoginDto>> LoginWithRedditAsync(string redditCode);
 
-    Task<Result<TokenPairDto>> RefreshAccessTokenAsync(string refreshToken);
+    Task<Result<LoginDto>> RefreshAccessTokenAsync(string refreshToken);
 
     Task LogoutAsync(string refreshToken);
 
