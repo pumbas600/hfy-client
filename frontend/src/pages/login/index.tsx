@@ -1,12 +1,12 @@
+import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
-import { Main, PageLayout } from "@/components/layout/pageLayout";
+import { Main, PageLayout, Sticky } from "@/components/layout/pageLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
 import { Api } from "@/util/api";
 import { randomBytes } from "crypto";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import { useEffect } from "react";
 
 function generateRandomString(length: number): string {
@@ -44,11 +44,9 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
 
   return (
     <PageLayout>
+      <Sticky start={<BackButton />} />
       <Main>
-        <BackButton />
-        <Link href={authorizationUrl}>
-          <button>Login with Reddit</button>
-        </Link>
+        <Link href={authorizationUrl}>Login with Reddit</Link>
       </Main>
     </PageLayout>
   );

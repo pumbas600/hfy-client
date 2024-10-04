@@ -1,9 +1,8 @@
+import { ReactNode } from "react";
 import styles from "./pageLayout.module.css";
 
-export * from "./Regions";
-
 export interface PageLayoutProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export default function PageLayout({ children }: PageLayoutProps) {
