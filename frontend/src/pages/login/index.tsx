@@ -51,7 +51,7 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
       <Sticky start={<BackButton />} />
       <Main noInlinePadding>
         <LoginCard
-          title={config.title}
+          title="Login"
           primaryLinkUrl={authorizationUrl}
           primaryLinkChildren={
             <>

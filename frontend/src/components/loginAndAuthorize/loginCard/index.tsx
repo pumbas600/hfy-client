@@ -26,8 +26,8 @@ export default function LoginCard({
         />
       </Link>
       <div>
-        <h3>Login</h3>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
+        <h2>{config.title}</h2>
       </div>
       <p className={styles.content}>{children}</p>
       <Link
