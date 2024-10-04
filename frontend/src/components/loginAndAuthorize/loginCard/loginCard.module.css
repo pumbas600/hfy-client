@@ -4,10 +4,11 @@
   background-color: var(--color-background);
   display: flex;
   flex-direction: column;
-  gap: var(--step-3);
-  padding-block-start: var(--step-4);
-  padding-block-end: var(--step-6);
-  padding-inline: var(--step-6);
+  gap: var(--step-2);
+  padding-block-start: var(--step-3);
+  padding-block-end: var(--step-5);
+  padding-inline: var(--step-5);
+  max-width: 35rem;
 
   & h2 {
     font-weight: 600;
@@ -15,7 +16,7 @@
 
   & h3 {
     font-weight: 400;
-    margin-block: var(--step--3);
+    margin-block: var(--step--4);
   }
 
   & p {
@@ -26,7 +27,7 @@
 
 .icon {
   aspect-ratio: 1/1;
-  width: 4rem;
+  width: 3.5rem;
 }
 
 .iconLink:hover {
