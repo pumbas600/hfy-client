@@ -20,6 +20,7 @@ const config = {
   cookies: {
     refreshToken: "RefreshToken",
     accessToken: "AccessToken",
+    userProfile: "UserProfile",
   },
 } as const;
 
