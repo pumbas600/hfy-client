@@ -24,7 +24,7 @@ export function Sticky({ start, children, end, self, className }: StickyProps) {
         {children ?? <div />}
 
         <div className={styles.row}>
-          {end} {self && <SelfProfile key="profile" user={self} />}
+          {end} {self && <SelfProfile key="profile" />}
         </div>
       </div>
     </div>

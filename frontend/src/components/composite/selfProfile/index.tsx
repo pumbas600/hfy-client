@@ -1,12 +1,17 @@
 import { Link } from "@/components/atomic";
-import ProfilePicture, {
-  ProfilePictureProps,
-} from "@/components/atomic/profilePicture";
+import ProfilePicture from "@/components/atomic/profilePicture";
+import { getSelf } from "@/lib/getSelf";
 
-export default function SelfProfile(props: ProfilePictureProps) {
+export default function SelfProfile() {
+  const self = getSelf();
+
+  if (!self) {
+    return null;
+  }
+
   return (
     <Link variant="iconButton" href="/settings" title="Settings">
-      <ProfilePicture {...props} className={props.className} />
+      <ProfilePicture user={self} />
     </Link>
   );
 }
