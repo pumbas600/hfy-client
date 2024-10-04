@@ -1,8 +1,9 @@
 import { Link } from "@/components/atomic";
 import ProfilePicture from "@/components/atomic/profilePicture";
 import { getSelf } from "@/lib/getSelf";
+import dynamic from "next/dynamic";
 
-export default function SelfProfile() {
+function SelfProfile() {
   const self = getSelf();
 
   if (!self) {
@@ -15,3 +16,10 @@ export default function SelfProfile() {
     </Link>
   );
 }
+
+// Prevent SSR to avoid hydration issues.
+const DynamicSelfProfile = dynamic(() => Promise.resolve(SelfProfile), {
+  ssr: false,
+});
+
+export default DynamicSelfProfile;
