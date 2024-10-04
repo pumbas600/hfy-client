@@ -11,6 +11,18 @@
     "header header header header"
     ". aside main ."
     "footer footer footer footer";
+
+  &:not(:has(aside)) {
+    grid-template-columns:
+      [full-start] auto [content-start] minmax(min-content, 50rem)
+      [content-end] auto [full-end];
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "sticky sticky sticky"
+      "header header header"
+      ". main ."
+      "footer footer footer";
+  }
 }
 
 .sticky {
