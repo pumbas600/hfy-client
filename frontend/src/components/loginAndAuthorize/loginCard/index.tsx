@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 interface LoginCardProps {
   title: string;
   children: ReactNode;
+  isLinkVisible: boolean;
   primaryLinkUrl: string;
   primaryLinkChildren: ReactNode;
 }
@@ -13,6 +14,7 @@ interface LoginCardProps {
 export default function LoginCard({
   title,
   children,
+  isLinkVisible,
   primaryLinkUrl,
   primaryLinkChildren,
 }: LoginCardProps) {
@@ -30,13 +32,15 @@ export default function LoginCard({
         <h2>{config.title}</h2>
       </div>
       <p className={styles.content}>{children}</p>
-      <Link
-        variant="button"
-        href={primaryLinkUrl}
-        className={styles.primaryButton}
-      >
-        {primaryLinkChildren}
-      </Link>
+      {isLinkVisible && (
+        <Link
+          variant="button"
+          href={primaryLinkUrl}
+          className={styles.primaryButton}
+        >
+          {primaryLinkChildren}
+        </Link>
+      )}
       <p>
         Learn more about{" "}
         <Link href="/about" variant="subtle" className={styles.inlineLink}>

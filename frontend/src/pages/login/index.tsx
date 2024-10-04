@@ -52,6 +52,7 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
       <Main noInlinePadding>
         <LoginCard
           title="Login"
+          isLinkVisible
           primaryLinkUrl={authorizationUrl}
           primaryLinkChildren={
             <>

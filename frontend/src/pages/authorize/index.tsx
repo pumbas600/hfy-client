@@ -33,7 +33,7 @@ function determineContent(isStateCorrect: boolean, error?: string | string[]) {
     return "Hmm… Something went wrong while logging in with Reddit. Please try again.";
   }
 
-  return "Verifying Reddit login attempt…";
+  return "Verifying Reddit login attempt… Please wait a moment while we redirect you.";
 }
 
 export default function AuthorizePage() {
@@ -72,12 +72,14 @@ export default function AuthorizePage() {
   }, [router]);
 
   const content = determineContent(isStateCorrect, error);
+  const isLinkVisible = !isStateCorrect || error !== undefined;
 
   return (
     <LoginLayout>
       <Main noInlinePadding>
         <LoginCard
           title="Authorizing"
+          isLinkVisible={isLinkVisible}
           primaryLinkUrl="/login"
           primaryLinkChildren={
             <>
