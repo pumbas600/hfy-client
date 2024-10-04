@@ -1,14 +1,28 @@
 .pageLayout {
+  min-height: 100dvh;
   display: grid;
   column-gap: var(--step-0);
   grid-template-columns:
     [full-start] auto [aside-start] 9rem
     [content-start] minmax(min-content, 50rem) [content-end] auto [full-end];
+  grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     "sticky sticky sticky sticky"
     "header header header header"
     ". aside main ."
     "footer footer footer footer";
+
+  &:not(:has(aside)) {
+    grid-template-columns:
+      [full-start] auto [content-start] minmax(min-content, 50rem)
+      [content-end] auto [full-end];
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "sticky sticky sticky"
+      "header header header"
+      ". main ."
+      "footer footer footer";
+  }
 }
 
 .sticky {
@@ -77,8 +91,8 @@
   grid-area: footer;
   grid-template-columns: subgrid;
   margin-block-start: var(--step-1);
-  padding-block-start: var(--step-4);
-  padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-4));
+  padding-block-start: var(--step-2);
+  padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-2));
   padding-inline: var(--step-0);
 }
 

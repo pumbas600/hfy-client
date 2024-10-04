@@ -1,12 +1,16 @@
+import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
-import { Main, PageLayout } from "@/components/layout/pageLayout";
+import { Main, Sticky } from "@/components/layout/pageLayout";
+import LoginCard from "@/components/loginAndAuthorize/loginCard";
+import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
 import { Api } from "@/util/api";
+import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { randomBytes } from "crypto";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import { useEffect } from "react";
 
 function generateRandomString(length: number): string {
@@ -43,13 +47,28 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
   }, [state]);
 
   return (
-    <PageLayout>
-      <Main>
-        <BackButton />
-        <Link href={authorizationUrl}>
-          <button>Login with Reddit</button>
-        </Link>
+    <LoginLayout>
+      <Sticky start={<BackButton />} />
+      <Main noInlinePadding>
+        <LoginCard
+          title="Login"
+          isLinkVisible
+          primaryLinkUrl={authorizationUrl}
+          primaryLinkChildren={
+            <>
+              <FontAwesomeIcon size="xl" icon={faReddit} /> Sign in with Reddit{" "}
+            </>
+          }
+        >
+          {config.title} is currently in beta, with a whitelist of users allowed
+          to access it. If you're interested in joining the beta or staying up
+          to date with development, feel free join the{" "}
+          <Link href={config.discordInviteUrl} variant="subtle">
+            Discord
+          </Link>
+          .
+        </LoginCard>
       </Main>
-    </PageLayout>
+    </LoginLayout>
   );
 }

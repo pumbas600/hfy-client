@@ -1,8 +1,12 @@
 import { Main, PageLayout } from "@/components/layout/pageLayout";
+import LoginCard from "@/components/loginAndAuthorize/loginCard";
+import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { PostLoginRequest } from "@/types/api";
 import { Api } from "@/util/api";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 
@@ -12,6 +16,24 @@ function stateMatches(state?: string | string[]): boolean {
     decodeURIComponent(state) ===
       localStorage.getItem(LocalStorageKeys.redditState)
   );
+}
+
+function determineContent(isStateCorrect: boolean, error?: string | string[]) {
+  /* https://github.com/reddit-archive/reddit/wiki/OAuth2#token-retrieval-code-flow */
+  if (error === "access_denied") {
+    return (
+      <>
+        Unfortunately, to access this site you must login with your Reddit
+        account. This is required to verify you have a Reddit account and to
+        determine your username and profile picture.
+      </>
+    );
+  }
+  if (!isStateCorrect || error) {
+    return "Hmm… Something went wrong while logging in with Reddit. Please try again.";
+  }
+
+  return "Verifying Reddit login attempt… Please wait a moment while we redirect you.";
 }
 
 export default function AuthorizePage() {
@@ -49,15 +71,25 @@ export default function AuthorizePage() {
     }
   }, [router]);
 
+  const content = determineContent(isStateCorrect, error);
+  const isLinkVisible = !isStateCorrect || error !== undefined;
+
   return (
-    <PageLayout>
-      <Main>
-        <h2>Authorizing...</h2>
-        {error && <p>Failed to log in: {error}</p>}
-        {!isStateCorrect && (
-          <p>There's something suspicious about this login request...</p>
-        )}
+    <LoginLayout>
+      <Main noInlinePadding>
+        <LoginCard
+          title="Authorizing"
+          isLinkVisible={isLinkVisible}
+          primaryLinkUrl="/login"
+          primaryLinkChildren={
+            <>
+              Try again <FontAwesomeIcon size="xl" icon={faArrowRight} />
+            </>
+          }
+        >
+          {content}
+        </LoginCard>
       </Main>
-    </PageLayout>
+    </LoginLayout>
   );
 }

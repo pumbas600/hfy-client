@@ -1,0 +1,9 @@
+.loginLayout {
+  background-color: var(--primary-color);
+
+  & main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
