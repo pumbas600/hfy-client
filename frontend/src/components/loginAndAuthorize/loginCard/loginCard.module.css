@@ -16,7 +16,7 @@
 
   & h3 {
     font-weight: 400;
-    margin-block: var(--step--4);
+    margin-block-start: var(--step--4);
   }
 
   & p {

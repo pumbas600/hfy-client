@@ -173,7 +173,7 @@
     --color-background: white;
     --color-foreground: black;
     --color-foreground-secondary: oklch(
-      from var(--color-foreground) l c h / 55%
+      from var(--color-foreground) l c h / 65%
     );
 
     /* Type scale */
