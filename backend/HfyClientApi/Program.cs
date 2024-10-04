@@ -74,6 +74,7 @@ builder.Services.AddScoped<IRedditSynchronisationService, RedditSynchronisationS
 builder.Services.AddScoped<ISubredditService, SubredditService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICipherService, CipherService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
 builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
@@ -82,6 +83,8 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
+
+builder.Services.AddDataProtection();
 
 builder.Services.AddHttpClient(
   Config.Clients.NoRedirect,
@@ -121,7 +124,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
       OnMessageReceived = context =>
       {
-        context.Token = context.Request.Cookies[Config.Cookies.AccessToken];
+        // If there's already an authorization header, don't bother checking for cookies
+        if (!context.Request.Headers.Authorization.IsNullOrEmpty())
+        {
+          return Task.CompletedTask;
+        }
+
+        if (context.Request.Cookies.TryGetValue(Config.Cookies.AccessToken, out var accessToken))
+        {
+          var cipherService = context.HttpContext.RequestServices.GetRequiredService<ICipherService>();
+          var decryptedResult = cipherService.Decrypt(accessToken);
+          if (decryptedResult.IsFailure)
+          {
+            context.Fail("Failed to decrypt access token cookie");
+            return Task.CompletedTask;
+          }
+
+          context.Token = decryptedResult.Data;
+        }
+
         return Task.CompletedTask;
       }
     };

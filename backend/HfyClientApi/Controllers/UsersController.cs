@@ -12,11 +12,14 @@ namespace HfyClientApi.Controllers
   [Route("api/v1/[controller]")]
   public class UsersController : ControllerBase
   {
+    private readonly ICipherService _cipherService;
     private readonly IUsersService _userService;
     private readonly JwtSettings _jwtSettings;
 
-    public UsersController(IUsersService userService, JwtSettings jwtSettings)
+    public UsersController(
+      ICipherService cipherService, IUsersService userService, JwtSettings jwtSettings)
     {
+      _cipherService = cipherService;
       _userService = userService;
       _jwtSettings = jwtSettings;
     }
@@ -100,8 +103,11 @@ namespace HfyClientApi.Controllers
       var accessTokenOptions = CreateCookieOptions(tokenPair.AccessToken.ExpiresAt);
       var refreshTokenOptions = CreateCookieOptions(tokenPair.RefreshToken.ExpiresAt);
 
-      Response.Cookies.Append(Config.Cookies.AccessToken, tokenPair.AccessToken.Value, accessTokenOptions);
-      Response.Cookies.Append(Config.Cookies.RefreshToken, tokenPair.RefreshToken.Value, refreshTokenOptions);
+      var accessToken = _cipherService.Encrypt(tokenPair.AccessToken.Value);
+      var refreshToken = tokenPair.RefreshToken.Value;
+
+      Response.Cookies.Append(Config.Cookies.AccessToken, accessToken, accessTokenOptions);
+      Response.Cookies.Append(Config.Cookies.RefreshToken, refreshToken, refreshTokenOptions);
 
     }
 
