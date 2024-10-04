@@ -91,8 +91,8 @@
   grid-area: footer;
   grid-template-columns: subgrid;
   margin-block-start: var(--step-1);
-  padding-block-start: var(--step-4);
-  padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-4));
+  padding-block-start: var(--step-2);
+  padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-2));
   padding-inline: var(--step-0);
 }
 
