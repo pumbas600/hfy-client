@@ -29,6 +29,10 @@
   width: 4rem;
 }
 
+.iconLink:hover {
+  opacity: 0.85;
+}
+
 .inlineLink {
   text-decoration: underline;
 }

@@ -11,11 +11,13 @@ interface LoginCardProps {
 export default function LoginCard({ redditAuthUrl }: LoginCardProps) {
   return (
     <div className={styles.loginCard}>
-      <img
-        src="https://styles.redditmedia.com/t5_2y95n/styles/communityIcon_or09gmyen4l21.png"
-        alt="HFY Logo"
-        className={styles.icon}
-      />
+      <Link href="/" className={styles.iconLink}>
+        <img
+          src="https://styles.redditmedia.com/t5_2y95n/styles/communityIcon_or09gmyen4l21.png"
+          alt="HFY Logo"
+          className={styles.icon}
+        />
+      </Link>
       <div>
         <h3>Login</h3>
         <h2>{config.title}</h2>
