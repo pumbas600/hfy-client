@@ -1,3 +1,7 @@
 .loginLayout {
   background-color: var(--primary-color);
+
+  & main {
+    align-self: center;
+  }
 }
