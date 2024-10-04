@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
@@ -15,6 +17,10 @@ namespace HfyClientApi.Controllers
     private readonly ICipherService _cipherService;
     private readonly IUsersService _userService;
     private readonly JwtSettings _jwtSettings;
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+      PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
 
     public UsersController(
       ICipherService cipherService, IUsersService userService, JwtSettings jwtSettings)
@@ -44,7 +50,7 @@ namespace HfyClientApi.Controllers
 
       var loginDto = loginResultDto.Data;
 
-      SetTokenCookies(loginDto);
+      SetCookies(loginDto);
 
       return loginDto.User;
     }
@@ -58,13 +64,13 @@ namespace HfyClientApi.Controllers
         return Errors.AuthRefreshTokenMissing.ToActionResult();
       }
 
-      var refreshResultDto = await _userService.RefreshAccessTokenAsync(refreshToken);
-      if (!refreshResultDto.IsSuccess)
+      var loginResultDto = await _userService.RefreshAccessTokenAsync(refreshToken);
+      if (!loginResultDto.IsSuccess)
       {
-        return refreshResultDto.Error.ToActionResult();
+        return loginResultDto.Error.ToActionResult();
       }
 
-      SetTokenCookies(refreshResultDto.Data);
+      SetCookies(loginResultDto.Data);
 
       return NoContent();
     }
@@ -80,6 +86,7 @@ namespace HfyClientApi.Controllers
 
       Response.Cookies.Delete(Config.Cookies.AccessToken);
       Response.Cookies.Delete(Config.Cookies.RefreshToken);
+      Response.Cookies.Delete(Config.Cookies.UserProfile);
 
       return NoContent();
     }
@@ -98,25 +105,34 @@ namespace HfyClientApi.Controllers
       return userResult.ToActionResult(Ok);
     }
 
-    internal void SetTokenCookies(TokenPairDto tokenPair)
+    internal void SetCookies(LoginDto loginDto)
     {
-      var accessTokenOptions = CreateCookieOptions(tokenPair.AccessToken.ExpiresAt);
-      var refreshTokenOptions = CreateCookieOptions(tokenPair.RefreshToken.ExpiresAt);
+      var accessTokenOptions = CreateCookieOptions(loginDto.AccessToken.ExpiresAt);
+      var refreshTokenOptions = CreateCookieOptions(loginDto.RefreshToken.ExpiresAt);
+      var userProfileOptions = CreateCookieOptions(loginDto.RefreshToken.ExpiresAt, false);
 
-      var accessToken = _cipherService.Encrypt(tokenPair.AccessToken.Value);
-      var refreshToken = tokenPair.RefreshToken.Value;
+      var accessToken = _cipherService.Encrypt(loginDto.AccessToken.Value);
+      var refreshToken = loginDto.RefreshToken.Value;
+      var userProfile = SerializeUserProfileCookieValue(loginDto.User);
 
       Response.Cookies.Append(Config.Cookies.AccessToken, accessToken, accessTokenOptions);
       Response.Cookies.Append(Config.Cookies.RefreshToken, refreshToken, refreshTokenOptions);
+      Response.Cookies.Append(Config.Cookies.UserProfile, userProfile, userProfileOptions);
 
     }
 
-    internal CookieOptions CreateCookieOptions(DateTime expiresAt)
+    internal string SerializeUserProfileCookieValue(UserDto userDto)
     {
-      var cookieExpiresAt = expiresAt.AddMinutes(_jwtSettings.CookieEarlyExpirationOffsetMinutes);
+      var userProfile = JsonSerializer.Serialize(userDto, _jsonSerializerOptions);
+      return Convert.ToBase64String(Encoding.UTF8.GetBytes(userProfile));
+    }
+
+    internal CookieOptions CreateCookieOptions(DateTime expiresAt, bool httpOnly = true)
+    {
+      var cookieExpiresAt = expiresAt.AddMinutes(-_jwtSettings.CookieEarlyExpirationOffsetMinutes);
       return new CookieOptions
       {
-        HttpOnly = true,
+        HttpOnly = httpOnly,
         Secure = true,
         SameSite = SameSiteMode.Strict,
         Expires = cookieExpiresAt,

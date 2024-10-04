@@ -28,11 +28,13 @@
 
 .icon {
   aspect-ratio: 1/1;
-  width: 3.5rem;
+  background-color: #0390fc;
+  border-radius: 50%;
+  width: 3rem;
 }
 
 .iconLink:hover {
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .content a {

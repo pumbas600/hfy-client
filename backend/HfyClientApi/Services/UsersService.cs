@@ -125,7 +125,7 @@ namespace HfyClientApi.Services
       await _refreshTokenRepository.DeleteRefreshTokenAsync(HashRefreshToken(refreshToken));
     }
 
-    public async Task<Result<TokenPairDto>> RefreshAccessTokenAsync(string refreshToken)
+    public async Task<Result<LoginDto>> RefreshAccessTokenAsync(string refreshToken)
     {
       var hashedRefreshToken = HashRefreshToken(refreshToken);
       var storedRefreshToken = await _refreshTokenRepository.GetRefreshTokenAsync(hashedRefreshToken);
@@ -139,21 +139,30 @@ namespace HfyClientApi.Services
         return Errors.AuthExpiredRefreshToken;
       }
 
-      var accessToken = _tokenService.GenerateAccessToken(storedRefreshToken.Username);
-      var newRefreshToken = _tokenService.GenerateRefreshToken(storedRefreshToken.Username);
+      var username = storedRefreshToken.Username;
+
+      var accessToken = _tokenService.GenerateAccessToken(username);
+      var newRefreshToken = _tokenService.GenerateRefreshToken(username);
 
       storedRefreshToken.Token = HashRefreshToken(newRefreshToken.Value);
       storedRefreshToken.ExpiresAt = newRefreshToken.ExpiresAt;
 
       await _refreshTokenRepository.UpdateRefreshTokenAsync(storedRefreshToken);
+      var user = await _userRepository.GetUserByUsernameAsync(username);
 
-      var tokenPair = new TokenPairDto()
+      if (user == null)
+      {
+        return Errors.UserNotFound(username);
+      }
+
+      var loginDto = new LoginDto()
       {
         AccessToken = accessToken,
         RefreshToken = newRefreshToken,
+        User = _mapper.ToUserDto(user),
       };
 
-      return tokenPair;
+      return loginDto;
     }
 
     internal static string HashRefreshToken(string refreshToken)

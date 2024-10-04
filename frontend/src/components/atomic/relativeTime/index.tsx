@@ -8,7 +8,11 @@ export default function RelativeTime({ dateTimeUtc }: RelativeTimeProps) {
   const dayjsTime = dayjs(dateTimeUtc);
 
   return (
-    <time dateTime={dateTimeUtc} title={dayjsTime.format("h:mm A, D MMM YYYY")}>
+    <time
+      dateTime={dateTimeUtc}
+      title={dayjsTime.format("h:mm A, D MMM YYYY")}
+      suppressHydrationWarning
+    >
       {dayjsTime.fromNow()}
     </time>
   );

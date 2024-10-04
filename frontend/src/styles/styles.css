@@ -218,6 +218,7 @@
     --color-link: #5ba6e7;
     --color-background: #1f1f1f;
     --color-foreground: #dddddd;
+    --color-foreground-secondary: #888888;
   }
 
   *:focus-visible {

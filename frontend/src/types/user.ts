@@ -3,7 +3,6 @@ export interface AuthorizationUrlDto {
 }
 
 export interface User {
-  id: string;
   name: string;
   iconUrl: string;
 }
