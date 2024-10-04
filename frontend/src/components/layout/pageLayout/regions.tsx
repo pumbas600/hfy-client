@@ -1,6 +1,5 @@
 import SelfProfile from "@/components/composite/selfProfile";
 import styles from "./pageLayout.module.css";
-import { User } from "@/types/user";
 import { ReactNode } from "react";
 
 export interface RegionProps {
@@ -21,7 +20,6 @@ export function Sticky({ start, children, end, className }: StickyProps) {
       <div className={styles.stickyContent}>
         {start ?? <div />}
         {children ?? <div />}
-
         <div className={styles.row}>
           {end} <SelfProfile key="profile" />
         </div>
