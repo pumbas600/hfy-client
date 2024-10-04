@@ -1,6 +1,12 @@
 import config from "@/config";
 import { IncomingMessage, OutgoingMessage } from "http";
 
+export class ApiError extends Error {
+  constructor(message: string, public code: string, public status: number) {
+    super(message);
+  }
+}
+
 export namespace Api {
   export interface NextIncomingMessage extends IncomingMessage {
     cookies: Record<string, string | undefined>;
@@ -102,6 +108,10 @@ export namespace Api {
 
     if (json === undefined) {
       throw new Error(response.statusText);
+    }
+
+    if (json.code && json.message) {
+      throw new ApiError(json.message, json.code, response.status);
     }
 
     throw new Error(JSON.stringify(json, undefined, 4));

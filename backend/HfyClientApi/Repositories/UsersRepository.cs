@@ -13,17 +13,19 @@ namespace HfyClientApi.Repositories
       _context = context;
     }
 
-    public async Task<User> UpsertUserAsync(User user)
+    public async Task<User?> UpsertUserAsync(User user)
     {
       await _context.Users.Upsert(user).RunAsync();
       await _context.SaveChangesAsync();
 
-      return user;
+      return await GetUserByUsernameAsync(user.Name);
     }
 
     public async Task<User?> GetUserByUsernameAsync(string username)
     {
-      return await _context.Users.FirstOrDefaultAsync(u => u.Name == username);
+      return await _context.Users
+        .Include(u => u.WhitelistedUser)
+        .FirstOrDefaultAsync(u => u.Name == username);
     }
   }
 }
