@@ -20,6 +20,7 @@ namespace HfyClientApi.Configuration
     {
       public const string AccessToken = "AccessToken";
       public const string RefreshToken = "RefreshToken";
+      public const string UserProfile = "UserProfile";
     }
 
     public class Clients

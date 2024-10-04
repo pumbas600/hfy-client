@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
@@ -44,7 +46,7 @@ namespace HfyClientApi.Controllers
 
       var loginDto = loginResultDto.Data;
 
-      SetTokenCookies(loginDto);
+      SetCookies(loginDto);
 
       return loginDto.User;
     }
@@ -64,7 +66,7 @@ namespace HfyClientApi.Controllers
         return refreshResultDto.Error.ToActionResult();
       }
 
-      SetTokenCookies(refreshResultDto.Data);
+      // SetCookies(refreshResultDto.Data);
 
       return NoContent();
     }
@@ -98,25 +100,34 @@ namespace HfyClientApi.Controllers
       return userResult.ToActionResult(Ok);
     }
 
-    internal void SetTokenCookies(TokenPairDto tokenPair)
+    internal void SetCookies(LoginDto loginDto)
     {
-      var accessTokenOptions = CreateCookieOptions(tokenPair.AccessToken.ExpiresAt);
-      var refreshTokenOptions = CreateCookieOptions(tokenPair.RefreshToken.ExpiresAt);
+      var accessTokenOptions = CreateCookieOptions(loginDto.AccessToken.ExpiresAt);
+      var refreshTokenOptions = CreateCookieOptions(loginDto.RefreshToken.ExpiresAt);
+      var userProfileOptions = CreateCookieOptions(loginDto.RefreshToken.ExpiresAt, false);
 
-      var accessToken = _cipherService.Encrypt(tokenPair.AccessToken.Value);
-      var refreshToken = tokenPair.RefreshToken.Value;
+      var accessToken = _cipherService.Encrypt(loginDto.AccessToken.Value);
+      var refreshToken = loginDto.RefreshToken.Value;
+      var userProfile = SerializeUserProfileCookieValue(loginDto.User);
 
       Response.Cookies.Append(Config.Cookies.AccessToken, accessToken, accessTokenOptions);
       Response.Cookies.Append(Config.Cookies.RefreshToken, refreshToken, refreshTokenOptions);
+      Response.Cookies.Append(Config.Cookies.UserProfile, userProfile, userProfileOptions);
 
     }
 
-    internal CookieOptions CreateCookieOptions(DateTime expiresAt)
+    internal static string SerializeUserProfileCookieValue(UserDto userDto)
     {
-      var cookieExpiresAt = expiresAt.AddMinutes(_jwtSettings.CookieEarlyExpirationOffsetMinutes);
+      var userProfile = JsonSerializer.Serialize(userDto);
+      return Convert.ToBase64String(Encoding.UTF8.GetBytes(userProfile));
+    }
+
+    internal CookieOptions CreateCookieOptions(DateTime expiresAt, bool httpOnly = true)
+    {
+      var cookieExpiresAt = expiresAt.AddMinutes(-_jwtSettings.CookieEarlyExpirationOffsetMinutes);
       return new CookieOptions
       {
-        HttpOnly = true,
+        HttpOnly = httpOnly,
         Secure = true,
         SameSite = SameSiteMode.Strict,
         Expires = cookieExpiresAt,
