@@ -4,11 +4,11 @@ import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { PostLoginRequest } from "@/types/api";
-import { Api } from "@/util/api";
+import { Api, ApiError } from "@/util/api";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function stateMatches(state?: string | string[]): boolean {
   return (
@@ -38,6 +38,7 @@ function determineContent(isStateCorrect: boolean, error?: string | string[]) {
 
 export default function AuthorizePage() {
   const router = useRouter();
+  const [isNotWhitelisted, setIsNotWhitelisted] = useState(false);
   const lastCode = useRef<string>();
   const { error, code, state } = router.query;
 
@@ -63,6 +64,9 @@ export default function AuthorizePage() {
         router.push("/");
       } catch (error) {
         console.error(error);
+        if (error instanceof ApiError && error.code === "User.NotWhitelisted") {
+          setIsNotWhitelisted(true);
+        }
       }
     };
 
@@ -72,7 +76,12 @@ export default function AuthorizePage() {
   }, [router]);
 
   const content = determineContent(isStateCorrect, error);
-  const isLinkVisible = !isStateCorrect || error !== undefined;
+  const isLinkVisible =
+    !isStateCorrect || error !== undefined || isNotWhitelisted;
+
+  const primaryLink = isNotWhitelisted
+    ? { url: "/", label: "Learn more" }
+    : { url: "/login", label: "Try again" };
 
   return (
     <LoginLayout>
@@ -80,10 +89,11 @@ export default function AuthorizePage() {
         <LoginCard
           title="Authorizing"
           isLinkVisible={isLinkVisible}
-          primaryLinkUrl="/login"
+          primaryLinkUrl={primaryLink.url}
           primaryLinkChildren={
             <>
-              Try again <FontAwesomeIcon size="xl" icon={faArrowRight} />
+              {primaryLink.label}{" "}
+              <FontAwesomeIcon size="xl" icon={faArrowRight} />
             </>
           }
         >
