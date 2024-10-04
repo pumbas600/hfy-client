@@ -5,12 +5,14 @@ import { ReactNode } from "react";
 
 interface LoginCardProps {
   title: string;
+  children: ReactNode;
   primaryLinkUrl: string;
   primaryLinkChildren: ReactNode;
 }
 
 export default function LoginCard({
   title,
+  children,
   primaryLinkUrl,
   primaryLinkChildren,
 }: LoginCardProps) {
@@ -27,19 +29,7 @@ export default function LoginCard({
         <h3>Login</h3>
         <h2>{title}</h2>
       </div>
-      <p>
-        {config.title} is currently in beta, with a whitelist of users allowed
-        to access it. If you're interested in joining the beta or staying up to
-        date with development, feel free join the{" "}
-        <Link
-          href={config.discordInviteUrl}
-          variant="subtle"
-          className={styles.inlineLink}
-        >
-          Discord
-        </Link>
-        .
-      </p>
+      <p className={styles.content}>{children}</p>
       <Link
         variant="button"
         href={primaryLinkUrl}

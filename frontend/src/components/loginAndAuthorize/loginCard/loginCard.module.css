@@ -34,7 +34,7 @@
   opacity: 0.85;
 }
 
-.inlineLink {
+.content a {
   text-decoration: underline;
 }
 

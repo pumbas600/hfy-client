@@ -1,3 +1,4 @@
+import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import { Main, Sticky } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
@@ -54,10 +55,18 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
           primaryLinkUrl={authorizationUrl}
           primaryLinkChildren={
             <>
-              <FontAwesomeIcon icon={faReddit} /> Sign in with Reddit{" "}
+              <FontAwesomeIcon size="xl" icon={faReddit} /> Sign in with Reddit{" "}
             </>
           }
-        />
+        >
+          {config.title} is currently in beta, with a whitelist of users allowed
+          to access it. If you're interested in joining the beta or staying up
+          to date with development, feel free join the{" "}
+          <Link href={config.discordInviteUrl} variant="subtle">
+            Discord
+          </Link>
+          .
+        </LoginCard>
       </Main>
     </LoginLayout>
   );
