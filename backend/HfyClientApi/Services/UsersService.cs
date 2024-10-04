@@ -98,7 +98,11 @@ namespace HfyClientApi.Services
         SyncedAt = DateTime.UtcNow
       };
 
-      await _userRepository.UpsertUserAsync(user);
+      var upsertedUser = await _userRepository.UpsertUserAsync(user);
+      if (upsertedUser?.WhitelistedUser == null)
+      {
+        return Errors.UserNotWhitelisted(user.Name);
+      }
 
       var accessToken = _tokenService.GenerateAccessToken(user.Name);
       var refreshToken = _tokenService.GenerateRefreshToken(user.Name);
@@ -153,6 +157,11 @@ namespace HfyClientApi.Services
       if (user == null)
       {
         return Errors.UserNotFound(username);
+      }
+
+      if (user.WhitelistedUser == null)
+      {
+        return Errors.UserNotWhitelisted(username);
       }
 
       var loginDto = new LoginDto()

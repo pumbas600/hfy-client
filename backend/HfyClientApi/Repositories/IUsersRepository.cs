@@ -6,6 +6,6 @@ namespace HfyClientApi.Repositories
   {
     Task<User?> GetUserByUsernameAsync(string username);
 
-    Task<User> UpsertUserAsync(User user);
+    Task<User?> UpsertUserAsync(User user);
   }
 }

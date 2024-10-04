@@ -13,12 +13,12 @@ namespace HfyClientApi.Repositories
       _context = context;
     }
 
-    public async Task<User> UpsertUserAsync(User user)
+    public async Task<User?> UpsertUserAsync(User user)
     {
       await _context.Users.Upsert(user).RunAsync();
       await _context.SaveChangesAsync();
 
-      return user;
+      return await GetUserByUsernameAsync(user.Name);
     }
 
     public async Task<User?> GetUserByUsernameAsync(string username)
