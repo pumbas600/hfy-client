@@ -1,8 +1,10 @@
-import { HeadMeta } from "@/components/atomic";
+import { Card, HeadMeta, Link } from "@/components/atomic";
 import { Header, Main, Sticky } from "@/components/layout/pageLayout";
 import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
 import styles from "@/components/home/home.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
 
 export default function Home() {
   return (
@@ -15,7 +17,13 @@ export default function Home() {
           <p>Optimizing your Reddit reading experience.</p>
         </Header>
         <Main noInlinePadding>
-          <h1>Home</h1>
+          <Card>
+            <h3>{config.title} is in beta</h3>
+
+            <Link href="/login" variant="largeButton">
+              Login <FontAwesomeIcon size="lg" icon={faArrowRight} />
+            </Link>
+          </Card>
         </Main>
       </PrimaryLayout>
     </>

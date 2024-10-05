@@ -17,8 +17,3 @@
 .inlineLink {
   text-decoration: underline;
 }
-
-.primaryButton {
-  font-size: var(--step-0);
-  padding-block: var(--step--1);
-}
