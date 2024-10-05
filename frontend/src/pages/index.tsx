@@ -1,3 +1,4 @@
+import { HeadMeta } from "@/components/atomic";
 import { Header, Main, Sticky } from "@/components/layout/pageLayout";
 import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
@@ -5,6 +6,7 @@ import config from "@/config";
 export default function Home() {
   return (
     <>
+      <HeadMeta title={config.title} description={config.description} />
       <PrimaryLayout>
         <Sticky />
         <Header>

@@ -13,7 +13,10 @@ import config from "@/config";
 export default function AboutPage() {
   return (
     <>
-      <HeadMeta title={`About | ${config.title}`} />
+      <HeadMeta
+        title={`About | ${config.title}`}
+        description={config.description}
+      />
       <PageLayout>
         <Sticky start={<BackButton />} />
         <Header>
