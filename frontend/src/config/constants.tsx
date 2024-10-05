@@ -6,8 +6,8 @@ export const SupportedSubreddits = {
 } as const;
 
 export const Links = {
+  Home: "/",
   About: "/about",
-  Settings: "/settings",
 } as const;
 
 export const DevelopmentLinks = {
