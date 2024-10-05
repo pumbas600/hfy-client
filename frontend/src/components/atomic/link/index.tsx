@@ -12,7 +12,7 @@ export interface BaseLinkProps {
   title?: string;
   target?: string;
   icon?: IconProp;
-  variant?: "subtle" | "underlined" | "button" | "iconButton";
+  variant?: "subtle" | "underlined" | "button" | "largeButton" | "iconButton";
 }
 
 export default function Link({
@@ -32,6 +32,9 @@ export default function Link({
       break;
     case "button":
       variantClassName = `button ${styles.buttonLink}`;
+      break;
+    case "largeButton":
+      variantClassName = `button ${styles.largeButtonLink}`;
       break;
     case "iconButton":
       variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton}`;

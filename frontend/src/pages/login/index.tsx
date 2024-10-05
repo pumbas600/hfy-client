@@ -1,10 +1,8 @@
-import { Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import { Main, Sticky } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
-import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
+import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
-import { WhitelistMessage } from "@/config/constants";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
 import { Api } from "@/util/api";
@@ -48,7 +46,7 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
   }, [state]);
 
   return (
-    <LoginLayout>
+    <PrimaryLayout>
       <Sticky start={<BackButton />} />
       <Main noInlinePadding>
         <LoginCard
@@ -61,9 +59,11 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
             </>
           }
         >
-          {WhitelistMessage}
+          You are required to login with Reddit to access this website. This is
+          used to verify that you have a Reddit account and to access your
+          username and profile picture.
         </LoginCard>
       </Main>
-    </LoginLayout>
+    </PrimaryLayout>
   );
 }

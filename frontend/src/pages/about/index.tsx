@@ -13,7 +13,10 @@ import config from "@/config";
 export default function AboutPage() {
   return (
     <>
-      <HeadMeta title={`About | ${config.title}`} />
+      <HeadMeta
+        title={`About | ${config.title}`}
+        description={config.description}
+      />
       <PageLayout>
         <Sticky start={<BackButton />} />
         <Header>
@@ -24,7 +27,7 @@ export default function AboutPage() {
           <TextLayout>
             <h3>{config.title}</h3>
             <p>
-              {config.title} is a simplified Reddit client optimised for reading
+              {config.title} is a simplified Reddit client optimized for reading
               stories on the{" "}
               <a href="https://www.reddit.com/r/HFY/" target="_blank">
                 r/HFY

@@ -17,6 +17,8 @@ const config = {
   githubUrl: "https://github.com/pumbas600/hfy-client",
   discordInviteUrl: "https://discord.com",
   title: "HFY Client",
+  description:
+    "HFY Client is a free, open-source client for Reddit designed to optimize your reading experience.",
   cookies: {
     refreshToken: "RefreshToken",
     accessToken: "AccessToken",

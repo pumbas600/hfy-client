@@ -1,4 +1,4 @@
-import { Link } from "@/components/atomic";
+import { Link, Card } from "@/components/atomic";
 import styles from "./loginCard.module.css";
 import config from "@/config";
 import { ReactNode } from "react";
@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 interface LoginCardProps {
   title: string;
   children: ReactNode;
-  isLinkVisible: boolean;
+  isLinkVisible?: boolean;
   primaryLinkUrl: string;
   primaryLinkChildren: ReactNode;
 }
@@ -14,12 +14,12 @@ interface LoginCardProps {
 export default function LoginCard({
   title,
   children,
-  isLinkVisible,
+  isLinkVisible = true,
   primaryLinkUrl,
   primaryLinkChildren,
 }: LoginCardProps) {
   return (
-    <div className={styles.loginCard}>
+    <Card className={styles.loginCard}>
       <Link href="/" className={styles.iconLink}>
         <img
           src="https://styles.redditmedia.com/t5_2y95n/styles/communityIcon_or09gmyen4l21.png"
@@ -33,11 +33,7 @@ export default function LoginCard({
       </div>
       <p className={styles.content}>{children}</p>
       {isLinkVisible && (
-        <Link
-          variant="button"
-          href={primaryLinkUrl}
-          className={styles.primaryButton}
-        >
+        <Link variant="largeButton" href={primaryLinkUrl}>
           {primaryLinkChildren}
         </Link>
       )}
@@ -48,6 +44,6 @@ export default function LoginCard({
         </Link>
         .
       </p>
-    </div>
+    </Card>
   );
 }

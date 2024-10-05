@@ -24,13 +24,13 @@ export default function SubredditLayout({
     <PageLayout>
       <Sticky
         start={
-          <img
-            src={subreddit.iconUrl}
-            alt={`${subreddit.name}'s icon`}
-            title={subreddit.name}
-            className={styles.icon}
-            style={{ backgroundColor: subreddit.iconBackgroundColor }}
-          />
+          <Link href="/" className={styles.icon}>
+            <img
+              src={subreddit.iconUrl}
+              alt={`${subreddit.name}'s icon`}
+              style={{ backgroundColor: subreddit.iconBackgroundColor }}
+            />
+          </Link>
         }
         end={[
           <Link
