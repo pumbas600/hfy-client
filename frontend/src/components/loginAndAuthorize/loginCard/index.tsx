@@ -31,7 +31,7 @@ export default function LoginCard({
         <h3>{title}</h3>
         <h2>{config.title}</h2>
       </div>
-      <p>{children}</p>
+      <p className={styles.content}>{children}</p>
       {isLinkVisible && (
         <Link
           variant="button"
