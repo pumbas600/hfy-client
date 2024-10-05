@@ -1,0 +1,26 @@
+.card {
+  align-items: flex-start;
+  border-radius: 1rem;
+  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  gap: var(--step-2);
+  padding-block-start: var(--step-3);
+  padding-block-end: var(--step-5);
+  padding-inline: var(--step-5);
+  width: 100%;
+
+  & h2 {
+    font-weight: 600;
+  }
+
+  & h3 {
+    font-weight: 400;
+    margin-block-start: var(--step--4);
+  }
+
+  & p {
+    color: var(--color-foreground-secondary);
+    font-size: var(--step--1);
+  }
+}

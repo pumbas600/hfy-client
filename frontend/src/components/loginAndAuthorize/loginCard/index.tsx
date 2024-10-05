@@ -2,6 +2,7 @@ import { Link } from "@/components/atomic";
 import styles from "./loginCard.module.css";
 import config from "@/config";
 import { ReactNode } from "react";
+import Card from "@/components/atomic/card";
 
 interface LoginCardProps {
   title: string;
@@ -19,7 +20,7 @@ export default function LoginCard({
   primaryLinkChildren,
 }: LoginCardProps) {
   return (
-    <div className={styles.loginCard}>
+    <Card className={styles.loginCard}>
       <Link href="/" className={styles.iconLink}>
         <img
           src="https://styles.redditmedia.com/t5_2y95n/styles/communityIcon_or09gmyen4l21.png"
@@ -48,6 +49,6 @@ export default function LoginCard({
         </Link>
         .
       </p>
-    </div>
+    </Card>
   );
 }
