@@ -18,7 +18,7 @@ const config = {
   discordInviteUrl: "https://discord.com",
   title: "HFY Client",
   description:
-    "HFY Client is a free, open-source client for Reddit designed to optimize the story reading experience.",
+    "HFY Client is a free, open-source client for Reddit designed to optimize your reading experience.",
   cookies: {
     refreshToken: "RefreshToken",
     accessToken: "AccessToken",

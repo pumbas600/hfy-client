@@ -1,0 +1,5 @@
+.homeHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--step--2);
+}
