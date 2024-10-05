@@ -5,25 +5,32 @@ import config from "@/config";
 import styles from "@/components/home/home.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
+import { WhitelistMessage } from "@/config/constants";
+import LoginCard from "@/components/loginAndAuthorize/loginCard";
 
 export default function Home() {
   return (
     <>
       <HeadMeta title={config.title} description={config.description} />
       <PrimaryLayout>
-        <Sticky />
-        <Header className={styles.homeHeader}>
-          <h2>{config.title}</h2>
-          <p>Optimizing your Reddit reading experience.</p>
-        </Header>
+        <Sticky>
+          <div>
+            <h4>{config.title}</h4>
+            <p>Optimizing your Reddit reading experience.</p>
+          </div>
+        </Sticky>
         <Main noInlinePadding>
-          <Card>
-            <h3>{config.title} is in beta</h3>
-
-            <Link href="/login" variant="largeButton">
-              Login <FontAwesomeIcon size="lg" icon={faArrowRight} />
-            </Link>
-          </Card>
+          <LoginCard
+            title="Beta Access"
+            primaryLinkUrl="/login"
+            primaryLinkChildren={
+              <>
+                Login <FontAwesomeIcon size="lg" icon={faArrowRight} />
+              </>
+            }
+          >
+            {WhitelistMessage}
+          </LoginCard>
         </Main>
       </PrimaryLayout>
     </>

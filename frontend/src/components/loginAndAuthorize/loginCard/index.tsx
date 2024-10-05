@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 interface LoginCardProps {
   title: string;
   children: ReactNode;
-  isLinkVisible: boolean;
+  isLinkVisible?: boolean;
   primaryLinkUrl: string;
   primaryLinkChildren: ReactNode;
 }
@@ -14,7 +14,7 @@ interface LoginCardProps {
 export default function LoginCard({
   title,
   children,
-  isLinkVisible,
+  isLinkVisible = true,
   primaryLinkUrl,
   primaryLinkChildren,
 }: LoginCardProps) {
