@@ -4,3 +4,7 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
+
+.primaryContrastSecondary {
+  color: var(--primary-contrast-secondary);
+}

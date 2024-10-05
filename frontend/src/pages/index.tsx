@@ -1,4 +1,4 @@
-import { Card, HeadMeta, Link } from "@/components/atomic";
+import { Card, HeadMeta, Link, Text } from "@/components/atomic";
 import { Header, Main, Sticky } from "@/components/layout/pageLayout";
 import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
@@ -16,7 +16,9 @@ export default function Home() {
         <Sticky>
           <div>
             <h4>{config.title}</h4>
-            <p>Optimizing your Reddit reading experience.</p>
+            <Text color="primaryContrastSecondary">
+              Optimizing your Reddit reading experience.
+            </Text>
           </div>
         </Sticky>
         <Main noInlinePadding>
