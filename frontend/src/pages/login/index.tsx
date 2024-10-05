@@ -1,7 +1,7 @@
 import BackButton from "@/components/composite/backButton";
 import { Main, Sticky } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
-import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
+import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
 import { LocalStorageKeys } from "@/config/localStorage";
 import { GetAuthorizationUrlRequest } from "@/types/api";
@@ -46,7 +46,7 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
   }, [state]);
 
   return (
-    <LoginLayout>
+    <PrimaryLayout>
       <Sticky start={<BackButton />} />
       <Main noInlinePadding>
         <LoginCard
@@ -64,6 +64,6 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
           username and profile picture.
         </LoginCard>
       </Main>
-    </LoginLayout>
+    </PrimaryLayout>
   );
 }

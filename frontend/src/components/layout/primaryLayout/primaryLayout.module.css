@@ -1,4 +1,4 @@
-.loginLayout {
+.primaryLayout {
   background-color: var(--primary-color);
 
   & main {

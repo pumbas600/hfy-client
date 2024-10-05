@@ -1,6 +1,6 @@
 import { Main, PageLayout } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
-import LoginLayout from "@/components/loginAndAuthorize/loginLayout";
+import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
 import { WhitelistMessage } from "@/config/constants";
 import { LocalStorageKeys } from "@/config/localStorage";
@@ -96,7 +96,7 @@ export default function AuthorizePage() {
     : { url: "/login", label: "Try again" };
 
   return (
-    <LoginLayout>
+    <PrimaryLayout>
       <Main noInlinePadding>
         <LoginCard
           title="Authorizing"
@@ -112,6 +112,6 @@ export default function AuthorizePage() {
           {content}
         </LoginCard>
       </Main>
-    </LoginLayout>
+    </PrimaryLayout>
   );
 }
