@@ -6,9 +6,18 @@
 }
 
 .icon {
+  aspect-ratio: 1/1;
   border-radius: 50%;
   height: 2.5rem;
-  padding: 0.125rem;
+  overflow: hidden;
+
+  & img {
+    padding: 0.125rem;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 .name {
