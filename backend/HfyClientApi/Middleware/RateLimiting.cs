@@ -53,6 +53,20 @@ namespace HfyClientApi.Middleware
               QueueLimit = publicOptions.QueueLimit,
             });
         });
+
+        limiterOptions.AddPolicy(RateLimiterPolicies.PublicLogin, partitioner: httpContext =>
+        {
+          var ipAddress = httpContext.Connection.RemoteIpAddress;
+          return RateLimitPartition.GetSlidingWindowLimiter(ipAddress, _ =>
+            new SlidingWindowRateLimiterOptions
+            {
+              PermitLimit = publicLoginOptions.PermitLimit,
+              Window = TimeSpan.FromSeconds(publicLoginOptions.WindowSeconds),
+              SegmentsPerWindow = publicLoginOptions.SegmentsPerWindow,
+              QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+              QueueLimit = publicLoginOptions.QueueLimit,
+            });
+        });
       });
     }
   }
