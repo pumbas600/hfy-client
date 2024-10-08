@@ -46,11 +46,11 @@ namespace HfyClientApi.Middleware
           return RateLimitPartition.GetSlidingWindowLimiter(ipAddress, _ =>
             new SlidingWindowRateLimiterOptions
             {
-              PermitLimit = 50,
-              Window = TimeSpan.FromSeconds(60),
-              SegmentsPerWindow = 3,
+              PermitLimit = publicOptions.PermitLimit,
+              Window = TimeSpan.FromSeconds(publicOptions.WindowSeconds),
+              SegmentsPerWindow = publicOptions.SegmentsPerWindow,
               QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-              QueueLimit = 5,
+              QueueLimit = publicOptions.QueueLimit,
             });
         });
       });
