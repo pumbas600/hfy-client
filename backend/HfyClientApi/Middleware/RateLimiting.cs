@@ -10,6 +10,14 @@ namespace HfyClientApi.Middleware
     public const string Authenticated = "Authenticated";
   }
 
+  public class RateLimitingOptions
+  {
+    public int PermitLimit { get; set; }
+    public int WindowSeconds { get; set; }
+    public int SegmentsPerWindow { get; set; }
+    public int QueueLimit { get; set; }
+  }
+
   public class RateLimiting
   {
     public static void ConfigureRateLimiting(IServiceCollection services)
