@@ -4,14 +4,17 @@ using System.Text.Json;
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
+using HfyClientApi.Middleware;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace HfyClientApi.Controllers
 {
   [ApiController]
   [Route("api/v1/[controller]")]
+  [EnableRateLimiting(RateLimiterPolicies.PublicLogin)]
   public class UsersController : ControllerBase
   {
     private readonly ICipherService _cipherService;
@@ -32,6 +35,7 @@ namespace HfyClientApi.Controllers
 
     [AllowAnonymous]
     [HttpGet("reddit/authorize")]
+    [EnableRateLimiting(RateLimiterPolicies.Public)]
     public ActionResult<AuthorizationUrlDto> GetAuthorizationUrl()
     {
       return _userService.GetAuthorizationUrl();
@@ -93,6 +97,7 @@ namespace HfyClientApi.Controllers
 
     [Authorize]
     [HttpGet("@me")]
+    [EnableRateLimiting(RateLimiterPolicies.Authenticated)]
     public async Task<ActionResult<LoginDto>> GetSelf()
     {
       var username = User.FindFirstValue(ClaimTypes.NameIdentifier);

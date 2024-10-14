@@ -1,13 +1,16 @@
 using HfyClientApi.Dtos;
+using HfyClientApi.Middleware;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace HfyClientApi.Controllers
 {
   [Authorize]
   [ApiController]
   [Route("api/v1/[controller]")]
+  [EnableRateLimiting(RateLimiterPolicies.Authenticated)]
   public class ChaptersController : ControllerBase
   {
     private readonly IChapterService _chapterService;
