@@ -60,10 +60,10 @@ export default function SettingsPage({ apiInfo }: SettingsPageProps) {
             <h2>Settings</h2>
             <h3>u/{self?.name}</h3>
           </div>
-          <LogoutButton />
         </Header>
         <Aside />
         <Main>
+          <LogoutButton />
           <SectionTitle>Appearance</SectionTitle>
           <ThemeSelect />
           <SectionTitle>Behind the scenes</SectionTitle>
