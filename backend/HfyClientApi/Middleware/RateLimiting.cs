@@ -1,4 +1,5 @@
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Authentication;
 
 namespace HfyClientApi.Middleware
 {
@@ -65,6 +66,23 @@ namespace HfyClientApi.Middleware
               SegmentsPerWindow = publicLoginOptions.SegmentsPerWindow,
               QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
               QueueLimit = publicLoginOptions.QueueLimit,
+            });
+        });
+
+        limiterOptions.AddPolicy(RateLimiterPolicies.Authenticated, partitioner: httpContext =>
+        {
+          var accessToken = httpContext.Features.Get<IAuthenticateResultFeature>()?
+            .AuthenticateResult?.Properties?.GetTokenValue("access_token")?.ToString()
+            ?? string.Empty;
+
+          return RateLimitPartition.GetSlidingWindowLimiter(accessToken, _ =>
+            new SlidingWindowRateLimiterOptions
+            {
+              PermitLimit = authenticatedOptions.PermitLimit,
+              Window = TimeSpan.FromSeconds(authenticatedOptions.WindowSeconds),
+              SegmentsPerWindow = authenticatedOptions.SegmentsPerWindow,
+              QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+              QueueLimit = authenticatedOptions.QueueLimit,
             });
         });
       });
