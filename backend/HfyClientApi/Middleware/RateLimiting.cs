@@ -50,7 +50,7 @@ namespace HfyClientApi.Middleware
               PermitLimit = publicOptions.PermitLimit,
               Window = TimeSpan.FromSeconds(publicOptions.WindowSeconds),
               SegmentsPerWindow = publicOptions.SegmentsPerWindow,
-              QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+              QueueProcessingOrder = QueueProcessingOrder.NewestFirst,
               QueueLimit = publicOptions.QueueLimit,
             });
         });
@@ -64,7 +64,7 @@ namespace HfyClientApi.Middleware
               PermitLimit = publicLoginOptions.PermitLimit,
               Window = TimeSpan.FromSeconds(publicLoginOptions.WindowSeconds),
               SegmentsPerWindow = publicLoginOptions.SegmentsPerWindow,
-              QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+              QueueProcessingOrder = QueueProcessingOrder.NewestFirst,
               QueueLimit = publicLoginOptions.QueueLimit,
             });
         });
@@ -81,7 +81,7 @@ namespace HfyClientApi.Middleware
               PermitLimit = authenticatedOptions.PermitLimit,
               Window = TimeSpan.FromSeconds(authenticatedOptions.WindowSeconds),
               SegmentsPerWindow = authenticatedOptions.SegmentsPerWindow,
-              QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+              QueueProcessingOrder = QueueProcessingOrder.NewestFirst,
               QueueLimit = authenticatedOptions.QueueLimit,
             });
         });
