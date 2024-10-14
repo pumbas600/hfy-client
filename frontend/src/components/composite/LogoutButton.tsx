@@ -18,9 +18,5 @@ export default function LogoutButton() {
     }
   };
 
-  return (
-    <Button variant="subtle" onClick={handleLogout}>
-      Log out
-    </Button>
-  );
+  return <Button onClick={handleLogout}>Log out</Button>;
 }

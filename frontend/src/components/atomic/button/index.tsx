@@ -1,5 +1,4 @@
 import { ButtonHTMLAttributes } from "react";
-import linkStyles from "../link/links.module.css";
 import styles from "./button.module.css";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
