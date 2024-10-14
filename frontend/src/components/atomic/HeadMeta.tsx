@@ -34,6 +34,7 @@ export default function HeadMeta({
           {imageAlt && <meta name="og:image:alt" content={imageAlt} />}
         </>
       )}
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       {children}
     </Head>
   );
