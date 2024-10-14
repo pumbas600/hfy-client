@@ -23,7 +23,7 @@ export default function AboutPage() {
         <Header>
           <h2>About</h2>
         </Header>
-        {getSelf() && <Aside />}
+        <Aside />
         <Main>
           <TextLayout>
             <h3>{config.title}</h3>

@@ -6,6 +6,7 @@ import {
   Links,
   SupportedSubreddits,
 } from "@/config/constants";
+import { getSelf } from "@/lib/getSelf";
 
 export interface AsideProps {
   className?: string;
@@ -30,8 +31,12 @@ export default function Aside({ className }: AsideProps) {
     <div className={styles.container}>
       <aside className={`${styles.aside} ${className ?? ""}`}>
         <nav className={styles.nav}>
-          <Subtitle>Subreddits</Subtitle>
-          {linksToListItems(SupportedSubreddits)}
+          {getSelf() && (
+            <>
+              <Subtitle>Subreddits</Subtitle>
+              {linksToListItems(SupportedSubreddits)}
+            </>
+          )}
           <Subtitle>Info</Subtitle>
           {linksToListItems(Links)}
           <Subtitle>Development</Subtitle>
