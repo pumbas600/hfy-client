@@ -9,6 +9,7 @@ import {
 } from "@/components/layout/pageLayout";
 import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
+import { getSelf } from "@/lib/getSelf";
 
 export default function AboutPage() {
   return (
@@ -22,7 +23,7 @@ export default function AboutPage() {
         <Header>
           <h2>About</h2>
         </Header>
-        <Aside />
+        {getSelf() && <Aside />}
         <Main>
           <TextLayout>
             <h3>{config.title}</h3>
