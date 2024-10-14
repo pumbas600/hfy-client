@@ -1,4 +1,4 @@
-import { HeadMeta } from "@/components/atomic";
+import { HeadMeta, Link } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import {
   Aside,
@@ -9,7 +9,6 @@ import {
 } from "@/components/layout/pageLayout";
 import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
-import { getSelf } from "@/lib/getSelf";
 
 export default function AboutPage() {
   return (
@@ -28,20 +27,14 @@ export default function AboutPage() {
           <TextLayout>
             <h3>{config.title}</h3>
             <p>
-              {config.title} is a simplified Reddit client optimized for reading
-              stories on the{" "}
-              <a href="https://www.reddit.com/r/HFY/" target="_blank">
-                r/HFY
-              </a>{" "}
-              subreddit. Being designed for stories, it allows for an improved
-              user experience and story-specific features.
+              {config.title} is a simplified client for Reddit, designed for
+              reading stories on the{" "}
+              <Link href="https://www.reddit.com/r/HFY/">r/HFY</Link> subreddit.
             </p>
             <p>
-              This project is{" "}
-              <a href={config.githubUrl} target="_blank">
-                open source
-              </a>
-              . Any and all contributions are welcome!
+              This project is free and{" "}
+              <Link href={config.githubUrl}>open source</Link>. Any and all
+              contributions are welcome!
             </p>
             <h3>Behind the scenes</h3>
             <p>
@@ -66,19 +59,14 @@ export default function AboutPage() {
                 <strong>Cover art</strong> — Comes from a link to an image with{" "}
                 <em>cover</em> in the label. If that cannot be found, it instead
                 gets the image from a{" "}
-                <a href="https://www.royalroad.com/home" target="_blank">
-                  Royal Road
-                </a>{" "}
+                <Link href="https://www.royalroad.com/home">Royal Road</Link>{" "}
                 link, if available.
               </li>
             </ul>
             <p>
               When chapters are processed, missing links from chapters are
-              automatically added where possible. When a broken link is found
-              (such as a link to a chapter, that doesn’t link back to it) then a
-              warning is raised, but currently, <strong>nothing is done</strong>
-              . Any other links to Reddit posts are changed to instead link to
-              this website.
+              automatically added where possible. Any other links to Reddit
+              posts are automatically updated to link back to this website.
             </p>
             <p>
               Periodically, chapters are synchronised with their corresponding
@@ -89,12 +77,17 @@ export default function AboutPage() {
             </p>
             <h3>Limitations</h3>
             <p>
-              Originally the aim of this project was to be a full Reddit Client,
-              including the ability to upvote, leave comments, and so on.
-              Unfortunately, due to the free Reddit API ratelimits this isn’t
-              possible. Instead, the requests that can be made to the Reddit API
+              Originally the aim of this project was to fully match the typical
+              functionality of Reddit, including the ability to upvote, leave
+              comments, and so on. Unfortunately, due to the free Reddit API
+              ratelimits this isn’t possible. Instead, the available requests
               are spent processing new posts, and regularly checking old posts
               for new updates.
+            </p>
+            <p>
+              If you have any ideas on how typical Reddit functionality can be
+              balanced with their ratelimit, feel free to let me know on the{" "}
+              <Link href={config.discordInviteUrl}>Discord</Link>.
             </p>
           </TextLayout>
         </Main>
