@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using HfyClientApi.BackgroundTasks;
 using HfyClientApi.Configuration;
 using HfyClientApi.Data;
+using HfyClientApi.Middleware;
 using HfyClientApi.Repositories;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -84,6 +85,8 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
 
+RateLimiter.ConfigureRateLimiting(builder.Configuration, builder.Services);
+
 builder.Services.AddDataProtection();
 
 builder.Services.AddHttpClient(
@@ -161,6 +164,8 @@ app.UseHttpsRedirection();
 app.UseCors(); // Enable cors!
 
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 
