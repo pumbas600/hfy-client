@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  api:
+    build:
+      context: ./backend/HfyClientApi
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      # Ensure the data protection keys are persisted outside the container
+      - ./dataprotection-keys:/root/.aspnet/DataProtection-Keys
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_HTTP_PORTS=8001
+      - RedditRefreshToken=${REDDIT_REFRESH_TOKEN}
+      - RedditAppSecret=${REDDIT_APP_SECRET}
+      - RedditAppId=${REDDIT_APP_ID}
+      - RedditAccessToken=${REDDIT_ACCESS_TOKEN}
+      - ConnectionStrings__DefaultConnection=${DATABASE_URL}
+      - JwtSettings__SecretKey=${JWT_SECRET_KEY}
