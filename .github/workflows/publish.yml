@@ -40,7 +40,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./backend/HfyClientApi
           file: ./backend/HfyClientApi/Dockerfile
           push: true
           provenance: mode=max
