@@ -1,3 +1,3 @@
-# A Reddit Client for r/HFY
+# A client for the r/HFY subreddit
 
 :)
