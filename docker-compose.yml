@@ -2,9 +2,7 @@ version: "3.4"
 
 services:
   api:
-    build:
-      context: ./backend/HfyClientApi
-      dockerfile: Dockerfile
+    image: pumbas600/hfy-client-api:latest
     ports:
       - "8001:8001"
     volumes:
