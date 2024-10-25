@@ -139,6 +139,7 @@ namespace HfyClientApi.Controllers
       {
         HttpOnly = httpOnly,
         Secure = true,
+        Domain = _jwtSettings.CookieDomain,
         SameSite = SameSiteMode.Strict,
         Expires = cookieExpiresAt,
         IsEssential = true,
