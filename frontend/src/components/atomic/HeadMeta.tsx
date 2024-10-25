@@ -37,14 +37,14 @@ export default function HeadMeta({
       {[16, 32].map((size) => (
         <Fragment key={size}>
           <link
-            href={`light-mode-favicon-${size}x${size}.png`}
+            href={`/light-mode-favicon-${size}x${size}.png`}
             rel="icon"
             type="image/png"
             sizes={`${size}x${size}`}
             media="(prefers-color-scheme: light)"
           />
           <link
-            href={`dark-mode-favicon-${size}x${size}.png`}
+            href={`/dark-mode-favicon-${size}x${size}.png`}
             rel="icon"
             type="image/png"
             sizes={`${size}x${size}`}
