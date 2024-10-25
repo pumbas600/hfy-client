@@ -20,7 +20,7 @@ export const DevelopmentLinks = {
 export const WhitelistMessage = (
   <>
     {config.title} is currently in beta, with a whitelist of users allowed to
-    access it. If you're interested in joining the beta or staying up to date
+    access it. If you’re interested in joining the beta or staying up to date
     with development, feel free join the{" "}
     <Link href={config.discordInviteUrl} variant="subtle">
       Discord
