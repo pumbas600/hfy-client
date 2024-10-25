@@ -34,7 +34,27 @@ export default function HeadMeta({
           {imageAlt && <meta name="og:image:alt" content={imageAlt} />}
         </>
       )}
-      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      {[16, 32].map((size) => (
+        <>
+          <link
+            key={`${size}-light`}
+            href={`light-mode-favicon-${size}x${size}.png`}
+            rel="icon"
+            type="image/png"
+            sizes={`${size}x${size}`}
+            media="(prefers-color-scheme: light)"
+          />
+          <link
+            key={`${size}-dark`}
+            href={`dark-mode-favicon-${size}x${size}.png`}
+            rel="icon"
+            type="image/png"
+            sizes={`${size}x${size}`}
+            media="(prefers-color-scheme: dark)"
+          />
+        </>
+      ))}
+
       {children}
     </Head>
   );
