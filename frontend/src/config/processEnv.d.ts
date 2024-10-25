@@ -7,7 +7,6 @@ declare namespace NodeJS {
     FRONTEND_BASE_URL?: string;
 
     // Vercel environment variables
-    VERCEL_ENV?: string;
     VERCEL_URL?: string;
   }
 }
