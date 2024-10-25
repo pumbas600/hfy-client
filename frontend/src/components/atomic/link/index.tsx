@@ -13,6 +13,7 @@ export interface BaseLinkProps {
   target?: string;
   icon?: IconProp;
   variant?: "subtle" | "underlined" | "button" | "largeButton" | "iconButton";
+  newTab?: boolean;
 }
 
 export default function Link({
@@ -20,6 +21,7 @@ export default function Link({
   children,
   variant = "underlined",
   icon,
+  newTab = true,
   ...props
 }: BaseLinkProps) {
   let variantClassName = "";
@@ -58,7 +60,7 @@ export default function Link({
 
   return (
     <a
-      target="_blank"
+      target={newTab ? "_blank" : undefined}
       {...props}
       className={`${variantClassName} ${className ?? ""}`}
     >

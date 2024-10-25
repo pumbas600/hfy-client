@@ -33,7 +33,7 @@ export default function LoginCard({
       </div>
       <p className={styles.content}>{children}</p>
       {isLinkVisible && (
-        <Link variant="largeButton" href={primaryLinkUrl}>
+        <Link variant="largeButton" href={primaryLinkUrl} newTab={false}>
           {primaryLinkChildren}
         </Link>
       )}
