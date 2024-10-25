@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { randomBytes } from "crypto";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
+import { HeadMeta } from "@/components/atomic";
 
 function generateRandomString(length: number): string {
   return randomBytes(length).toString("hex");
@@ -46,24 +47,28 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
   }, [state]);
 
   return (
-    <PrimaryLayout>
-      <Sticky start={<BackButton />} />
-      <Main noInlinePadding>
-        <LoginCard
-          title="Login"
-          isLinkVisible
-          primaryLinkUrl={authorizationUrl}
-          primaryLinkChildren={
-            <>
-              <FontAwesomeIcon size="xl" icon={faReddit} /> Sign in with Reddit{" "}
-            </>
-          }
-        >
-          You are required to login with Reddit to access this website. This is
-          used to verify that you have a Reddit account and to access your
-          username and profile picture.
-        </LoginCard>
-      </Main>
-    </PrimaryLayout>
+    <>
+      <HeadMeta title={`Login | ${config.title}`} />
+      <PrimaryLayout>
+        <Sticky start={<BackButton />} />
+        <Main noInlinePadding>
+          <LoginCard
+            title="Login"
+            isLinkVisible
+            primaryLinkUrl={authorizationUrl}
+            primaryLinkChildren={
+              <>
+                <FontAwesomeIcon size="xl" icon={faReddit} /> Sign in with
+                Reddit{" "}
+              </>
+            }
+          >
+            You are required to login with Reddit to access this website. This
+            is used to verify that you have a Reddit account and to access your
+            username and profile picture.
+          </LoginCard>
+        </Main>
+      </PrimaryLayout>
+    </>
   );
 }
