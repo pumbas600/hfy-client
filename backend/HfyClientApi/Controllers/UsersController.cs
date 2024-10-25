@@ -56,7 +56,7 @@ namespace HfyClientApi.Controllers
 
       SetCookies(loginDto);
 
-      return loginDto.User;
+      return Ok(loginDto.User);
     }
 
     [AllowAnonymous]
@@ -98,7 +98,7 @@ namespace HfyClientApi.Controllers
     [Authorize]
     [HttpGet("@me")]
     [EnableRateLimiting(RateLimiterPolicies.Authenticated)]
-    public async Task<ActionResult<LoginDto>> GetSelf()
+    public async Task<ActionResult<UserDto>> GetSelf()
     {
       var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
       if (username == null)
