@@ -1,4 +1,4 @@
-import NsfwIcon from "@/icons/nsfwIcon";
+import NsfwIcon from "@/icons/NsfwIcon";
 import styles from "./badges.module.css";
 import { Badge } from "@/components/atomic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
