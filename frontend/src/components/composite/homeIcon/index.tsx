@@ -3,11 +3,18 @@ import Link from "next/link";
 import styles from "./homeIcon.module.css";
 import config from "@/config";
 
-export default function HomeIcon(props: Omit<AppIconProps, "className">) {
+interface HomeIconProps extends Omit<AppIconProps, "className"> {
+  hideTitle?: boolean;
+}
+
+export default function HomeIcon({
+  hideTitle = false,
+  ...props
+}: HomeIconProps) {
   return (
     <Link href="/" className={styles.homeIcon}>
       <AppIcon {...props} />
-      <p>{config.title}</p>
+      {!hideTitle && <p>{config.title}</p>}
     </Link>
   );
 }
