@@ -1,4 +1,4 @@
-interface AppIconProps {
+export interface AppIconProps {
   inverted?: boolean;
   className?: string;
 }
