@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 
 export interface HeadMetaProps {
   title: string;
@@ -35,9 +35,8 @@ export default function HeadMeta({
         </>
       )}
       {[16, 32].map((size) => (
-        <>
+        <Fragment key={size}>
           <link
-            key={`${size}-light`}
             href={`light-mode-favicon-${size}x${size}.png`}
             rel="icon"
             type="image/png"
@@ -45,14 +44,13 @@ export default function HeadMeta({
             media="(prefers-color-scheme: light)"
           />
           <link
-            key={`${size}-dark`}
             href={`dark-mode-favicon-${size}x${size}.png`}
             rel="icon"
             type="image/png"
             sizes={`${size}x${size}`}
             media="(prefers-color-scheme: dark)"
           />
-        </>
+        </Fragment>
       ))}
 
       {children}
