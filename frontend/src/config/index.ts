@@ -26,7 +26,7 @@ const config = {
   },
   fontendBaseUrl: determineFrontendBaseUrl(),
   githubUrl: "https://github.com/pumbas600/hfy-client",
-  discordInviteUrl: "https://discord.com",
+  discordInviteUrl: "https://discord.gg/SuFQXGBG",
   title: "HFY Client",
   description:
     "HFY Client is a free, open-source client for Reddit designed to optimize your reading experience.",
