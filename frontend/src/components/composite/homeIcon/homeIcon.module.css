@@ -1,0 +1,19 @@
+.homeIcon {
+  transition: opacity ease 150ms;
+  display: flex;
+  gap: var(--step--2);
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-contrast);
+  letter-spacing: 0.02em;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+@media screen and (max-width: 50rem) {
+  .homeIcon > p {
+    display: none;
+  }
+}

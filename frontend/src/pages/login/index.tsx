@@ -12,6 +12,7 @@ import { randomBytes } from "crypto";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { HeadMeta } from "@/components/atomic";
+import HomeIcon from "@/components/composite/homeIcon";
 
 function generateRandomString(length: number): string {
   return randomBytes(length).toString("hex");
@@ -50,7 +51,7 @@ export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
     <>
       <HeadMeta title={`Login | ${config.title}`} />
       <PrimaryLayout>
-        <Sticky start={<BackButton />} />
+        <Sticky start={<HomeIcon inverted />} />
         <Main noInlinePadding>
           <LoginCard
             title="Login"
