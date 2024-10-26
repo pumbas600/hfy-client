@@ -1,4 +1,4 @@
-import { HeadMeta, Text } from "@/components/atomic";
+import { HeadMeta } from "@/components/atomic";
 import { Main, Sticky } from "@/components/layout/pageLayout";
 import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
