@@ -1,5 +1,6 @@
 import { User } from "@/types/user";
 import styles from "./profilePicture.module.css";
+import NoSsr from "../NoSsr";
 
 export interface ProfilePictureProps {
   user: User;
