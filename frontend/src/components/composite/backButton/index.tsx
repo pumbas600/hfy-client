@@ -14,7 +14,7 @@ export default function BackButton({ link, title = "Back" }: BackButtonProps) {
 
   if (link !== undefined) {
     return (
-      <Link variant="iconButton" href={link} title="title" icon={faArrowLeft} />
+      <Link variant="iconButton" href={link} title={title} icon={faArrowLeft} />
     );
   }
 

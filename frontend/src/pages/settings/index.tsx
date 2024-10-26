@@ -1,4 +1,4 @@
-import { Button, HeadMeta, ProfilePicture } from "@/components/atomic";
+import { HeadMeta, ProfilePicture } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import {
   Aside,
@@ -18,6 +18,7 @@ import { GetStaticProps } from "next";
 import styles from "@/components/settings/settings.module.css";
 import LogoutButton from "@/components/composite/LogoutButton";
 import { getSelf } from "@/lib/getSelf";
+import NoSsr from "@/components/atomic/NoSsr";
 
 interface SettingsPageProps {
   apiInfo: ApiInfoProps;
@@ -54,11 +55,15 @@ export default function SettingsPage({ apiInfo }: SettingsPageProps) {
         <Sticky start={<BackButton />} />
         <Header className={styles.header}>
           {self && (
-            <ProfilePicture user={self} className={styles.profilePicture} />
+            <NoSsr>
+              <ProfilePicture user={self} className={styles.profilePicture} />
+            </NoSsr>
           )}
           <div>
             <h2>Settings</h2>
-            <h3>u/{self?.name}</h3>
+            <h3>
+              <NoSsr>u/{self?.name}</NoSsr>
+            </h3>
           </div>
         </Header>
         <Aside />

@@ -8,20 +8,20 @@
 .authorWrapper {
   display: flex;
   flex-direction: column;
-
-  & a {
-    color: var(--primary-contrast-secondary);
-  }
 }
 
 .subreddit {
+  color: var(--primary-contrast-secondary);
   font-size: var(--step--1);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.025em;
   line-height: 1.1em;
 }
 
 .author {
-  font-weight: 600;
+  color: var(--primary-contrast);
+  font-weight: 500;
+  font-size: var(--step--1);
+  letter-spacing: 0.025em;
   line-height: 1.1em;
 }
 

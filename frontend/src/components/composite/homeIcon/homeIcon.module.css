@@ -1,0 +1,43 @@
+.homeIcon {
+  transition: opacity ease 150ms;
+  display: flex;
+  gap: var(--step--2);
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-contrast);
+  letter-spacing: 0.02em;
+
+  &:hover .appIcon {
+    outline: calc(1 * var(--hairline)) solid var(--primary-color);
+
+    &.inverted {
+      outline-color: var(--primary-contrast);
+    }
+  }
+
+  &:active {
+    & > p {
+      color: var(--primary-contrast-secondary);
+    }
+
+    & > .appIcon {
+      outline-color: var(--primary-active);
+      --icon-background-color: var(--primary-active);
+
+      &.inverted {
+        outline-color: var(--primary-contrast-secondary);
+        --icon-background-color: var(--primary-contrast-secondary);
+      }
+    }
+  }
+}
+
+.appIcon {
+  border-radius: 12.5%;
+}
+
+@media screen and (max-width: 50rem) {
+  .homeIcon > p {
+    display: none;
+  }
+}

@@ -10,5 +10,5 @@
 
 .secure {
   background-color: var(--primary-color);
-  color: var(--primary-contrast-color);
+  color: var(--primary-contrast);
 }

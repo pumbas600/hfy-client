@@ -10,6 +10,7 @@ import styles from "./subredditLayout.module.css";
 import ChapterSearchInput from "../chapterSearchInput";
 import { Link } from "@/components/atomic";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
+import HomeIcon from "@/components/composite/homeIcon";
 
 export interface SubredditLayoutProps {
   children?: React.ReactNode;
@@ -24,13 +25,14 @@ export default function SubredditLayout({
     <PageLayout>
       <Sticky
         start={
-          <Link href="/" className={styles.icon}>
-            <img
-              src={subreddit.iconUrl}
-              alt={`${subreddit.name}'s icon`}
-              style={{ backgroundColor: subreddit.iconBackgroundColor }}
-            />
-          </Link>
+          <HomeIcon inverted hideTitle />
+          // <Link href="/" className={styles.icon}>
+          //   <img
+          //     src={subreddit.iconUrl}
+          //     alt={`${subreddit.name}'s icon`}
+          //     style={{ backgroundColor: subreddit.iconBackgroundColor }}
+          //   />
+          // </Link>
         }
         end={[
           <Link
@@ -48,9 +50,17 @@ export default function SubredditLayout({
         />
       </Sticky>
       <Header className={styles.header}>
-        <div>
-          <h3 className={styles.name}>r/{subreddit.name}</h3>
-          <h2 className={styles.title}>{subreddit.title}</h2>
+        <div className={styles.headerContent}>
+          <img
+            src={subreddit.iconUrl}
+            alt={`${subreddit.name}'s icon`}
+            style={{ backgroundColor: subreddit.iconBackgroundColor }}
+            className={styles.icon}
+          />
+          <div>
+            <h3 className={styles.name}>r/{subreddit.name}</h3>
+            <h2 className={styles.title}>{subreddit.title}</h2>
+          </div>
         </div>
         <p className={styles.description}>{subreddit.description}</p>
       </Header>

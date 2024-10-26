@@ -6,18 +6,11 @@
 }
 
 .icon {
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  height: 2.5rem;
+  aspect-ratio: 1;
+  border-radius: calc(1px * infinity);
+  height: var(--step-6);
   overflow: hidden;
-
-  & img {
-    padding: 0.125rem;
-  }
-
-  &:hover {
-    opacity: 0.9;
-  }
+  padding: 0.125rem;
 }
 
 .name {
@@ -33,6 +26,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--step-4);
+}
+
+.headerContent {
+  display: flex;
+  gap: var(--step-0);
+  align-items: center;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 768px) {
