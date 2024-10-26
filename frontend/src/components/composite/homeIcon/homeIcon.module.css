@@ -8,18 +8,26 @@
   letter-spacing: 0.02em;
 
   &:hover .appIcon {
-    outline: 1px solid var(--primary-color);
+    outline: calc(1 * var(--hairline)) solid var(--primary-color);
 
     &.inverted {
       outline-color: var(--primary-contrast);
     }
   }
 
-  &:active .appIcon {
-    outline-color: var(--primary-active);
+  &:active {
+    & > p {
+      color: var(--primary-contrast-secondary);
+    }
 
-    &.inverted {
-      outline-color: var(--primary-contrast-secondary);
+    & > .appIcon {
+      outline-color: var(--primary-active);
+      --icon-background-color: var(--primary-active);
+
+      &.inverted {
+        outline-color: var(--primary-contrast-secondary);
+        --icon-background-color: var(--primary-contrast-secondary);
+      }
     }
   }
 }
