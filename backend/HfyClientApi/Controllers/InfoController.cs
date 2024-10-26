@@ -12,10 +12,12 @@ namespace HfyClientApi.Controllers
   public class InfoController : ControllerBase
   {
     private readonly IWebHostEnvironment _environment;
+    private readonly VersionSettings _versionSettings;
 
-    public InfoController(IWebHostEnvironment environment)
+    public InfoController(IWebHostEnvironment environment, VersionSettings versionSettings)
     {
       _environment = environment;
+      _versionSettings = versionSettings;
     }
 
     [HttpGet]
@@ -28,7 +30,7 @@ namespace HfyClientApi.Controllers
       return Ok(new InfoDto()
       {
         Environment = buildEnvironment,
-        ApiVersion = Config.ApiVersion
+        ApiVersion = _versionSettings.ApiVersion,
       });
     }
   }

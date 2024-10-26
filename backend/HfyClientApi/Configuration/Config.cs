@@ -4,6 +4,7 @@ namespace HfyClientApi.Configuration
   {
     public class Keys
     {
+      public const string Version = "Version";
       public const string RedditAppId = "RedditAppId";
       public const string RedditAppSecret = "RedditAppSecret";
       public const string RedditRefreshToken = "RedditRefreshToken";
@@ -23,8 +24,6 @@ namespace HfyClientApi.Configuration
       public const string NoRedirect = "NoRedirect";
     }
 
-    public const string ApiVersion = "v0.0.1";
-    public const string UserAgent = $"hfy-client/{ApiVersion}";
     public const string RedditUrl = "https://www.reddit.com";
     public const string UnprefixedRedditUrl = "https://reddit.com";
     public const string OldRedditUrl = "https://old.reddit.com";

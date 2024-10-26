@@ -15,15 +15,18 @@ namespace HfyClientApi.Services
     private readonly RedditClient _redditClient;
     private readonly ILogger<RedditService> _logger;
     private readonly IConfiguration _configuration;
+    private readonly VersionSettings _versionSettings;
 
     public RedditService(
       IHttpClientFactory httpClientFactory, RedditClient redditClient,
-      ILogger<RedditService> logger, IConfiguration configuration)
+      ILogger<RedditService> logger, IConfiguration configuration,
+      VersionSettings versionSettings)
     {
       _httpClientFactory = httpClientFactory;
       _redditClient = redditClient;
       _logger = logger;
       _configuration = configuration;
+      _versionSettings = versionSettings;
     }
 
     public async Task<Result<string>> GetAccessTokenAsync(string code)
@@ -40,7 +43,7 @@ namespace HfyClientApi.Services
         Method = HttpMethod.Post,
         RequestUri = new Uri(Config.RedditUrl + "/api/v1/access_token"),
         Headers = {
-          { "User-Agent", Config.UserAgent },
+          { "User-Agent", _versionSettings.UserAgent },
           { "Authorization", $"Basic {base64Token}" },
         },
         Content = new FormUrlEncodedContent(new Dictionary<string, string>
@@ -113,7 +116,7 @@ namespace HfyClientApi.Services
         Method = HttpMethod.Post,
         RequestUri = new Uri(Config.RedditUrl + "/api/v1/revoke_token"),
         Headers = {
-          { "User-Agent", Config.UserAgent },
+          { "User-Agent", _versionSettings.UserAgent },
         },
         Content = new FormUrlEncodedContent(new Dictionary<string, string>
         {
