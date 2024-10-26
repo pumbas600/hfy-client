@@ -1,14 +1,14 @@
 .iconButton {
-  aspect-ratio: 1/1;
+  aspect-ratio: 1;
   background-color: var(--primary-contrast);
-  border-radius: 50%;
+  border-radius: calc(1px * infinity);
   color: var(--primary-color);
   padding: 0;
   transition: outline 50ms ease-in-out;
-  width: 2.5rem;
+  width: 2rem;
 
   &:hover {
-    outline: calc(2 * var(--hairline)) solid var(--primary-contrast);
+    outline: calc(1 * var(--hairline)) solid var(--primary-contrast);
   }
 
   &:active {
