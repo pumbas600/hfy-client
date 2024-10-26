@@ -3,14 +3,7 @@
 }
 
 .icon {
-  aspect-ratio: 1/1;
-  background-color: #0390fc;
-  border-radius: 50%;
   width: 3rem;
-}
-
-.iconLink:hover {
-  opacity: 0.9;
 }
 
 .content a,

@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./homeIcon.module.css";
 import config from "@/config";
 
-interface HomeIconProps extends Omit<AppIconProps, "className"> {
+interface HomeIconProps extends AppIconProps {
   hideTitle?: boolean;
 }
 
