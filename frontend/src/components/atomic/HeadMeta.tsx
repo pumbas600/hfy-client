@@ -6,7 +6,6 @@ export interface HeadMetaProps {
   title: string;
   description?: string | null;
   image?: string | null;
-  twitterImage?: string | null;
   imageAlt?: string | null;
   children?: ReactNode;
 }
@@ -15,18 +14,12 @@ export default function HeadMeta({
   title,
   description,
   image,
-  twitterImage,
   imageAlt,
   children,
 }: HeadMetaProps) {
   if (!image) {
     image = "/og-image.png";
-    twitterImage = "/twitter-image.png";
     imageAlt = config.title;
-  }
-
-  if (!twitterImage) {
-    twitterImage = image;
   }
 
   return (
@@ -34,7 +27,7 @@ export default function HeadMeta({
       <title>{title}</title>
       <meta name="og:title" content={title} />
       <meta name="twitter:title" content={title} />
-      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="og:site_name" content={config.title} />
 
       {description && (
@@ -48,7 +41,7 @@ export default function HeadMeta({
       {image && (
         <>
           <meta name="og:image" content={image} />
-          <meta name="twitter:image" content={twitterImage} />
+          <meta name="twitter:image" content={image} />
           {imageAlt && <meta name="og:image:alt" content={imageAlt} />}
           {imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
         </>
