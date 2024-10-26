@@ -22,7 +22,11 @@ export default function HomeIcon({
   }
 
   return (
-    <Link href="/" className={styles.homeIcon} aria-label="Go to home page">
+    <Link
+      href="/"
+      className={styles.homeIcon}
+      aria-label={hideTitle ? "Go to home page" : undefined}
+    >
       <AppIcon {...props} className={appIconClasses.join(" ")} />
       {!hideTitle && <p>{config.title}</p>}
     </Link>

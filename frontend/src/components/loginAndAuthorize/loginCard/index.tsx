@@ -2,7 +2,7 @@ import { Link, Card } from "@/components/atomic";
 import styles from "./loginCard.module.css";
 import config from "@/config";
 import { ReactNode } from "react";
-import HomeIcon from "@/components/composite/homeIcon";
+import AppIcon from "@/icons/appIcon";
 
 interface LoginCardProps {
   title: string;
@@ -21,7 +21,7 @@ export default function LoginCard({
 }: LoginCardProps) {
   return (
     <Card className={styles.loginCard}>
-      <HomeIcon hideTitle className={styles.icon} />
+      <AppIcon className={styles.icon} />
       <div>
         <h3>{title}</h3>
         <h2>{config.title}</h2>
