@@ -1,3 +1,4 @@
+import config from "@/config";
 import Head from "next/head";
 import { Fragment, ReactNode } from "react";
 
@@ -16,10 +17,16 @@ export default function HeadMeta({
   imageAlt,
   children,
 }: HeadMetaProps) {
+  if (!image) {
+    image = "/light-mode-icon-320x320.png";
+    imageAlt = `The ${config.title} logo`;
+  }
+
   return (
     <Head>
       <title>{title}</title>
       <meta name="og:title" content={title} />
+      <meta name="twitter:card" content="summary" />
 
       {description && (
         <>
