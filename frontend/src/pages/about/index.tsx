@@ -1,5 +1,5 @@
 import { HeadMeta, Link } from "@/components/atomic";
-import BackButton from "@/components/composite/backButton";
+import HomeIcon from "@/components/composite/homeIcon";
 import {
   Aside,
   Header,
@@ -18,7 +18,7 @@ export default function AboutPage() {
         description={config.description}
       />
       <PageLayout>
-        <Sticky start={<BackButton />} />
+        <Sticky start={<HomeIcon inverted />} />
         <Header>
           <h2>About</h2>
         </Header>
