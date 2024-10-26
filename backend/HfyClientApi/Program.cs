@@ -19,17 +19,19 @@ builder.Services.AddControllers()
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
   });
 
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()
+  ?? throw new ArgumentNullException("JwtSettings section in configuration is required");
+
+var versionSettings = builder.Configuration.Get<VersionSettings>()
+  ?? throw new ArgumentNullException($"{nameof(VersionSettings.ApiVersion)} key in configuration is required");
 
 var reddit = new RedditClient(
   appId: builder.Configuration[Config.Keys.RedditAppId],
   appSecret: builder.Configuration[Config.Keys.RedditAppSecret],
   refreshToken: builder.Configuration[Config.Keys.RedditRefreshToken],
   accessToken: builder.Configuration[Config.Keys.RedditAccessToken],
-  userAgent: Config.UserAgent
+  userAgent: versionSettings.UserAgent
 );
-
-var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()
-  ?? throw new ArgumentNullException("JwtSettings section in configuration is required");
 
 // var hfySubreddit = reddit.Subreddit("HFY");
 // var latestPost = hfySubreddit.Posts.New[0].About();
@@ -66,6 +68,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddSingleton(reddit);
+builder.Services.AddSingleton(versionSettings);
 builder.Services.AddSingleton(jwtSettings);
 builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IChapterParsingService, ChapterParsingService>();
@@ -93,7 +96,7 @@ builder.Services.AddHttpClient(
   Config.Clients.NoRedirect,
   client =>
   {
-    client.DefaultRequestHeaders.UserAgent.ParseAdd(Config.UserAgent);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd(versionSettings.UserAgent);
   }
 ).ConfigurePrimaryHttpMessageHandler(() =>
 {

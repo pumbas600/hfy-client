@@ -20,11 +20,13 @@ namespace HfyClientApi.Services
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
     private readonly ILogger<UsersService> _logger;
+    private readonly VersionSettings _versionSettings;
 
     public UsersService(
       IUsersRepository userRepository, ITokenService tokenService,
       IRefreshTokenRepository refreshTokenRepository, IRedditService redditService,
-      IConfiguration configuration, IMapper mapper, ILogger<UsersService> logger)
+      IConfiguration configuration, IMapper mapper, ILogger<UsersService> logger,
+      VersionSettings versionSettings)
     {
       _userRepository = userRepository;
       _tokenService = tokenService;
@@ -33,6 +35,7 @@ namespace HfyClientApi.Services
       _configuration = configuration;
       _mapper = mapper;
       _logger = logger;
+      _versionSettings = versionSettings;
     }
 
     public AuthorizationUrlDto GetAuthorizationUrl()
@@ -74,7 +77,7 @@ namespace HfyClientApi.Services
         appId: _configuration[Config.Keys.RedditAppId],
         appSecret: _configuration[Config.Keys.RedditAppSecret],
         accessToken: redditAccessToken,
-        userAgent: Config.UserAgent
+        userAgent: _versionSettings.UserAgent
       );
 
       Reddit.Controllers.User redditUser;
