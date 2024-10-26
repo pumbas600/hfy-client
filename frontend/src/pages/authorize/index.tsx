@@ -1,4 +1,4 @@
-import { Main, PageLayout } from "@/components/layout/pageLayout";
+import { Main, PageLayout, Sticky } from "@/components/layout/pageLayout";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
@@ -10,6 +10,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import HomeIcon from "@/components/composite/homeIcon";
 
 function stateMatches(state?: string | string[]): boolean {
   return (
@@ -97,6 +98,7 @@ export default function AuthorizePage() {
 
   return (
     <PrimaryLayout>
+      <Sticky start={<HomeIcon inverted />} />
       <Main noInlinePadding>
         <LoginCard
           title="Authorizing"
