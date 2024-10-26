@@ -1,4 +1,4 @@
-import AppIcon, { AppIconProps } from "@/icons/AppIcon";
+import AppIcon, { AppIconProps } from "@/icons/appIcon";
 import Link from "next/link";
 import styles from "./homeIcon.module.css";
 import config from "@/config";

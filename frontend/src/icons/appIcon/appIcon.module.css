@@ -1,0 +1,9 @@
+.appIcon {
+  --icon-foreground-color: var(--primary-contrast);
+  --icon-background-color: var(--primary-color);
+}
+
+.invertedAppIcon {
+  --icon-foreground-color: var(--primary-color);
+  --icon-background-color: var(--primary-contrast);
+}
