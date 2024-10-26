@@ -26,19 +26,24 @@ export default function HeadMeta({
     <Head>
       <title>{title}</title>
       <meta name="og:title" content={title} />
+      <meta name="twitter:title" content={title} />
       <meta name="twitter:card" content="summary" />
+      <meta name="og:site_name" content={config.title} />
 
       {description && (
         <>
           <meta name="description" content={description} />
           <meta name="og:description" content={description} />
+          <meta name="twitter:description" content={description} />
         </>
       )}
 
       {image && (
         <>
           <meta name="og:image" content={image} />
+          <meta name="twitter:image" content={image} />
           {imageAlt && <meta name="og:image:alt" content={imageAlt} />}
+          {imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
         </>
       )}
       {[16, 32].map((size) => (
