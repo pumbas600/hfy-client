@@ -8,6 +8,7 @@ import { WhitelistMessage } from "@/config/constants";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import { getSelf } from "@/lib/getSelf";
 import NoSsr from "@/components/atomic/NoSsr";
+import HomeIcon from "@/components/composite/homeIcon";
 
 export default function Home() {
   const isAuthenticated = getSelf() !== undefined;
@@ -16,7 +17,7 @@ export default function Home() {
     <>
       <HeadMeta title={config.title} description={config.description} />
       <PrimaryLayout>
-        <Sticky />
+        <Sticky start={<HomeIcon inverted />} />
         <Main noInlinePadding>
           <NoSsr>
             {isAuthenticated ? (
