@@ -18,7 +18,7 @@ export default function HeadMeta({
   children,
 }: HeadMetaProps) {
   if (!image) {
-    image = "/light-mode-icon-320x320.png";
+    image = "/light-mode-favicon-32x32.png";
     imageAlt = `The ${config.title} logo`;
   }
 
