@@ -4,6 +4,7 @@ namespace HfyClientApi.Configuration
   {
     public class Keys
     {
+      public const string Version = "Version";
       public const string RedditAppId = "RedditAppId";
       public const string RedditAppSecret = "RedditAppSecret";
       public const string RedditRefreshToken = "RedditRefreshToken";
