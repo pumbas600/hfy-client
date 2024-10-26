@@ -83,7 +83,7 @@ builder.Services.AddScoped<ISubredditRepository, SubredditRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
-builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
+// builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
 
 RateLimiter.ConfigureRateLimiting(builder.Configuration, builder.Services);
 

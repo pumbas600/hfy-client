@@ -4,7 +4,7 @@
 
 .aside {
   position: sticky;
-  top: calc(2.5em + 3 * calc(var(--step--2))); /* Height of sticky header */
+  top: calc(2em + 3 * calc(var(--step--3))); /* Height of sticky header */
   z-index: 1;
 }
 
