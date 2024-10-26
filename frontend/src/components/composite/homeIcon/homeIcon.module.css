@@ -7,9 +7,25 @@
   color: var(--primary-contrast);
   letter-spacing: 0.02em;
 
-  &:hover {
-    opacity: 0.85;
+  &:hover .appIcon {
+    outline: 1px solid var(--primary-color);
+
+    &.inverted {
+      outline-color: var(--primary-contrast);
+    }
   }
+
+  &:active .appIcon {
+    outline-color: var(--primary-active);
+
+    &.inverted {
+      outline-color: var(--primary-contrast-secondary);
+    }
+  }
+}
+
+.appIcon {
+  border-radius: 12.5%;
 }
 
 @media screen and (max-width: 50rem) {
