@@ -1,4 +1,15 @@
 .appIcon {
+  width: 2.5rem;
+  aspect-ratio: 1;
+}
+
+@media screen and (max-width: 50rem) {
+  .appIcon {
+    width: 2rem;
+  }
+}
+
+.normalAppIcon {
   --icon-foreground-color: var(--primary-contrast);
   --icon-background-color: var(--primary-color);
 }
