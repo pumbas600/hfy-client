@@ -6,7 +6,10 @@ export interface AppIconProps {
 }
 
 export default function AppIcon({ inverted, className }: AppIconProps) {
-  const classes = [inverted ? styles.invertedAppIcon : styles.appIcon];
+  const classes = [
+    styles.appIcon,
+    inverted ? styles.invertedAppIcon : styles.normalAppIcon,
+  ];
   if (className) {
     classes.push(className);
   }

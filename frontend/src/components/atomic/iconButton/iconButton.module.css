@@ -5,7 +5,7 @@
   color: var(--primary-color);
   padding: 0;
   transition: outline 50ms ease-in-out;
-  width: 2rem;
+  width: 2.5rem;
 
   &:hover {
     outline: calc(1 * var(--hairline)) solid var(--primary-contrast);
@@ -13,5 +13,11 @@
 
   &:active {
     outline-color: var(--primary-contrast-secondary);
+  }
+}
+
+@media screen and (max-width: 50rem) {
+  .iconButton {
+    width: 2rem;
   }
 }
