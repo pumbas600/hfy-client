@@ -1,5 +1,8 @@
 .coverArt {
-  background-color: var(--primary-contrast);
+  aspect-ratio: 2/3;
+  background-color: var(--color-cover-image-background);
+  color: var(--color-cover-image-foreground);
+  font-size: var(--step--1);
   border: var(--border);
   width: 7rem;
   padding: 0.1875rem;
