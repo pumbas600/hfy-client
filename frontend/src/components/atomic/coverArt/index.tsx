@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./coverArt.module.css";
 
 export interface CoverArtProps {
@@ -12,10 +14,14 @@ export default function CoverArt({
   className,
 }: CoverArtProps) {
   return (
-    <img
-      src={url}
-      alt={`${chapterTitle}'s cover art`}
-      className={`${styles.coverArt} ${className ?? ""}`}
-    />
+    <div className={`${styles.coverArtContainer} ${className ?? ""}`}>
+      <img
+        className={styles.coverArt}
+        src={url}
+        alt={`${chapterTitle}'s cover art`}
+      />
+      <span className={styles.backdrop} />
+      <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
+    </div>
   );
 }

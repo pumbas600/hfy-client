@@ -1,15 +1,46 @@
-.coverArt {
-  aspect-ratio: 2/3;
+.coverArtContainer {
   background-color: var(--color-cover-image-background);
-  color: var(--color-cover-image-foreground);
-  font-size: var(--step--1);
   border: var(--border);
+  cursor: pointer;
   width: 7rem;
   padding: 0.1875rem;
+  position: relative;
+
+  & .backdrop {
+    display: none;
+    background-color: black;
+    position: absolute;
+    top: calc(-1 * var(--hairline));
+    bottom: calc(-1 * var(--hairline));
+    left: calc(-1 * var(--hairline));
+    right: calc(-1 * var(--hairline));
+  }
+
+  & > svg {
+    color: var(--color-cover-image-background);
+    display: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+
+  &:hover > svg {
+    display: block;
+  }
+
+  &:hover > .backdrop {
+    display: block;
+  }
+}
+
+.coverArt {
+  color: var(--color-cover-image-foreground);
+  font-size: var(--step--1);
 }
 
 @media screen and (max-width: 50rem) {
-  .coverArt {
+  .coverArtContainer {
     width: 5rem;
   }
 }
