@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./coverArt.module.css";
+import { useState } from "react";
 
 export interface CoverArtProps {
   url: string;
@@ -13,10 +14,21 @@ export default function CoverArt({
   chapterTitle,
   className,
 }: CoverArtProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleExpand = (): void => {
+    setIsExpanded(true);
+  };
+
+  const handleCollapse = (): void => {
+    setIsExpanded(false);
+  };
+
   return (
     <div
-      className={`${styles.coverArtContainer} ${className ?? ""}`}
       aria-label="Expand cover art"
+      className={`${styles.coverArtContainer} ${className ?? ""}`}
+      onClick={handleExpand}
     >
       <img
         className={styles.coverArt}
