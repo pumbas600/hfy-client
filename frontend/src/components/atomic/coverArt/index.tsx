@@ -14,7 +14,10 @@ export default function CoverArt({
   className,
 }: CoverArtProps) {
   return (
-    <div className={`${styles.coverArtContainer} ${className ?? ""}`}>
+    <div
+      className={`${styles.coverArtContainer} ${className ?? ""}`}
+      aria-label="Expand cover art"
+    >
       <img
         className={styles.coverArt}
         src={url}
