@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./coverArt.module.css";
 import { useState } from "react";
+import Modal from "../modal";
 
 export interface CoverArtProps {
   url: string;
@@ -25,19 +26,24 @@ export default function CoverArt({
   };
 
   return (
-    <div
-      aria-label="Expand cover art"
-      className={`${styles.coverArtContainer} ${className ?? ""}`}
-      onClick={handleExpand}
-    >
-      <img
-        className={styles.coverArt}
-        src={url}
-        alt={`${chapterTitle}'s cover art`}
-      />
-      <div className={styles.backdrop}>
-        <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
+    <>
+      <div
+        aria-label="Expand cover art"
+        className={`${styles.coverArtContainer} ${className ?? ""}`}
+        onClick={handleExpand}
+      >
+        <img
+          className={styles.coverArt}
+          src={url}
+          alt={`${chapterTitle}'s cover art`}
+        />
+        <div className={styles.backdrop}>
+          <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
+        </div>
       </div>
-    </div>
+      <Modal isOpen={isExpanded} onClose={handleCollapse}>
+        Hi
+      </Modal>
+    </>
   );
 }
