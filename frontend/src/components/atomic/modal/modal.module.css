@@ -1,4 +1,6 @@
 .modal {
+  outline-color: var(--primary-color);
+  outline-offset: 0;
   background-color: var(--color-background);
   color: var(--color-foreground);
   border: var(--border);
