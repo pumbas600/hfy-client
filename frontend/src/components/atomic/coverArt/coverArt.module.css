@@ -1,5 +1,5 @@
 .backdrop {
-  display: none;
+  display: flex;
   background-color: rgb(from var(--color-cover-image-foreground) r g b / 0.8);
   position: absolute;
   width: calc(100% + 2 * var(--hairline));
@@ -8,6 +8,8 @@
   left: calc(-1 * var(--hairline));
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transition: 100ms opacity ease-in-out;
 
   & > svg {
     color: var(--color-cover-image-background);
@@ -22,7 +24,7 @@
   position: relative;
 
   &:hover > .backdrop {
-    display: flex;
+    opacity: 1;
   }
 }
 
