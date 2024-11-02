@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./coverArt.module.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "../modal";
 
 export interface CoverArtProps {
@@ -15,10 +15,12 @@ export default function CoverArt({
   chapterTitle,
   className,
 }: CoverArtProps) {
+  const modalRef = useRef<HTMLDialogElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleExpand = (): void => {
-    setIsExpanded(true);
+    // setIsExpanded(true);
+    modalRef.current?.showModal();
   };
 
   const handleCollapse = (): void => {
@@ -41,7 +43,7 @@ export default function CoverArt({
           <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
         </div>
       </div>
-      <Modal isOpen={isExpanded} onClose={handleCollapse}>
+      <Modal ref={modalRef} isOpen={isExpanded} onClose={handleCollapse}>
         Hi
       </Modal>
     </>

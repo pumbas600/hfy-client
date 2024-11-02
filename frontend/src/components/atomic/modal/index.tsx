@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
+import styles from "./modal.module.css";
 
 interface ModalProps {
   isOpen: boolean;
@@ -6,10 +7,20 @@ interface ModalProps {
   children: ReactNode;
 }
 
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
-  return (
-    <dialog open={isOpen} onClose={onClose}>
-      {children}
-    </dialog>
-  );
-}
+const Modal = forwardRef<HTMLDialogElement, ModalProps>(
+  ({ isOpen, onClose, children }, ref) => {
+    return (
+      <dialog
+        ref={ref}
+        open={isOpen}
+        onClose={onClose}
+        className={styles.modal}
+      >
+        <button>Hello</button>
+        {children}
+      </dialog>
+    );
+  }
+);
+
+export default Modal;

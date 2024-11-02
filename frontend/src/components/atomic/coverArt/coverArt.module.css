@@ -1,6 +1,6 @@
 .backdrop {
   display: flex;
-  background-color: rgb(from var(--color-cover-image-foreground) r g b / 0.7);
+  background-color: var(--color-backdrop);
   position: absolute;
   width: calc(100% + 2 * var(--hairline));
   height: calc(100% + 2 * var(--hairline));
