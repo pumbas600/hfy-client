@@ -1,46 +1,40 @@
+.backdrop {
+  display: none;
+  background-color: rgb(from var(--color-cover-image-foreground) r g b / 0.8);
+  position: absolute;
+  width: calc(100% + 2 * var(--hairline));
+  height: calc(100% + 2 * var(--hairline));
+  top: calc(-1 * var(--hairline));
+  left: calc(-1 * var(--hairline));
+  justify-content: center;
+  align-items: center;
+
+  & > svg {
+    color: var(--color-cover-image-background);
+  }
+}
+
 .coverArtContainer {
   background-color: var(--color-cover-image-background);
   border: var(--border);
   cursor: pointer;
-  width: 7rem;
   padding: 0.1875rem;
   position: relative;
 
-  & .backdrop {
-    display: none;
-    background-color: black;
-    position: absolute;
-    top: calc(-1 * var(--hairline));
-    bottom: calc(-1 * var(--hairline));
-    left: calc(-1 * var(--hairline));
-    right: calc(-1 * var(--hairline));
-  }
-
-  & > svg {
-    color: var(--color-cover-image-background);
-    display: none;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-  }
-
-  &:hover > svg {
-    display: block;
-  }
-
   &:hover > .backdrop {
-    display: block;
+    display: flex;
   }
 }
 
 .coverArt {
   color: var(--color-cover-image-foreground);
   font-size: var(--step--1);
+  width: 7rem;
+  max-width: fit-content;
 }
 
 @media screen and (max-width: 50rem) {
-  .coverArtContainer {
+  .coverArt {
     width: 5rem;
   }
 }

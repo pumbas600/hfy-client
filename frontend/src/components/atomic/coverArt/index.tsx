@@ -20,8 +20,9 @@ export default function CoverArt({
         src={url}
         alt={`${chapterTitle}'s cover art`}
       />
-      <span className={styles.backdrop} />
-      <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
+      <div className={styles.backdrop}>
+        <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
+      </div>
     </div>
   );
 }
