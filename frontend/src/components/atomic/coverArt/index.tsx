@@ -35,7 +35,7 @@ export default function CoverArt({
         </div>
       </div>
       <Modal ref={modalRef} onClose={close}>
-        Hi
+        <img src={url} alt={`${chapterTitle}'s cover art`} />
       </Modal>
     </>
   );
