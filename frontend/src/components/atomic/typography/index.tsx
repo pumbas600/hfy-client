@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import styles from "./typography.module.css";
+import { cx } from "@/util/classNames";
 
 export interface SubtitleProps {
   className?: string;
@@ -25,5 +26,5 @@ export function Text({ children, color }: TextProps) {
       break;
   }
 
-  return <p className={`${styles.text} ${colorClass ?? ""}`}>{children}</p>;
+  return <p className={cx(styles.text, colorClass)}>{children}</p>;
 }

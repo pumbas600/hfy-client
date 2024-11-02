@@ -1,3 +1,4 @@
+import { cx } from "@/util/classNames";
 import styles from "./label.module.css";
 
 export interface LabelProps {
@@ -9,7 +10,7 @@ export interface LabelProps {
 
 export default function Label({ icon, label, className, title }: LabelProps) {
   return (
-    <span className={`${styles.label} ${className ?? ""}`} title={title}>
+    <span className={cx(styles.label, className)} title={title}>
       {icon}
       <p>{label}</p>
     </span>

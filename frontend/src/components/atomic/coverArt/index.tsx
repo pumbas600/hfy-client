@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./coverArt.module.css";
-import { useRef, useState } from "react";
 import Modal from "../modal";
 import useModal from "@/hooks/useModal";
+import { cx } from "@/util/classNames";
 
 export interface CoverArtProps {
   url: string;
@@ -22,7 +22,7 @@ export default function CoverArt({
     <>
       <div
         aria-label="Expand cover art"
-        className={`${styles.coverArtContainer} ${className ?? ""}`}
+        className={cx(styles.coverArtContainer, className)}
         onClick={open}
       >
         <img

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import styles from "./card.module.css";
+import { cx } from "@/util/classNames";
 
 interface CardProps {
   children?: ReactNode;
@@ -7,5 +8,5 @@ interface CardProps {
 }
 
 export default function Card({ children, className }: CardProps) {
-  return <div className={`${styles.card} ${className ?? ""}`}>{children}</div>;
+  return <div className={cx(styles.card, className)}>{children}</div>;
 }

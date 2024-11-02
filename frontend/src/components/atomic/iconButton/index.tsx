@@ -4,6 +4,7 @@ import {
 } from "@fortawesome/react-fontawesome";
 import { ButtonHTMLAttributes, forwardRef } from "react";
 import styles from "./iconButton.module.css";
+import { cx } from "@/util/classNames";
 
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +18,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       <button
         ref={ref}
         {...props}
-        className={`${styles.iconButton} ${props.className ?? ""}`}
+        className={cx(styles.iconButton, props.className)}
       >
         <FontAwesomeIcon icon={icon} size={size ?? "xl"} />
       </button>
