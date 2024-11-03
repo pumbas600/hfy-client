@@ -1,5 +1,8 @@
 .container {
   font-family: var(--chapter-body-font);
+  /* Handle long unbreakable words like '-----------------------' */
+  word-break: break-word;
+  overflow-wrap: break-word;
   padding-block: 0.5rem;
 
   & a {
