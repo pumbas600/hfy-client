@@ -9,7 +9,7 @@
   left: 50%;
   top: 50%;
   padding-block: var(--step-2);
-  padding-inline: var(--step-3);
+  padding-inline: var(--step-4);
   transform: translate(-50%, -50%);
 }
 
