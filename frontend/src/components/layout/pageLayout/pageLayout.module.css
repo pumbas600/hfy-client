@@ -4,7 +4,7 @@
   column-gap: var(--step-0);
   grid-template-columns:
     [full-start] auto [aside-start] 9rem
-    [content-start] minmax(min-content, 50rem) [content-end] auto [full-end];
+    [content-start] minmax(auto, 50rem) [content-end] auto [full-end];
   grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     "sticky sticky sticky sticky"
@@ -14,7 +14,7 @@
 
   &:not(:has(aside)) {
     grid-template-columns:
-      [full-start] auto [content-start] minmax(min-content, 50rem)
+      [full-start] auto [content-start] minmax(auto, 50rem)
       [content-end] auto [full-end];
     grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
