@@ -15,11 +15,8 @@ export default function ChapterSummaryCard({
   metadata,
 }: ChapterSummaryCardProps) {
   return (
-    <Link
-      href={`/chapters/${metadata.id}`}
-      prefetch={false}
-      className={styles.cardLink}
-    >
+    // Purposely not using a Next.js link here to avoid prefetching when hovering
+    <a href={`/chapters/${metadata.id}`} className={styles.cardLink}>
       <div className={styles.card}>
         <div>
           <div className={styles.authorContainer}>
@@ -43,6 +40,6 @@ export default function ChapterSummaryCard({
           <CoverArt url={metadata.coverArtUrl} chapterTitle={metadata.title} />
         )}
       </div>
-    </Link>
+    </a>
   );
 }
