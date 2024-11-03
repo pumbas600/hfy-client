@@ -15,7 +15,11 @@ export default function ChapterSummaryCard({
   metadata,
 }: ChapterSummaryCardProps) {
   return (
-    <Link href={`/chapters/${metadata.id}`} className={styles.cardLink}>
+    <Link
+      href={`/chapters/${metadata.id}`}
+      prefetch={false}
+      className={styles.cardLink}
+    >
       <div className={styles.card}>
         <div>
           <div className={styles.authorContainer}>
