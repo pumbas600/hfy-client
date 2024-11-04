@@ -4,6 +4,8 @@ import styles from "./coverArt.module.css";
 import Modal from "../modal";
 import useModal from "@/hooks/useModal";
 import { cx } from "@/util/classNames";
+import IconButton from "../iconButton";
+import { faClose } from "@fortawesome/free-solid-svg-icons/faClose";
 
 export interface CoverArtProps {
   url: string;
@@ -33,6 +35,12 @@ export default function CoverArt({
         </div>
       </div>
       <Modal ref={modalRef} onClose={close} className={styles.expandedModal}>
+        <IconButton
+          autoFocus
+          icon={faClose}
+          title="Close modal"
+          onClick={close}
+        />
         <img src={url} alt={altText} />
       </Modal>
     </>
