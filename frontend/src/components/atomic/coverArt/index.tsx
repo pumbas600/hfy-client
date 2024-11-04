@@ -40,6 +40,7 @@ export default function CoverArt({
           icon={faClose}
           title="Close modal"
           onClick={close}
+          variant="ghost"
         />
         <img src={url} alt={altText} />
       </Modal>

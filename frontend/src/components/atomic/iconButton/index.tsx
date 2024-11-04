@@ -10,16 +10,23 @@ export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: FontAwesomeIconProps["icon"];
   size?: FontAwesomeIconProps["size"];
+  variant?: "primary" | "ghost";
 }
 
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, size, ...props }, ref) => {
+  ({ icon, size, variant, className, ...props }, ref) => {
+    const classes = [styles.iconButton, className];
+    switch (variant) {
+      case "primary":
+        classes.push(styles.primary);
+        break;
+      case "ghost":
+        classes.push(styles.ghost);
+        break;
+    }
+
     return (
-      <button
-        ref={ref}
-        {...props}
-        className={cx(styles.iconButton, props.className)}
-      >
+      <button ref={ref} {...props} className={cx(...classes)}>
         <FontAwesomeIcon icon={icon} size={size ?? "xl"} />
       </button>
     );

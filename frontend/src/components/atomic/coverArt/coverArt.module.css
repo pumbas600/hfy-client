@@ -40,7 +40,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: var(--step--5);
 
   & img {
     width: 25rem;
