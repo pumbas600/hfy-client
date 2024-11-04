@@ -21,9 +21,9 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(
         ref={ref}
         onClose={onClose}
         onClick={handleClick}
-        className={cx(styles.modal, className)}
+        className={styles.modal}
       >
-        <div className={styles.modalContent}>{children}</div>
+        <div className={cx(styles.modalContent, className)}>{children}</div>
       </dialog>
     );
   }

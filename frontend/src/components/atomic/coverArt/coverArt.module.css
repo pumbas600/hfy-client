@@ -36,6 +36,13 @@
   max-width: fit-content;
 }
 
+.expandedModal {
+  & img {
+    width: 25rem;
+    aspect-ratio: 2/3;
+  }
+}
+
 @media screen and (max-width: 50rem) {
   .coverArt {
     width: 5rem;

@@ -18,6 +18,8 @@ export default function CoverArt({
 }: CoverArtProps) {
   const { modalRef, open, close } = useModal();
 
+  const altText = `${chapterTitle}'s cover art`;
+
   return (
     <>
       <div
@@ -25,17 +27,13 @@ export default function CoverArt({
         className={cx(styles.coverArtContainer, className)}
         onClick={open}
       >
-        <img
-          className={styles.coverArt}
-          src={url}
-          alt={`${chapterTitle}'s cover art`}
-        />
+        <img className={styles.coverArt} src={url} alt={altText} />
         <div className={styles.backdrop}>
           <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
         </div>
       </div>
-      <Modal ref={modalRef} onClose={close}>
-        <img src={url} alt={`${chapterTitle}'s cover art`} />
+      <Modal ref={modalRef} onClose={close} className={styles.expandedModal}>
+        <img src={url} alt={altText} />
       </Modal>
     </>
   );

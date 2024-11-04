@@ -13,6 +13,7 @@
 }
 
 .modalContent {
+  width: max-content;
   padding-block: var(--step-2);
   padding-inline: var(--step-4);
 }
