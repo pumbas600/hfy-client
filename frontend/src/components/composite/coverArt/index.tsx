@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlassPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./coverArt.module.css";
-import Modal from "../modal";
+import Modal from "@/components/atomic/modal";
 import useModal from "@/hooks/useModal";
 import { cx } from "@/util/classNames";
-import IconButton from "../iconButton";
+import IconButton from "@/components/atomic/iconButton";
 import { faClose } from "@fortawesome/free-solid-svg-icons/faClose";
 
 export interface CoverArtProps {

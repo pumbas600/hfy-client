@@ -13,9 +13,8 @@ import BackButton from "@/components/composite/backButton";
 import LabelContainer from "@/components/layout/labelContainer";
 import UpvoteLabel from "@/components/composite/upvoteLabel";
 import { NsfwBadge } from "@/components/composite/badges";
-import CoverArt from "@/components/atomic/coverArt";
+import CoverArt from "@/components/composite/coverArt";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
-import { User } from "@/types/user";
 import { faReddit } from "@fortawesome/free-brands-svg-icons/faReddit";
 
 export interface ChapterLayoutProps {

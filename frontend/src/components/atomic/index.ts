@@ -2,7 +2,6 @@ export { default as Badge } from "./badge";
 export { default as Button } from "./button";
 export { default as Container } from "./container";
 export { default as Card } from "./card";
-export { default as CoverArt } from "./coverArt";
 export { default as IconButton } from "./iconButton";
 export { default as Label } from "./label";
 export { default as Link } from "./link";
