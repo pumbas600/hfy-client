@@ -11,39 +11,44 @@ export interface CoverArtProps {
   url: string;
   chapterTitle: string;
   className?: string;
+  expandable?: boolean;
 }
 
 export default function CoverArt({
   url,
   chapterTitle,
   className,
+  expandable = true,
 }: CoverArtProps) {
   const { modalRef, open, close } = useModal();
-
   const altText = `${chapterTitle}'s cover art`;
 
   return (
     <>
       <div
-        aria-label="Expand cover art"
+        aria-label={expandable ? "Expand cover art" : undefined}
         className={cx(styles.coverArtContainer, className)}
         onClick={open}
       >
         <img className={styles.coverArt} src={url} alt={altText} />
-        <div className={styles.backdrop}>
-          <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
-        </div>
+        {expandable && (
+          <div className={styles.backdrop}>
+            <FontAwesomeIcon icon={faMagnifyingGlassPlus} size="xl" />
+          </div>
+        )}
       </div>
-      <Modal ref={modalRef} onClose={close} className={styles.expandedModal}>
-        <IconButton
-          autoFocus
-          icon={faClose}
-          title="Close modal"
-          onClick={close}
-          variant="ghost"
-        />
-        <img src={url} alt={altText} />
-      </Modal>
+      {expandable && (
+        <Modal ref={modalRef} onClose={close} className={styles.expandedModal}>
+          <IconButton
+            autoFocus
+            icon={faClose}
+            title="Close modal"
+            onClick={close}
+            variant="ghost"
+          />
+          <img src={url} alt={altText} />
+        </Modal>
+      )}
     </>
   );
 }

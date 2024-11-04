@@ -36,7 +36,11 @@ export default function ChapterSummaryCard({
           </LabelContainer>
         </div>
         {metadata.coverArtUrl && (
-          <CoverArt url={metadata.coverArtUrl} chapterTitle={metadata.title} />
+          <CoverArt
+            url={metadata.coverArtUrl}
+            chapterTitle={metadata.title}
+            expandable={false}
+          />
         )}
       </div>
     </Link>
