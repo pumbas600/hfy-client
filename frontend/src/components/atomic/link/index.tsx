@@ -40,7 +40,7 @@ export default function Link({
       variantClassName = `button ${styles.largeButtonLink}`;
       break;
     case "iconButton":
-      variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton}`;
+      variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton} ${iconButtonStyles.primary}`;
       if (icon) {
         children = (
           <>
