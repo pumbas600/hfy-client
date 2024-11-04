@@ -29,6 +29,7 @@
 }
 
 .coverArt {
+  aspect-ratio: 2/3;
   color: var(--color-cover-image-foreground);
   font-size: var(--step--1);
   width: 7rem;
