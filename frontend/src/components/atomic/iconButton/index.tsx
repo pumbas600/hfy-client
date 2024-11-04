@@ -14,7 +14,7 @@ export interface IconButtonProps
 }
 
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, size, variant, className, ...props }, ref) => {
+  ({ icon, size, variant = "primary", className, ...props }, ref) => {
     const classes = [styles.iconButton, className];
     switch (variant) {
       case "primary":

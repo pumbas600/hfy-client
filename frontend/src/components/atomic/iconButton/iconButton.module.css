@@ -28,6 +28,8 @@
 .ghost {
   background-color: transparent;
   color: var(--color-foreground-secondary);
+  transition: all 150ms ease-in-out;
+  transition-property: color, background-color;
 
   &:hover {
     color: var(--color-foreground);
