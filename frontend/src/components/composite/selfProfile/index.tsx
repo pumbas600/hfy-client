@@ -1,6 +1,4 @@
-import { Link } from "@/components/atomic";
-import NoSsr from "@/components/atomic/NoSsr";
-import ProfilePicture from "@/components/atomic/profilePicture";
+import { Link, NoSsr, ProfilePicture } from "@/components/atomic";
 import { getSelf } from "@/lib/getSelf";
 
 export default function SelfProfile() {

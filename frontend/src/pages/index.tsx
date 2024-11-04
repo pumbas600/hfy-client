@@ -1,4 +1,4 @@
-import { HeadMeta } from "@/components/atomic";
+import { HeadMeta, NoSsr } from "@/components/atomic";
 import { Main, Sticky } from "@/components/layout/pageLayout";
 import PrimaryLayout from "@/components/layout/primaryLayout";
 import config from "@/config";
@@ -7,7 +7,6 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
 import { WhitelistMessage } from "@/config/constants";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import { getSelf } from "@/lib/getSelf";
-import NoSsr from "@/components/atomic/NoSsr";
 import HomeIcon from "@/components/composite/homeIcon";
 
 export default function Home() {

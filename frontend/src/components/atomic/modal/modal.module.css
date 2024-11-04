@@ -1,0 +1,24 @@
+.modal {
+  outline-color: var(--primary-color);
+  outline-offset: 0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border: var(--border);
+  border-radius: calc(2 * var(--border-radius));
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+.modalContent {
+  width: max-content;
+  max-width: 100%;
+  padding-block: var(--step-2);
+  padding-inline: var(--step-4);
+}
+
+.modal::backdrop {
+  background-color: var(--color-backdrop);
+}

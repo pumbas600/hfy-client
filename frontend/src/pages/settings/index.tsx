@@ -1,4 +1,4 @@
-import { HeadMeta, ProfilePicture } from "@/components/atomic";
+import { HeadMeta, ProfilePicture, NoSsr } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import {
   Aside,
@@ -18,7 +18,6 @@ import { GetStaticProps } from "next";
 import styles from "@/components/settings/settings.module.css";
 import LogoutButton from "@/components/composite/LogoutButton";
 import { getSelf } from "@/lib/getSelf";
-import NoSsr from "@/components/atomic/NoSsr";
 
 interface SettingsPageProps {
   apiInfo: ApiInfoProps;

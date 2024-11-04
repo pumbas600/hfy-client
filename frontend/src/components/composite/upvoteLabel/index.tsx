@@ -1,7 +1,7 @@
 import { ChapterMetadata } from "@/types/chapter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons/faHeart";
-import Label from "../../atomic/label";
+import { Label } from "@/components/atomic";
 
 export interface UpvoteLabelProps {
   upvotes: ChapterMetadata["upvotes"];

@@ -1,0 +1,55 @@
+.backdrop {
+  display: flex;
+  background-color: var(--color-backdrop);
+  position: absolute;
+  width: calc(100% + 2 * var(--hairline));
+  height: calc(100% + 2 * var(--hairline));
+  top: calc(-1 * var(--hairline));
+  left: calc(-1 * var(--hairline));
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 100ms opacity ease-in-out;
+
+  & > svg {
+    color: var(--color-cover-image-background);
+  }
+}
+
+.coverArtContainer {
+  background-color: var(--color-cover-image-background);
+  border: var(--border);
+  cursor: pointer;
+  padding: 0.1875rem;
+  position: relative;
+
+  &:hover > .backdrop {
+    opacity: 1;
+  }
+}
+
+.coverArt {
+  aspect-ratio: 2/3;
+  color: var(--color-cover-image-foreground);
+  font-size: var(--step--1);
+  width: 7rem;
+  max-width: fit-content;
+}
+
+.expandedModal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--step--5);
+
+  & img {
+    width: 25rem;
+    aspect-ratio: 2/3;
+  }
+}
+
+@media screen and (max-width: 50rem) {
+  .coverArt {
+    width: 5rem;
+  }
+}

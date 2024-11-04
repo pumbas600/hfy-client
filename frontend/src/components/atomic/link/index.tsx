@@ -4,6 +4,7 @@ import iconButtonStyles from "../iconButton/iconButton.module.css";
 import { ReactNode } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { cx } from "@/util/classNames";
 
 export interface BaseLinkProps {
   className?: string;
@@ -39,7 +40,7 @@ export default function Link({
       variantClassName = `button ${styles.largeButtonLink}`;
       break;
     case "iconButton":
-      variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton}`;
+      variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton} ${iconButtonStyles.primary}`;
       if (icon) {
         children = (
           <>
@@ -52,7 +53,7 @@ export default function Link({
 
   if (props.href?.startsWith("/")) {
     return (
-      <NextLink {...props} className={`${variantClassName} ${className ?? ""}`}>
+      <NextLink {...props} className={cx(variantClassName, className)}>
         {children}
       </NextLink>
     );
@@ -62,7 +63,7 @@ export default function Link({
     <a
       target={newTab ? "_blank" : undefined}
       {...props}
-      className={`${variantClassName} ${className ?? ""}`}
+      className={cx(variantClassName, className)}
     >
       {children}
     </a>

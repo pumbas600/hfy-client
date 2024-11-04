@@ -1,5 +1,6 @@
 import { RelativeTime } from "@/components/atomic";
 import styles from "./chapterTimeMetadata.module.css";
+import { cx } from "@/util/classNames";
 
 export interface ChapterTimeMetadataProps {
   createdAtUtc: string;
@@ -13,7 +14,7 @@ export default function ChapterTimeMetadata({
   className,
 }: ChapterTimeMetadataProps) {
   return (
-    <p className={`${styles.timeMetadata} ${className ?? ""}`}>
+    <p className={cx(styles.timeMetadata, className)}>
       Posted <RelativeTime dateTimeUtc={createdAtUtc} /> • Synced{" "}
       <RelativeTime dateTimeUtc={syncedAtUtc} />
     </p>

@@ -1,9 +1,9 @@
 import { ChapterMetadata } from "@/types/chapter";
 import Link from "next/link";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
-import UpvoteLabel from "../../composite/upvoteLabel";
+import UpvoteLabel from "@/components/composite/upvoteLabel";
 import styles from "./chapterSummaryCard.module.css";
-import CoverArt from "@/components/atomic/coverArt";
+import CoverArt from "@/components/composite/coverArt";
 import { NsfwBadge } from "@/components/composite/badges";
 import LabelContainer from "@/components/layout/labelContainer";
 
@@ -37,7 +37,11 @@ export default function ChapterSummaryCard({
           </LabelContainer>
         </div>
         {metadata.coverArtUrl && (
-          <CoverArt url={metadata.coverArtUrl} chapterTitle={metadata.title} />
+          <CoverArt
+            url={metadata.coverArtUrl}
+            chapterTitle={metadata.title}
+            expandable={false}
+          />
         )}
       </div>
     </a>

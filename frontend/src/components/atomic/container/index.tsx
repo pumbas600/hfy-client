@@ -1,3 +1,4 @@
+import { cx } from "@/util/classNames";
 import styles from "./container.module.css";
 import { ReactNode } from "react";
 
@@ -20,8 +21,8 @@ export default function Container({
   }
 
   if (main) {
-    return <main className={classNames.join(" ")}>{children}</main>;
+    return <main className={cx(...classNames)}>{children}</main>;
   }
 
-  return <div className={classNames.join(" ")}>{children}</div>;
+  return <div className={cx(...classNames)}>{children}</div>;
 }

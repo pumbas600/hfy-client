@@ -1,5 +1,4 @@
-import { Link } from "@/components/atomic";
-import { Subtitle } from "@/components/atomic/typography";
+import { Link, NoSsr, Subtitle } from "@/components/atomic";
 import styles from "./aside.module.css";
 import {
   DevelopmentLinks,
@@ -7,7 +6,6 @@ import {
   SupportedSubreddits,
 } from "@/config/constants";
 import { getSelf } from "@/lib/getSelf";
-import NoSsr from "@/components/atomic/NoSsr";
 
 export interface AsideProps {
   className?: string;

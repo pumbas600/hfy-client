@@ -1,6 +1,6 @@
 import { User } from "@/types/user";
 import styles from "./profilePicture.module.css";
-import NoSsr from "../NoSsr";
+import { cx } from "@/util/classNames";
 
 export interface ProfilePictureProps {
   user: User;
@@ -15,7 +15,7 @@ export default function ProfilePicture({
     <img
       src={user.iconUrl}
       alt={user.name}
-      className={`${styles.profilePicture} ${className ?? ""}`}
+      className={cx(styles.profilePicture, className)}
     />
   );
 }

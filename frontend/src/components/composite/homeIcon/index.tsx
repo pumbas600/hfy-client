@@ -2,6 +2,7 @@ import AppIcon, { AppIconProps } from "@/icons/appIcon";
 import Link from "next/link";
 import styles from "./homeIcon.module.css";
 import config from "@/config";
+import { cx } from "@/util/classNames";
 
 interface HomeIconProps extends AppIconProps {
   hideTitle?: boolean;
@@ -23,7 +24,7 @@ export default function HomeIcon({
 
   return (
     <Link href="/" className={styles.homeIcon} aria-label="Go to home page">
-      <AppIcon {...props} className={appIconClasses.join(" ")} />
+      <AppIcon {...props} className={cx(...appIconClasses)} />
       {!hideTitle && <p>{config.title}</p>}
     </Link>
   );
