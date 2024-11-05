@@ -6,8 +6,12 @@ export function middleware(request: NextRequest): NextResponse {
   const isAuthenticated = request.cookies.has(appConfig.cookies.refreshToken);
   console.debug(`[Middleware]: User is authenticated: ${isAuthenticated}`);
 
-  if (request.nextUrl.pathname === "/" && isAuthenticated) {
-    return NextResponse.redirect(serverConfig.frontendUrl + "/r/HFY");
+  if (request.nextUrl.pathname === "/") {
+    if (isAuthenticated) {
+      return NextResponse.redirect(serverConfig.frontendUrl + "/r/HFY");
+    }
+
+    return NextResponse.next();
   }
 
   if (!isAuthenticated) {
