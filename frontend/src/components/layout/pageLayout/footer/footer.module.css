@@ -8,19 +8,19 @@
   padding-inline: var(--step-0);
 
   & h6 {
-    color: var(--primary-color);
-    font-weight: 700;
+    color: var(--color-primary-highlight);
   }
 
   & hr {
-    margin-block-start: var(--step-0);
-    border-color: var(--primary-color);
+    margin-block-start: var(--step-2);
+    margin-block-end: var(--step-0);
+    border-color: var(--color-primary-highlight);
   }
 }
 
 .footerContent {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: var(--step-3);
 }
 
@@ -33,6 +33,7 @@
 
 .footerParagraph {
   font-size: var(--step--1);
+  color: var(--color-foreground-secondary);
 }
 
 .iconList {
