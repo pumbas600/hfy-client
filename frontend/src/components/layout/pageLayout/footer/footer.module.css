@@ -24,6 +24,12 @@
   gap: var(--step-3);
 }
 
+@media screen and (max-width: 50rem) {
+  .footerContent {
+    grid-template-columns: 1fr;
+  }
+}
+
 .footerMetadata {
   display: flex;
   flex-direction: row;
