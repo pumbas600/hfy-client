@@ -2,6 +2,7 @@ import { HeadMeta, Link } from "@/components/atomic";
 import HomeIcon from "@/components/composite/homeIcon";
 import {
   Aside,
+  Footer,
   Header,
   Main,
   PageLayout,
@@ -91,6 +92,7 @@ export default function AboutPage() {
             </p>
           </TextLayout>
         </Main>
+        <Footer />
       </PageLayout>
     </>
   );

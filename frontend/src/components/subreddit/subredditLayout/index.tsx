@@ -4,6 +4,7 @@ import {
   Header,
   Main,
   Sticky,
+  Footer,
 } from "@/components/layout/pageLayout";
 import { Subreddit } from "@/types/subreddit";
 import styles from "./subredditLayout.module.css";
@@ -66,6 +67,7 @@ export default function SubredditLayout({
       </Header>
       <Aside />
       <Main noInlinePadding>{children}</Main>
+      <Footer />
     </PageLayout>
   );
 }

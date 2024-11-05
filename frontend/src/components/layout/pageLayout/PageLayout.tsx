@@ -12,9 +12,6 @@ export interface PageLayoutProps {
 
 export default function PageLayout({ children, className }: PageLayoutProps) {
   return (
-    <div className={`${styles.pageLayout} ${className ?? ""}`}>
-      {children}
-      <Footer />
-    </div>
+    <div className={`${styles.pageLayout} ${className ?? ""}`}>{children}</div>
   );
 }

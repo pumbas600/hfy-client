@@ -2,6 +2,7 @@ import { HeadMeta, ProfilePicture, NoSsr } from "@/components/atomic";
 import BackButton from "@/components/composite/backButton";
 import {
   Aside,
+  Footer,
   Header,
   Main,
   PageLayout,
@@ -73,6 +74,7 @@ export default function SettingsPage({ apiInfo }: SettingsPageProps) {
           <SectionTitle>Behind the scenes</SectionTitle>
           <ApiInfo {...apiInfo} />
         </Main>
+        <Footer />
       </PageLayout>
     </>
   );
