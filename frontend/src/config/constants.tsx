@@ -1,10 +1,6 @@
 import { Link } from "@/components/atomic";
 import config from ".";
 
-export const SupportedSubreddits = {
-  "r/HFY": "/r/HFY",
-} as const;
-
 export const Links = {
   Home: "/",
   About: "/about",
