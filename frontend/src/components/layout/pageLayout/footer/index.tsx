@@ -35,7 +35,7 @@ export default function Footer() {
         <hr />
         <div className={styles.footerMetadata}>
           <p className={styles.footerParagraph}>
-            © {year} - Copyright {config.title}
+            © {year} &ndash; Copyright {config.title}
           </p>
           <div className={styles.iconList}>
             <Link
