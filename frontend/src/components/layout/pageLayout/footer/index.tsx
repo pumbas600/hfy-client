@@ -17,13 +17,11 @@ export default function Footer() {
           <div>
             <Subtitle>About</Subtitle>
             <p className={styles.footerParagraph}>
-              Lorem ipsum dolor sit amet. Et impedit molestias et deleniti dolor
-              eos nulla necessitatibus. Sit Quis repudiandae aut quia
-              repellendus et recusandae dolore sed deserunt maxime est cumque
-              sapiente est nostrum atque rem sunt voluptatem. Ut totam quam sit
-              optio error sed quas amet cum architecto repudiandae.{" "}
+              {config.title} is a free, open-source client for Reddit dedicated
+              to the r/HFY subreddit. Designed for reading stories, it contains
+              features to improve your reading experience.{" "}
               <Link href="/about" variant="subtle">
-                Learn more
+                Learn more here
               </Link>
               .
             </p>
