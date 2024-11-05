@@ -3,7 +3,10 @@ import styles from "./links.module.css";
 import iconButtonStyles from "../iconButton/iconButton.module.css";
 import { ReactNode } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from "@fortawesome/react-fontawesome";
 import { cx } from "@/util/classNames";
 import { IconButtonProps } from "../iconButton";
 
@@ -20,6 +23,7 @@ interface IconButtonLinkProps extends Omit<BaseLinkProps, "variant"> {
   variant: "iconButton";
   icon: IconProp;
   type: IconButtonProps["variant"];
+  size?: FontAwesomeIconProps["size"];
 }
 
 type LinkProps = BaseLinkProps | IconButtonLinkProps;
@@ -52,7 +56,7 @@ export default function Link({
     if (props.icon) {
       children = (
         <>
-          <FontAwesomeIcon icon={props.icon} size="xl" />
+          <FontAwesomeIcon icon={props.icon} size={props.size ?? "xl"} />
           {children}
         </>
       );

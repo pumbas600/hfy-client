@@ -6,4 +6,31 @@
   padding-block-start: var(--step-2);
   padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-2));
   padding-inline: var(--step-0);
+
+  & hr {
+    border-color: var(--primary-color);
+  }
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: row;
+  gap: var(--step-3);
+}
+
+.footerMetadata {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  & p {
+    font-size: var(--step--1);
+  }
+}
+
+.iconList {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
 }
