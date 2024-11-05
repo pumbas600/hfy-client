@@ -21,7 +21,7 @@ interface BaseLinkProps {
 
 interface IconButtonLinkProps extends Omit<BaseLinkProps, "variant"> {
   variant: "iconButton";
-  icon: IconProp;
+  icon?: IconProp;
   type?: IconButtonProps["variant"];
   size?: FontAwesomeIconProps["size"];
 }
