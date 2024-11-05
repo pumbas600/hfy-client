@@ -12,7 +12,7 @@ export default function LinkList({ title, links }: LinkListProps) {
       <Subtitle>{title}</Subtitle>
       <ul className={styles.linkList}>
         {Object.entries(links).map(([label, link]) => (
-          <li key={label + link} className={styles.listItem}>
+          <li key={label + link}>
             <Link variant="subtle" href={link}>
               {label}
             </Link>
