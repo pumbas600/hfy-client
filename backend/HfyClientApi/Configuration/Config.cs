@@ -25,9 +25,10 @@ namespace HfyClientApi.Configuration
     }
 
     public const string RedditUrl = "https://www.reddit.com";
-    public const string UnprefixedRedditUrl = "https://reddit.com";
-    public const string OldRedditUrl = "https://old.reddit.com";
     public const string OauthRedditUrl = "https://oauth.reddit.com";
+    public static readonly List<string> SupportedRedditUrls = [
+      RedditUrl, "https://reddit.com", "https://old.reddit.com", "https://new.reddit.com"
+    ];
 
   }
 }
