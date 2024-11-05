@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import styles from "./pageLayout.module.css";
+import { Subtitle } from "@/components/atomic";
 
 export interface PageLayoutProps {
   children?: ReactNode;
@@ -12,7 +13,7 @@ export default function PageLayout({ children, className }: PageLayoutProps) {
       {children}
       <footer className={styles.footer}>
         <div className={styles.content}>
-          <p>Footer</p>
+          <Subtitle>Development</Subtitle>
         </div>
       </footer>
     </div>
