@@ -31,7 +31,6 @@ namespace HfyClientApi.Services
     /// A regex expression that allows the subreddit and post id to be extracted from a Reddit link.
     /// </summary>
     private const string RedditLinkRegex = @$"/r/(\w+)/comments/(\w+)/\w+/?";
-    private readonly List<string> RedditLinkBases = [Config.RedditUrl, Config.UnprefixedRedditUrl, Config.OldRedditUrl];
 
     private readonly RedditClient _redditClient;
     private readonly IHttpClientFactory _clientFactory;
@@ -176,7 +175,7 @@ namespace HfyClientApi.Services
 
     internal bool IsRedditLink(string link)
     {
-      return RedditLinkBases.Any(link.StartsWith);
+      return Config.SupportedRedditUrls.Any(link.StartsWith);
     }
 
     internal async protected Task<ChapterLink?> ParseRedditLink(HtmlNode linkElement)
@@ -194,7 +193,7 @@ namespace HfyClientApi.Services
         return null;
       }
 
-      foreach (var redditLinkBase in RedditLinkBases)
+      foreach (var redditLinkBase in Config.SupportedRedditUrls)
       {
         link = link.Replace(redditLinkBase, "");
       }
