@@ -4,6 +4,7 @@ import {
   Header,
   Main,
   Sticky,
+  Footer,
 } from "@/components/layout/pageLayout";
 import { FullChapter } from "@/types/chapter";
 import React from "react";
@@ -73,6 +74,7 @@ export default function ChapterLayout({
       </Header>
       <Aside />
       <Main>{children}</Main>
+      <Footer />
     </PageLayout>
   );
 }

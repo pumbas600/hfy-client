@@ -29,6 +29,19 @@ export default function HeadMeta({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="og:site_name" content={config.title} />
+      {/* Unfortunately, we can't use CSS variables so these need to be hardcoded. */}
+      <meta
+        name="theme-color"
+        media="(prefers-color-scheme: light)"
+        content="#06402b"
+        key="theme-color-light"
+      />
+      <meta
+        name="theme-color"
+        media="(prefers-color-scheme: dark)"
+        content="#127551"
+        key="theme-color-dark"
+      />
 
       {description && (
         <>

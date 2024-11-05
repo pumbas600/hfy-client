@@ -1,17 +1,13 @@
 import { Link } from "@/components/atomic";
 import config from ".";
 
-export const SupportedSubreddits = {
-  "r/HFY": "/r/HFY",
-} as const;
-
 export const Links = {
   Home: "/",
   About: "/about",
 } as const;
 
 export const DevelopmentLinks = {
-  "View source": config.githubUrl,
+  Contribute: config.githubUrl,
   "Request feature": `${config.githubUrl}/issues`,
   "Report bug": `${config.githubUrl}/issues`, // TODO: Create proper templates!
   "Report security vulnerability": `${config.githubUrl}/issues`,

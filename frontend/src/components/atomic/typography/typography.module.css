@@ -3,6 +3,7 @@
   font-size: var(--step--2);
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  margin-block-end: var(--step--2);
 }
 
 .primaryContrastSecondary {

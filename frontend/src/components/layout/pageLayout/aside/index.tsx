@@ -1,28 +1,9 @@
-import { Link, NoSsr, Subtitle } from "@/components/atomic";
 import styles from "./aside.module.css";
-import {
-  DevelopmentLinks,
-  Links,
-  SupportedSubreddits,
-} from "@/config/constants";
-import { getSelf } from "@/lib/getSelf";
+import { DevelopmentLinks, Links } from "@/config/constants";
+import LinkList from "@/components/composite/linkList";
 
 export interface AsideProps {
   className?: string;
-}
-
-function linksToListItems(links: Record<string, string>): React.ReactNode {
-  return (
-    <ul className={styles.linkList}>
-      {Object.entries(links).map(([label, link]) => (
-        <li key={label + link} className={styles.listItem}>
-          <Link variant="subtle" href={link}>
-            {label}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
 }
 
 export default function Aside({ className }: AsideProps) {
@@ -30,16 +11,8 @@ export default function Aside({ className }: AsideProps) {
     <div className={styles.container}>
       <aside className={`${styles.aside} ${className ?? ""}`}>
         <nav className={styles.nav}>
-          {getSelf() && (
-            <NoSsr>
-              <Subtitle>Subreddits</Subtitle>
-              {linksToListItems(SupportedSubreddits)}
-            </NoSsr>
-          )}
-          <Subtitle>Info</Subtitle>
-          {linksToListItems(Links)}
-          <Subtitle>Development</Subtitle>
-          {linksToListItems(DevelopmentLinks)}
+          <LinkList title="Info" links={Links} />
+          <LinkList title="Development" links={DevelopmentLinks} />
         </nav>
       </aside>
     </div>

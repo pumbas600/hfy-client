@@ -157,6 +157,7 @@
   :root {
     /* Colors */
     --primary-color: #06402b;
+    --color-primary-highlight: var(--primary-color);
     --primary-hover: oklch(from var(--primary-color) calc(l * 0.94) c h);
     --primary-active: oklch(from var(--primary-color) calc(l * 0.88) c h);
 
@@ -214,6 +215,7 @@
 
   [data-theme="dark"] {
     --primary-color: #127551;
+    --color-primary-highlight: #20c78a;
 
     --border-color: #666;
     --divider-color: #666;
