@@ -3,7 +3,7 @@ import { DevelopmentLinks } from "@/config/constants";
 import styles from "./footer.module.css";
 import layoutStyles from "../pageLayout.module.css";
 import config from "@/config";
-import { Link } from "@/components/atomic";
+import { Link, Subtitle } from "@/components/atomic";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons/faDiscord";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
 
@@ -14,6 +14,20 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={layoutStyles.content}>
         <div className={styles.footerContent}>
+          <div>
+            <Subtitle>About</Subtitle>
+            <p className={styles.footerParagraph}>
+              Lorem ipsum dolor sit amet. Et impedit molestias et deleniti dolor
+              eos nulla necessitatibus. Sit Quis repudiandae aut quia
+              repellendus et recusandae dolore sed deserunt maxime est cumque
+              sapiente est nostrum atque rem sunt voluptatem. Ut totam quam sit
+              optio error sed quas amet cum architecto repudiandae.{" "}
+              <Link href="/about" variant="subtle">
+                Learn more
+              </Link>
+              .
+            </p>
+          </div>
           <LinkList title="Development" links={DevelopmentLinks} />
           <LinkList
             title="Resources"
@@ -22,7 +36,7 @@ export default function Footer() {
         </div>
         <hr />
         <div className={styles.footerMetadata}>
-          <p>
+          <p className={styles.footerParagraph}>
             © {year} - Copyright {config.title}
           </p>
           <ul className={styles.iconList}>

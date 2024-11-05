@@ -7,14 +7,20 @@
   padding-block-end: calc(env(safe-area-inset-bottom, 0) + var(--step-2));
   padding-inline: var(--step-0);
 
+  & h6 {
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+
   & hr {
+    margin-block-start: var(--step-0);
     border-color: var(--primary-color);
   }
 }
 
 .footerContent {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
   gap: var(--step-3);
 }
 
@@ -23,10 +29,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
 
-  & p {
-    font-size: var(--step--1);
-  }
+.footerParagraph {
+  font-size: var(--step--1);
 }
 
 .iconList {
