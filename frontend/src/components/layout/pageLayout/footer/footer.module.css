@@ -45,5 +45,11 @@
 .iconList {
   display: flex;
   flex-direction: row;
-  list-style-type: none;
+}
+
+.verticalDivider {
+  border-inline-start: var(--border);
+  width: var(--hairline);
+  margin-block: var(--step--5);
+  margin-inline: var(--step--5);
 }

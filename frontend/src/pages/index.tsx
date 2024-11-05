@@ -8,9 +8,14 @@ import { WhitelistMessage } from "@/config/constants";
 import LoginCard from "@/components/loginAndAuthorize/loginCard";
 import { getSelf } from "@/lib/getSelf";
 import HomeIcon from "@/components/composite/homeIcon";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   const isAuthenticated = getSelf() !== undefined;
+
+  if (isAuthenticated) {
+    redirect("/r/HFY");
+  }
 
   return (
     <>

@@ -37,28 +37,24 @@ export default function Footer() {
           <p className={styles.footerParagraph}>
             © {year} - Copyright {config.title}
           </p>
-          <ul className={styles.iconList}>
-            <li>
-              <Link
-                href={config.discordInviteUrl}
-                variant="iconButton"
-                type="ghost"
-                icon={faDiscord}
-                title={`${config.title} Discord`}
-                size="lg"
-              />
-            </li>
-            <li>
-              <Link
-                href={config.githubUrl}
-                variant="iconButton"
-                type="ghost"
-                icon={faGithub}
-                title={`${config.title} GitHub`}
-                size="lg"
-              />
-            </li>
-          </ul>
+          <div className={styles.iconList}>
+            <Link
+              href={config.discordInviteUrl}
+              variant="iconButton"
+              type="ghost"
+              icon={faDiscord}
+              title={`${config.title} Discord`}
+              size="lg"
+            />
+            <span className={styles.verticalDivider} />
+            <Link
+              href={config.githubUrl}
+              variant="iconButton"
+              type="ghost"
+              icon={faGithub}
+              title={`${config.title} GitHub`}
+            />
+          </div>
         </div>
       </div>
     </footer>
