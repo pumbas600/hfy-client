@@ -6,6 +6,10 @@ export function middleware(request: NextRequest): NextResponse {
   const isAuthenticated = request.cookies.has(appConfig.cookies.refreshToken);
   console.debug(`[Middleware]: User is authenticated: ${isAuthenticated}`);
 
+  if (request.nextUrl.pathname === "/" && isAuthenticated) {
+    return NextResponse.redirect(serverConfig.frontendUrl + "/r/HFY");
+  }
+
   if (!isAuthenticated) {
     return NextResponse.redirect(serverConfig.frontendUrl + "/login");
   }
@@ -14,5 +18,5 @@ export function middleware(request: NextRequest): NextResponse {
 }
 
 export const config: MiddlewareConfig = {
-  matcher: ["/r/:path*", "/chapters/:path*", "/settings"],
+  matcher: ["/", "/r/:path*", "/chapters/:path*", "/settings"],
 };
