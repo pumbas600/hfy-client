@@ -34,11 +34,13 @@ export default function HeadMeta({
         name="theme-color"
         media="(prefers-color-scheme: light)"
         content="#06402b"
+        key="theme-color-light"
       />
       <meta
         name="theme-color"
         media="(prefers-color-scheme: dark)"
         content="#127551"
+        key="theme-color-dark"
       />
 
       {description && (
