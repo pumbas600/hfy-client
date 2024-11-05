@@ -5,55 +5,63 @@ import { ReactNode } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { cx } from "@/util/classNames";
+import { IconButtonProps } from "../iconButton";
 
-export interface BaseLinkProps {
+interface BaseLinkProps {
   className?: string;
   children?: ReactNode;
   href: string;
   title?: string;
-  target?: string;
-  icon?: IconProp;
-  variant?: "subtle" | "underlined" | "button" | "largeButton" | "iconButton";
   newTab?: boolean;
+  variant?: "subtle" | "underlined" | "button" | "largeButton";
 }
+
+interface IconButtonLinkProps extends Omit<BaseLinkProps, "variant"> {
+  variant: "iconButton";
+  icon: IconProp;
+  type: IconButtonProps["variant"];
+}
+
+type LinkProps = BaseLinkProps | IconButtonLinkProps;
 
 export default function Link({
   className,
   children,
-  variant = "underlined",
-  icon,
   newTab = true,
   ...props
-}: BaseLinkProps) {
-  let variantClassName = "";
-  switch (variant) {
-    case "subtle":
-      variantClassName = styles.subtleLink;
-      break;
-    case "underlined":
-      variantClassName = styles.underlinedLink;
-      break;
-    case "button":
-      variantClassName = `button ${styles.buttonLink}`;
-      break;
-    case "largeButton":
-      variantClassName = `button ${styles.largeButtonLink}`;
-      break;
-    case "iconButton":
-      variantClassName = `button ${styles.buttonLink} ${iconButtonStyles.iconButton} ${iconButtonStyles.primary}`;
-      if (icon) {
-        children = (
-          <>
-            <FontAwesomeIcon icon={icon} size="xl" />
-            {children}
-          </>
-        );
-      }
+}: LinkProps) {
+  const linkProps = { href: props.href, title: props.title };
+
+  const classNames = [className];
+  if (props.variant === "subtle" || props.variant === undefined) {
+    classNames.push(styles.subtleLink);
+  } else if (props.variant === "underlined") {
+    classNames.push(styles.underlinedLink);
+  } else if (props.variant === "button") {
+    classNames.push("button", styles.buttonLink);
+  } else if (props.variant === "largeButton") {
+    classNames.push("button", styles.largeButtonLink);
+  } else if (props.variant === "iconButton") {
+    classNames.push(
+      "button",
+      styles.buttonLink,
+      iconButtonStyles.iconButton,
+      iconButtonStyles[props.type ?? "primary"]
+    );
+
+    if (props.icon) {
+      children = (
+        <>
+          <FontAwesomeIcon icon={props.icon} size="xl" />
+          {children}
+        </>
+      );
+    }
   }
 
   if (props.href?.startsWith("/")) {
     return (
-      <NextLink {...props} className={cx(variantClassName, className)}>
+      <NextLink {...linkProps} className={cx(...classNames)}>
         {children}
       </NextLink>
     );
@@ -62,8 +70,8 @@ export default function Link({
   return (
     <a
       target={newTab ? "_blank" : undefined}
-      {...props}
-      className={cx(variantClassName, className)}
+      {...linkProps}
+      className={cx(...classNames)}
     >
       {children}
     </a>
