@@ -13,6 +13,8 @@ import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { HeadMeta } from "@/components/atomic";
 import HomeIcon from "@/components/composite/homeIcon";
+import { useRouter } from "next/router";
+import { getSelf } from "@/lib/getSelf";
 
 function generateRandomString(length: number): string {
   return randomBytes(length).toString("hex");
@@ -42,10 +44,21 @@ export const getServerSideProps = (async ({ req, res }) => {
 }) satisfies GetServerSideProps<LoginPageProps>;
 
 export default function LoginPage({ authorizationUrl, state }: LoginPageProps) {
+  const router = useRouter();
+  const self = getSelf();
+
   useEffect(() => {
     console.log("[Authorize]: Setting reddit state in local storage");
     localStorage.setItem(LocalStorageKeys.redditState, state);
   }, [state]);
+
+  useEffect(() => {
+    const returnUrl = router.query.returnUrl;
+    if (typeof returnUrl === "string" && self) {
+      console.log(`[Authorize]: Redirecting to ${returnUrl}`);
+      router.push(returnUrl);
+    }
+  }, [router]);
 
   return (
     <>
