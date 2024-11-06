@@ -15,7 +15,9 @@ export function middleware(request: NextRequest): NextResponse {
   }
 
   if (!isAuthenticated) {
-    return NextResponse.redirect(serverConfig.frontendUrl + "/login");
+    const loginUrl = new URL(serverConfig.frontendUrl + "/login");
+    loginUrl.searchParams.set("returnUrl", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
