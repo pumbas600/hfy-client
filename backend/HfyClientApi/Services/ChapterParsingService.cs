@@ -35,14 +35,16 @@ namespace HfyClientApi.Services
     private readonly RedditClient _redditClient;
     private readonly IHttpClientFactory _clientFactory;
     private readonly ILogger<ChapterParsingService> _logger;
+    private readonly VersionSettings _versionSettings;
 
     public ChapterParsingService(
       RedditClient redditClient, IHttpClientFactory clientFactory,
-      ILogger<ChapterParsingService> logger)
+      ILogger<ChapterParsingService> logger, VersionSettings versionSettings)
     {
       _redditClient = redditClient;
       _clientFactory = clientFactory;
       _logger = logger;
+      _versionSettings = versionSettings;
     }
 
     public DateTime GetEditedAtUtc(SelfPost post)
@@ -77,7 +79,7 @@ namespace HfyClientApi.Services
           bool isRedditLink = IsRedditLink(link);
           if (!isRedditLink)
           {
-            if (label.Contains("cover") && IsImageUrl(link))
+            if (label.Contains("cover") && await IsImageUrlAsync(link))
             {
               coverArtUrl = link;
             }
@@ -215,7 +217,7 @@ namespace HfyClientApi.Services
       };
     }
 
-    internal protected static bool IsImageUrl(string url)
+    internal protected async Task<bool> IsImageUrlAsync(string url)
     {
       List<string> imageFiletypes = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
 
@@ -224,8 +226,19 @@ namespace HfyClientApi.Services
         return false;
       }
 
-      // TODO: Make a HEAD request and check the Content-Type header
-      return true;
+
+      using HttpClient client = _clientFactory.CreateClient();
+
+      var request = new HttpRequestMessage(HttpMethod.Head, url);
+      request.Headers.Add("User-Agent", _versionSettings.UserAgent);
+
+      var response = await client.SendAsync(request);
+      var mediaType = response.Content.Headers.ContentType?.MediaType;
+
+      var isImageMediaType = response.IsSuccessStatusCode && mediaType != null
+        && mediaType.StartsWith("image/") && !mediaType.Contains("svg");
+
+      return isImageMediaType;
     }
 
     internal protected async Task<string?> GetCoverArtUrlFromRoyalRoadLink(
