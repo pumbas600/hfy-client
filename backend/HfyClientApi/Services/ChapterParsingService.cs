@@ -237,8 +237,8 @@ namespace HfyClientApi.Services
         var graph = await OpenGraph.ParseUrlAsync(royalRoadLink);
         var imageUrl = graph.Image?.ToString();
 
-        // Default Royal Road cover art
-        if (imageUrl == "/dist/img/nocover-new-min.png")
+        // Default Royal Road cover art. Sometimes this can start with file:///
+        if (imageUrl != null && imageUrl.EndsWith("/dist/img/nocover-new-min.png"))
         {
           return null;
         }
