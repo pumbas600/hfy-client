@@ -8,11 +8,30 @@ services:
       - ./dataprotection-keys:/root/.aspnet/DataProtection-Keys
     env_file:
       - .env
+    depends_on:
+      - database
     environment:
       - ASPNETCORE_HTTP_PORTS=8001
       - RedditRefreshToken=${REDDIT_REFRESH_TOKEN}
       - RedditAppSecret=${REDDIT_APP_SECRET}
       - RedditAppId=${REDDIT_APP_ID}
       - RedditAccessToken=${REDDIT_ACCESS_TOKEN}
-      - ConnectionStrings__DefaultConnection=${DATABASE_URL}
+      - ConnectionStrings__DefaultConnection=Server=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - JwtSettings__SecretKey=${JWT_SECRET_KEY}
+  database:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
