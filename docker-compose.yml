@@ -16,16 +16,28 @@ services:
       - RedditAppSecret=${REDDIT_APP_SECRET}
       - RedditAppId=${REDDIT_APP_ID}
       - RedditAccessToken=${REDDIT_ACCESS_TOKEN}
-      - ConnectionStrings__DefaultConnection=Server=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - ConnectionStrings__DefaultConnection=Server=database;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};SSL Mode=Require
       - JwtSettings__SecretKey=${JWT_SECRET_KEY}
   database:
-    image: postgres:14
+    image: postgres:16
     ports:
       - "5432:5432"
     volumes:
       - ./database/data:/var/lib/postgresql/data
+      - ./database/logs:/var/log/postgresql
+      - ./database/certs:/var/lib/postgresql/certs:ro
+      - ./database/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./database/pg_hba.conf:/etc/postgresql/pg_hba.conf
     env_file:
       - .env
+    command:
+      [
+        "postgres",
+        "-c",
+        "config_file=/etc/postgresql/postgresql.conf",
+        "-c",
+        "hba_file=/etc/postgresql/pg_hba.conf",
+      ]
     healthcheck:
       test:
         [

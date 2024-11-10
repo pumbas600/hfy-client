@@ -1,3 +1,4 @@
 dataprotection-keys/
-database/
+database/data/
+database/logs/
 .env
