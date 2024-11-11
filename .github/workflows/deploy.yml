@@ -5,6 +5,7 @@ on:
     workflows: ["Publish"]
     types: [completed]
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
