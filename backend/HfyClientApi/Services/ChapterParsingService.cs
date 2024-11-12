@@ -83,9 +83,13 @@ namespace HfyClientApi.Services
               continue;
             }
 
-            if (label.Contains("cover") && await IsImageUrlAsync(link))
+            if (label.Contains("cover"))
             {
-              coverArtUrl = link;
+              link = RemoveQueryParameters(link);
+              if (link != null && await IsImageUrlAsync(link))
+              {
+                coverArtUrl = link;
+              }
             }
             else if (link.StartsWith("https://www.royalroad.com/fiction"))
             {
@@ -251,7 +255,7 @@ namespace HfyClientApi.Services
       try
       {
         var graph = await OpenGraph.ParseUrlAsync(royalRoadLink);
-        var imageUrl = graph.Image?.ToString();
+        var imageUrl = RemoveQueryParameters(graph.Image?.ToString());
 
         // Default Royal Road cover art. Sometimes this can start with file:///
         if (imageUrl == null || imageUrl.EndsWith("/dist/img/nocover-new-min.png")
@@ -267,6 +271,16 @@ namespace HfyClientApi.Services
         _logger.LogError(e, "Failed to fetch cover art from Royal Road link: {}", royalRoadLink);
         return null;
       }
+    }
+
+    internal static string? RemoveQueryParameters(string? url)
+    {
+      if (url == null)
+      {
+        return null;
+      }
+
+      return url.Split("?")[0];
     }
 
     public async Task<string?> GetShareLinkLocationAsync(string shareLink)
