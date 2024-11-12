@@ -35,14 +35,16 @@ namespace HfyClientApi.Services
     private readonly RedditClient _redditClient;
     private readonly IHttpClientFactory _clientFactory;
     private readonly ILogger<ChapterParsingService> _logger;
+    private readonly VersionSettings _versionSettings;
 
     public ChapterParsingService(
       RedditClient redditClient, IHttpClientFactory clientFactory,
-      ILogger<ChapterParsingService> logger)
+      ILogger<ChapterParsingService> logger, VersionSettings versionSettings)
     {
       _redditClient = redditClient;
       _clientFactory = clientFactory;
       _logger = logger;
+      _versionSettings = versionSettings;
     }
 
     public DateTime GetEditedAtUtc(SelfPost post)
@@ -74,14 +76,22 @@ namespace HfyClientApi.Services
             continue;
           }
 
-          bool isRedditLink = IsRedditLink(link);
-          if (!isRedditLink)
+          if (!IsRedditLink(link))
           {
-            if (label.Contains("cover") && IsImageUrl(link))
+            if (coverArtUrl != null)
             {
-              coverArtUrl = link;
+              continue;
             }
-            else if (coverArtUrl == null && link.StartsWith("https://www.royalroad.com/fiction"))
+
+            if (label.Contains("cover"))
+            {
+              link = RemoveQueryParameters(link);
+              if (link != null && await IsImageUrlAsync(link))
+              {
+                coverArtUrl = link;
+              }
+            }
+            else if (link.StartsWith("https://www.royalroad.com/fiction"))
             {
               coverArtUrl = await GetCoverArtUrlFromRoyalRoadLink(link);
             }
@@ -215,30 +225,41 @@ namespace HfyClientApi.Services
       };
     }
 
-    internal protected static bool IsImageUrl(string url)
+    internal protected async Task<bool> IsImageUrlAsync(string url)
     {
-      List<string> imageFiletypes = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
+      List<string> imageFiletypes = [".jpg", ".jpeg", ".gif", ".png", ".bmp", ".webp"];
 
       if (!imageFiletypes.Any(url.EndsWith))
       {
         return false;
       }
 
-      // TODO: Make a HEAD request and check the Content-Type header
-      return true;
+      using HttpClient client = _clientFactory.CreateClient();
+
+      var request = new HttpRequestMessage(HttpMethod.Head, url);
+      request.Headers.Add("User-Agent", _versionSettings.UserAgent);
+
+      var response = await client.SendAsync(request);
+      var mediaType = response.Content.Headers.ContentType?.MediaType;
+
+      // SVGs can include embedded JS so we want to avoid those for security reasons.
+      var isImageMediaType = response.IsSuccessStatusCode && mediaType != null
+        && mediaType.StartsWith("image/") && !mediaType.Contains("svg");
+
+      return isImageMediaType;
     }
 
-    internal protected async Task<string?> GetCoverArtUrlFromRoyalRoadLink(
-      string royalRoadLink)
+    internal protected async Task<string?> GetCoverArtUrlFromRoyalRoadLink(string royalRoadLink)
     {
       _logger.LogInformation("Fetching cover art from Royal Road link: {} ", royalRoadLink);
       try
       {
         var graph = await OpenGraph.ParseUrlAsync(royalRoadLink);
-        var imageUrl = graph.Image?.ToString();
+        var imageUrl = RemoveQueryParameters(graph.Image?.ToString());
 
-        // Default Royal Road cover art
-        if (imageUrl == "/dist/img/nocover-new-min.png")
+        // Default Royal Road cover art. Sometimes this can start with file:///
+        if (imageUrl == null || imageUrl.EndsWith("/dist/img/nocover-new-min.png")
+          || !await IsImageUrlAsync(imageUrl))
         {
           return null;
         }
@@ -250,6 +271,16 @@ namespace HfyClientApi.Services
         _logger.LogError(e, "Failed to fetch cover art from Royal Road link: {}", royalRoadLink);
         return null;
       }
+    }
+
+    internal static string? RemoveQueryParameters(string? url)
+    {
+      if (url == null)
+      {
+        return null;
+      }
+
+      return url.Split("?")[0];
     }
 
     public async Task<string?> GetShareLinkLocationAsync(string shareLink)
