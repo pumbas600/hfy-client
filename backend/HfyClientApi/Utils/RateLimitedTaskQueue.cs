@@ -1,9 +1,12 @@
+using System.Collections.Concurrent;
+
 namespace HfyClientApi.Utils
 {
-  public abstract class Task
+  public interface Task { }
+
+  public abstract class MergeableTask : Task
   {
-    public abstract bool IsMergeableWith(Task other);
-    public abstract void MergeWith(Task other);
+    public abstract bool TryMergeWith(MergeableTask other);
   }
 
   public class EnqueuedTaskInfo
@@ -22,41 +25,19 @@ namespace HfyClientApi.Utils
 
   public class RateLimitedTaskQueue
   {
-    private readonly LinkedList<Task> _taskQueue = new();
+    private readonly ConcurrentQueue<Task> _scheduledTasks = new();
+    private readonly ConcurrentQueue<MergeableTask> _mergeableTasks = new();
 
     public EnqueuedTaskInfo Enqueue(Task task)
     {
-      int totalCount;
-      lock (_taskQueue)
+      if (task is not MergeableTask mergeableTask)
       {
-        totalCount = _taskQueue.Count;
-        var index = totalCount - 1;
-        var currentNode = _taskQueue.Last;
-
-        while (currentNode != null)
-        {
-          if (currentNode.Value.IsMergeableWith(task))
-          {
-            currentNode.Value.MergeWith(task);
-            return new EnqueuedTaskInfo
-            {
-              Index = index,
-              EstimatedCompletionTimeMilliseconds = 0 // TODO: Calculate this
-            };
-          }
-
-          index--;
-          currentNode = currentNode.Previous;
-        }
-
-        _taskQueue.AddLast(task);
+        _scheduledTasks.Enqueue(task);
       }
-
-      return new EnqueuedTaskInfo
+      else
       {
-        Index = totalCount,
-        EstimatedCompletionTimeMilliseconds = 0 // TODO: Calculate this
-      };
+        _mergeableTasks.Enqueue(mergeableTask);
+      }
     }
   }
 }
