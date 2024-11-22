@@ -53,5 +53,7 @@ namespace HfyClientApi.Models
     /// the story this chapter belongs to has not been identified yet.
     /// </summary>
     public string? FirstChapterId { get; set; } = null!;
+
+    public List<HistoryEntry> HistoryEntries { get; set; } = null!;
   }
 }

@@ -11,6 +11,7 @@ namespace HfyClientApi.Data
     public DbSet<User> Users { get; set; }
     public DbSet<WhitelistedUser> WhitelistedUsers { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<HistoryEntry> HistoryEntries { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -26,6 +27,19 @@ namespace HfyClientApi.Data
         .OnDelete(DeleteBehavior.Cascade)
         .IsRequired();
 
+      modelBuilder.Entity<HistoryEntry>()
+        .HasOne(historyEntry => historyEntry.User)
+        .WithMany(user => user.HistoryEntries)
+        .HasForeignKey(historyEntry => historyEntry.UserId)
+        .OnDelete(DeleteBehavior.Cascade) // Delete all the history entries when the user is deleted
+        .IsRequired();
+
+      modelBuilder.Entity<HistoryEntry>()
+        .HasOne(historyEntity => historyEntity.Chapter)
+        .WithMany(chapter => chapter.HistoryEntries)
+        .HasForeignKey(historyEntity => historyEntity.ChapterId)
+        .OnDelete(DeleteBehavior.Cascade) // Delete all the history entries when the chapter is deleted
+        .IsRequired();
     }
   }
 }

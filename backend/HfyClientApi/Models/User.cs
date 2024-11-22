@@ -10,5 +10,6 @@ namespace HfyClientApi.Models
     public string IconUrl { get; set; } = null!;
     public DateTime SyncedAt { get; set; }
     public WhitelistedUser? WhitelistedUser { get; set; }
+    public List<HistoryEntry> HistoryEntries { get; set; } = null!;
   }
 }
