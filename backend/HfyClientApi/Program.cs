@@ -85,6 +85,7 @@ builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
 builder.Services.AddScoped<ISubredditRepository, SubredditRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IHistoryEntriesRepository, HistoryEntriesRepository>();
 
 builder.Services.AddHostedService<RedditSynchronisationBackgroundService>();
 
