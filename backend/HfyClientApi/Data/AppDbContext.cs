@@ -5,13 +5,13 @@ namespace HfyClientApi.Data
 {
   public class AppDbContext : DbContext
   {
-    public DbSet<Chapter> Chapters { get; set; }
-    public DbSet<StoryMetadata> StoryMetadata { get; set; }
-    public DbSet<Subreddit> Subreddits { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<WhitelistedUser> WhitelistedUsers { get; set; }
-    public DbSet<RefreshToken> RefreshTokens { get; set; }
-    public DbSet<HistoryEntry> HistoryEntries { get; set; }
+    public DbSet<Chapter> Chapters { get; set; } = null!;
+    public DbSet<StoryMetadata> StoryMetadata { get; set; } = null!;
+    public DbSet<Subreddit> Subreddits { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<WhitelistedUser> WhitelistedUsers { get; set; } = null!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+    public DbSet<HistoryEntry> HistoryEntries { get; set; } = null!;
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
