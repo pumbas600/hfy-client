@@ -100,7 +100,7 @@ namespace HfyClientApi.Services
       {
         Id = historyEntry.Id,
         ChapterId = historyEntry.ChapterId,
-        UserId = historyEntry.UserId,
+        UserName = historyEntry.UserName,
         ReadAtUtc = historyEntry.ReadAtUtc
       };
     }

@@ -30,7 +30,7 @@ namespace HfyClientApi.Data
       modelBuilder.Entity<HistoryEntry>()
         .HasOne(historyEntry => historyEntry.User)
         .WithMany(user => user.HistoryEntries)
-        .HasForeignKey(historyEntry => historyEntry.UserId)
+        .HasForeignKey(historyEntry => historyEntry.UserName)
         .OnDelete(DeleteBehavior.Cascade) // Delete all the history entries when the user is deleted
         .IsRequired();
 

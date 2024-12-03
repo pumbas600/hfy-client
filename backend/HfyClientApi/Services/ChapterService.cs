@@ -44,12 +44,12 @@ namespace HfyClientApi.Services
     }
 
 
-    public async Task<Result<HistoryEntryDto>> ReadChapterByIdAsync(string id, string readerId)
+    public async Task<Result<HistoryEntryDto>> ReadChapterByIdAsync(string id, string readerName)
     {
       var newHistoryEntry = new HistoryEntry
       {
         ChapterId = id,
-        UserId = readerId,
+        UserName = readerName,
         ReadAtUtc = DateTime.UtcNow,
       };
 
