@@ -93,5 +93,16 @@ namespace HfyClientApi.Services
         IconUrl = user.IconUrl
       };
     }
+
+    public HistoryEntryDto ToHistoryEntryDto(HistoryEntry historyEntry)
+    {
+      return new HistoryEntryDto
+      {
+        Id = historyEntry.Id,
+        ChapterId = historyEntry.ChapterId,
+        UserId = historyEntry.UserId,
+        ReadAtUtc = historyEntry.ReadAtUtc
+      };
+    }
   }
 }

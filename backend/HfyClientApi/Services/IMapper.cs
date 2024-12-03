@@ -15,5 +15,7 @@ namespace HfyClientApi.Services
     SubredditDto ToSubredditDto(Subreddit subreddit);
 
     UserDto ToUserDto(User user);
+
+    HistoryEntryDto ToHistoryEntryDto(HistoryEntry historyEntry);
   }
 }
