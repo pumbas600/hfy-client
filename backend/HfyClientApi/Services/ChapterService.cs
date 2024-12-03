@@ -20,7 +20,7 @@ namespace HfyClientApi.Services
     public ChapterService(
       IChapterRepository chapterRepository, IChapterParsingService chapterParsingService,
       IHistoryEntriesRepository historyEntriesRepository,
-      StoryMetadataRepository storyMetadataRepository, IRedditService redditService,
+      IStoryMetadataRepository storyMetadataRepository, IRedditService redditService,
       ILogger<ChapterService> logger, IMapper mapper)
     {
       _chapterRepository = chapterRepository;
