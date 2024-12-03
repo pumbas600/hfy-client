@@ -15,6 +15,7 @@ namespace HfyClientApi.Repositories
     public async Task<HistoryEntry> AddHistoryEntryAsync(HistoryEntry historyEntry)
     {
       await _context.AddAsync(historyEntry);
+      await _context.SaveChangesAsync();
       return historyEntry;
     }
   }

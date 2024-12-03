@@ -39,7 +39,7 @@ namespace HfyClientApi.Controllers
       }
 
       var historyEntryResult = await _chapterService.ReadChapterByIdAsync(id, readerName);
-      return historyEntryResult.ToActionResult(Created);
+      return historyEntryResult.ToActionResult(entry => StatusCode(201, entry));
     }
 
     [HttpPut("{id}/process")]
