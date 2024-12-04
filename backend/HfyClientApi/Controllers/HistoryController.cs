@@ -23,9 +23,25 @@ namespace HfyClientApi.Controllers
       _historyService = historyService;
     }
 
+    [HttpGet("/stories")]
+    public async Task<ActionResult<IEnumerable<ChapterMetadataDto>>> GetCurrentlyReadingChapters()
+    {
+      var requesterName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      if (requesterName == null)
+      {
+        return Errors.AuthSubjectMissing.ToActionResult();
+      }
+
+      var currentlyReadingChaptersResult = await _historyService.GetCurrentlyReadingChaptersAsync(
+        requesterName
+      );
+
+      return currentlyReadingChaptersResult.ToActionResult(Ok);
+    }
+
 
     [HttpPost]
-    public async Task<ActionResult<HistoryEntryDto>> ReadChapterById(
+    public async Task<ActionResult<HistoryEntryDto>> AddHistoryEntry(
       [FromBody] CreateHistoryEntryDto createHistoryEntryDto)
     {
       var readerName = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -37,7 +53,8 @@ namespace HfyClientApi.Controllers
       var historyEntryResult = await _historyService.AddHistoryEntryAsync(
         createHistoryEntryDto.ChapterId, readerName
       );
-      return historyEntryResult.ToActionResult(entry => StatusCode(201, entry));
+      return historyEntryResult
+        .ToActionResult(entry => CreatedAtAction(nameof(GetCurrentlyReadingChapters), entry));
     }
   }
 }
