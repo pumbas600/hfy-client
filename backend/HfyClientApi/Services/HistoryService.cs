@@ -25,7 +25,7 @@ namespace HfyClientApi.Services
         ReadAtUtc = DateTime.UtcNow,
       };
 
-      var createdHistoryEntry = await _historyRepository.AddHistoryEntryAsync(newHistoryEntry);
+      var createdHistoryEntry = await _historyRepository.AddEntryAsync(newHistoryEntry);
       return _mapper.ToHistoryEntryDto(createdHistoryEntry);
     }
   }
