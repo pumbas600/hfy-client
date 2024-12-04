@@ -8,8 +8,6 @@ namespace HfyClientApi.Services
   {
     Task<Result<FullChapterDto>> GetChapterByIdAsync(string id);
 
-    Task<Result<HistoryEntryDto>> ReadChapterByIdAsync(string id, string readerName);
-
     Task<Result<FullChapterDto>> ProcessChapterByIdAsync(string id);
 
     Task<Result<FullChapterDto>> ProcessChapterByPostAsync(SelfPost post);

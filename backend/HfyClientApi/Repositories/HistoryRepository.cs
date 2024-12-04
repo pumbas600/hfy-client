@@ -3,11 +3,11 @@ using HfyClientApi.Models;
 
 namespace HfyClientApi.Repositories
 {
-  public class HistoryEntriesRepository : IHistoryEntriesRepository
+  public class HistoryRepository : IHistoryRepository
   {
     private readonly AppDbContext _context;
 
-    public HistoryEntriesRepository(AppDbContext context)
+    public HistoryRepository(AppDbContext context)
     {
       _context = context;
     }

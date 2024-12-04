@@ -10,7 +10,6 @@ namespace HfyClientApi.Services
   public class ChapterService : IChapterService
   {
     private readonly IChapterRepository _chapterRepository;
-    private readonly IHistoryEntriesRepository _historyEntriesRepository;
     private readonly IStoryMetadataRepository _storyMetadataRepository;
     private readonly IChapterParsingService _chapterParsingService;
     private readonly IRedditService _redditService;
@@ -19,12 +18,10 @@ namespace HfyClientApi.Services
 
     public ChapterService(
       IChapterRepository chapterRepository, IChapterParsingService chapterParsingService,
-      IHistoryEntriesRepository historyEntriesRepository,
       IStoryMetadataRepository storyMetadataRepository, IRedditService redditService,
       ILogger<ChapterService> logger, IMapper mapper)
     {
       _chapterRepository = chapterRepository;
-      _historyEntriesRepository = historyEntriesRepository;
       _storyMetadataRepository = storyMetadataRepository;
       _chapterParsingService = chapterParsingService;
       _redditService = redditService;
@@ -41,20 +38,6 @@ namespace HfyClientApi.Services
       }
 
       return chapterResult.Map(_mapper.ToFullChapterDto);
-    }
-
-
-    public async Task<Result<HistoryEntryDto>> ReadChapterByIdAsync(string id, string readerName)
-    {
-      var newHistoryEntry = new HistoryEntry
-      {
-        ChapterId = id,
-        UserName = readerName,
-        ReadAtUtc = DateTime.UtcNow,
-      };
-
-      var createdHistoryEntry = await _historyEntriesRepository.AddHistoryEntryAsync(newHistoryEntry);
-      return _mapper.ToHistoryEntryDto(createdHistoryEntry);
     }
 
     public async Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(

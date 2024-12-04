@@ -1,6 +1,4 @@
-using System.Security.Claims;
 using HfyClientApi.Dtos;
-using HfyClientApi.Exceptions;
 using HfyClientApi.Middleware;
 using HfyClientApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -29,18 +27,7 @@ namespace HfyClientApi.Controllers
       return chapterResult.ToActionResult(Ok);
     }
 
-    [HttpPost("{id}/read")]
-    public async Task<ActionResult<HistoryEntryDto>> ReadChapterById([FromRoute] string id)
-    {
-      var readerName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-      if (readerName == null)
-      {
-        return Errors.AuthSubjectMissing.ToActionResult();
-      }
 
-      var historyEntryResult = await _chapterService.ReadChapterByIdAsync(id, readerName);
-      return historyEntryResult.ToActionResult(entry => StatusCode(201, entry));
-    }
 
     [HttpPut("{id}/process")]
     public async Task<ActionResult<FullChapterDto>> ProcessChapterById([FromRoute] string id)
