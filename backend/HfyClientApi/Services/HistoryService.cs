@@ -28,5 +28,15 @@ namespace HfyClientApi.Services
       var createdHistoryEntry = await _historyRepository.AddEntryAsync(newHistoryEntry);
       return _mapper.ToHistoryEntryDto(createdHistoryEntry);
     }
+
+    public async Task<Result<IEnumerable<ChapterMetadataDto>>> GetCurrentlyReadingChaptersAsync(
+      string userName)
+    {
+      var currentlyReadingChapters = await _historyRepository.GetCurrentlyReadingChaptersAsync(
+        userName
+      );
+
+      return Result.Success(currentlyReadingChapters.Select(_mapper.ToChapterMetadataDto));
+    }
   }
 }
