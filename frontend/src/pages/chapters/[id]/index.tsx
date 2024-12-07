@@ -4,11 +4,12 @@ import ChapterLayout from "@/components/chapter/chapterLayout";
 import ScrollToTopButton from "@/components/composite/scrollToTopButton";
 import TextLayout from "@/components/layout/textLayout";
 import config from "@/config";
-import { GetChapterRequest, GetSelf } from "@/types/api";
+import { GetChapterRequest, GetSelf, PostHistoryRequest } from "@/types/api";
 import { FullChapter } from "@/types/chapter";
 import { User } from "@/types/user";
 import { Api } from "@/util/api";
 import { GetServerSideProps } from "next";
+import { useEffect } from "react";
 
 export interface ChapterPageProps {
   chapter: FullChapter;
@@ -34,6 +35,25 @@ export const getServerSideProps = (async ({ req, res, params }) => {
 }) satisfies GetServerSideProps<ChapterPageProps, { id: string }>;
 
 export default function ChapterPage({ chapter }: ChapterPageProps) {
+  useEffect(() => {
+    const addHistoryEntry = async () => {
+      try {
+        const response = await Api.post<PostHistoryRequest.ResBody>(
+          config.api.baseUrl + "/history",
+          {
+            chapterId: chapter.id,
+          }
+        );
+
+        console.debug("History entry added", response.data);
+      } catch (e) {
+        console.error("Failed to add history entry", e);
+      }
+    };
+
+    addHistoryEntry();
+  }, []);
+
   return (
     <>
       <HeadMeta
