@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using HfyClientApi.Data;
 using HfyClientApi.Dtos;
 using HfyClientApi.Exceptions;
-using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using HfyClientApi.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -144,11 +143,20 @@ namespace HfyClientApi.Repositories
       Expression<Func<CombinedChapter, object>>? orderBy = null)
     {
       var query = _context.Chapters
-        .LeftJoin(
+        // This is essentially doing a LEFT JOIN
+        .GroupJoin(
           _context.StoryMetadata,
           chapter => chapter.FirstChapterId,
           story => story.FirstChapterId,
-          (chapter, story) => new CombinedChapter() { Chapter = chapter, StoryMetadata = story }
+          (chapter, story) => new { Chapter = chapter, Story = story }
+        )
+        .SelectMany(
+          x => x.Story.DefaultIfEmpty(),
+          (chapter, story) => new CombinedChapter()
+          {
+            Chapter = chapter.Chapter,
+            StoryMetadata = story
+          }
         );
 
       var orderedQuery = orderBy != null
