@@ -23,7 +23,6 @@ namespace HfyClientApi.Repositories
 
     public async Task<IEnumerable<CombinedChapter>> GetCurrentlyReadingChaptersAsync(string userName)
     {
-      // TODO: Add distinct
       var currentlyReadingChapters = await _context.HistoryEntries
         .Where(entry => entry.UserName == userName)
         .Include(entry => entry.Chapter)
@@ -32,7 +31,7 @@ namespace HfyClientApi.Repositories
           _context.StoryMetadata,
           entry => entry.Chapter.FirstChapterId,
           story => story.FirstChapterId,
-          (entry, story) => new { Chapter = entry.Chapter, Story = story }
+          (entry, story) => new { entry.Chapter, Story = story }
         )
         .SelectMany(
           x => x.Story.DefaultIfEmpty(),
