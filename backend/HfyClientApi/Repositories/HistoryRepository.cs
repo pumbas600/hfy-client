@@ -28,14 +28,22 @@ namespace HfyClientApi.Repositories
         .Where(entry => entry.UserName == userName)
         .Include(entry => entry.Chapter)
         .OrderBy(entry => entry.ReadAtUtc)
-        .LeftJoin(_context.StoryMetadata,
+        .GroupJoin(
+          _context.StoryMetadata,
           entry => entry.Chapter.FirstChapterId,
           story => story.FirstChapterId,
+          (entry, story) => new { Chapter = entry.Chapter, Story = story }
+        )
+        .SelectMany(
+          x => x.Story.DefaultIfEmpty(),
           (entry, story) => new CombinedChapter()
           {
             Chapter = entry.Chapter,
             StoryMetadata = story
-          })
+          }
+        )
+        .GroupBy(chapter => chapter.Chapter.FirstChapterId)
+        .Select(group => group.First())
         .ToListAsync();
 
       return currentlyReadingChapters;
