@@ -23,7 +23,7 @@ namespace HfyClientApi.Controllers
       _historyService = historyService;
     }
 
-    [HttpGet("stories")]
+    [HttpGet("reading")]
     public async Task<ActionResult<IEnumerable<ChapterMetadataDto>>> GetCurrentlyReadingChapters()
     {
       var requesterName = User.FindFirstValue(ClaimTypes.NameIdentifier);

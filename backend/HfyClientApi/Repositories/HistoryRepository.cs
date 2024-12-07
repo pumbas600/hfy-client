@@ -1,7 +1,7 @@
 using HfyClientApi.Data;
+using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HfyClientApi.Repositories
 {
@@ -23,15 +23,19 @@ namespace HfyClientApi.Repositories
 
     public async Task<IEnumerable<CombinedChapter>> GetCurrentlyReadingChaptersAsync(string userName)
     {
+      // TODO: Add distinct
       var currentlyReadingChapters = await _context.HistoryEntries
         .Where(entry => entry.UserName == userName)
         .Include(entry => entry.Chapter)
         .OrderBy(entry => entry.ReadAtUtc)
-        .DistinctBy(entry => entry.Chapter.FirstChapterId)
         .LeftJoin(_context.StoryMetadata,
           entry => entry.Chapter.FirstChapterId,
           story => story.FirstChapterId,
-          (entry, story) => new CombinedChapter() { Chapter = entry.Chapter, StoryMetadata = story })
+          (entry, story) => new CombinedChapter()
+          {
+            Chapter = entry.Chapter,
+            StoryMetadata = story
+          })
         .ToListAsync();
 
       return currentlyReadingChapters;
