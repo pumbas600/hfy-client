@@ -53,8 +53,17 @@ namespace HfyClientApi.Controllers
       var historyEntryResult = await _historyService.AddHistoryEntryAsync(
         createHistoryEntryDto.ChapterId, readerName
       );
+
       return historyEntryResult
-        .ToActionResult(entry => CreatedAtAction(nameof(GetCurrentlyReadingChapters), entry));
+        .ToActionResult(entry =>
+        {
+          if (entry.IsCreated)
+          {
+            return CreatedAtAction(nameof(GetCurrentlyReadingChapters), entry);
+          }
+
+          return Ok(entry.Value);
+        });
     }
   }
 }
