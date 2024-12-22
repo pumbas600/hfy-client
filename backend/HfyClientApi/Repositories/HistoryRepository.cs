@@ -1,5 +1,4 @@
 using HfyClientApi.Data;
-using HfyClientApi.Extensions;
 using HfyClientApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +45,14 @@ namespace HfyClientApi.Repositories
         .ToListAsync();
 
       return currentlyReadingChapters;
+    }
+
+    public async Task<HistoryEntry?> GetMostRecentEntryAsync(string userName)
+    {
+      return await _context.HistoryEntries
+        .Where(entry => entry.UserName == userName)
+        .OrderByDescending(entry => entry.ReadAtUtc)
+        .FirstOrDefaultAsync();
     }
   }
 }
