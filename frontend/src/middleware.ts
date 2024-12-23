@@ -24,5 +24,5 @@ export function middleware(request: NextRequest): NextResponse {
 }
 
 export const config: MiddlewareConfig = {
-  matcher: ["/", "/r/:path*", "/chapters/:path*", "/settings"],
+  matcher: ["/", "/r/:path*", "/chapters/:path*", "/settings", "/reading"],
 };

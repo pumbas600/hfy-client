@@ -4,6 +4,7 @@ import config from ".";
 export const Links = {
   Home: "/",
   About: "/about",
+  Reading: "/reading",
 } as const;
 
 export const DevelopmentLinks = {
