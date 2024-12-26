@@ -1,5 +1,11 @@
 import { HeadMeta } from "@/components/atomic";
-import { Aside, Header, PageLayout } from "@/components/layout/pageLayout";
+import {
+  Aside,
+  Header,
+  Main,
+  PageLayout,
+} from "@/components/layout/pageLayout";
+import ChapterSummaryCard from "@/components/subreddit/chapterSummaryCard";
 import config from "@/config";
 import { GetReadingHistoryRequest } from "@/types/api";
 import { ChapterMetadata } from "@/types/chapter";
@@ -45,6 +51,11 @@ export default function ReadingHistoryPage({
           <p>Recently read stories</p>
         </Header>
         <Aside />
+        <Main>
+          {readingHistory.map((metadata) => (
+            <ChapterSummaryCard key={metadata.id} metadata={metadata} />
+          ))}
+        </Main>
       </PageLayout>
     </>
   );
