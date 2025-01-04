@@ -8,5 +8,7 @@ namespace HfyClientApi.Models
     public string FirstChapterId { get; set; } = null!;
 
     public string CoverArtUrl { get; set; } = null!;
+
+    public List<Chapter> Chapters { get; set; } = null!;
   }
 }

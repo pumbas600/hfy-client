@@ -53,6 +53,8 @@ namespace HfyClientApi.Models
     /// </summary>
     public string? FirstChapterId { get; set; } = null!;
 
+    public StoryMetadata? StoryMetadata { get; set; } = null!;
+
     public List<HistoryEntry> HistoryEntries { get; set; } = null!;
   }
 }

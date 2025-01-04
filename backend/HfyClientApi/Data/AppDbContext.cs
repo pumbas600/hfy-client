@@ -20,6 +20,13 @@ namespace HfyClientApi.Data
       base.OnModelCreating(modelBuilder);
 
       modelBuilder.HasPostgresExtension("fuzzystrmatch");
+
+      modelBuilder.Entity<Chapter>()
+        .HasOne(chapter => chapter.StoryMetadata)
+        .WithMany(storyMetadata => storyMetadata.Chapters)
+        .HasForeignKey(chapter => chapter.FirstChapterId)
+        .HasPrincipalKey(storyMetadata => storyMetadata.FirstChapterId);
+
       modelBuilder.Entity<User>()
         .HasOne(user => user.WhitelistedUser)
         .WithOne(whitelistedUser => whitelistedUser.User)
