@@ -14,14 +14,23 @@ namespace HfyClientApi.Migrations
                 name: "FK_Chapters_StoryMetadata_FirstChapterId",
                 table: "Chapters");
 
-            migrationBuilder.DropTable(
-                name: "StoryMetadata");
-
             migrationBuilder.AddColumn<string>(
                 name: "CoverArtUrl",
                 table: "Chapters",
                 type: "text",
                 nullable: true);
+
+            migrationBuilder.Sql(
+                """
+                UPDATE "Chapters" AS "C"
+                SET "C"."CoverArtUrl" = "SM"."CoverArtUrl"
+                FROM "StoryMetadata" AS "SM"
+                WHERE "C"."FirstChapterId" = "SM"."FirstChapterId"
+                """
+            );
+
+            migrationBuilder.DropTable(
+                name: "StoryMetadata");
         }
 
         /// <inheritdoc />
@@ -42,6 +51,14 @@ namespace HfyClientApi.Migrations
                 {
                     table.PrimaryKey("PK_StoryMetadata", x => x.FirstChapterId);
                 });
+
+            migrationBuilder.Sql(
+                """
+                INSERT INTO "StoryMetadata" ("FirstChapterId", "CoverArtUrl")
+                SELECT DISTINCT ON ("FirstChapterId") "FirstChapterId", "CoverArtUrl"
+                FROM "Chapters"
+                """
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Chapters_StoryMetadata_FirstChapterId",
