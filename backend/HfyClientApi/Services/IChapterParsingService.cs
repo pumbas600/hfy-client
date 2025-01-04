@@ -9,6 +9,6 @@ namespace HfyClientApi.Services
 
     Task<string?> GetShareLinkLocationAsync(string shortLink);
 
-    Task<(Chapter, StoryMetadata?)> ChapterFromPostAsync(SelfPost post);
+    Task<Chapter> ChapterFromPostAsync(SelfPost post);
   }
 }

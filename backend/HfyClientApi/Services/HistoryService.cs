@@ -54,7 +54,9 @@ namespace HfyClientApi.Services
         userName
       );
 
-      return Result.Success(currentlyReadingChapters.Select(_mapper.ToChapterMetadataDto));
+      return Result.Success(
+        currentlyReadingChapters.Select(entry => _mapper.ToChapterMetadataDto(entry.Chapter))
+      );
     }
 
     private static bool IsDuplicateEntry(HistoryEntry mostRecentHistoryEntry, string chapterId)

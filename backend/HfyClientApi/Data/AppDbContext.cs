@@ -6,7 +6,6 @@ namespace HfyClientApi.Data
   public class AppDbContext : DbContext
   {
     public DbSet<Chapter> Chapters { get; set; } = null!;
-    public DbSet<StoryMetadata> StoryMetadata { get; set; } = null!;
     public DbSet<Subreddit> Subreddits { get; set; } = null!;
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<WhitelistedUser> WhitelistedUsers { get; set; } = null!;
@@ -20,12 +19,6 @@ namespace HfyClientApi.Data
       base.OnModelCreating(modelBuilder);
 
       modelBuilder.HasPostgresExtension("fuzzystrmatch");
-
-      modelBuilder.Entity<Chapter>()
-        .HasOne(chapter => chapter.StoryMetadata)
-        .WithMany(storyMetadata => storyMetadata.Chapters)
-        .HasForeignKey(chapter => chapter.FirstChapterId)
-        .HasPrincipalKey(storyMetadata => storyMetadata.FirstChapterId);
 
       modelBuilder.Entity<User>()
         .HasOne(user => user.WhitelistedUser)

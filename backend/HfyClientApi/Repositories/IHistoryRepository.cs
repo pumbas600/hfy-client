@@ -4,7 +4,7 @@ namespace HfyClientApi.Repositories
 {
   public interface IHistoryRepository
   {
-    public Task<IEnumerable<CombinedChapter>> GetCurrentlyReadingChaptersAsync(string userName);
+    public Task<IEnumerable<HistoryEntry>> GetCurrentlyReadingChaptersAsync(string userName);
 
     public Task<HistoryEntry?> GetMostRecentEntryAsync(string userName);
 

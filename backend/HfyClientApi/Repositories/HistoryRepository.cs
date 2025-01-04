@@ -20,26 +20,12 @@ namespace HfyClientApi.Repositories
       return historyEntry;
     }
 
-    public async Task<IEnumerable<CombinedChapter>> GetCurrentlyReadingChaptersAsync(string userName)
+    public async Task<IEnumerable<HistoryEntry>> GetCurrentlyReadingChaptersAsync(string userName)
     {
       var currentlyReadingChapters = await _context.HistoryEntries
         .Where(entry => entry.UserName == userName)
         .Include(entry => entry.Chapter)
         .OrderBy(entry => entry.ReadAtUtc)
-        .GroupJoin(
-          _context.StoryMetadata,
-          entry => entry.Chapter.FirstChapterId,
-          story => story.FirstChapterId,
-          (entry, story) => new { entry.Chapter, Story = story }
-        )
-        .SelectMany(
-          x => x.Story.DefaultIfEmpty(),
-          (entry, story) => new CombinedChapter()
-          {
-            Chapter = entry.Chapter,
-            StoryMetadata = story
-          }
-        )
         .GroupBy(chapter => chapter.Chapter.FirstChapterId)
         .Select(group => group.First())
         .ToListAsync();

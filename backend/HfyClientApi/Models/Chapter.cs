@@ -51,9 +51,9 @@ namespace HfyClientApi.Models
     /// same FirstChapterId. If this is the first chapter, it will be the same as Id. If null, then
     /// the story this chapter belongs to has not been identified yet.
     /// </summary>
-    public string? FirstChapterId { get; set; } = null!;
+    public string? FirstChapterId { get; set; }
 
-    public StoryMetadata? StoryMetadata { get; set; } = null!;
+    public string? CoverArtUrl { get; set; }
 
     public List<HistoryEntry> HistoryEntries { get; set; } = null!;
   }

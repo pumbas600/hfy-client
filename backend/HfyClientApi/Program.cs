@@ -82,7 +82,6 @@ builder.Services.AddScoped<ICipherService, CipherService>();
 builder.Services.AddScoped<IHistoryService, HistoryService>();
 
 builder.Services.AddScoped<IChapterRepository, ChapterRepository>();
-builder.Services.AddScoped<IStoryMetadataRepository, StoryMetadataRepository>();
 builder.Services.AddScoped<ISubredditRepository, SubredditRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();

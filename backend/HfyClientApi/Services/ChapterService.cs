@@ -10,7 +10,6 @@ namespace HfyClientApi.Services
   public class ChapterService : IChapterService
   {
     private readonly IChapterRepository _chapterRepository;
-    private readonly IStoryMetadataRepository _storyMetadataRepository;
     private readonly IChapterParsingService _chapterParsingService;
     private readonly IRedditService _redditService;
     private readonly ILogger<ChapterService> _logger;
@@ -18,11 +17,9 @@ namespace HfyClientApi.Services
 
     public ChapterService(
       IChapterRepository chapterRepository, IChapterParsingService chapterParsingService,
-      IStoryMetadataRepository storyMetadataRepository, IRedditService redditService,
-      ILogger<ChapterService> logger, IMapper mapper)
+      IRedditService redditService, ILogger<ChapterService> logger, IMapper mapper)
     {
       _chapterRepository = chapterRepository;
-      _storyMetadataRepository = storyMetadataRepository;
       _chapterParsingService = chapterParsingService;
       _redditService = redditService;
       _logger = logger;
@@ -43,7 +40,7 @@ namespace HfyClientApi.Services
     public async Task<ChapterPaginationDto> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, string? title, int pageSize, ChapterPaginationKey? nextKey)
     {
-      IEnumerable<CombinedChapter> chapters;
+      IEnumerable<Chapter> chapters;
       if (title != null)
       {
         chapters = await _chapterRepository.GetPaginatedChaptersMetadataByTitleAsync(
@@ -103,33 +100,23 @@ namespace HfyClientApi.Services
         "Updating chapter {}. Post was edited at {}. Chapter was edited at {}",
         chapter.Id, postEditedAtUtc, chapter.EditedAtUtc);
 
-      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
+      var parsedChapter = await _chapterParsingService.ChapterFromPostAsync(post);
       await UpdateChapterLinksAsync(parsedChapter);
-
-      if (storyMetadata != null)
-      {
-        await _storyMetadataRepository.UpsertMetadataAsync(storyMetadata);
-      }
 
       await _chapterRepository.UpdateChapterAsync(parsedChapter);
     }
 
     internal async Task CreateChapterAsync(SelfPost post)
     {
-      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
+      var parsedChapter = await _chapterParsingService.ChapterFromPostAsync(post);
       await UpdateChapterLinksAsync(parsedChapter);
-
-      if (storyMetadata != null)
-      {
-        await _storyMetadataRepository.UpsertMetadataAsync(storyMetadata);
-      }
 
       await _chapterRepository.CreateChapterAsync(parsedChapter);
     }
 
     public async Task<Result<FullChapterDto>> ProcessChapterByPostAsync(SelfPost post)
     {
-      var (parsedChapter, storyMetadata) = await _chapterParsingService.ChapterFromPostAsync(post);
+      var parsedChapter = await _chapterParsingService.ChapterFromPostAsync(post);
 
       await UpdateChapterLinksAsync(parsedChapter);
 
@@ -140,22 +127,7 @@ namespace HfyClientApi.Services
       }
 
       var createdChapter = createdChapterResult.Data;
-
-
-      if (storyMetadata != null)
-      {
-        await _storyMetadataRepository.UpsertMetadataAsync(storyMetadata);
-      }
-      else if (createdChapter.FirstChapterId != null)
-      {
-        storyMetadata = await _storyMetadataRepository.GetMetadataAsync(createdChapter.FirstChapterId);
-      }
-
-      return _mapper.ToFullChapterDto(new CombinedChapter
-      {
-        Chapter = createdChapter,
-        StoryMetadata = storyMetadata
-      });
+      return _mapper.ToFullChapterDto(createdChapter);
     }
 
     internal async Task<Result> UpdateChapterLinksAsync(Chapter chapter)

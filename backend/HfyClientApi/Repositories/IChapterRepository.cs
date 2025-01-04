@@ -4,17 +4,12 @@ using HfyClientApi.Utils;
 
 namespace HfyClientApi.Repositories
 {
-  public class CombinedChapter
-  {
-    public required Chapter Chapter { get; set; }
-    public required StoryMetadata? StoryMetadata { get; set; }
-  }
 
   public interface IChapterRepository
   {
     Task<IEnumerable<Chapter>> GetChaptersByIdsAsync(IEnumerable<string> ids);
 
-    Task<Result<CombinedChapter>> GetChapterByIdAsync(string id);
+    Task<Result<Chapter>> GetChapterByIdAsync(string id);
 
     Task<(Chapter?, Chapter?)> GetLinkedChaptersByChapterAsync(Chapter chapter);
 
@@ -28,10 +23,10 @@ namespace HfyClientApi.Repositories
 
     Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false, bool track = false);
 
-    Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersMetadataByTitleAsync(
+    Task<IEnumerable<Chapter>> GetPaginatedChaptersMetadataByTitleAsync(
       string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey);
 
-    Task<IEnumerable<CombinedChapter>> GetPaginatedNewChaptersMetadataAsync(
+    Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey);
   }
 

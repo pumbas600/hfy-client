@@ -52,7 +52,7 @@ namespace HfyClientApi.Services
       return post.Edited == default ? post.Created : post.Edited;
     }
 
-    public async Task<(Chapter, StoryMetadata?)> ChapterFromPostAsync(SelfPost post)
+    public async Task<Chapter> ChapterFromPostAsync(SelfPost post)
     {
       var document = new HtmlDocument();
       document.LoadHtml(post.SelfTextHTML);
@@ -152,16 +152,6 @@ namespace HfyClientApi.Services
         firstChapterId = post.Id;
       }
 
-      StoryMetadata? storyMetadata = null;
-      if (firstChapterId != null && coverArtUrl != null)
-      {
-        storyMetadata = new()
-        {
-          FirstChapterId = firstChapterId,
-          CoverArtUrl = coverArtUrl
-        };
-      }
-
       var chapter = new Chapter()
       {
         Id = post.Id,
@@ -178,12 +168,13 @@ namespace HfyClientApi.Services
         NextChapterId = nextChapterId,
         PreviousChapterId = previousChapterId,
         FirstChapterId = firstChapterId,
+        CoverArtUrl = coverArtUrl,
       };
 
-      return (chapter, storyMetadata);
+      return chapter;
     }
 
-    internal bool IsRedditLink(string link)
+    internal static bool IsRedditLink(string link)
     {
       return Config.SupportedRedditUrls.Any(link.StartsWith);
     }

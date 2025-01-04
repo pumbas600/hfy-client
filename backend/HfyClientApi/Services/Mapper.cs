@@ -1,16 +1,13 @@
 using HfyClientApi.Configuration;
 using HfyClientApi.Dtos;
 using HfyClientApi.Models;
-using HfyClientApi.Repositories;
 
 namespace HfyClientApi.Services
 {
   public class Mapper : IMapper
   {
-    public FullChapterDto ToFullChapterDto(CombinedChapter combinedChapter)
+    public FullChapterDto ToFullChapterDto(Chapter chapter)
     {
-      var chapter = combinedChapter.Chapter;
-
       return new FullChapterDto
       {
         Id = chapter.Id,
@@ -21,7 +18,7 @@ namespace HfyClientApi.Services
         IsNsfw = chapter.IsNsfw,
         Upvotes = chapter.Upvotes,
         Downvotes = chapter.Downvotes,
-        CoverArtUrl = combinedChapter.StoryMetadata?.CoverArtUrl,
+        CoverArtUrl = chapter.CoverArtUrl,
         RedditPostLink = $"{Config.RedditUrl}/r/{chapter.Subreddit}/comments/{chapter.Id}",
         RedditAuthorLink = $"{Config.RedditUrl}/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
@@ -33,10 +30,8 @@ namespace HfyClientApi.Services
       };
     }
 
-    public ChapterMetadataDto ToChapterMetadataDto(CombinedChapter combinedChapter)
+    public ChapterMetadataDto ToChapterMetadataDto(Chapter chapter)
     {
-      var chapter = combinedChapter.Chapter;
-
       return new ChapterMetadataDto
       {
         Id = chapter.Id,
@@ -46,7 +41,7 @@ namespace HfyClientApi.Services
         IsNsfw = chapter.IsNsfw,
         Upvotes = chapter.Upvotes,
         Downvotes = chapter.Downvotes,
-        CoverArtUrl = combinedChapter.StoryMetadata?.CoverArtUrl,
+        CoverArtUrl = chapter.CoverArtUrl,
         RedditAuthorLink = $"{Config.RedditUrl}/user/{chapter.Author}",
         CreatedAtUtc = chapter.CreatedAtUtc,
         EditedAtUtc = chapter.EditedAtUtc,
@@ -55,20 +50,20 @@ namespace HfyClientApi.Services
     }
 
     public ChapterPaginationDto ToPaginatedChapterMetadataDto(
-      int pageSize, IEnumerable<CombinedChapter> combinedChapters)
+      int pageSize, IEnumerable<Chapter> chapters)
     {
-      var lastChapter = combinedChapters.LastOrDefault();
+      var lastChapter = chapters.LastOrDefault();
       var nextKey = lastChapter == null ? null : new ChapterPaginationKey()
       {
-        LastCreatedAtUtc = lastChapter.Chapter.CreatedAtUtc,
-        LastPostId = lastChapter.Chapter.Id
+        LastCreatedAtUtc = lastChapter.CreatedAtUtc,
+        LastPostId = lastChapter.Id
       };
 
       return new ChapterPaginationDto()
       {
         NextKey = nextKey,
         PageSize = pageSize,
-        Data = combinedChapters.Select(ToChapterMetadataDto)
+        Data = chapters.Select(ToChapterMetadataDto)
       };
     }
 

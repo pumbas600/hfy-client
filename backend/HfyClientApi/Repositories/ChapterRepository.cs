@@ -55,21 +55,16 @@ namespace HfyClientApi.Repositories
       return Errors.ChapterUpsertFailed(chapter.Id);
     }
 
-    public async Task<Result<CombinedChapter>> GetChapterByIdAsync(string id)
+    public async Task<Result<Chapter>> GetChapterByIdAsync(string id)
     {
-      var combinedChapter = await _context.Chapters.Join(
-        _context.StoryMetadata,
-        chapter => chapter.FirstChapterId,
-        story => story.FirstChapterId,
-        (chapter, story) => new CombinedChapter() { Chapter = chapter, StoryMetadata = story }
-      ).FirstOrDefaultAsync(c => c.Chapter.Id == id);
+      var chapter = await _context.Chapters.FirstOrDefaultAsync(c => c.Id == id);
 
-      if (combinedChapter == null)
+      if (chapter == null)
       {
         return Errors.ChapterNotFound(id);
       }
 
-      return combinedChapter;
+      return chapter;
     }
 
     public async Task<Chapter> UpdateChapterAsync(Chapter chapter, bool onlyLinks = false, bool track = false)
@@ -107,64 +102,49 @@ namespace HfyClientApi.Repositories
       return await _context.Chapters.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<IEnumerable<CombinedChapter>> GetPaginatedNewChaptersMetadataAsync(
+    public async Task<IEnumerable<Chapter>> GetPaginatedNewChaptersMetadataAsync(
       string subreddit, int pageSize, ChapterPaginationKey? nextKey)
     {
       var uppercaseSubreddit = subreddit.ToUpper();
 
-      Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
-        ? c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
-        : c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
-          && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
-          || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
+      Expression<Func<Chapter, bool>> predicate = nextKey == null
+        ? c => c.Subreddit.ToUpper() == uppercaseSubreddit
+        : c => c.Subreddit.ToUpper() == uppercaseSubreddit
+          && c.CreatedAtUtc < nextKey.LastCreatedAtUtc
+          || (c.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Id.CompareTo(nextKey.LastPostId) > 0);
 
       return await GetPaginatedChaptersAsync(predicate, pageSize);
     }
 
-    public async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersMetadataByTitleAsync(
+    public async Task<IEnumerable<Chapter>> GetPaginatedChaptersMetadataByTitleAsync(
       string subreddit, string title, int pageSize, ChapterPaginationKey? nextKey)
     {
       var uppercaseSubreddit = subreddit.ToUpper();
       var searchableTitle = GetSearchableTitle(title);
 
-      Expression<Func<CombinedChapter, bool>> predicate = nextKey == null
-        ? c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
-          && c.Chapter.SearchableTitle.Contains(searchableTitle)
-        : c => c.Chapter.Subreddit.ToUpper() == uppercaseSubreddit
-          && c.Chapter.SearchableTitle.Contains(searchableTitle)
-          && c.Chapter.CreatedAtUtc < nextKey.LastCreatedAtUtc
-          || (c.Chapter.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Chapter.Id.CompareTo(nextKey.LastPostId) > 0);
+      Expression<Func<Chapter, bool>> predicate = nextKey == null
+        ? c => c.Subreddit.ToUpper() == uppercaseSubreddit
+          && c.SearchableTitle.Contains(searchableTitle)
+        : c => c.Subreddit.ToUpper() == uppercaseSubreddit
+          && c.SearchableTitle.Contains(searchableTitle)
+          && c.CreatedAtUtc < nextKey.LastCreatedAtUtc
+          || (c.CreatedAtUtc == nextKey.LastCreatedAtUtc && c.Id.CompareTo(nextKey.LastPostId) > 0);
 
       return await GetPaginatedChaptersAsync(predicate, pageSize);
     }
 
-    internal async Task<IEnumerable<CombinedChapter>> GetPaginatedChaptersAsync(
-      Expression<Func<CombinedChapter, bool>> predicate, int pageSize,
-      Expression<Func<CombinedChapter, object>>? orderBy = null)
+    internal async Task<IEnumerable<Chapter>> GetPaginatedChaptersAsync(
+      Expression<Func<Chapter, bool>> predicate, int pageSize,
+      Expression<Func<Chapter, object>>? orderBy = null)
     {
-      var query = _context.Chapters
-        // This is essentially doing a LEFT JOIN
-        .GroupJoin(
-          _context.StoryMetadata,
-          chapter => chapter.FirstChapterId,
-          story => story.FirstChapterId,
-          (chapter, story) => new { Chapter = chapter, Story = story }
-        )
-        .SelectMany(
-          x => x.Story.DefaultIfEmpty(),
-          (chapter, story) => new CombinedChapter()
-          {
-            Chapter = chapter.Chapter,
-            StoryMetadata = story
-          }
-        );
+      var query = _context.Chapters;
 
       var orderedQuery = orderBy != null
-        ? query.OrderBy(orderBy).ThenByDescending(c => c.Chapter.CreatedAtUtc)
-        : query.OrderByDescending(c => c.Chapter.CreatedAtUtc);
+        ? query.OrderBy(orderBy).ThenByDescending(c => c.CreatedAtUtc)
+        : query.OrderByDescending(c => c.CreatedAtUtc);
 
       return await orderedQuery
-        .ThenBy(c => c.Chapter.Id)
+        .ThenBy(c => c.Id)
         .Where(predicate)
         .Take(pageSize)
         .ToListAsync();
