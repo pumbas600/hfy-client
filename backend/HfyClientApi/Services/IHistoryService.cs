@@ -11,7 +11,7 @@ namespace HfyClientApi.Services
 
   public interface IHistoryService
   {
-    Task<Result<IEnumerable<ChapterMetadataDto>>> GetCurrentlyReadingChaptersAsync(string userName);
+    Task<Result<IEnumerable<ReadingHistoryDto>>> GetCurrentlyReadingChaptersAsync(string userName);
 
     Task<Result<MaybeCreated<HistoryEntryDto>>> AddHistoryEntryAsync(string id, string readerName);
   }

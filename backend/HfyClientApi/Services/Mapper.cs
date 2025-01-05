@@ -98,5 +98,15 @@ namespace HfyClientApi.Services
         ReadAtUtc = historyEntry.ReadAtUtc
       };
     }
+
+    public ReadingHistoryDto ToReadingHistoryDto(HistoryEntry historyEntry)
+    {
+      return new ReadingHistoryDto
+      {
+        ChapterMetadata = ToChapterMetadataDto(historyEntry.Chapter),
+        ReadAtUtc = historyEntry.ReadAtUtc,
+        NextChapterId = historyEntry.Chapter.NextChapterId
+      };
+    }
   }
 }

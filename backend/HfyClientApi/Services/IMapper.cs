@@ -16,5 +16,7 @@ namespace HfyClientApi.Services
     UserDto ToUserDto(User user);
 
     HistoryEntryDto ToHistoryEntryDto(HistoryEntry historyEntry);
+
+    ReadingHistoryDto ToReadingHistoryDto(HistoryEntry historyEntry);
   }
 }

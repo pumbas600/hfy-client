@@ -47,16 +47,14 @@ namespace HfyClientApi.Services
       };
     }
 
-    public async Task<Result<IEnumerable<ChapterMetadataDto>>> GetCurrentlyReadingChaptersAsync(
+    public async Task<Result<IEnumerable<ReadingHistoryDto>>> GetCurrentlyReadingChaptersAsync(
       string userName)
     {
       var currentlyReadingChapters = await _historyRepository.GetCurrentlyReadingChaptersAsync(
         userName
       );
 
-      return Result.Success(
-        currentlyReadingChapters.Select(entry => _mapper.ToChapterMetadataDto(entry.Chapter))
-      );
+      return Result.Success(currentlyReadingChapters.Select(_mapper.ToReadingHistoryDto));
     }
 
     private static bool IsDuplicateEntry(HistoryEntry mostRecentHistoryEntry, string chapterId)
