@@ -1,5 +1,4 @@
-import { ChapterMetadata } from "../chapter";
-import { HistoryEntry } from "../history";
+import { HistoryEntry, ReadingHistoryEntry } from "../history";
 
 export namespace PostHistoryRequest {
   export type Params = never;
@@ -10,5 +9,5 @@ export namespace PostHistoryRequest {
 export namespace GetReadingHistoryRequest {
   export type Params = never;
   export type ReqBody = never;
-  export type ResBody = ChapterMetadata[];
+  export type ResBody = ReadingHistoryEntry[];
 }

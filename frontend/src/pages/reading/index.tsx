@@ -8,12 +8,12 @@ import {
 import ChapterSummaryCard from "@/components/subreddit/chapterSummaryCard";
 import config from "@/config";
 import { GetReadingHistoryRequest } from "@/types/api";
-import { ChapterMetadata } from "@/types/chapter";
+import { ReadingHistoryEntry } from "@/types/history";
 import { Api } from "@/util/api";
 import { GetServerSideProps } from "next";
 
 interface ReadingHistoryPageProps {
-  readingHistory: ChapterMetadata[];
+  readingHistory: ReadingHistoryEntry[];
 }
 
 export const getServerSideProps = (async ({ req, res }) => {
@@ -52,8 +52,11 @@ export default function ReadingHistoryPage({
         </Header>
         <Aside />
         <Main>
-          {readingHistory.map((metadata) => (
-            <ChapterSummaryCard key={metadata.id} metadata={metadata} />
+          {readingHistory.map((entry) => (
+            <ChapterSummaryCard
+              key={entry.chapterMetadata.id}
+              metadata={entry.chapterMetadata}
+            />
           ))}
         </Main>
       </PageLayout>
