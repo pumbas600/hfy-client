@@ -22,10 +22,10 @@ namespace HfyClientApi.Migrations
 
             migrationBuilder.Sql(
                 """
-                UPDATE "Chapters" AS "C"
-                SET "C"."CoverArtUrl" = "SM"."CoverArtUrl"
-                FROM "StoryMetadata" AS "SM"
-                WHERE "C"."FirstChapterId" = "SM"."FirstChapterId"
+                UPDATE "Chapters"
+                SET "CoverArtUrl" = "StoryMetadata"."CoverArtUrl"
+                FROM "StoryMetadata"
+                WHERE "Chapters"."FirstChapterId" = "StoryMetadata"."FirstChapterId";
                 """
             );
 
@@ -57,6 +57,7 @@ namespace HfyClientApi.Migrations
                 INSERT INTO "StoryMetadata" ("FirstChapterId", "CoverArtUrl")
                 SELECT DISTINCT ON ("FirstChapterId") "FirstChapterId", "CoverArtUrl"
                 FROM "Chapters"
+                WHERE "FirstChapterId" IS NOT NULL;
                 """
             );
 
