@@ -52,7 +52,7 @@ export default function ChapterPage({ chapter }: ChapterPageProps) {
     };
 
     addHistoryEntry();
-  }, []);
+  }, [chapter.id]);
 
   return (
     <>
