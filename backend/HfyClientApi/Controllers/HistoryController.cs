@@ -59,7 +59,7 @@ namespace HfyClientApi.Controllers
         {
           if (entry.IsCreated)
           {
-            return CreatedAtAction(nameof(GetCurrentlyReadingChapters), entry);
+            return CreatedAtAction(nameof(GetCurrentlyReadingChapters), entry.Value);
           }
 
           return Ok(entry.Value);
