@@ -30,20 +30,13 @@ namespace HfyClientApi.Repositories
 
       var currentlyReadingChapters = await _context.HistoryEntries
         .FromSql($"""
-          SELECT * FROM (
-            SELECT H.*, RANK() OVER (
-                PARTITION BY C."FirstChapterId"
-                ORDER BY H."ReadAtUtc"
-            ) Rank
-            FROM "HistoryEntries" H
-            LEFT JOIN "Chapters" C ON C."Id" = H."ChapterId"
-            WHERE H."UserName" = {userName}
-
-          )
-          WHERE Rank = 1
-          ORDER BY "ReadAtUtc" DESC
+          SELECT DISTINCT ON (C."FirstChapterId") H.*
+          FROM "HistoryEntries" H
+          LEFT JOIN "Chapters" C ON C."Id" = H."ChapterId"
+          ORDER BY C."FirstChapterId", H."ReadAtUtc" DESC
         """)
         .Include(entry => entry.Chapter)
+        .OrderByDescending(entry => entry.ReadAtUtc)
         .Select(entry => new HistoryEntry()
         {
           Id = entry.Id,

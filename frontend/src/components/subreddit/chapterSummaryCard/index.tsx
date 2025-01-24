@@ -1,5 +1,4 @@
 import { ChapterMetadata } from "@/types/chapter";
-import Link from "next/link";
 import ChapterTimeMetadata from "@/components/composite/chapterTimeMetadata";
 import UpvoteLabel from "@/components/composite/upvoteLabel";
 import styles from "./chapterSummaryCard.module.css";

@@ -7,6 +7,7 @@ export interface HistoryEntry {
 }
 
 export interface ReadingHistoryEntry {
+  id: number;
   chapterMetadata: ChapterMetadata;
   nextChapterId: string | null;
   readAtUtc: string;
