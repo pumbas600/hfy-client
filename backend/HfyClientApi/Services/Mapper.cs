@@ -103,6 +103,7 @@ namespace HfyClientApi.Services
     {
       return new ReadingHistoryDto
       {
+        Id = historyEntry.Id,
         ChapterMetadata = ToChapterMetadataDto(historyEntry.Chapter),
         ReadAtUtc = historyEntry.ReadAtUtc,
         NextChapterId = historyEntry.Chapter.NextChapterId

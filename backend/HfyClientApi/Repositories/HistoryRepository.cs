@@ -44,15 +44,31 @@ namespace HfyClientApi.Repositories
           ORDER BY "ReadAtUtc" DESC
         """)
         .Include(entry => entry.Chapter)
+        .Select(entry => new HistoryEntry()
+        {
+          Id = entry.Id,
+          ChapterId = entry.ChapterId,
+          UserName = entry.UserName,
+          ReadAtUtc = entry.ReadAtUtc,
+          Chapter = new Chapter()
+          { // Exclude the TextHtml column to reduce the payload size
+            Id = entry.Chapter.Id,
+            Author = entry.Chapter.Author,
+            Subreddit = entry.Chapter.Subreddit,
+            Title = entry.Chapter.Title,
+            IsNsfw = entry.Chapter.IsNsfw,
+            CreatedAtUtc = entry.Chapter.CreatedAtUtc,
+            EditedAtUtc = entry.Chapter.EditedAtUtc,
+            SyncedAtUtc = entry.Chapter.SyncedAtUtc,
+            NextChapterId = entry.Chapter.NextChapterId,
+            PreviousChapterId = entry.Chapter.PreviousChapterId,
+            FirstChapterId = entry.Chapter.FirstChapterId,
+            Downvotes = entry.Chapter.Downvotes,
+            Upvotes = entry.Chapter.Upvotes,
+            CoverArtUrl = entry.Chapter.CoverArtUrl,
+          }
+        })
         .ToListAsync();
-
-      // This generates the most horrendous SQL query ever... Idk how to manually adjust the SQL
-      // var currentlyReadingChapters = await _context.HistoryEntries
-      //   .Where(entry => entry.UserName == userName)
-      //   .Include(entry => entry.Chapter)
-      //   .GroupBy(chapter => chapter.Chapter.FirstChapterId)
-      //   .Select(group => group.OrderByDescending(entry => entry.ReadAtUtc).First())
-      //   .ToListAsync();
 
       stopwatch.Stop();
       _logger.LogInformation(
